@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
+<title>Forschungstagebuch Promotion</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#24504E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Forschungstagebuch">
+<style>
+@font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215}
+@font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-ext-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Source Serif 4";src:url(fonts/source-serif-4-latin-opsz-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0000-00FF,U+2000-206F,U+20AC}
+@font-face{font-family:"Source Serif 4";src:url(fonts/source-serif-4-latin-opsz-italic.woff2) format("woff2");font-weight:200 900;font-style:italic;font-display:swap;unicode-range:U+0000-00FF,U+2000-206F,U+20AC}
+/* Layout: eine Spalte wie eine Buchseite, rote Faden-Linie links am Innenrand, Navigation unten */
+:root{
+  --paper:#FAF8F4; --sheet:#FFFFFF; --ink:#1F2E2D; --soft:#4F625F; --muted:#7A8A87;
+  --petrol:#2E5D5B; --petrol-dark:#24504E; --nebel:#EEF3F2; --line:#D6DEDC;
+  --faden:#A3402F; --faden-soft:#F3E3DE; --gold:#E9C9A6;
+  --good:#3B7A57; --warn:#B7791F;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#14201F; --sheet:#1B2928; --ink:#E7EEEC; --soft:#B5C4C1; --muted:#8FA19E;
+  --petrol:#7FB3AE; --petrol-dark:#9CC7C2; --nebel:#22312F; --line:#33464390;
+  --faden:#E07B66; --faden-soft:#3A2622; --gold:#E9C9A6; --good:#7CC39A; --warn:#E0B060; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#14201F; --sheet:#1B2928; --ink:#E7EEEC; --soft:#B5C4C1; --muted:#8FA19E;
+  --petrol:#7FB3AE; --petrol-dark:#9CC7C2; --nebel:#22312F; --line:#33464390;
+  --faden:#E07B66; --faden-soft:#3A2622; --gold:#E9C9A6; --good:#7CC39A; --warn:#E0B060; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--faden);outline-offset:2px}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px calc(96px + env(safe-area-inset-bottom,0px))}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+header.top .in{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;display:flex;align-items:center;gap:12px}
+.brand{font-family:var(--serif);font-weight:600;font-size:17px;color:var(--petrol-dark);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{display:block;font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faden)}
+.pill{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--petrol-dark);background:var(--nebel);border-radius:999px;padding:4px 10px;white-space:nowrap;font-variant-numeric:tabular-nums}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--sheet);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+nav.tabs .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav.tabs button{background:none;border:0;padding:8px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:600;color:var(--muted)}
+nav.tabs button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs button[aria-current="page"]{color:var(--faden)}
+h1,h2,h3{font-family:var(--serif);color:var(--petrol-dark);text-wrap:balance;margin:0}
+h1{font-size:28px;line-height:1.15;font-weight:600}
+h2{font-size:21px;line-height:1.25;font-weight:600}
+h3{font-size:17px;font-weight:600}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faden);margin-bottom:4px}
+.lead{color:var(--soft);font-size:16px;margin:6px 0 0}
+.muted{color:var(--muted);font-size:14px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.page{background:var(--sheet);border:1px solid var(--line);border-left:3px solid var(--faden);border-radius:4px;padding:18px 16px;display:flex;flex-direction:column;gap:16px}
+.sec{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--petrol)}
+.sec::after{content:"";flex:1;height:1px;background:var(--line)}
+.sec svg{width:20px;height:20px;stroke:var(--petrol);fill:none;stroke-width:1.5}
+.q{font-weight:600;color:var(--petrol-dark);font-size:15px;margin-bottom:6px;display:block}
+.q .hn{display:block;font-weight:400;color:var(--muted);font-size:13px}
+textarea,input[type=text],input[type=date]{width:100%;background:var(--nebel);border:1px solid transparent;border-bottom:1px solid var(--line);border-radius:3px;padding:9px 10px;font-size:16px;line-height:1.45;resize:vertical}
+textarea{min-height:64px}
+textarea:focus,input:focus{border-color:var(--petrol);outline:none;background:var(--sheet)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:7px 14px;font-size:15px;font-weight:600;color:var(--soft);min-height:40px}
+.chip[aria-pressed="true"]{background:var(--petrol-dark);border-color:var(--petrol-dark);color:var(--sheet)}
+.scale{display:grid;grid-template-columns:repeat(9,1fr);gap:4px}
+.scale.s10{grid-template-columns:repeat(10,1fr)}
+.scale button{aspect-ratio:1;max-width:100%;border:1px solid var(--line);background:var(--sheet);border-radius:50%;font-weight:700;font-size:15px;color:var(--soft);padding:0;font-variant-numeric:tabular-nums}
+.scale button[aria-pressed="true"]{background:var(--faden);border-color:var(--faden);color:#fff}
+.scale-l{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px}
+.todo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.todo input[type=text]{flex:1;min-width:0}
+.cbx{width:28px;height:28px;flex:none;border:1.5px solid var(--petrol);border-radius:4px;background:var(--sheet);display:grid;place-items:center;padding:0}
+.cbx[aria-pressed="true"]{background:var(--petrol);}
+.cbx[aria-pressed="true"]::after{content:"";width:7px;height:13px;border:solid var(--sheet);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.band{background:var(--petrol-dark);color:#fff;border-radius:3px;padding:16px 16px 18px;position:relative}
+:root[data-theme="dark"] .band{background:#0E1918}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .band{background:#0E1918}}
+.band .k{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.band p{margin:0;font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.45}
+.band .src{display:block;margin-top:8px;font-family:var(--sans);font-style:normal;font-size:12px;color:#C9D8D5}
+.fact{background:var(--nebel);border-radius:3px;padding:14px 16px}
+.fact .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faden);margin-bottom:4px}
+.fact h3{margin-bottom:4px}
+.fact p{margin:0;color:var(--ink)}
+.fact .src{display:block;margin-top:8px;font-size:12px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:4px;padding:12px 18px;font-weight:700;font-size:16px;background:var(--faden);color:#fff;min-height:46px;text-decoration:none}
+.btn.sec2{background:var(--nebel);color:var(--petrol-dark)}
+.btn.ghost{background:none;color:var(--petrol-dark);border:1px solid var(--line)}
+.btn.small{padding:8px 12px;min-height:38px;font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.two>*{min-width:0}
+@media (max-width:420px){.two{grid-template-columns:1fr}}
+.daynav{display:flex;align-items:center;gap:8px}
+.daynav .t{flex:1;min-width:0}
+.iconbtn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--sheet);display:grid;place-items:center;color:var(--petrol-dark);flex:none}
+.iconbtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
+.iconbtn:disabled{opacity:.35}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:14px 16px}
+.list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:4px;background:var(--sheet);overflow:hidden}
+.list button.it{display:flex;align-items:center;gap:12px;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:12px 14px;width:100%}
+.list button.it:first-child{border-top:0}
+.list .it .l{flex:1;min-width:0}
+.list .it .l b{display:block;font-weight:600;color:var(--ink)}
+.list .it .l span{font-size:13px;color:var(--muted)}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--line)}
+.dot.f{background:var(--petrol)} .dot.a{background:var(--gold)} .dot.r{background:var(--faden)}
+.tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--faden-soft);color:var(--faden);white-space:nowrap}
+.tag.ok{background:var(--nebel);color:var(--petrol)}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.tile{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:12px 14px}
+.tile .v{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--petrol-dark);line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .l{font-size:13px;color:var(--muted)}
+.seg{display:inline-flex;background:var(--nebel);border-radius:999px;padding:3px}
+.seg button{border:0;background:none;padding:7px 14px;border-radius:999px;font-weight:600;font-size:14px;color:var(--soft)}
+.seg button[aria-pressed="true"]{background:var(--sheet);color:var(--petrol-dark);box-shadow:0 1px 2px #0002}
+.chart{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-family:var(--sans);font-size:11px}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar{display:grid;grid-template-columns:96px 1fr 44px;gap:8px;align-items:center;font-size:14px}
+.bar .tr{height:14px;background:var(--nebel);border-radius:2px;overflow:hidden;display:flex}
+.bar .tr i{display:block;height:100%;background:var(--petrol)}
+.bar .tr i.r{background:var(--faden)} .bar .tr i.g{background:var(--gold)}
+.bar .n{text-align:right;font-variant-numeric:tabular-nums;color:var(--soft)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--soft)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal div{aspect-ratio:1;border-radius:3px;background:var(--nebel);font-size:11px;display:grid;place-items:center;color:var(--muted);font-variant-numeric:tabular-nums}
+.cal div.f{background:var(--petrol);color:var(--sheet)} .cal div.as{background:var(--gold);color:#3b2a12} .cal div.af{background:var(--faden);color:#fff}
+.cal div.h{background:none}
+.mtab{overflow-x:auto}
+.mtab table{border-collapse:collapse;font-size:14px;min-width:100%}
+.mtab th,.mtab td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:center;font-variant-numeric:tabular-nums}
+.mtab th:first-child,.mtab td:first-child{text-align:left}
+.mtab td.lo{color:var(--faden);font-weight:700}
+.rateitem{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;margin-bottom:6px}
+.rateitem input{min-width:0}
+.rsel{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.rsel button{border:0;background:var(--sheet);padding:6px 9px;font-weight:700;color:var(--soft);font-size:14px;min-width:34px}
+.rsel button[aria-pressed="true"]{background:var(--petrol-dark);color:var(--sheet)}
+.x{border:0;background:none;color:var(--muted);font-size:22px;line-height:1;padding:4px 6px}
+.ms{background:linear-gradient(var(--faden-soft),var(--sheet));border:1px solid var(--line);border-left:3px solid var(--faden);border-radius:4px;padding:18px 16px;display:flex;flex-direction:column;gap:14px}
+.ms h1{font-size:34px}
+.story{border-left:3px solid var(--gold);padding-left:12px;color:var(--soft)}
+.story .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faden)}
+.story p{margin:6px 0 0;font-family:var(--serif);font-style:italic}
+.offer{background:var(--nebel);border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.offer .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faden)}
+.offer p{margin:0}
+a{color:var(--petrol-dark)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:999px;font-size:14px;font-weight:600;z-index:9;opacity:0;transition:opacity .25s;pointer-events:none}
+.toast.on{opacity:1}
+.hit{background:var(--faden-soft);border-radius:2px;padding:0 2px}
+.demo{background:var(--faden-soft);color:var(--faden);border-radius:4px;padding:10px 14px;font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.hero{padding:22px 0 6px}
+.hero h1{font-size:34px}
+.thread{height:3px;width:72px;background:var(--faden);margin:14px 0}
+details.help{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:12px 14px}
+details.help summary{font-weight:600;color:var(--petrol-dark);cursor:pointer}
+details.help ol{margin:8px 0 0;padding-left:20px;color:var(--soft)}
+#print{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff;color:#000}
+  header.top,nav.tabs,.wrap,.toast,body::before{display:none!important}
+  #print{display:block;font-family:var(--sans);font-size:11pt;color:#000}
+  #print h1,#print h2{color:#24504E}
+  #print .pd{break-inside:avoid;border-left:2px solid #A3402F;padding-left:10px;margin:0 0 14px}
+  #print .pw{break-before:page}
+}
+@font-face{font-family:"Caveat";src:url(fonts/caveat-latin.woff2) format("woff2");font-weight:400 600;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2191,U+2193}
+@font-face{font-family:"Caveat";src:url(fonts/caveat-latin-ext.woff2) format("woff2");font-weight:400 600;font-display:swap;unicode-range:U+0100-02BA,U+1E00-1E9F,U+2020,U+20A0-20AB}
+:root{--hand:"Caveat","Segoe Print","Bradley Hand",cursive;--handink:var(--ink);--rule:#DCE4E8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--rule:#2C3D3B}}
+:root[data-theme="dark"]{--rule:#2C3D3B}
+nav.tabs .in{grid-template-columns:repeat(5,1fr)}
+nav.tabs button{font-size:11px}
+.pill{text-align:right;line-height:1.25}
+.pill small{display:block;font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--muted)}
+body.writing nav.tabs{display:none}
+/* Buchansicht */
+.paperpage{background-color:var(--sheet);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,var(--rule) 33px,var(--rule) 34px);background-position:0 12px;border:1px solid var(--line);border-radius:3px;padding:12px 16px 20px 30px;position:relative;box-shadow:0 1px 0 var(--line),0 6px 18px -12px #0003}
+.paperpage::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--faden);opacity:.75}
+.paperpage .date{font-family:var(--serif);font-size:20px;color:var(--petrol-dark);line-height:34px;font-weight:600}
+.paperpage .lbl{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:17px;margin-top:17px}
+.paperpage .hw{font-family:var(--hand);font-size:23px;line-height:34px;color:var(--handink);white-space:pre-wrap;overflow-wrap:anywhere}
+.paperpage .hw.s{font-size:21px}
+.paperpage .meta{font-family:var(--hand);font-size:22px;line-height:34px;color:var(--handink)}
+.paperpage .circ{display:inline-block;border:1.5px solid var(--handink);border-radius:50%;padding:0 7px;line-height:24px;margin:0 2px}
+.paperpage .tick{font-family:var(--hand);font-size:22px;line-height:34px;color:var(--handink)}
+.paperpage .band{margin:17px -4px 0}
+.paperpage .moonsun{display:flex;align-items:center;gap:8px;margin-top:17px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--petrol);line-height:17px}
+.paperpage .tick{display:flex;align-items:center;gap:8px}
+.paperpage .hbox{width:24px;height:24px;transform:rotate(-2.5deg);flex:none;fill:none;stroke:var(--handink);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.paperpage .hbox .hk{stroke-width:2.2}
+.paperpage .penbtn{margin-left:auto;display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:5px 11px;min-height:32px;font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--soft)}
+.paperpage .moonsun .penbtn svg{width:14px;height:14px;stroke:currentColor}
+.paperpage .moonsun svg{width:18px;height:18px;stroke:var(--petrol);fill:none;stroke-width:1.5}
+.paperpage .empty{font-size:14px;color:var(--muted);line-height:34px;font-style:italic}
+.startday{display:flex;flex-direction:column;gap:14px}
+.bigchoice{display:grid;grid-template-columns:1fr;gap:10px}
+.bigchoice button{border:1px solid var(--line);background:var(--sheet);border-radius:4px;padding:16px;text-align:left;font-family:var(--serif);font-size:19px;font-weight:600;color:var(--petrol-dark);display:flex;justify-content:space-between;align-items:center;min-height:60px}
+.bigchoice button span{font-family:var(--sans);font-size:13px;font-weight:400;color:var(--muted);display:block}
+.bigchoice button svg{width:22px;height:22px;stroke:var(--faden);fill:none;stroke-width:1.8;flex:none}
+.switch{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:4px;padding:12px 14px;background:var(--sheet);text-align:left;width:100%}
+.switch .tr{width:46px;height:28px;border-radius:999px;background:var(--line);position:relative;flex:none;transition:background .2s}
+.switch .tr::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:left .2s}
+.switch[aria-checked="true"] .tr{background:var(--faden)}
+.switch[aria-checked="true"] .tr::after{left:21px}
+.switch b{display:block;color:var(--ink);font-weight:600}
+.switch small{color:var(--muted);font-size:13px}
+.notice{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--sheet);border-radius:4px;padding:10px 14px;width:100%;text-align:left;font-weight:600;color:var(--petrol-dark)}
+.filters{display:flex;flex-direction:column;gap:10px;background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:12px}
+.filters .seg{flex-wrap:wrap}
+.karte{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:18px 16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 20px -14px #0004}
+.karte .ic{width:44px;height:44px;border-radius:50%;background:var(--faden-soft);display:grid;place-items:center}
+.karte .ic svg{width:24px;height:24px;stroke:var(--faden);fill:none;stroke-width:1.6}
+.karte ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.karte .say{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--petrol-dark);border-left:3px solid var(--gold);padding-left:10px}
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hgrid button{border:1px solid var(--line);background:var(--sheet);border-radius:4px;padding:12px;text-align:left;min-height:74px;display:flex;flex-direction:column;gap:4px}
+.hgrid button b{font-weight:600;color:var(--petrol-dark);font-size:15px;line-height:1.25}
+.hgrid button span{font-size:12px;color:var(--muted)}
+.hgrid button[aria-pressed="true"]{border-color:var(--faden);box-shadow:inset 0 0 0 1px var(--faden)}
+.tq{display:flex;flex-direction:column;gap:6px;padding:10px 0;border-top:1px solid var(--line)}
+.tq:first-child{border-top:0}
+.tq .opts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.tq .opts button{border:1px solid var(--line);background:var(--sheet);border-radius:4px;padding:8px 4px;font-size:12px;font-weight:600;color:var(--soft);min-height:44px;line-height:1.2}
+.tq .opts button[aria-pressed="true"]{background:var(--petrol-dark);border-color:var(--petrol-dark);color:var(--sheet)}
+input[type=time]{width:100%;background:var(--nebel);border:1px solid transparent;border-bottom:1px solid var(--line);border-radius:3px;padding:9px 10px;font-size:16px}
+</style>
+</head><body>
+<header class="top"><div class="in">
+  <div class="brand"><small>Forschungstagebuch</small>Promotion · 6 Monate</div>
+  <span class="pill" id="prog"></span>
+</div></header>
+
+<main class="wrap" id="app" aria-live="polite"></main>
+
+
+<nav class="tabs" aria-label="Bereiche"><div class="in">
+  <button data-tab="heute"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 10h8M8 14h8M8 18h5"/></svg>Heute</button>
+  <button data-tab="verlauf"><svg viewBox="0 0 24 24"><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/><path d="M7 19h6a3 3 0 0 0 0-6h-2a3 3 0 0 1 0-6h6"/></svg>Verlauf</button>
+  <button data-tab="reflexion"><svg viewBox="0 0 24 24"><path d="M8.5 15a3.5 3.5 0 0 1-.6-6.95A4.6 4.6 0 0 1 16.4 7a3.5 3.5 0 0 1 .1 8z"/><circle cx="7.2" cy="18.6" r="1.3"/><circle cx="4.6" cy="21" r=".7"/></svg>Reflexion</button>
+  <button data-tab="statistik"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Statistik</button>
+  <button data-tab="mehr"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg>Ich</button>
+</div></nav>
+<div class="toast" id="toast" role="status"></div>
+<div id="print"></div>
+
+<script>
+const INHALT={"band": {"1": [["Real Talk", "Wenn eine Promotion einfach wäre, könnte es jede:r. Sie ist es nicht. Und du bist trotzdem hier.", null], ["Mit auf den Weg", "Wer begonnen hat, hat schon die Hälfte getan. Wage es, weise zu sein: Fang an!", "Horaz, Episteln I,2 (um 20 v. Chr., eigene Übersetzung)"], ["Für dich", "Du bist nicht allein an diesem Punkt. Viele Promovierende stehen genau hier. Ab heute gehst du diesen Weg mit einem roten Faden.", null], ["Real Talk", "Deine Promotion ist ein Vertrag mit dir selbst. Keiner zwingt dich, keiner bezahlt dich, und du hältst trotzdem daran fest. Das ist wahre Stärke.", null], ["Gut zu wissen", "Einstein schrieb seine bahnbrechenden Aufsätze von 1905 neben einem Vollzeitjob im Patentamt. Was Einstein konnte, können wir auch.", null], ["Mit auf den Weg", "Sag dir zuerst, wer du sein willst. Dann tu, was du tun musst.", "Epiktet, Diatriben III,23 (eigene Übersetzung)"]], "2": [["Mit auf den Weg", "Jede Fähigkeit wird durch die passenden Handlungen erhalten und gestärkt.", "Epiktet, Diatriben II,18 (eigene Übersetzung)"], ["Für dich", "Eine Routine entsteht nicht an einem Tag. Jeder Tag, an dem du dranbleibst, festigt jedoch das neuronale Fundament enorm.", null], ["Real Talk", "Motivation kommt und geht. Disziplin und Konstanz sind das, was dich langfristig weiterbringt.", null], ["Gut zu wissen", "Gregor Mendel forschte neben seinen Pflichten als Mönch und Lehrer. Forschung passt auch in kleine Zeitfenster.", null], ["Real Talk", "Du musst nicht jeden Tag Lust haben. Du musst nur jeden Tag anfangen. Die Lust kommt oft erst beim Arbeiten.", null], ["Mit auf den Weg", "Der Tropfen höhlt den Stein.", "Ovid, Epistulae ex Ponto IV,10 (eigene Übersetzung)"]], "3": [["Real Talk", "Dein Job wird nie sagen: Jetzt ist genug, nimm dir Zeit für deine Promotion. Das musst du selbst sagen.", null], ["Mit auf den Weg", "Nirgends ist, wer überall ist.", "Seneca, Briefe an Lucilius 2 (eigene Übersetzung)"], ["Gut zu wissen", "Kepler rechnete jahrelang an der Marsbahn, bis er 1609 zeigte: Sie ist eine Ellipse. Ausdauer schlägt Tempo.", null], ["Real Talk", "Zig kleine Mails, mal eben hier, mal eben da: Abends bist du erschöpft und hast das Gefühl, nichts gearbeitet zu haben. Das ist kein Zufall.", null], ["Für dich", "Wenn heute nur eine Stunde drin war, dann war es eine gute Stunde. Fokus misst sich nicht in Minuten.", null], ["Mit auf den Weg", "Ein Teil unserer Zeit wird uns entrissen, ein Teil entwendet, ein Teil zerrinnt einfach.", "Seneca, Briefe an Lucilius 1 (eigene Übersetzung)"]], "4": [["Gut zu wissen", "Hans Krebs reichte 1937 seine Arbeit zum Zitronensäurezyklus bei „Nature“ ein. Sie wurde abgelehnt. 1953 bekam er dafür den Nobelpreis.", null], ["Mit auf den Weg", "Eine Reise von tausend Meilen beginnt unter deinen Füßen.", "Laozi, Daodejing 64 (eigene Übersetzung)"], ["Real Talk", "Du wartest auf den perfekten freien Tag für deine Promotion? Der kommt nicht. Nimm die Stunde, die du heute hast.", null], ["Für dich", "Kleine Schritte sind keine kleinen Leistungen. Sie sind der einzige Weg, auf dem große Arbeiten fertig werden.", null], ["Mit auf den Weg", "Lass dich nicht vom Gedanken an das Ganze erdrücken. Frag bei dem, was jetzt vor dir liegt: Was genau daran ist unerträglich?", "Marc Aurel, Selbstbetrachtungen VIII,36 (eigene Übersetzung)"], ["Real Talk", "Die Promotion kennt keinen Feierabend, also sitzt das schlechte Gewissen immer mit am Tisch. Dein Feierabend muss deshalb eine Entscheidung sein.", null]], "5": [["Für dich", "Dein erster Entwurf darf holprig sein. Niemand schreibt fertige Kapitel. Alle schreiben Entwürfe und überarbeiten.", null], ["Real Talk", "Lesen fühlt sich produktiv an. Aber deine Dissertation entsteht beim Schreiben. Irgendwann musst du anfangen.", null], ["Mit auf den Weg", "Es ist nicht genug zu wissen, man muss auch anwenden; es ist nicht genug zu wollen, man muss auch tun.", "Johann Wolfgang von Goethe, Wilhelm Meisters Wanderjahre (1829)"], ["Real Talk", "Niemand liest deinen ersten Entwurf außer dir. Er muss nicht klug klingen. Er muss nur existieren.", null], ["Gut zu wissen", "Watson und Crick beschrieben die DNA-Doppelhelix 1953 auf etwa einer Seite. Klarheit braucht nicht viele Worte.", null], ["Mit auf den Weg", "Tust du etwas Gutes unter Mühen, vergeht die Mühe, das Gute bleibt.", "Musonius Rufus, überliefert bei Gellius, Noctes Atticae XVI,1 (eigene Übersetzung)"]], "6": [["Real Talk", "Mein erster Tag als wissenschaftliche Mitarbeiterin: Mensa mit Kolleg:innen, ein Schaulaufen der Fachlichkeit. Lass mal die Hälfte davon stimmen.", null], ["Für dich", "Du musst nicht alles gelesen haben. Niemand hat das. Du musst wissen, was du für deine Arbeit brauchst.", null], ["Mit auf den Weg", "Jeder liebt sich selbst mehr als alle anderen, gibt aber auf das eigene Urteil weniger als auf das der anderen.", "Marc Aurel, Selbstbetrachtungen XII,4 (eigene Übersetzung)"], ["Real Talk", "Noch ein Aufsatz, noch ein Buch: Irgendwann wird Lesen zur Ausrede. Du weißt genug, um weiterzuschreiben.", null], ["Gut zu wissen", "Hermann Ebbinghaus maß 1885 sein eigenes Vergessen: Vieles war schon nach einem Tag weg. Notier Gedanken sofort.", null], ["Mit auf den Weg", "Zieh dich in dich selbst zurück, so sehr du kannst. Umgib dich mit Menschen, die dich besser machen.", "Seneca, Briefe an Lucilius 7 (eigene Übersetzung)"]], "7": [["Real Talk", "Auswerten ist mühsam, kleinteilig und manchmal langweilig. Genau deshalb schaffen es nicht alle. Du schon.", null], ["Mit auf den Weg", "Der Zufall begünstigt nur den vorbereiteten Geist.", "Louis Pasteur, Rede in Lille (1854, eigene Übersetzung)"], ["Gut zu wissen", "Henrietta Leavitt fand 1912, bezahlt wie eine Hilfskraft, beim Auswerten tausender Fotoplatten den Schlüssel zu kosmischen Entfernungen.", null], ["Real Talk", "Ein großer Teil der Forschung an Hochschulen wird vom Mittelbau gemacht. Auf dem Titel steht oft ein anderer Name. Deine Leistung ist trotzdem echt.", null], ["Für dich", "Du kennst deine Daten besser als jede andere Person. Trau dir zu, etwas aus ihnen zu machen.", null], ["Mit auf den Weg", "Das Hindernis für das Handeln fördert das Handeln. Was im Weg steht, wird zum Weg.", "Marc Aurel, Selbstbetrachtungen V,20 (eigene Übersetzung)"]], "8": [["Gut zu wissen", "Dorothy Hodgkin begann 1934 mit der Struktur des Insulins. Gelöst hat sie sie 1969. Lange Wege sind normal.", null], ["Real Talk", "Promovierende sind nicht klüger als andere. Sie sind die, die immer wieder zurückkommen. Das unterscheidet sie.", null], ["Mit auf den Weg", "Nichts Großes entsteht auf einmal, nicht einmal eine Traube oder eine Feige.", "Epiktet, Diatriben I,15 (eigene Übersetzung)"], ["Für dich", "Acht Wochen dabei. Das ist keine Kleinigkeit. Du hast etwas aufgebaut, das vorher nicht da war.", null], ["Real Talk", "Achte auf deine Energie, nicht nur auf deine Zeit. Eine Stunde mit leerem Kopf bringt weniger als zwanzig Minuten mit klarem.", null], ["Mit auf den Weg", "Wie deine Gedanken häufig sind, so wird deine Gesinnung. Denn die Seele nimmt die Farbe ihrer Gedanken an.", "Marc Aurel, Selbstbetrachtungen V,16 (eigene Übersetzung)"]], "9": [["Real Talk", "Es wird immer einen dringenden Auftrag geben. Wenn du auf eine ruhige Phase wartest, wartest du ewig.", null], ["Mit auf den Weg", "Wir haben nicht zu wenig Zeit, sondern wir vergeuden viel davon.", "Seneca, Von der Kürze des Lebens 1 (eigene Übersetzung)"], ["Für dich", "Wer neben dem Job promoviert, leistet doppelt. Schau dir das an, bevor du streng mit dir wirst.", null], ["Real Talk", "Ist dein Chef zugleich dein Doktorvater, fühlt sich jedes Nein riskant an. Zeit für deine Promotion zu schützen bleibt trotzdem dein gutes Recht.", null], ["Gut zu wissen", "Cecilia Payne zeigte 1925, dass Sterne vor allem aus Wasserstoff bestehen. Ein führender Astronom riet ihr, das abzuschwächen. Sie hatte recht.", null], ["Mit auf den Weg", "Das meiste, was wir sagen und tun, ist nicht notwendig. Wer es weglässt, hat mehr Zeit und mehr Ruhe.", "Marc Aurel, Selbstbetrachtungen IV,24 (eigene Übersetzung)"]], "10": [["Für dich", "Rund 70 Tage dabei. Was am Anfang Kraft gekostet hat, ist jetzt ein Stück Alltag. Das hast du geschafft.", null], ["Real Talk", "Routine klingt langweilig. Aber sie bringt dich ans Ziel, nicht die seltenen genialen Tage.", null], ["Mit auf den Weg", "Wenn es einen Glauben gibt, der Berge versetzen kann, so ist es der Glaube an die eigene Kraft.", "Marie von Ebner-Eschenbach, Aphorismen (1880)"], ["Real Talk", "Zehn Wochen. Viele, die mit dir angefangen hätten, hätten längst aufgehört. Du nicht. Hör auf, das kleinzureden.", null], ["Gut zu wissen", "Eine Londoner Studie fand: Bis eine neue Gewohnheit automatisch läuft, dauert es im Schnitt 66 Tage. Du bist bei 70.", null], ["Mit auf den Weg", "Wie lange willst du noch warten, bis du dich des Besten für würdig hältst?", "Epiktet, Handbuch 51 (eigene Übersetzung)"]], "11": [["Real Talk", "Jede Promotion hat Wochen, in denen nichts vorangeht. Wer aufhört, bleibt dort stehen. Wer weitermacht, kommt raus.", null], ["Für dich", "Ein Durchhänger sagt nichts über deine Fähigkeiten. Er sagt nur, dass du müde bist. Morgen ist wieder mehr Kraft da.", null], ["Gut zu wissen", "Penzias und Wilson putzten 1964 Taubendreck aus ihrer Antenne. Das Rauschen blieb: Es war der Nachhall des Urknalls.", null], ["Mit auf den Weg", "Wir leiden öfter in der Vorstellung als in der Wirklichkeit.", "Seneca, Briefe an Lucilius 13 (eigene Übersetzung)"], ["Real Talk", "An freien Tagen denkst du an die Promotion, an Arbeitstagen an alles andere. Das schlechte Gewissen ist kein Antrieb. Es ist nur laut.", null], ["Mit auf den Weg", "Es irrt der Mensch, solang er strebt.", "Johann Wolfgang von Goethe, Faust I, Prolog im Himmel (1808)"]], "12": [["Gut zu wissen", "Der erste Beweis von Fermats letztem Satz durch Andrew Wiles hatte einen Fehler. 1994 behob er ihn. Fehler gehören dazu.", null], ["Mit auf den Weg", "Nicht weil es schwer ist, wagen wir es nicht, sondern weil wir es nicht wagen, ist es schwer.", "Seneca, Briefe an Lucilius 104 (eigene Übersetzung)"], ["Real Talk", "Ein Rückschlag kostet dich ein paar Tage. Aufgeben kostet dich alles, was du schon investiert hast.", null], ["Für dich", "Kritisches Feedback zu deinem Kapitel ist keine Kritik an dir. Es zeigt, dass deine Arbeit ernst genommen wird.", null], ["Mit auf den Weg", "Feuer prüft das Gold, Widrigkeit die starken Menschen.", "Seneca, Über die Vorsehung 5 (eigene Übersetzung)"], ["Real Talk", "Wer forscht, sammelt Absagen: abgelehnte Anträge, Paper, Konferenzbeiträge. Das gehört zum Beruf und sagt nichts über deinen Wert.", null]], "13": [["Für dich", "Halbzeit. Dreizehn Wochen bist du drangeblieben. Halt kurz an und sieh, wie weit du gekommen bist.", null], ["Mit auf den Weg", "Wenn du morgens nur schwer aufstehst, halte dir vor Augen: Ich erwache, um das Werk eines Menschen zu tun.", "Marc Aurel, Selbstbetrachtungen V,1 (eigene Übersetzung)"], ["Real Talk", "Halbzeit heißt auch: Die Hälfte liegt noch vor dir. Jetzt zeigt sich, wer weitermacht. Du machst weiter.", null], ["Gut zu wissen", "Mendelejew ließ 1869 in seinem Periodensystem Lücken für unbekannte Elemente. Eine gute Struktur zeigt, was noch fehlt.", null], ["Real Talk", "Du ärgerst dich, dass du nicht schon weiter bist? Die verlorene Zeit holst du nicht zurück. Die nächste Stunde gehört dir.", null], ["Mit auf den Weg", "Von den Dingen stehen die einen in unserer Macht, die anderen nicht.", "Epiktet, Handbuch 1 (eigene Übersetzung)"]], "14": [["Real Talk", "Die Promotion ist DEIN Projekt. Wenn du sie nicht schützt, tut es niemand. Dein Job wird immer lauter sein.", null], ["Für dich", "Nein zu einem Auftrag zu sagen ist nicht unprofessionell. Es ist ein Ja zu deinem eigenen Projekt.", null], ["Mit auf den Weg", "Niemand ist frei, der nicht Herr über sich selbst ist.", "Epiktet, Fragmente (eigene Übersetzung)"], ["Real Talk", "„Kannst du mal eben …?“ Jedes Mal-eben kostet dich mehr als die fünf Minuten. Es kostet deinen roten Faden.", null], ["Gut zu wissen", "Darwin arbeitete meist nur wenige konzentrierte Stunden am Vormittag. Es kommt auf die Qualität der Zeit an.", null], ["Mit auf den Weg", "Plane das Schwierige, solange es leicht ist. Tu das Große, solange es klein ist.", "Laozi, Daodejing 63 (eigene Übersetzung)"]], "15": [["Real Talk", "Pausen sind kein Luxus, sondern Teil der Arbeit. Wer nie abschaltet, schreibt irgendwann nur noch im Kreis.", null], ["Mit auf den Weg", "Nirgends zieht sich der Mensch ruhiger und ungestörter zurück als in seine eigene Seele.", "Marc Aurel, Selbstbetrachtungen IV,3 (eigene Übersetzung)"], ["Gut zu wissen", "Kekulé erzählte 1890, die Ringform des Benzols sei ihm im Halbschlaf eingefallen. Lass Gedanken auch mal ruhen.", null], ["Für dich", "Erholung gehört zu deiner Routine wie das Schreiben. Ausgeruht kommst du schneller voran, nicht langsamer.", null], ["Real Talk", "Wer nach Feierabend noch zehn Mails beantwortet, hatte keinen Feierabend. Dein Kopf merkt den Unterschied, auch wenn du es nicht tust.", null], ["Mit auf den Weg", "Nicht was wir erleben, sondern wie wir empfinden, was wir erleben, macht unser Schicksal aus.", "Marie von Ebner-Eschenbach, Aphorismen (1880)"]], "16": [["Gut zu wissen", "Wegener stellte 1912 die Kontinentalverschiebung vor und wurde dafür verspottet. Anerkannt wurde sie erst in den 1960ern.", null], ["Real Talk", "Fast alle Promovierenden fühlen sich irgendwann wie Hochstapler. Das Gefühl ist normal. Schreib trotzdem weiter.", null], ["Mit auf den Weg", "Nicht die Dinge selbst beunruhigen die Menschen, sondern ihre Meinungen über die Dinge.", "Epiktet, Handbuch 5 (eigene Übersetzung)"], ["Für dich", "Wenn du gerade zweifelst, ob du das kannst: Du hast es bis hierher geschafft. Das war kein Zufall, das war Können.", null], ["Real Talk", "Vergleich dich nicht mit dem Kollegen, der schon zwei Paper hat. Du kennst seine Zweifel nicht, und er kennt deinen Weg nicht.", null], ["Mit auf den Weg", "Habe Mut, dich deines eigenen Verstandes zu bedienen!", "Immanuel Kant, Beantwortung der Frage: Was ist Aufklärung? (1784)"]], "17": [["Für dich", "Du suchst gerade den roten Faden? Er ist da. Manchmal sieht man ihn erst, wenn man einen Schritt zurücktritt.", null], ["Mit auf den Weg", "Man muss etwas Neues machen, um etwas Neues zu sehen.", "Georg Christoph Lichtenberg, Sudelbücher"], ["Real Talk", "Die nächsten Wochen werden anstrengend. Gut so. Du lernst gerade, schwere Dinge zu tun, und das bleibt.", null], ["Gut zu wissen", "Barbara McClintock beschrieb in den 1940ern springende Gene. Viele Fachleute hielten das für Unsinn. 1983 bekam sie den Nobelpreis.", null], ["Mit auf den Weg", "Hör endlich auf, darüber zu reden, wie ein guter Mensch sein soll. Sei einer.", "Marc Aurel, Selbstbetrachtungen X,16 (eigene Übersetzung)"], ["Real Talk", "Wenn du nicht mehr weißt, warum du dir das antust: Schlag vorne dein Warum auf. Es hat sich nicht verändert. Nur deine Müdigkeit ist größer.", null]], "18": [["Real Talk", "Jetzt zählt nicht, wie motiviert du bist. Jetzt zählt, dass du jeden Tag lieferst. Auch an den zähen Tagen.", null], ["Für dich", "Sei stolz, wie weit du in diesen Wochen gekommen bist. Viele hätten längst aufgegeben. Du bist da.", null], ["Mit auf den Weg", "Es gibt keinen bequemen Weg von der Erde zu den Sternen.", "Seneca, Der rasende Herkules, Vers 437 (eigene Übersetzung)"], ["Gut zu wissen", "Einsteins erster Anlauf zur Doktorarbeit von 1901 blieb erfolglos, er zog sie zurück. 1905 reichte er in Zürich eine neue ein.", null], ["Real Talk", "Am Ende warten kein garantierter Job, kein Bonus und kein Applaus. Du machst es trotzdem. Das ist keine Naivität, das ist Haltung.", null], ["Mit auf den Weg", "Verlange nicht, dass alles so geschieht, wie du willst. Wolle es so, wie es geschieht, dann lebst du gelassen.", "Epiktet, Handbuch 8 (eigene Übersetzung)"]], "19": [["Real Talk", "Konstanz schlägt Intensität. Eine Stunde jeden Tag bringt dich weiter als ein Wochenende im Ausnahmezustand.", null], ["Mit auf den Weg", "Sei wie der Felsen, an dem sich unablässig die Wellen brechen. Er steht fest, und um ihn herum legt sich die Brandung.", "Marc Aurel, Selbstbetrachtungen IV,49 (eigene Übersetzung)"], ["Gut zu wissen", "Marie und Pierre Curie verarbeiteten tonnenweise Pechblende, um 1902 ein Zehntelgramm Radiumchlorid zu gewinnen.", null], ["Für dich", "Du musst nicht jeden Tag Höchstleistung bringen. Du musst nur jeden Tag ein Stück weitergehen.", null], ["Real Talk", "Die meisten Stunden deiner Promotion sieht niemand. Kein Lob, kein Like. Wer das aushält, wird fertig.", null], ["Mit auf den Weg", "Halte durch und bleib fest: Dieser Schmerz wird dir einmal nützen.", "Ovid, Amores III,11 (eigene Übersetzung)"]], "20": [["Gut zu wissen", "Florence Nightingale überzeugte 1858 mit eigenen Diagrammen, wo Zahlenkolonnen nicht reichten. Darstellung zählt.", null], ["Real Talk", "Kein Text wird beim ersten Mal gut. Gute Texte sind überarbeitete Texte. Das gilt für alle, auch für dich.", null], ["Mit auf den Weg", "Ich weiß nicht, ob es besser wird, wenn es anders wird. Aber so viel kann ich sagen: Es muss anders werden, wenn es gut werden soll.", "Georg Christoph Lichtenberg, Sudelbücher"], ["Für dich", "Du siehst jetzt Schwächen, die du vor Monaten nicht gesehen hättest. Das ist kein Rückschritt, das ist Kompetenz.", null], ["Mit auf den Weg", "Nichts scheint mir unglücklicher als ein Mensch, dem nie etwas Widriges begegnet ist.", "Seneca, Über die Vorsehung 3 (eigene Übersetzung)"], ["Real Talk", "Kommt dasselbe Kapitel zum dritten Mal zurück, fehlt dir nicht das Können. Ihr meint nur noch nicht dasselbe. Frag konkret nach.", null]], "21": [["Für dich", "Deine Kapitel hängen mehr zusammen, als du denkst. Der rote Faden ist gelegt. Jetzt machst du ihn sichtbar.", null], ["Mit auf den Weg", "Wenn einer nicht weiß, welchen Hafen er ansteuert, ist ihm kein Wind günstig.", "Seneca, Briefe an Lucilius 71 (eigene Übersetzung)"], ["Real Talk", "Wenn du deine Arbeit nicht in zwei Sätzen erklären kannst, fehlt nicht Text, sondern Klarheit. Arbeite daran.", null], ["Gut zu wissen", "John Snow trug 1854 Cholerafälle in einen Stadtplan von London ein und fand die verseuchte Pumpe. Ordnen zeigt Muster.", null], ["Mit auf den Weg", "Lass dich vom Künftigen nicht beunruhigen. Du wirst ihm, wenn nötig, mit derselben Vernunft begegnen, die du jetzt gebrauchst.", "Marc Aurel, Selbstbetrachtungen VII,8 (eigene Übersetzung)"], ["Real Talk", "Bescheidenheit in Ehren, aber deine Ergebnisse gehören in die erste Reihe. Schreib sie so, dass man sie nicht übersehen kann.", null]], "22": [["Real Talk", "Perfekt wird keine Dissertation. Fertig schon. Und nur eine fertige Arbeit kannst du verteidigen.", null], ["Für dich", "Gut genug ist kein fauler Kompromiss. Es ist die Entscheidung, die eine Dissertation fertig werden lässt.", null], ["Mit auf den Weg", "Nicht wer zu wenig hat, ist arm, sondern wer immer mehr will.", "Seneca, Briefe an Lucilius 2 (eigene Übersetzung)"], ["Gut zu wissen", "Max Planck nannte seine Quantenhypothese von 1900 später einen „Akt der Verzweiflung“. Sie veränderte die Physik.", null], ["Real Talk", "Dein Text wird nie alles sagen, was du weißt. Er muss nur deine Frage beantworten. Den Rest darfst du loslassen.", null], ["Mit auf den Weg", "Während wir aufschieben, eilt das Leben vorüber.", "Seneca, Briefe an Lucilius 1 (eigene Übersetzung)"]], "23": [["Real Talk", "Du hast neben Job, Alltag und Müdigkeit ein Forschungsprojekt bis hierher gebracht. Das schaffen die wenigsten.", null], ["Für dich", "Du bist nicht mehr dieselbe Person wie zu Beginn. Du bist gewachsen, auch wenn es im Stillen passiert ist.", null], ["Gut zu wissen", "Freuds „Traumdeutung“ verkaufte sich in den ersten sechs Jahren nur 351 Mal. Heute gehört sie zu den meistzitierten Büchern ihres Fachs.", null], ["Mit auf den Weg", "Die Neigung der Menschen, kleine Dinge für wichtig zu halten, hat sehr viel Großes hervorgebracht.", "Georg Christoph Lichtenberg, Sudelbücher"], ["Real Talk", "Wer in der Mensa am lautesten von seiner Forschung erzählt, wird nicht zwingend fertig. Fertig wird, wer leise weiterarbeitet.", null], ["Mit auf den Weg", "Ergreif den heutigen Tag, dann hängst du weniger vom morgigen ab.", "Seneca, Briefe an Lucilius 1 (eigene Übersetzung)"]], "24": [["Gut zu wissen", "Peter Higgs’ Aufsatz über das später nach ihm benannte Teilchen wurde 1964 zunächst abgelehnt. 2013 bekam er den Nobelpreis.", null], ["Für dich", "Wenn du an das Ende deiner Promotion denkst, darfst du nervös sein. Nervosität heißt nur, dass dir diese Arbeit wichtig ist.", null], ["Real Talk", "Die sechs Monate enden bald, deine Promotion nicht. Lass jetzt nicht nach. Du hast zu viel investiert, um langsamer zu werden.", null], ["Mit auf den Weg", "Man bemerkt nie, was schon getan ist; man sieht nur, was noch zu tun bleibt.", "Marie Curie, Brief an ihren Bruder (1894, eigene Übersetzung)"], ["Real Talk", "Nicht der Titel hat dich bis hierher gebracht, sondern dein Warum. Halt es fest, wenn es zäh wird.", null], ["Mit auf den Weg", "Wenn dich etwas Äußeres bedrückt, ist es nicht das Ding selbst, sondern dein Urteil darüber. Und das kannst du ändern.", "Marc Aurel, Selbstbetrachtungen VIII,47 (eigene Übersetzung)"]], "25": [["Für dich", "Du hast monatelang gearbeitet, gezweifelt und weitergemacht. Das nimmt dir niemand mehr. Du kommst an.", null], ["Mit auf den Weg", "Wenn ich weiter gesehen habe, so deshalb, weil ich auf den Schultern von Riesen stand.", "Isaac Newton, Brief an Robert Hooke (1676, eigene Übersetzung)"], ["Real Talk", "Du hast dieses Tagebuch nicht angefangen, um es leicht zu haben. Sondern um es zu schaffen. Und das tust du.", null], ["Gut zu wissen", "Jahoda, Lazarsfeld und Zeisel schrieben die Marienthal-Studie 1933 gemeinsam. Gute Forschung entsteht im Austausch.", null], ["Mit auf den Weg", "Mehr als jede Schrift nützen dir die lebendige Stimme und das Zusammensein.", "Seneca, Briefe an Lucilius 6 (eigene Übersetzung)"], ["Real Talk", "Bald fragt dich keine Tagesseite mehr, wie es läuft. Dann fragst du dich selbst. Du weißt inzwischen, wie das geht.", null]], "26": [["Für dich", "Sechsundzwanzig Wochen. Du bist drangeblieben, an guten und an schweren Tagen. Das ist Forschung mit rotem Faden.", null], ["Real Talk", "Du hast bewiesen, dass du schwere Dinge tun kannst. Dieses Wissen bleibt, lange nach der Promotion.", null], ["Mit auf den Weg", "Leben Sie jetzt die Fragen. Vielleicht leben Sie dann allmählich, ohne es zu merken, eines fernen Tages in die Antwort hinein.", "Rainer Maria Rilke, Briefe an einen jungen Dichter (1929)"], ["Gut zu wissen", "Edwin Hubble zeigte 1929, dass sich das Universum ausdehnt. Dein Horizont auch.", null], ["Real Talk", "Du hast den Vertrag mit dir selbst sechs Monate lang gehalten, ohne Lohn und ohne Garantie. Vergiss das nicht, wenn wieder jemand an dir zweifelt.", null], ["Mit auf den Weg", "Wie man lebt, muss man lernen, solange man lebt.", "Seneca, Briefe an Lucilius 76 (eigene Übersetzung)"]]}, "wissen": {"1": ["Neustart nutzen", "Zeitliche Wegmarken wie ein Wochen-, Monats- oder Semesterbeginn wecken Motivation. In den Daten einer Uni-Sporthalle stieg die Besuchswahrscheinlichkeit zu Semesterbeginn um 47 Prozent, zu Wochenbeginn um 33 Prozent. Dein Start mit diesem Tagebuch ist so eine Wegmarke: Nutze ihn bewusst als Neuanfang.", "Dai, H., Milkman, K. L. & Riis, J. (2014). The fresh start effect: Temporal landmarks motivate aspirational behavior. Management Science, 60(10), 2563–2582."], "2": ["Gewohnheiten brauchen Zeit", "Bis eine neue Gewohnheit automatisch ausgeführt wurde, vergingen einer Studie zufolge durchschnittlich 66 Tage. Die Spanne reichte von 18 bis 254 Tagen. Ein einzelner verpasster Tag schadete dabei kaum. Ein Ausrutscher bedeutet also keinen Neustart bei null.", "Lally, P., van Jaarsveld, C. H. M., Potts, H. W. W. & Wardle, J. (2010). How are habits formed: Modelling habit formation in the real world. European Journal of Social Psychology, 40(6), 998–1009."], "3": ["Wenn-dann-Pläne", "Wer genau festlegt, wann, wo und wie er handelt, erreicht Ziele deutlich häufiger. Das zeigt eine Meta-Analyse über 94 Studien. Für dich heißt das: nicht „diese Woche schreiben“, sondern „Dienstag, 7 Uhr, Küchentisch, Methodenkapitel“.", "Gollwitzer, P. M. & Sheeran, P. (2006). Implementation intentions and goal achievement: A meta-analysis of effects and processes. Advances in Experimental Social Psychology, 38, 69–119."], "4": ["Planung ist zu optimistisch", "Studierende schätzten, ihre Abschlussarbeit in rund 34 Tagen fertigzustellen. Tatsächlich brauchten sie im Schnitt 56 Tage. Nur etwa 30 Prozent schafften es in der eigenen Prognose. Vermutlich ist deine Zeitschätzung zu optimistisch, nicht du zu langsam.", "Buehler, R., Griffin, D. & Ross, M. (1994). Exploring the \"planning fallacy\": Why people underestimate their task completion times. Journal of Personality and Social Psychology, 67(3), 366–381."], "5": ["Nahe Ziele motivieren", "Kinder mit kleinen, nahen Tageszielen lernten besser als Kinder mit einem fernen Gesamtziel. Sie trauten sich mehr zu und blieben bei schweren Aufgaben länger dran. „Promotion fertig“ ist zu weit weg. Ein Wochenziel gibt dir Halt.", "Bandura, A. & Schunk, D. H. (1981). Cultivating competence, self-efficacy, and intrinsic interest through proximal self-motivation. Journal of Personality and Social Psychology, 41(3), 586–598."], "6": ["Jeder Wechsel kostet", "Jeder Wechsel zwischen zwei Aufgaben kostet Zeit und erhöht die Fehlerquote, selbst bei einfachen, gut geübten Aufgaben. Bündle deshalb ähnliche Tätigkeiten. Mails zwischen zwei Absätzen bremsen dein Schreiben stärker, als es sich anfühlt.", "Monsell, S. (2003). Task switching. Trends in Cognitive Sciences, 7(3), 134–140."], "7": ["Der Rest im Kopf", "Wer eine Aufgabe unfertig liegen lässt, nimmt einen Teil der Aufmerksamkeit mit in die nächste. Die Leistung bei der folgenden Aufgabe sank messbar. Schließe einen Arbeitsblock deshalb bewusst ab, bevor du in den Job-Modus wechselst.", "Leroy, S. (2009). Why is it so hard to do my work? The challenge of attention residue when switching between work tasks. Organizational Behavior and Human Decision Processes, 109(2), 168–181."], "8": ["Pläne beruhigen", "Unerledigte Aufgaben kreisen im Kopf und stören die Konzentration bei allem anderen. Schon ein konkreter Plan, wann und wie du weitermachst, bringt die Gedanken zur Ruhe. Deine drei Schritte für nächste Woche sind genau so ein Plan.", "Masicampo, E. J. & Baumeister, R. F. (2011). Consider it done! Plan making can eliminate the cognitive effects of unfulfilled goals. Journal of Personality and Social Psychology, 101(4), 667–683."], "9": ["Kurz und täglich schreiben", "Der Psychologe Robert Boice begleitete neue Hochschullehrende beim Schreiben. Kurze, tägliche Schreibzeiten halfen mehr als Schreibmarathons und wurden als wenig unangenehm erlebt. Lieber 30 Minuten an fünf Tagen als ein ganzer Samstag, der dann doch ausfällt.", "Boice, R. (1989). Procrastination, busyness and bingeing. Behaviour Research and Therapy, 27(6), 605–611."], "10": ["Hand oder Tastatur", "Lange galt: Wer mit der Hand mitschreibt, versteht mehr. Eine große Wiederholungsstudie fand das nicht. Am Laptop wurde mehr notiert, das Verständnis war gleich. Wähle also das Werkzeug, mit dem du am besten denkst.", "Urry, H. L., Crittle, C. S., Floerke, V. A., Leonard, M. Z., Perry, C. S., III, Akdilek, N., ... Zarrow, J. E. (2021). Don't ditch the laptop just yet: A direct replication of Mueller and Oppenheimer's (2014) Study 1 plus mini meta-analyses across similar studies. Psychological Science, 32(3), 326–339."], "11": ["Flow finden", "Flow ist der Zustand, in dem du ganz in einer Tätigkeit aufgehst. Flow-Erleben sagte spätere Leistungen voraus. Er entsteht eher, wenn Anforderung und Können zusammenpassen. Teile dein Kapitel so auf, dass der nächste Schritt fordernd, aber machbar ist.", "Engeser, S. & Rheinberg, F. (2008). Flow, performance and moderators of challenge-skill balance. Motivation and Emotion, 32(3), 158–172."], "12": ["Fortschritt festhalten", "Eine Meta-Analyse über 138 Studien zeigt: Wer seinen Fortschritt regelmäßig überprüft, erreicht Ziele eher. Besonders, wenn Fortschritte schriftlich festgehalten oder anderen berichtet werden. Dein Tagebuch ist genau dafür da. Erzähl jemandem davon, und schau ab und zu in deine Statistik.", "Harkin, B., Webb, T. L., Chang, B. P. I., Prestwich, A., Conner, M., Kellar, I., Benn, Y. & Sheeran, P. (2016). Does monitoring goal progress promote goal attainment? A meta-analysis of the experimental evidence. Psychological Bulletin, 142(2), 198–229."], "13": ["Aufschieben ist Gefühlssache", "Aufschieben ist selten ein Zeitproblem, sondern meist der Versuch, unangenehme Gefühle zu vermeiden. Die Stimmung jetzt wird wichtiger als dein zukünftiges Ich. Frag dich beim nächsten Ausweichen: Welches Gefühl will ich gerade nicht spüren?", "Sirois, F. & Pychyl, T. (2013). Procrastination and the priority of short-term mood regulation: Consequences for future self. Social and Personality Psychology Compass, 7(2), 115–127."], "14": ["Aufschub auf Pump", "Studierende, die aufschoben, hatten zu Semesterbeginn weniger Stress. Gegen Ende kehrte sich das um: mehr Stress, mehr Krankheitssymptome, schlechtere Noten. Wenn du heute ausweichst, zahlst du später mit Zinsen. Fünf Minuten am Text sind besser als null.", "Tice, D. M. & Baumeister, R. F. (1997). Longitudinal study of procrastination, performance, stress, and health: The costs and benefits of dawdling. Psychological Science, 8(6), 454–458."], "15": ["Nicht gut genug?", "Das Gefühl, eigentlich nicht gut genug zu sein und bald aufzufliegen, ist weit verbreitet. Eine Übersicht über 62 Studien fand Häufigkeiten zwischen 9 und 82 Prozent. Wenn du dich so fühlst, bist du in der Promotion in großer Gesellschaft.", "Bravata, D. M., Watts, S. A., Keefer, A. L., Madhusudhan, D. K., Taylor, K. T., Clark, D. M., Nelson, R. S., Cokley, K. O. & Hagg, H. K. (2020). Prevalence, predictors, and treatment of impostor syndrome: A systematic review. Journal of General Internal Medicine, 35(4), 1252–1275."], "16": ["Schreiben entlastet", "Wer über belastende Erlebnisse schreibt, profitiert im Schnitt messbar davon. Der Effekt ist klein, aber verlässlich. Wenn dich ein Gutachten oder ein Rückschlag beschäftigt, kann eine Viertelstunde ehrliches Schreiben entlasten.", "Frattaroli, J. (2006). Experimental disclosure and its moderators: A meta-analysis. Psychological Bulletin, 132(6), 823–865."], "17": ["Nicht allein", "Menschen, die sich auf Unterstützung verlassen können, verkraften Stress besser. Wahrgenommene Unterstützung federt die Folgen belastender Ereignisse ab. Du musst deine Promotion nicht allein stemmen. Betreuung, Kolleg:innen, Freund:innen oder eine feste Gruppe gehören zu deinen Ressourcen.", "Cohen, S. & Wills, T. A. (1985). Stress, social support, and the buffering hypothesis. Psychological Bulletin, 98(2), 310–357."], "18": ["Kleine Pausen", "Kurze Pausen von höchstens zehn Minuten steigern die Energie und senken Müdigkeit. Bei anspruchsvoller Denkarbeit reichten sie allein nicht. Plane nach einer intensiven Schreibphase also eine echte Pause ein, nicht nur einen Blick aufs Handy.", "Albulescu, P., Macsinga, I., Rusu, A., Sulea, C., Bodnaru, A. & Tulbure, B. T. (2022). \"Give me a break!\" A systematic review and meta-analysis on the efficacy of micro-breaks for increasing well-being and performance. PLoS ONE, 17(8), e0272460."], "19": ["Ideen kommen beim Gehen", "Beim Gehen hatten Versuchspersonen deutlich mehr kreative Ideen als im Sitzen, auch kurz danach noch. Für Aufgaben mit nur einer richtigen Lösung half es nicht. Hängst du an einer Argumentation fest? Geh eine Runde um den Block.", "Oppezzo, M. & Schwartz, D. L. (2014). Give your ideas some legs: The positive effect of walking on creative thinking. Journal of Experimental Psychology: Learning, Memory, and Cognition, 40(4), 1142–1152."], "20": ["Schlaf bringt Einsicht", "Nach einer Nacht Schlaf entdeckten mehr als doppelt so viele Versuchspersonen eine versteckte Abkürzung in einer Aufgabe wie nach gleich langer Wachzeit. Schlaf scheint Gelerntes neu zu ordnen. Manchmal kommt die Lösung für dein Kapitel nach dem Ausschlafen.", "Wagner, U., Gais, S., Haider, H., Verleger, R. & Born, J. (2004). Sleep inspires insight. Nature, 427(6972), 352–355."], "21": ["Wem nützt es?", "Wer sein Lernen mit einem Zweck über sich selbst hinaus verband, blieb bei langweiligen Aufgaben länger dran. Eine kurze Übung dazu verbesserte über Monate sogar die Noten. Frag dich in zähen Phasen: Wem nützt meine Forschung?", "Yeager, D. S., Henderson, M. D., Paunesku, D., Walton, G. M., D'Mello, S., Spitzer, B. J. & Duckworth, A. L. (2014). Boring but important: A self-transcendent purpose for learning fosters academic self-regulation. Journal of Personality and Social Psychology, 107(4), 559–580."], "22": ["Zutrauen zählt", "Wer sich eine Aufgabe zutraut, leistet dabei im Schnitt mehr. Zutrauen wächst vor allem durch eigene Erfolgserlebnisse. Deshalb lohnt es sich, jeden erledigten Schritt bewusst wahrzunehmen.", "Stajkovic, A. D. & Luthans, F. (1998). Self-efficacy and work-related performance: A meta-analysis. Psychological Bulletin, 124(2), 240–261."], "23": ["Das Ziel in Sicht", "Je näher Menschen einem Ziel kommen, desto mehr strengen sie sich an. Café-Kund:innen mit Stempelkarte kauften schneller, je weniger Stempel fehlten. Das Ende deiner sechs Monate rückt näher. Schau bewusst darauf, wie viel du schon geschafft hast.", "Kivetz, R., Urminsky, O. & Zheng, Y. (2006). The goal-gradient hypothesis resurrected: Purchase acceleration, illusionary goal progress, and customer retention. Journal of Marketing Research, 43(1), 39–58."], "24": ["Stolz gibt Ausdauer", "In Experimenten blieben Menschen, die stolz auf eine Leistung waren, länger an einer mühsamen Folgeaufgabe dran. Das lag nicht nur an guter Laune. Erlaube dir Stolz auf das, was du geschafft hast. Er gibt dir Kraft für die nächste Etappe.", "Williams, L. A. & DeSteno, D. (2008). Pride and perseverance: The motivational role of pride. Journal of Personality and Social Psychology, 94(6), 1007–1017."], "25": ["Das Ende färbt alles", "Wie wir eine Erfahrung erinnern, hängt stark von ihrem Ende ab. Die Dauer zählte in Experimenten kaum. Gestalte den Abschluss dieser sechs Monate deshalb bewusst. Ein gutes Ende prägt den Rückblick auf die ganze Zeit.", "Kahneman, D., Fredrickson, B. L., Schreiber, C. A. & Redelmeier, D. A. (1993). When more pain is preferred to less: Adding a better end. Psychological Science, 4(6), 401–405."], "26": ["Du wächst weiter", "Über 19.000 Menschen unterschätzten in jedem Alter deutlich, wie sehr sie sich noch verändern werden. Wir halten das Heute gern für den Endpunkt. Schau zurück, wer du zu Beginn warst, und rechne damit, dass noch viel kommt.", "Quoidbach, J., Gilbert, D. T. & Wilson, T. D. (2013). The end of history illusion. Science, 339(6115), 96–98."]}, "werkzeug": {"1": ["Prozess statt Ziel", "Wer sich vor einer Prüfung nur das gute Ergebnis ausmalte, lernte weniger als Studierende, die sich täglich ein paar Minuten den Weg dorthin vorstellten. Stell dir deshalb nicht die fertige Arbeit vor, sondern einen typischen Forschungstag im nächsten Monat. Wo sitzt du? Was liegt vor dir? Womit fängst du an?", "Pham, L. B. & Taylor, S. E. (1999). From thought to action: Effects of process- versus outcome-based mental simulations on performance. Personality and Social Psychology Bulletin, 25(2), 250–260."], "2": ["WOOP: Wunsch trifft Hindernis", "Du stellst deinen Wunsch dem inneren Hindernis gegenüber und machst dann einen Wenn-dann-Plan. Eine Meta-Analyse über 21 Arbeiten fand einen kleinen bis mittleren Effekt auf die Zielerreichung. Übung: Jeden Sonntag fünf Minuten. Wunsch: Was will ich diese Woche schaffen? Ergebnis: Wie fühlt sich das an? Hindernis: Was in mir steht im Weg? Plan: Wenn dieses Hindernis auftaucht, dann tue ich …", "Wang, G., Wang, Y. & Gai, X. (2021). A meta-analysis of the effects of mental contrasting with implementation intentions on goal attainment. Frontiers in Psychology, 12, 565202."], "3": ["Ein klarer Feierabend", "Wer nach der Arbeit gedanklich abschaltet, erholt sich besser. Fehlt das, hängt es mit mehr Erschöpfung zusammen. Wenn sich Job und Promotion den Abend teilen, brauchst du klare Grenzen. Übung: Beende jede Schreibsession mit einem festen Ritual: nächsten Schritt notieren, Laptop zu, Tisch frei. Danach ist die Promotion für heute erledigt, auch im Kopf.", "Sonnentag, S. & Fritz, C. (2015). Recovery from job stress: The stressor-detachment model as an integrative framework. Journal of Organizational Behavior, 36(S1), S72–S103."], "4": ["Freundlich statt hart", "Nach einem Rückschlag ist Selbstkritik oft der erste Reflex. In Experimenten lernten Menschen nach einem schwierigen Test länger für einen zweiten Versuch, wenn sie sich vorher freundlich begegnet waren. Übung: Wenn diesen Monat etwas schiefgeht, schreib dir drei Sätze, die du einer guten Freundin in derselben Lage sagen würdest. Dann plane den nächsten kleinen Schritt.", "Breines, J. G. & Chen, S. (2012). Self-compassion increases self-improvement motivation. Personality and Social Psychology Bulletin, 38(9), 1133–1143."], "5": ["Deine Werte als Anker", "Wer sich kurz auf seine wichtigsten Werte besinnt, begegnet Kritik und Druck oft gelassener. In manchen Studien verbesserten solche Übungen sogar Leistungen. Übung: Wähle zwei Werte, die dir wirklich wichtig sind, etwa Neugier oder Gerechtigkeit. Schreib zehn Minuten darüber, warum sie zählen und wo sie in deiner Promotion auftauchen. Lies den Text, wenn Kritik dich trifft.", "Cohen, G. L. & Sherman, D. K. (2014). The psychology of change: Self-affirmation and social psychological intervention. Annual Review of Psychology, 65, 333–371."], "6": ["Deine Erfolgsliste", "In fast 12.000 Tagebucheinträgen von 238 Beschäftigten stand an den besten Arbeitstagen der Fortschritt im Mittelpunkt, auch in kleinen Schritten. Übung: Führe im letzten Monat eine Erfolgsliste. Notiere jeden Abend einen Schritt, der dir gelungen ist. Lies am Monatsende alles am Stück.", "Amabile, T. M. & Kramer, S. J. (2011). The progress principle: Using small wins to ignite joy, engagement, and creativity at work. Boston: Harvard Business Review Press."]}, "motiv": {"1": "Ein Monat liegt hinter dir. Nicht jeder Tag lief nach Plan, aber du bist drangeblieben, und genau das unterscheidet dich von den vielen, die irgendwann aufhören. Du gehst diesen Weg nicht allein: Viele Promovierende kennen genau diese Phase. Und ich glaube an dich. Nimm diesen Stolz mit in den nächsten Monat.", "2": "Zwei Monate. Die erste Begeisterung ist vorbei, und genau jetzt zeigt sich, wer dranbleibt. Du bist noch hier. Das ist kein Zufall, sondern deine Entscheidung, jeden Tag aufs Neue. Ich sehe, was du leistest, auch wenn es von außen niemand sieht. Mach weiter, Schritt für Schritt.", "3": "Halbzeit. Drei Monate, in denen du dir Zeit für dein Projekt erkämpft hast, gegen Fristen, Mails und Müdigkeit. Sei stolz darauf. Die zweite Hälfte wird nicht leichter, aber du bist stärker als vor drei Monaten. Und du hast mehr Rückhalt, als du an schlechten Tagen denkst.", "4": "Vier Monate. Vielleicht war dieser Monat zäh, vielleicht hast du öfter gezweifelt, als dir lieb war. Das gehört dazu. Schau, wie viele Tage in deinem Tagebuch schon gefüllt sind. Jede davon ist ein Beweis, dass du weitermachst, wenn es schwer ist. Genau so wird man fertig.", "5": "Noch ein Monat. Jetzt zählt jeder Tag. Du hast gelernt, Grenzen zu setzen, deine Zeit zu verteidigen und an schlechten Tagen trotzdem anzufangen. Nimm diese Kraft mit in den letzten Monat. Ich glaube an dich.", "6": "Sechs Monate. Du hast getan, was die meisten nur vorhaben: Du hast dir dein Projekt zurückgeholt. Was du in dieser Zeit gelernt hast, bleibt, auch über diese sechs Monate hinaus. Sei stolz auf dich. Ich bin es."}};
+
+</script>
+<script>
+"use strict";
+// ================= Grunddaten =================
+const KEY="ftb-promotion-v1";
+const LINKS={pif:"https://drmaschakoerner.de/promotion-im-fokus/",gespraech:"https://drmaschakoerner.de/erstgespraech/#formular",gantt:"https://drmaschakoerner.de/gantt-vorlagen/",sos:"https://drmaschakoerner.de/schnelle-hilfe/"};
+// Testversion: nur der erste Monat (4 Wochen + Monatsreflexion 1). Für die Vollversion WK=26 setzen.
+const WK=4;const TESTV=WK<26;
+const MONATE=Object.fromEntries(Object.entries({4:1,9:2,13:3,17:4,22:5,26:6}).filter(([w])=>+w<=WK));
+const MS_WEEKS=[10,13,26].filter(w=>w<=WK);
+function testPhaseDone(){return TESTV&&!!(S.weeks[2]&&S.weeks[2].done)}
+const TEST_DONE_TXT=`<p style="margin:0">Zwei Wochen und zwei Wochenreflexionen: Du hast die Testphase geschafft. Danke, dass du dabei bist! Bitte füll jetzt den kurzen Feedback-Fragebogen aus. Danach bekommst du ab dem Launch kostenlosen Zugang zur Vollversion.</p><p style="margin:0">Du kannst gern noch zwei weitere Wochen weiterschreiben. Die Vollversion mit allen sechs Monaten erscheint im neuen Jahr.</p>`;
+function testOver(date){return TESTV&&diffDays(startDate(),date)>=WK*7}
+const RATE_ITEMS=[["Mein Projekt",["Fortschritt im Text","Klarheit meiner Argumentation","Zuversicht","Freude am Thema"]],["Ich",["Energie","Schlaf und Erholung"]],["Meine Rahmenbedingungen",["Störungsfreie Arbeitsumgebung","Social Media im Griff","Grenzen bei Familie und Freunden","Grenzen im Job, Feierabend","Promotion fest im Kalender"]]];
+const SCHLAF=["unter 6 Std.","6–7 Std.","7–9 Std.","über 9 Std."];
+const STUNDEN=["unter 1 Std.","1–4 Std.","über 4 Std."];
+const STD_MID=[0.5,2.5,5];
+const STOER=["Handy","Mails und Nachrichten","Job","Familie","Krankheit oder Notfall","Eigener Kopf","Keiner","Eigener Störfaktor"];
+const TYP=["Promotionsarbeitstag","Bewusste Auszeit"];
+
+// ================= Hilfecenter (nach dem SOS-Reset-Paket) =================
+const HILFE=[
+ {id:"handy",t:"Handy und Ablenkung",k:"Ich lasse mich ständig rausreißen.",
+  say:"Mein Fokus gehört heute meinem Projekt, nicht meinem Handy.",
+  was:"Der Griff zum Handy kommt selten zufällig. Oft ist er eine kleine Flucht, wenn die Aufgabe gerade kognitiv anstrengend, unklar oder unangenehm ist: Das Handy bietet leichte Berieselung ohne Anstrengung. Jede Unterbrechung kostet dann mehr als die Sekunden, die sie dauert, weil der Kopf danach erst wieder in die Aufgabe finden muss. Mit Willenskraft allein gewinnt man dagegen selten. Leichter wird es, wenn du den Impuls bemerkst, ihn kurz aufschiebst und deine nächsten Schritte so klein machst, dass der Ausweg weniger lockt.",
+  tipps:["Die Zehn-Minuten-Regel nach Nir Eyal: Wenn der Impuls kommt, sag dir bewusst „Alles klar, in zehn Minuten“ und schau einmal kurz auf die Uhr. Meist ist der dringende Impuls bis dahin verschwunden.","Benenne den Impuls: Was will ich gerade nicht fühlen oder nicht tun? Schon das Bemerken nimmt ihm Kraft.","Mach den nächsten Schritt kleiner und konkreter. Je genauer du weißt, was als Nächstes dran ist, desto seltener greifst du zum Handy.","Leg das Handy für deinen Fokusblock in einen anderen Raum, nicht nur umgedreht auf den Tisch, und schalte einen Fokus- oder Nicht-stören-Modus ein.","Plan Handyzeit bewusst ein, zum Beispiel als Belohnung nach dem Block, mit Timer.","Arbeite mit Pomodoro: 25 Minuten arbeiten, 5 Minuten Pause. Ein Study-with-me-Video auf YouTube gibt den Takt vor."],
+  lit:["Eyal, N. (2019). Indistractable. How to Control Your Attention and Choose Your Life. Dallas: BenBella Books. Deutsch: Unablenkbar (2019).","Monsell, S. (2003). Task switching. Trends in Cognitive Sciences, 7(3), 134–140.","Cirillo, F. (2018). The Pomodoro Technique. New York: Currency."]},
+ {id:"aufschieben",t:"Aufschieben",k:"Ich nehme es mir vor und fange doch nicht an.",
+  say:"Erst anfangen, dann nachdenken.",
+  was:"Prokrastination ist vor allem ein Gefühlsthema, kein Zeitproblem. Eine Aufgabe löst Unsicherheit, Langeweile oder Angst aus, und das Aufschieben bringt sofort Erleichterung. Diese kurze Erleichterung belohnt das Ausweichen. Je weiter weg und unklarer eine Aufgabe ist, desto leichter fällt es. Darum hilft es, Aufgaben klein und konkret zu machen.",
+  tipps:["Zähl von 5 rückwärts und fang bei 1 an, bevor die Gründe dagegen kommen.","Formulier die Aufgabe so konkret, dass du sofort weißt, was zu tun ist: nicht „am Kapitel arbeiten“, sondern „drei Unterpunkte zu 2.1 in Stichworten notieren“.","Knüpf dein Zeitfenster an etwas Bestehendes: „Nach dem ersten Kaffee öffne ich meine Gliederung.“"],
+  lit:["Sirois, F. & Pychyl, T. (2013). Procrastination and the priority of short-term mood regulation. Social and Personality Psychology Compass, 7(2), 115–127.","Robbins, M. (2017). The 5 Second Rule. Savio Republic."]},
+ {id:"grenzen",t:"Grenzen setzen",k:"Job und Alltag fressen meine Promotionszeit.",
+  say:"Mein Feierabend ist eine Entscheidung, keine Restgröße.",
+  was:"Es wird immer etwas Dringendes geben. Wer auf eine ruhige Phase wartet, wartet oft lange. Zeit für die Promotion entsteht selten von allein, sie muss eingeplant und verteidigt werden. Das gilt besonders, wenn Job und Promotion eng verbunden sind und jedes Nein riskant wirkt.",
+  tipps:["Trag Promotionszeit als festen Termin in deinen Kalender ein, wie jede andere Besprechung.","Leg dir einen Satz für Anfragen zurecht: „Das schaue ich mir morgen an, heute ist mein Schreibtag.“","Schau in deiner Statistik, wie oft Feierabend und Auszeiten fremdbestimmt waren. Das ist eine gute Grundlage für ein Gespräch mit Vorgesetzten oder Betreuung."],
+  lit:["Gollwitzer, P. M. (1999). Implementation intentions: Strong effects of simple plans. American Psychologist, 54(7), 493–503."]},
+ {id:"perfekt",t:"Perfektionismus und Zweifel",k:"Nichts ist gut genug, ich formuliere ewig um.",
+  say:"Ein erster Entwurf darf holprig sein. Er muss nur existieren.",
+  was:"Eine Blockade entsteht oft, wenn Denken und Formulieren gleichzeitig perfekt sein sollen. Wer jeden Satz schon beim Schreiben bewertet, blockiert sich selbst. Kurze, regelmäßige Schreibzeiten helfen nachweislich mehr als seltene lange Schreibtage.",
+  tipps:["Schreib 25 Minuten lang alles auf, was du zu einem Kapitel schon weißt, ohne Anspruch auf schöne Sätze.","Trenn Schreiben und Überarbeiten: heute Rohtext, morgen Feinschliff.","Frag dich: Beantwortet dieser Absatz meine Forschungsfrage? Wenn ja, ist er gut genug für jetzt."],
+  lit:["Rose, M. (1984). Writer's Block: The Cognitive Dimension. Carbondale: Southern Illinois University Press.","Boice, R. (1990). Professors as Writers. Stillwater: New Forums Press."]},
+ {id:"ueberblick",t:"Überforderung und roter Faden",k:"Zu viel auf einmal, ich verliere den Überblick.",
+  say:"Ich muss heute nicht alles lösen. Der nächste Schritt reicht.",
+  was:"Unser Arbeitsgedächtnis kann nur wenige Dinge gleichzeitig halten. Unerledigte Aufgaben drängen sich immer wieder in die Gedanken. Schon ein konkreter Plan, wann und wie du sie angehst, entlastet den Kopf spürbar, bevor sie erledigt sind.",
+  tipps:["Schreib alle offenen Aufgaben auf und markiere sie mit der Ampel: grün fertig, gelb begonnen, rot offen.","Schätz für jede gelbe und rote Aufgabe den Aufwand: viel, mittel, wenig.","Ergänz für jedes Kapitel einen Satz: „Dieses Kapitel hilft, meine Forschungsfrage zu beantworten, weil …“"],
+  lit:["Masicampo, E. J. & Baumeister, R. F. (2011). Consider it done! Plan making can eliminate the cognitive effects of unfulfilled goals. Journal of Personality and Social Psychology, 101(4), 667–683.","Sweller, J. (1988). Cognitive load during problem solving. Cognitive Science, 12(2), 257–285."]},
+ {id:"energie",t:"Energie und Erschöpfung",k:"Ich bin müde und komme nicht in Gang.",
+  say:"Pause ist kein Rückschritt. Sie gehört zur Arbeit.",
+  was:"Eine Stunde mit leerem Kopf bringt weniger als zwanzig Minuten mit klarem. Schlaf, Essen, Trinken und echte Pausen sind keine Nebensache, sondern die Grundlage für Denkarbeit. Für Erwachsene werden mindestens sieben Stunden Schlaf empfohlen.",
+  tipps:["Schau in deine Statistik: Wie hängen Schlaf und Energie bei dir zusammen?","Leg anspruchsvolle Aufgaben in deine energiereichste Tageszeit und Fleißarbeit in die müden Stunden.","Plan nach einem Fokusblock eine Pause ohne Bildschirm, zum Beispiel zehn Minuten draußen oder eine kurze Atemübung."],
+  lit:["Watson, N. F. et al. (2015). Recommended amount of sleep for a healthy adult. Sleep, 38(6), 843–844.","Sonnentag, S. & Fritz, C. (2007). The Recovery Experience Questionnaire. Journal of Occupational Health Psychology, 12(3), 204–221."]},
+ {id:"motivation",t:"Motivation",k:"Ich habe gerade keine Lust auf mein Thema.",
+  say:"Motivation ist das Sahnehäubchen, nicht der Startschuss.",
+  was:"Motivation entsteht vor allem, wenn wir uns selbstbestimmt, kompetent und verbunden fühlen. Wer unsicher oder allein ist, verliert sie ganz von selbst. Darum lohnt es sich nicht, mit dem Anfangen auf sie zu warten. Oft kommt sie durch das Tun.",
+  tipps:["Wähl eine Aufgabe, die du in zehn Minuten schaffst, und erledige sie. Erfolg vor Motivation.","Lies dein Warum unter „Ich“.","Verabrede dich zum gemeinsamen Arbeiten, online oder vor Ort."],
+  lit:["Ryan, R. M. & Deci, E. L. (2000). Self-determination theory and the facilitation of intrinsic motivation. American Psychologist, 55(1), 68–78."]},
+];
+const TEST=[["handy","Ich greife beim Arbeiten oft zum Handy, ohne es zu wollen."],["handy","Benachrichtigungen reißen mich regelmäßig aus der Konzentration."],
+ ["aufschieben","Ich verschiebe meine Promotionsaufgaben häufig auf morgen."],["aufschieben","Ich habe ein schlechtes Gewissen, sobald ich an mein Projekt denke."],
+ ["grenzen","Job, Familie oder Alltag verdrängen meine geplante Promotionszeit."],["grenzen","Es fällt mir schwer, Nein zu sagen, um Zeit für mein Projekt zu schützen."],
+ ["perfekt","Ich formuliere denselben Absatz immer wieder um."],["perfekt","Ich zweifle daran, ob meine Arbeit gut genug ist."],
+ ["energie","Ich fühle mich beim Arbeiten oft müde oder leer."],["energie","Ich schlafe schlecht oder zu wenig."]];
+const TEST_OPT=["trifft nicht zu","eher nicht","eher ja","trifft voll zu"];
+
+function blank(){return {v:2,days:[],weeks:{},months:{},stand:{},warum:{},brief:{},ms:{},rem:{},test:{},fb:{},demo:false,created:today()}}
+let S=blank();let storageOK=true;
+function load(){try{const r=localStorage.getItem(KEY);if(r){S=Object.assign(blank(),JSON.parse(r))}}catch(e){storageOK=false}}
+let saveT=null;
+function save(){clearTimeout(saveT);saveT=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){storageOK=false}},250)}
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+
+// ================= Datum =================
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function today(){return iso(new Date())}
+function addDays(s,n){const d=new Date(s+"T12:00:00");d.setDate(d.getDate()+n);return iso(d)}
+function fmtDate(s,long){if(!s)return"";const d=new Date(s+"T12:00:00");return d.toLocaleDateString("de-DE",long?{weekday:"long",day:"numeric",month:"long"}:{weekday:"short",day:"numeric",month:"short"})}
+function diffDays(a,b){return Math.round((new Date(b+"T12:00:00")-new Date(a+"T12:00:00"))/864e5)}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function sortedDays(){return S.days.slice().sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.id-b.id)}
+function startDate(){return S.startDate||(S.days.length?sortedDays()[0].date:today())}
+function weekOfDate(s){return Math.max(1,Math.min(26,Math.floor(diffDays(startDate(),s)/7)+1))}
+function weekRange(w){const a=addDays(startDate(),(w-1)*7),b=addDays(a,6);const f=x=>new Date(x+"T12:00:00").toLocaleDateString("de-DE",{day:"numeric",month:"short"});return f(a)+" bis "+f(b)}
+function weekEnded(w){return diffDays(startDate(),today())>=w*7}
+function daysInWeek(w){return sortedDays().filter(d=>weekOfDate(d.date)===w)}
+function bandFor(d){const w=weekOfDate(d.date);const arr=INHALT.band[w];const i=Math.max(0,daysInWeek(w).indexOf(d));return arr[i%6]}
+function bandForDate(s){const w=weekOfDate(s);return INHALT.band[w][daysInWeek(w).length%6]}
+function curWeek(){return weekOfDate(today())}
+function dayOf(s){return S.days.find(d=>d.date===s)}
+function toast(t){const el=document.getElementById("toast");el.textContent=t;el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),2000)}
+const $=s=>document.querySelector(s);
+const ICON={sun:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',moon:'<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',l:'<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>',r:'<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>',pen:'<svg viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/></svg>',plaster:'<svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="4" transform="rotate(-35 12 12)"/><path d="M10 11h.01M14 13h.01M12 9.5h.01M12 14.5h.01"/></svg>'};
+
+// ================= Bausteine =================
+let BIND={};let bindId=0;
+function bindObj(o){const id="o"+(++bindId);BIND[id]=o;return id}
+function ta(o,key,label,hint,rows){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<div><label class="q" for="${fid}">${label}${hint?`<span class="hn">${hint}</span>`:""}</label><textarea id="${fid}" rows="${rows||2}" data-b="${id}" data-k="${key}">${esc(o[key])}</textarea></div>`}
+function inp(o,key,label,ph,hint){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<div><label class="q" for="${fid}">${label}${hint?`<span class="hn">${hint}</span>`:""}</label><input type="text" id="${fid}" placeholder="${esc(ph||"")}" data-b="${id}" data-k="${key}" value="${esc(o[key])}"></div>`}
+function chips(o,key,opts,label){const id=bindObj(o);return `<div>${label?`<span class="q">${label}</span>`:""}<div class="chips" role="group">${opts.map((t,i)=>`<button class="chip" data-b="${id}" data-k="${key}" data-v="${i}" aria-pressed="${o[key]===i}">${t}</button>`).join("")}</div></div>`}
+function scale(o,key,label,n){n=n||9;const id=bindObj(o);return `<div><span class="q">${label}</span><div class="scale ${n===10?"s10":""}" role="group" aria-label="${label}">${Array.from({length:n},(_,i)=>`<button data-b="${id}" data-k="${key}" data-v="${i+1}" aria-pressed="${o[key]===i+1}" aria-label="${i+1}">${i+1}</button>`).join("")}</div><div class="scale-l"><span>leer</span><span>voller Energie</span></div></div>`}
+function todos(o,key,label,n,hint){if(!Array.isArray(o[key]))o[key]=[];while(o[key].length<n)o[key].push({t:"",d:false});const id=bindObj(o[key]);return `<div><span class="q">${label}${hint?`<span class="hn">${hint}</span>`:""}</span>${o[key].map((t,i)=>`<div class="todo"><button class="cbx" aria-label="erledigt" data-b="${id}" data-i="${i}" data-todo="1" aria-pressed="${!!t.d}"></button><input type="text" aria-label="${label} ${i+1}" data-b="${id}" data-i="${i}" data-todot="1" value="${esc(t.t)}"></div>`).join("")}</div>`}
+function sw(o,key,label,small){const id=bindObj(o);return `<button class="switch" role="switch" aria-checked="${!!o[key]}" data-b="${id}" data-sw="${key}"><span class="tr"></span><span><b>${label}</b>${small?`<small>${small}</small>`:""}</span></button>`}
+function ratedList(o,key,label,withRate){if(!Array.isArray(o[key]))o[key]=[];if(!o[key].length)o[key].push({t:"",r:null});const id=bindObj(o[key]);return `<div><span class="q">${label}</span>${withRate?'<span class="muted">++ anspruchsvoll · o neutral · -- Fleißarbeit</span>':""}<div style="margin-top:6px">${o[key].map((it,i)=>`<div class="rateitem"><input type="text" aria-label="${label} ${i+1}" data-b="${id}" data-i="${i}" data-rl="1" value="${esc(it.t)}">${withRate?`<span class="rsel">${["++","o","--"].map(v=>`<button data-b="${id}" data-i="${i}" data-rr="${v}" aria-pressed="${it.r===v}">${v}</button>`).join("")}</span>`:"<span></span>"}<button class="x" aria-label="Eintrag entfernen" data-b="${id}" data-i="${i}" data-rx="1">×</button></div>`).join("")}</div><button class="btn ghost small" data-b="${id}" data-radd="1">+ Eintrag</button></div>`}
+document.addEventListener("input",e=>{const t=e.target;const o=BIND[t.dataset.b];if(!o)return;
+  if(t.dataset.todot||t.dataset.rl){o[+t.dataset.i].t=t.value}else if(t.dataset.k){o[t.dataset.k]=t.value}save()});
+document.addEventListener("focusin",e=>{if(e.target.matches("textarea,input[type=text]"))document.body.classList.add("writing")});
+document.addEventListener("focusout",e=>{if(e.target.matches("textarea,input[type=text]"))document.body.classList.remove("writing")});
+document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
+  if(t.dataset.tab){go(t.dataset.tab);return}
+  const o=BIND[t.dataset.b];
+  if(o){
+    if(t.dataset.todo){const it=o[+t.dataset.i];it.d=!it.d;t.setAttribute("aria-pressed",it.d);save();return}
+    if(t.dataset.sw){o[t.dataset.sw]=!o[t.dataset.sw];save();keepScroll(render);return}
+    if(t.dataset.rr){const it=o[+t.dataset.i];it.r=it.r===t.dataset.rr?null:t.dataset.rr;save();keepScroll(render);return}
+    if(t.dataset.rx){o.splice(+t.dataset.i,1);if(!o.length)o.push({t:"",r:null});save();keepScroll(render);return}
+    if(t.dataset.radd){o.push({t:"",r:null});save();keepScroll(render);return}
+    if(t.dataset.k){const v=+t.dataset.v;o[t.dataset.k]=o[t.dataset.k]===v?null:v;save();keepScroll(render);return}
+  }
+  const a=t.dataset.act;if(a&&ACT[a])ACT[a](t);
+});
+function keepScroll(fn){const y=window.scrollY;fn();window.scrollTo(0,y)}
+
+// ================= Ansicht =================
+let view={tab:"heute",day:null,edit:false,sub:null,period:"gesamt",q:"",f:{q:"",typ:"alle",e:"alle"}};
+function go(tab,extra){view=Object.assign({tab,day:null,edit:false,sub:null,period:view.period,q:"",f:view.f},extra||{});render();window.scrollTo(0,0)}
+function render(){BIND={};bindId=0;
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===view.tab?"page":"false"));
+  $("#prog").innerHTML=S.started?`Woche ${Math.min(curWeek(),WK)} von ${WK}${S.days.length?`<small>${S.days.length}. Tagebuchtag</small>`:""}`:"Start";
+  $("#prog").title="Woche seit deinem Starttag · Anzahl deiner ausgefüllten Tagesseiten";
+  const fn={heute:vHeute,verlauf:vVerlauf,reflexion:vReflexion,statistik:vStatistik,mehr:vMehr}[view.tab];
+  const demo=S.demo?`<div class="demo">Du siehst Beispieldaten.<button class="btn small" data-act="clearDemo">Löschen und selbst starten</button></div>`:"";
+  $("#app").innerHTML=`<div class="stack">${demo}${view.sub?SUB[view.sub.t](view.sub):fn()}</div>`;
+}
+
+// ================= Einrichten =================
+function vEinrichten(){const r=S.rem;
+  return `<div class="hero"><div class="eyebrow">Sechs Monate · ein roter Faden</div><h1>Dein Forschungstagebuch für die Promotion</h1><div class="thread"></div>
+  <p class="lead">Jeden Arbeitstag eine Seite, morgens und abends je fünf Minuten. Dazu Reflexionen und eine Statistik, die dir zeigt, was dich voranbringt.${TESTV?` <b>Testversion:</b> die ersten vier Wochen mit Wochen- und Monatsreflexion.`:""}</p></div>
+  <div class="page">
+   <div><label class="q" for="sd">Mein Starttag<span class="hn">Ab hier zählen deine ${TESTV?"vier Testwochen":"26 Wochen"}.</span></label><input type="date" id="sd" value="${esc(S.startDate||today())}"></div>
+   <div><span class="q">Möchtest du Erinnerungen in deinem Kalender?<span class="hn">Freiwillig. Die App erstellt dir Kalendereinträge für morgens, abends und deine Reflexionen.</span></span>
+   <div class="chips"><button class="chip" data-act="remOn" aria-pressed="${r.on===true}">Ja, gern</button><button class="chip" data-act="remOff" aria-pressed="${r.on===false}">Nein, danke</button></div></div>
+   ${r.on?`<div class="two"><div><label class="q" for="rm">Morgens um</label><input type="time" id="rm" value="${esc(r.m||"08:30")}"></div><div><label class="q" for="ra">Abends um</label><input type="time" id="ra" value="${esc(r.a||"20:00")}"></div></div>`:""}
+   <button class="btn" data-act="start">Los geht’s</button>
+  </div>
+  <button class="btn ghost" data-act="demo">Erst ein Beispiel ansehen</button>
+  ${installHelp()}
+  <p class="muted">Deine Einträge bleiben nur auf diesem Gerät. Es gibt kein Konto und keine Cloud.</p>`}
+function installHelp(){return `<details class="help"><summary>Auf den Home-Bildschirm legen</summary><ol><li><b>iPhone (Safari):</b> unten auf das Teilen-Symbol tippen, dann „Zum Home-Bildschirm“.</li><li><b>Android (Chrome):</b> oben rechts auf die drei Punkte, dann „App installieren“.</li><li>Öffne das Tagebuch danach immer über das neue Symbol. Auf dem iPhone bleiben deine Daten nur so dauerhaft gespeichert.</li></ol></details>`}
+function remHelp(){return `<details class="help"><summary>Erinnerungen wieder entfernen</summary><ol><li>Öffne in deinem Kalender einen der Termine „Forschungstagebuch“.</li><li>Tippe auf „Termin löschen“ und wähle „Alle zukünftigen Termine löschen“.</li><li>Das machst du für jede der vier Serien einmal: Morgenseite, Abendseite, Wochenreflexion, Monatsreflexion.</li></ol></details>`}
+
+// ================= Heute =================
+function vHeute(){
+  if(!S.started)return vEinrichten();
+  const pend=(testPhaseDone()&&!S.fb.sent?`<div class="offer"><div class="k">Testphase geschafft</div>${TEST_DONE_TXT}<div class="row"><button class="btn small" data-act="openSub" data-t="feedback">Feedback geben</button></div></div>`:"")+pendingNotice();
+  let d=view.day?S.days.find(x=>x.id===view.day):dayOf(today());
+  if(!d)return pend+vNeuerTag();
+  return pend+(view.edit?dayForm(d):bookPage(d));
+}
+function vNeuerTag(){if(testOver(today()))return `<div class="page"><div class="eyebrow">Testversion</div><h2>Deine vier Testwochen sind geschafft.</h2><p style="margin:0">Danke, dass du das Forschungstagebuch getestet hast. Alle deine Seiten, Reflexionen und die Statistik bleiben dir erhalten. Neue Tagesseiten gibt es in der Vollversion.</p><button class="btn" data-act="openSub" data-t="feedback">Feedback geben</button></div>`;const last=sortedDays().slice(-1)[0];const [k,t,q]=bandForDate(today());
+  return `<div class="page startday"><div><div class="eyebrow">Neue Tagesseite</div><label class="q" for="nd0" style="margin-top:6px">Datum</label><input type="date" id="nd0" value="${today()}"></div>
+  <div class="bigchoice"><button data-act="newDay" data-typ="0">Promotionsarbeitstag<span></span>${ICON.r}</button><button data-act="newDay" data-typ="1">Bewusste Auszeit von der Promotion${ICON.r}</button></div></div>
+  ${last?`<button class="btn ghost small" data-act="openDay" data-id="${last.id}" style="align-self:flex-start">Letzte Seite ansehen</button>`:""}
+  <div class="band"><div class="k">${k}</div><p>${esc(t)}</p>${q?`<span class="src">${esc(q)}</span>`:""}</div>`}
+function pendingNotice(){if(!S.days.length)return"";
+  for(let w=1;w<=WK;w++){if(weekEnded(w)&&daysInWeek(w).length&&!(S.weeks[w]&&S.weeks[w].done))return `<button class="notice" data-act="openSub" data-t="woche" data-n="${w}">Wochenreflexion ${w} steht an ${ICON.r.replace("<svg",'<svg width="18" height="18" style="stroke:currentColor;fill:none;stroke-width:1.8;flex:none"')}</button>`}
+  for(const [w,m] of Object.entries(MONATE)){if(weekEnded(+w)&&!(S.months[m]&&S.months[m].done))return `<button class="notice" data-act="openSub" data-t="monat" data-n="${m}">Monatsreflexion ${m} steht an</button>`}
+  for(const w of MS_WEEKS){if(weekEnded(w)&&!(S.ms[w]&&S.ms[w].seen))return `<button class="notice" data-act="openSub" data-t="ms" data-n="${w}">Meilenstein nach Woche ${w}: schau rein</button>`}
+  return""}
+function dayHead(d){const days=sortedDays(),i=days.indexOf(d);
+  return `<div class="daynav"><button class="iconbtn" aria-label="vorherige Seite" data-act="openDay" data-id="${i>0?days[i-1].id:""}" ${i>0?"":"disabled"}>${ICON.l}</button>
+  <div class="t"><div class="eyebrow">Woche ${weekOfDate(d.date)} von ${WK} · ${i+1}. Tagebuchtag</div></div>
+  <button class="iconbtn" aria-label="nächste Seite" data-act="openDay" data-id="${i<days.length-1?days[i+1].id:""}" ${i<days.length-1?"":"disabled"}>${ICON.r}</button></div>`}
+const HW=(l,v,s)=>v&&String(v).trim()?`<span class="lbl">${l}</span><div class="hw ${s?"s":""}">${esc(v)}</div>`:"";
+const HBOX=c=>`<svg class="hbox" viewBox="0 0 26 26" aria-label="${c?"erledigt":"offen"}"><path d="M5.4 6.6c4.2-.9 9.3-1.2 14.2-.5.6 4.3.4 9.1.3 13.6-4.7.7-9.8.6-14.6.2-.8-4.4-.6-8.9 0-13.5.3 0 .7.1 1.1.3"/>${c?`<path class="hk" d="M7.6 13.4c1.3 1 2.5 2.6 3.5 4.6 2.6-6 6.4-11.4 12-16"/>`:""}</svg>`;
+const PEN=(d,p)=>`<button class="penbtn" data-act="edit" data-id="${d.id}" data-part="${p}" aria-label="${p==="morgen"?"Morgen":"Abend"} bearbeiten">${ICON.pen}<span>Bearbeiten</span></button>`;
+function bookPage(d){const [k,t,q]=bandFor(d);const isA=d.typ===1;const td=(d.todos||[]).filter(x=>x.t&&x.t.trim());
+  const morningEmpty=!d.eM&&!d.eMw&&d.schlaf==null&&!d.fokus&&!td.length&&!d.aff&&!d.aGrund;const eveningEmpty=!d.eA&&!d.eAw&&!d.abbr&&d.st==null&&d.fa==null&&!d.plus&&!d.minus&&!d.geschafft&&!d.erk&&!d.haenge&&d.std==null;
+  return dayHead(d)+`<article class="paperpage" aria-label="Tagebuchseite">
+  <div class="date">${fmtDate(d.date,true)}</div>
+  <div class="meta">${TYP[isA?1:0]}${isA&&d.aArt!=null?` · ${["selbst gewählt","fremdbestimmt"][d.aArt]}`:""}</div>
+  <div class="moonsun">${ICON.sun} Morgens${PEN(d,"morgen")}</div>
+  ${morningEmpty?`<div class="empty">Noch nichts eingetragen.</div>`:""}
+  ${d.eM?`<div class="meta">Energie <span class="circ">${d.eM}</span>${d.schlaf!=null?` · Schlaf ${SCHLAF[d.schlaf]}`:""}</div>`:d.schlaf!=null?`<div class="meta">Schlaf ${SCHLAF[d.schlaf]}</div>`:""}
+  ${HW("Begründung",d.eMw,1)}${HW("Auszeit, weil",d.aGrund)}${HW("Mein Fokus",d.fokus)}
+  ${td.length?`<span class="lbl">Meine Schritte</span>${td.map(x=>`<div class="tick">${HBOX(x.d)}${esc(x.t)}</div>`).join("")}`:""}
+  ${HW("Affirmation",d.aff)}
+  <div class="band"><div class="k">${k}</div><p>${esc(t)}</p>${q?`<span class="src">${esc(q)}</span>`:""}</div>
+  <div class="moonsun">${ICON.moon} Abends${PEN(d,"abend")}</div>
+  ${eveningEmpty?`<div class="empty">Noch nichts eingetragen.</div>`:""}
+  ${d.eA?`<div class="meta">Energie <span class="circ">${d.eA}</span>${!isA&&d.std!=null?` · Projekt ${STUNDEN[d.std]}`:""}</div>`:!isA&&d.std!=null?`<div class="meta">Projekt ${STUNDEN[d.std]}</div>`:""}
+  ${HW("Begründung",d.eAw,1)}
+  ${d.abbr?`<div class="meta" style="color:var(--faden)">Fremdbestimmt abgebrochen${d.abbrW?": "+esc(d.abbrW):""}</div>`:""}
+  ${!isA&&d.fa!=null?`<div class="meta">Feierabend ${["selbst gewählt","fremdbestimmt"][d.fa]}</div>`:""}
+  ${d.st!=null&&d.st!==6?`<div class="meta">Störfaktor: ${d.st===7?esc(d.stE||"eigener"):STOER[d.st]}</div>`:""}
+  ${HW("Energie gegeben",d.plus)}${HW("Energie gezogen",d.minus)}${HW("Geschafft",d.geschafft)}${HW("Daran hänge ich",d.haenge)}${HW("Erkenntnis",d.erk)}
+  </article>
+  ${!morningEmpty&&eveningEmpty?`<div class="row"><button class="btn" data-act="edit" data-id="${d.id}" data-part="abend">${ICON.moon.replace("<svg",'<svg width="18" height="18" style="stroke:currentColor;fill:none;stroke-width:1.8"')} Abend ausfüllen</button></div>`:""}`}
+function dayForm(d){const [k,t,q]=bandFor(d);const isA=d.typ===1;
+  return `<div><div class="eyebrow">Woche ${weekOfDate(d.date)} von ${WK}</div><h2>${fmtDate(d.date,true)}</h2></div>
+  <div class="page">
+    <div class="sec">${ICON.sun} Morgens</div>
+    ${chips(d,"typ",TYP,"Was ist heute?")}
+    ${isA?chips(d,"aArt",["selbst gewählt","fremdbestimmt"],"Meine Auszeit ist …")+ta(d,"aGrund","Ich nehme heute eine Auszeit, weil …"):""}
+    ${chips(d,"schlaf",SCHLAF,"Geschlafen")}
+    ${scale(d,"eM","Mein Energielevel am Morgen")}
+    ${ta(d,"eMw","Begründung",null,1)}
+    ${isA?"":inp(d,"fokus","Mein Fokus heute","z. B. Kapitel 5.1, Auswertung Typ A","Schlagworte: Kapitel, Forschungsabschnitt oder Bereich")+todos(d,"todos","Meine Arbeitsschritte für heute",3,"konkret und machbar")}
+    ${inp(d,"aff","Meine Affirmation","z. B. Ich darf heute klein anfangen.")}
+    <button class="btn" data-act="saveDay" data-id="${d.id}">Morgen speichern</button>
+  </div>
+  <div class="band"><div class="k">${k}</div><p>${esc(t)}</p>${q?`<span class="src">${esc(q)}</span>`:""}</div>
+  <div class="page" id="abend">
+    <div class="sec">${ICON.moon} Abends</div>
+    ${scale(d,"eA","Mein Energielevel am Abend")}
+    ${ta(d,"eAw","Begründung",null,1)}
+    ${isA?"":sw(d,"abbr","Fremdbestimmt abgebrochen oder nicht umgesetzt","z. B. ein Auftrag aus dem Job hat den Promotionstag verdrängt")}
+    ${!isA&&d.abbr?inp(d,"abbrW","Was kam dazwischen?","kurz, z. B. Projektantrag für die Chefin"):""}
+    ${isA?"":chips(d,"std",STUNDEN,"Heute am Projekt gearbeitet")}
+    ${isA?"":chips(d,"fa",["selbst gewählt","fremdbestimmt"],"Mein Feierabend war …")}
+    ${chips(d,"st",STOER,"Größter Störfaktor heute")}
+    ${d.st===7?inp(d,"stE","Mein Störfaktor","kurz, in deinen Worten"):""}
+    <div class="two">${ta(d,"plus","Das hat mir Energie gegeben")}${ta(d,"minus","Das hat mir Energie gezogen")}</div>
+    ${isA?"":ta(d,"geschafft","Das habe ich heute geschafft")}
+    ${ta(d,"haenge","Daran hänge ich gerade")}
+    ${ta(d,"erk","Meine heutige Erkenntnis","fachlich oder über mich und meine Grenzen")}
+    <button class="btn" data-act="saveDay" data-id="${d.id}">Eintrag speichern</button>
+  </div>
+  <div class="row"><button class="btn ghost small" data-act="editDate" data-id="${d.id}">Datum ändern</button><button class="btn ghost small" data-act="delDay" data-id="${d.id}">Seite löschen</button></div><div id="confirm"></div>`}
+
+// ================= Unterseiten =================
+const FBQ=[["oft","Wie oft hast du die App in den zwei Wochen genutzt?",["fast täglich","mehrmals pro Woche","selten"]],
+ ["dauer","Wie lange hat ein Tageseintrag ungefähr gedauert?",["unter 5 Min.","5–10 Min.","10–20 Min.","länger"]],
+ ["hilf","Was hat dir am meisten geholfen?"],["stoer","Was hat dich gestört oder war unklar?"],["selten","Was hast du kaum oder gar nicht genutzt, und warum?"],["fehlt","Was hast du vermisst?"],
+ ["weiter","Würdest du die App weiter nutzen?",["sicher","wahrscheinlich","eher nicht","nein"]],["empf","Würdest du sie anderen Promovierenden empfehlen?",["ja","vielleicht","nein"]],
+ ["fach","Dein Fach und deine aktuelle Phase (freiwillig)"],["zitat","Darf ich dein Feedback anonym zitieren, z. B. auf meiner Website?",["ja, anonym","ja, mit Vorname","lieber nicht"]]];
+function fbText(){const o=S.fb;return "Feedback zur Testphase – Forschungstagebuch Promotion\n\n"+FBQ.map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")}
+const SUB={
+ testdone(){return `<div class="ms"><div class="eyebrow">Testversion</div><h1>Testphase geschafft.</h1>${TEST_DONE_TXT}<div class="row"><button class="btn" data-act="openSub" data-t="feedback">Jetzt Feedback geben</button><button class="btn ghost" data-act="go" data-tab="heute">Später</button></div></div>`},
+ feedback(){const o=S.fb;return back()+`<div class="page"><div class="eyebrow">Testphase · etwa 5 Minuten</div><h1>Dein Feedback</h1>
+  <p class="muted" style="margin:0">Danke, dass du das Tagebuch testest. Gesendet werden nur diese Antworten, deine Tagebucheinträge bleiben auf deinem Gerät. Sobald dein Feedback da ist, bekommst du ab dem Launch kostenlosen Zugang zur Vollversion.</p>
+  ${FBQ.map(([k,q,c])=>c?chips(o,k,c,q):k==="fach"?inp(o,k,q,"z. B. Soziologie, Auswertung"):ta(o,k,q,null,3)).join("")}
+  <button class="btn" data-act="fbSend">Feedback per E-Mail senden</button>
+  <p class="muted" style="margin:0">Das öffnet dein E-Mail-Programm mit deinen Antworten. Klappt das nicht, kopier den Text unten und schick ihn an kontakt@drmaschakoerner.de.</p>
+  <textarea id="fbtxt" rows="5" readonly>${esc(fbText())}</textarea></div>`},
+ woche(s){const w=s.n;const o=S.weeks[w]||(S.weeks[w]={});const st=stats(daysInWeek(w));const [ti,tx,src]=INHALT.wissen[w];
+  return back()+`<div class="page"><div class="eyebrow">Woche ${w} von ${WK} · ${weekRange(w)}</div><h1>Wochenreflexion</h1>
+  <div class="fact" style="background:var(--faden-soft)"><div class="k">Frage der Woche</div><h3>Wie habe ich in dieser Woche meine Promotion vorangebracht?</h3></div>
+  ${ta(o,"frage","Meine Antwort",null,4)}
+  <div class="two">${ta(o,"voran","Das hat mich vorangebracht")}${ta(o,"bremse","Das hat mich ausgebremst")}</div>
+  <div><span class="q">Meine Woche in Zahlen</span><div class="tiles">${tile(st.f,"Promotionsarbeitstage")}${tile(st.a,"Auszeiten")}${tile(st.abbr,"fremdbestimmt abgebrochen")}${tile(st.aF+st.faF,"fremdbestimmte Auszeiten und Feierabende")}</div><p class="muted">Aus deinen Tagesseiten berechnet.</p></div>
+  ${ta(o,"wer","Wer hat über meine Zeit entschieden? Was sagt mir das?")}
+  ${ta(o,"grenzen","Wo habe ich Grenzen gesetzt, und wo nicht?")}
+  ${todos(o,"schritte","Drei Schritte für nächste Woche",3)}
+  <div class="fact"><div class="k">Wissen am Rande</div><h3>${esc(ti)}</h3><p>${esc(tx)}</p><span class="src">${esc(src)}</span></div>
+  ${ta(o,"notiz","Notizen · Ideen · konkrete Planung","Denk hier dein Projekt weiter, bis du weißt, womit du am Montag beginnst.",5)}
+  ${doneBtn("woche",w,o)}</div>`},
+ monat(s){const m=s.n;const o=S.months[m]||(S.months[m]={});o.r=o.r||{};const prev=S.months[m-1]&&S.months[m-1].r||{};const [nm,tx,src]=INHALT.werkzeug[m];
+  const wEnd=+Object.keys(MONATE).find(k=>MONATE[k]===m);const wStart=m===1?1:(+Object.keys(MONATE).find(k=>MONATE[k]===m-1))+1;
+  let ds=[];for(let w=wStart;w<=wEnd;w++)ds=ds.concat(daysInWeek(w));const st=stats(ds);
+  return back()+`<div class="page"><div class="eyebrow">Monat ${m} · Woche ${wStart} bis ${wEnd}</div><h1>Monatsreflexion</h1>
+  <p class="muted">Bewerte jeden Punkt von 1 bis 10. Der Pfeil zeigt, ob es besser oder schlechter ist als ${m===1?"zu Beginn":"im letzten Monat"}.</p>
+  ${RATE_ITEMS.map(([g,its])=>`<div class="stack" style="gap:10px"><div class="sec">${g}</div>${its.map(it=>{const id=bindObj(o.r);const v=o.r[it],p=prev[it];const ar=v&&p?(v>p?" ↑":v<p?" ↓":" ="):"";return `<div><span class="q">${it}<span style="color:var(--faden)">${ar}</span></span><div class="scale s10">${Array.from({length:10},(_,i)=>`<button data-b="${id}" data-k="${it}" data-v="${i+1}" aria-pressed="${v===i+1}">${i+1}</button>`).join("")}</div></div>`}).join("")}</div>`).join("")}
+  <div><span class="q">In Zahlen</span><div class="tiles">${tile(st.f,"Promotionsarbeitstage")}${tile(st.a,"Auszeiten")}${tile(st.abbr,"fremdbestimmt abgebrochen")}${tile(st.hn?"ca. "+Math.round(st.h):"–","Stunden am Projekt")}</div></div>
+  <div class="two">${ta(o,"plus","Das hat mir Energie gegeben")}${ta(o,"minus","Das hat mir Energie gezogen")}</div>
+  ${ta(o,"unter5",`Alles unter 5: Was ändere ich ${m===6?"nach den sechs Monaten":"im nächsten Monat"}?`)}
+  <div class="band"><div class="k">Motivation am Rande</div><p>${esc(INHALT.motiv[m])}</p></div>
+  <div class="sec">Mein Zeitplan im Abgleich</div>
+  <p class="muted" style="margin:0">Leg deinen Zeitplan daneben. Noch keinen? <a href="${LINKS.gantt}" target="_blank" rel="noopener">Gantt-Vorlagen kostenlos</a>.</p>
+  ${ta(o,"wie","Wie geplant erledigt")}${ta(o,"versch","Verschoben, und warum?")}${ta(o,"opt","Was optimiere oder verändere ich an meinem Plan?")}
+  ${todos(o,"ziele",m===6?"Drei Ziele für die Zeit danach":"Drei Ziele für den nächsten Monat",3)}
+  <div class="fact"><div class="k">Werkzeug des Monats</div><h3>${esc(nm)}</h3><p>${esc(tx)}</p><span class="src">${esc(src)}</span></div>
+  ${[1,3,6].includes(m)?offer(m):""}
+  ${doneBtn("monat",m,o)}</div>`},
+ ms(s){const w=s.n;const o=S.ms[w]||(S.ms[w]={});o.seen=true;save();return back()+MS[w](o)},
+ stand(s){const k=s.n;const o=S.stand[k]||(S.stand[k]={});const lab={start:"Am Anfang",mitte:"Zur Halbzeit",ende:"Nach sechs Monaten"}[k];
+  return back()+`<div class="page"><div class="eyebrow">${lab}</div><h1>Mein Stand</h1><p class="muted">Ehrlich und ohne Bewertung. Später schaust du hierher zurück.</p>
+  ${inp(o,"titel","Arbeitstitel")}${ta(o,"frage","Meine Forschungsfrage, wie sie heute lautet",null,3)}
+  ${ratedList(o,"fertig","Das ist schon fertig",false)}${ratedList(o,"entwurf","Das ist im Entwurf",true)}${ratedList(o,"offen","Das ist noch offen",true)}
+  <p class="muted">„Fleißarbeit“ heißt: ohne große gedankliche Herausforderung. Ideal für Tage mit wenig Energie.</p>
+  ${ta(o,"ziel","Mein persönliches Ziel für diese sechs Monate",null,3)}
+  ${s.first?`<button class="btn" data-act="openSub" data-t="warum" data-first="1">Weiter zu meinem Warum</button>`:""}</div>`},
+ warum(s){const o=S.warum;return back()+`<div class="page"><div class="eyebrow">Bevor du startest</div><h1>Mein <i>Warum</i></h1>
+  <p class="muted">Vielleicht bist du in deine Promotion hineingerutscht. Das ist in Ordnung. Wichtig ist, was dich heute noch dranhält.</p>
+  ${ta(o,"wie","Wie bin ich zu meiner Promotion gekommen?")}${ta(o,"dran","Was hält mich heute noch dran, obwohl es schwer ist?",null,3)}
+  ${ta(o,"jetzt","Warum investiere ich gerade jetzt noch einmal in mich und mein Projekt?")}${ta(o,"wen","Für wen oder was mache ich das? Und was davon gehört wirklich mir?")}
+  <div class="fact" style="background:var(--faden-soft)">${ta(o,"satz","Mein Warum in einem Satz",null,2)}</div>
+  ${s.first?`<button class="btn" data-act="go" data-tab="heute">Zur ersten Tagesseite</button>`:""}</div>`},
+ brief(){const o=S.brief;const open=diffDays(startDate(),today())>=175||(S.ms[26]&&S.ms[26].seen);const locked=o.text&&o.sealed&&!open;
+  return back()+`<div class="page"><div class="eyebrow">Bevor du startest</div><h1>Brief an mein zukünftiges Ich</h1>
+  ${locked?`<p class="lead">Dein Brief ist versiegelt. Du kannst ihn beim Meilenstein nach Woche 26 lesen.</p><p class="muted">Geschrieben am ${fmtDate(o.date,true)}.</p>`:
+  `<p class="muted">Nimm dir 15 Minuten und sei ehrlich zu dir. Wenn du ihn versiegelst, kannst du ihn erst nach Woche 26 wieder lesen.</p>
+  <ul style="margin:0;padding-left:20px;color:var(--soft)"><li>Wo stehe ich heute mit meiner Promotion, und wie geht es mir damit?</li><li>Was wünsche ich mir, in sechs Monaten erreicht zu haben?</li><li>Was will ich mir sagen, wenn es zwischendurch schwer wird?</li></ul>
+  ${ta(o,"text","Mein Brief",null,10)}
+  ${o.sealed?"":`<button class="btn" data-act="seal">Brief versiegeln</button>`}`}</div>`},
+ karte(s){const h=HILFE.find(x=>x.id===s.n);return back()+`<div class="karte"><div class="row" style="flex-wrap:nowrap"><div class="ic">${ICON.plaster}</div><div><div class="eyebrow" style="margin:0">Hilfecenter</div><h2>${h.t}</h2></div></div>
+  <div class="say">${esc(h.say)}</div>
+  <div><div class="q">Was dahinter steckt</div><p style="margin:0">${esc(h.was)}</p></div>
+  <div><div class="q">Probier das aus</div><ul>${h.tipps.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+  <div><div class="q">Zum Weiterlesen</div><ul class="muted">${h.lit.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div>
+  <div class="offer"><div class="k">Wenn es sich nicht löst</div><p>Im kostenlosen SOS-Reset-Paket gehst du deine Blockade Schritt für Schritt an. Und manchmal hilft vor allem ein Gespräch.</p><div class="row"><a class="btn small" href="${LINKS.sos}" target="_blank" rel="noopener">SOS-Reset-Paket</a><a class="btn ghost small" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a></div></div>`},
+ test(){const o=S.test;o.a=o.a||{};const id=bindObj(o.a);const done=TEST.every((_,i)=>o.a[i]!=null);
+  return back()+`<div class="page"><div class="eyebrow">Kurzer Selbsttest · 2 Minuten</div><h1>Was bremst mich gerade?</h1>
+  <p class="muted" style="margin:0">Zehn Aussagen. Antworte aus dem Bauch heraus, bezogen auf die letzten zwei Wochen.</p>
+  <div>${TEST.map(([c,txt],i)=>`<div class="tq"><span style="font-weight:600">${txt}</span><div class="opts">${TEST_OPT.map((l,v)=>`<button data-b="${id}" data-k="${i}" data-v="${v}" aria-pressed="${o.a[i]===v}">${l}</button>`).join("")}</div></div>`).join("")}</div>
+  ${done?testResult(o.a):`<p class="muted" style="margin:0">Dein Ergebnis erscheint, sobald alle zehn Aussagen beantwortet sind.</p>`}</div>`},
+ notfall(){return back()+`<div class="karte"><div class="row" style="flex-wrap:nowrap"><div class="ic">${ICON.plaster}</div><h2>Für schlechte Tage</h2></div>
+  <div class="say">Eine Blockade ist kein Zeichen von Inkompetenz.</div><div class="say">Ich muss heute nicht alles schaffen. 30 Minuten reichen.</div><div class="say">Erst anfangen, dann nachdenken.</div>
+  <div class="fact"><div class="k">Du kommst nicht ins Arbeiten</div><p>Zähl von 5 rückwärts und steh bei 1 auf. Dann nur eine Sache für zehn Minuten: eine Datei öffnen, einen Absatz lesen, eine Überschrift schreiben.</p><span class="src">Die 5-Sekunden-Regel geht auf Mel Robbins zurück (Robbins, 2017).</span></div>
+  <div class="fact"><div class="k">Alles fühlt sich zu viel an</div><p>Schreib alles auf, was dich gerade drückt. Streich, was diese Woche nicht dran ist. Von dem, was bleibt, wählst du genau einen Schritt für heute.</p></div>
+  <div class="offer"><div class="k">Wenn es nicht besser wird</div><p>Manchmal hilft kein Trick, sondern ein Gespräch. Im kostenlosen Erstgespräch schauen wir gemeinsam auf dein Projekt.</p><a class="btn small" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch anfragen</a></div>
+  <p class="muted" style="margin:0">Wenn du über längere Zeit erschöpft bist oder in einer Krise steckst, ist ärztliche oder psychologische Hilfe der richtige Weg, zum Beispiel die psychologische Beratung deiner Hochschule oder die Telefonseelsorge (0800 111 0 111, kostenlos, rund um die Uhr).</p></div>`},
+};
+function testResult(a){const sc={};TEST.forEach(([c],i)=>sc[c]=(sc[c]||0)+a[i]);const tot=Object.values(sc).reduce((s,v)=>s+v,0);
+  const sorted=Object.entries(sc).sort((x,y)=>y[1]-x[1]);const top=sorted[0];const h=HILFE.find(x=>x.id===top[0]);
+  let rec;if(tot>=22||top[1]>=6)rec=`<div class="offer"><div class="k">Meine Empfehlung</div><p>Deine Werte sind gerade hoch. Du musst das nicht allein lösen: Lass uns in einem kostenlosen Erstgespräch auf deine Situation schauen. Wenn die Belastung schon lange anhält, ist auch ärztliche oder psychologische Hilfe ein guter Schritt.</p><div class="row"><a class="btn small" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch anfragen</a></div></div>`;
+  else if(top[1]>=4)rec=`<div class="offer"><div class="k">Meine Empfehlung</div><p>Schau dir die Karte „${h.t}“ an. Wenn sich die Blockade damit nicht löst, hilft dir das kostenlose SOS-Reset-Paket Schritt für Schritt weiter.</p><div class="row"><button class="btn small" data-act="openSub" data-t="karte" data-n="${h.id}">Karte öffnen</button><a class="btn ghost small" href="${LINKS.sos}" target="_blank" rel="noopener">SOS-Reset-Paket</a></div></div>`;
+  else rec=`<div class="offer"><div class="k">Meine Empfehlung</div><p>Gerade sieht es recht stabil aus. Am ehesten lohnt sich ein Blick auf „${h.t}“.</p><button class="btn small" data-act="openSub" data-t="karte" data-n="${h.id}" style="align-self:flex-start">Karte öffnen</button></div>`;
+  return `<div class="stack" style="gap:10px"><div class="sec">Dein Ergebnis</div><div class="bars">${sorted.map(([c,v])=>`<div class="bar"><span>${HILFE.find(x=>x.id===c).t.split(" ")[0]}</span><span class="tr"><i class="${v>=4?"r":""}" style="width:${v/6*100}%"></i></span><span class="n">${v}/6</span></div>`).join("")}</div>${rec}</div>`}
+function back(){return `<button class="btn ghost small" data-act="back" style="align-self:flex-start">${ICON.l.replace("<svg",'<svg width="18" height="18" style="stroke:currentColor;fill:none;stroke-width:1.8"')} Zurück</button>`}
+function tile(v,l){return `<div class="tile"><div class="v">${v}</div><div class="l">${l}</div></div>`}
+function doneBtn(t,n,o){return o.done?`<p class="tag ok" style="align-self:flex-start">Abgeschlossen</p>`:`<button class="btn" data-act="done" data-t="${t}" data-n="${n}">Reflexion abschließen</button>`}
+function offer(m){const txt={1:"Du möchtest diesen Weg nicht allein gehen? In „Promotion im Fokus“ arbeitest du sechs Monate in einer kleinen Gruppe mit festen Treffen, Check-ins und Coaching. Die Gruppen starten zu festen Terminen.",3:"Halbzeit ist ein guter Moment, um Unterstützung zu holen. In „Promotion im Fokus“ begleite ich kleine Gruppen von Promovierenden über sechs Monate, mit festen Startterminen.",6:"Sechs Monate geschafft. Wenn du für die nächste Etappe eine feste Struktur und eine Gruppe an deiner Seite möchtest: „Promotion im Fokus“ startet regelmäßig neu."}[m];
+  return `<div class="offer"><div class="k">Promotion im Fokus</div><p>${txt}</p><div class="row"><a class="btn small" href="${LINKS.pif}" target="_blank" rel="noopener">Mehr erfahren</a><a class="btn ghost small" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a></div></div>`}
+const MS={
+ 10:o=>`<div class="ms"><div class="eyebrow">Meilenstein · Woche 10</div><h1>Rund 70 Tage.</h1>
+  <p class="lead">Bis sich ein neues Verhalten selbstverständlich anfühlt, dauert es im Mittel gut zwei Monate. Diese Zeit hast du jetzt hinter dir. <span class="muted">(Lally et al., 2010)</span></p>
+  <p style="margin:0">Halt kurz an. Schau zurück zu Woche 1. Vieles, was dich damals Überwindung gekostet hat, machst du heute einfach.</p>
+  <div class="story"><div class="k">Aus meiner Promotion</div><p>Früher wollte ich oft von einem Tag auf den anderen alles radikal ändern. Das war nicht praktikabel oder einfach zu viel auf einmal. Meine erste Routine, die wirklich funktioniert hat, sah ganz anders aus: klein, aber realistisch.</p><p>Am Anfang fühlt sich das an, als würde es nicht reichen. Doch dann kommt die Konstanz ins Spiel, und kleine Gewohnheiten zeigen ihren Wert.</p></div>
+  ${ta(o,"selbst","Das ist inzwischen selbstverständlich")}${ta(o,"stolz","Darauf bin ich stolz, gerade weil es hart war")}${ta(o,"behalte","Diese kleine Gewohnheit behalte ich")}${ta(o,"feiern","So feiere ich das")}</div>`,
+ 13:o=>`<div class="ms"><div class="eyebrow">Meilenstein · Woche 13</div><h1>Halbzeit.</h1>
+  <p class="lead">Drei Monate liegen hinter dir, drei liegen vor dir. Jetzt ist der beste Moment, ehrlich nachzusteuern.</p>
+  <div class="row"><button class="btn sec2 small" data-act="openSub" data-t="warum">Mein Warum lesen</button><button class="btn small" data-act="openSub" data-t="stand" data-n="mitte">Stand zur Halbzeit festhalten</button></div>
+  <div class="story"><div class="k">Aus meiner Promotion</div><p>Nachsteuern musste ich immer dann, wenn mein Außen zu laut wurde und zu viel Priorität bekam, manchmal bewusst, meist unbewusst.</p><p>Aber wenn ich ganz ehrlich zu mir war: An der einen oder anderen Stelle hätte ich Nein sagen können.</p></div>
+  ${chips(o,"satzOk",["Mein Warum stimmt noch","Es hat sich verändert"],"Stimmt mein Warum-Satz noch?")}
+  ${ta(o,"geschafft","Das habe ich in drei Monaten geschafft")}${ta(o,"nein","Wo hätte ich in den letzten drei Monaten Nein sagen können?")}${ta(o,"vor","Das nehme ich mir für die zweite Hälfte vor")}</div>`,
+ 26:o=>`<div class="ms"><div class="eyebrow">Meilenstein · Woche 26</div><h1>Geschafft.</h1>
+  <p class="lead">Sechs Monate. Jeden Arbeitstag ein Schritt, jede Woche ein ehrlicher Blick zurück, jeden Monat ein Abgleich mit deinem Plan. Du bist drangeblieben.</p>
+  <div class="row">${S.brief.text?`<button class="btn small" data-act="openSub" data-t="brief">Meinen Brief lesen</button>`:""}<button class="btn sec2 small" data-act="openSub" data-t="stand" data-n="ende">Stand nach sechs Monaten</button><button class="btn ghost small" data-act="go" data-tab="statistik">Statistik ansehen</button></div>
+  <div class="story"><div class="k">Mein Abschlusswort</div><p>Ich wünsche dir, dass dein Weg jetzt so weitergeht, dass du deinem Abschluss stetig näher kommst und irgendwann aus deiner Verteidigung gehst, voller Stolz, diesen unfassbar schweren Weg gegangen zu sein.</p></div>
+  <p style="font-family:var(--hand);color:var(--faden);font-size:26px;margin:0">Deine Mascha</p>
+  ${ta(o,"arbeit","Das hat sich in sechs Monaten an meiner Arbeit verändert")}${ta(o,"ich","Das hat sich an mir verändert")}${ta(o,"learning","Mein wichtigstes Learning")}${ta(o,"mit","Was nehme ich in meinen Alltag mit, was lasse ich bewusst los?")}${ta(o,"weiter","So geht es für mich weiter")}
+  ${offer(6)}</div>`,
+};
+
+// ================= Verlauf (nur Tagesseiten, mit Filter) =================
+function eLevel(d){const v=avg([d.eM,d.eA]);return v==null?null:v<=3.5?"niedrig":v<=6.5?"mittel":"hoch"}
+function txtOf(d){return Object.values(d).map(v=>typeof v==="string"?v:Array.isArray(v)?v.map(x=>x.t||"").join(" "):"").join(" ").toLowerCase()}
+function vVerlauf(){const F=view.f;
+  let h=`<div><div class="eyebrow">${WK} Wochen ab ${fmtDate(startDate(),true)}</div><h1>Verlauf</h1></div>
+  <div class="filters"><input type="text" id="fq" placeholder="Schlagwort suchen" aria-label="Schlagwort" value="${esc(F.q)}">
+   <div class="seg" role="group" aria-label="Art des Tages">${[["alle","Alle"],["arbeit","Arbeitstage"],["auszeit","Auszeiten"],["abbr","Abgebrochen"]].map(([k,l])=>`<button data-act="ft" data-v="${k}" aria-pressed="${F.typ===k}">${l}</button>`).join("")}</div>
+   <div class="seg" role="group" aria-label="Energie">${[["alle","Energie: alle"],["niedrig","niedrig"],["mittel","mittel"],["hoch","hoch"]].map(([k,l])=>`<button data-act="fe" data-v="${k}" aria-pressed="${F.e===k}">${l}</button>`).join("")}</div></div><div id="vlist">${verlaufList()}</div>`;
+  return h}
+function verlaufList(){const F=view.f;const q=F.q.trim().toLowerCase();
+  if(!S.days.length)return `<div class="card"><p style="margin:0">Hier erscheinen deine Tagesseiten, sobald du die erste angelegt hast.</p></div>`;
+  const ok=d=>(F.typ==="alle"||(F.typ==="arbeit"&&d.typ!==1)||(F.typ==="auszeit"&&d.typ===1)||(F.typ==="abbr"&&d.abbr))&&(F.e==="alle"||eLevel(d)===F.e)&&(!q||txtOf(d).includes(q));
+  let h="",n=0;for(let w=26;w>=1;w--){const ds=daysInWeek(w).filter(ok);if(!ds.length)continue;n+=ds.length;
+    h+=`<div><div class="eyebrow" style="margin:8px 0 6px">Woche ${w} · ${weekRange(w)}</div><div class="list">${ds.slice().reverse().map(d=>`<button class="it" data-act="openDay" data-id="${d.id}"><span class="dot ${d.typ===1?(d.aArt===1?"r":"a"):d.abbr?"r":"f"}"></span><span class="l"><b>${fmtDate(d.date,true)}</b><span>${d.typ===1?"Auszeit":esc(d.fokus||(d.todos||[]).map(x=>x.t).filter(Boolean)[0]||"Promotionsarbeitstag")}${d.abbr?" · abgebrochen":""}</span></span>${d.eM||d.eA?`<span class="pill">${d.eM||"–"} / ${d.eA||"–"}</span>`:""}</button>`).join("")}</div></div>`}
+  return (n?`<p class="muted" style="margin:0">${n} Tagesseite${n===1?"":"n"} · Zahlen rechts: Energie morgens / abends</p>`:"")+(h||`<div class="card"><p style="margin:0">Keine Tagesseite passt zu diesem Filter.</p></div>`)}
+document.addEventListener("input",e=>{if(e.target.id==="fq"){view.f.q=e.target.value;$("#vlist").innerHTML=verlaufList()}if(e.target.id==="q"){view.q=e.target.value;$("#hits").innerHTML=hits(view.q)}});
+
+// ================= Reflexion =================
+function vReflexion(){const cw=Math.min(curWeek(),WK);let rows="";
+  for(let w=cw;w>=1;w--){const wr=S.weeks[w];const has=daysInWeek(w).length;
+    if(MS_WEEKS.includes(w)&&weekEnded(w))rows+=`<button class="it" data-act="openSub" data-t="ms" data-n="${w}"><span class="dot r"></span><span class="l"><b>Meilenstein nach Woche ${w}</b></span>${S.ms[w]&&S.ms[w].seen?'<span class="tag ok">gesehen</span>':'<span class="tag">neu</span>'}</button>`;
+    if(MONATE[w]){const m=MONATE[w];rows+=`<button class="it" data-act="openSub" data-t="monat" data-n="${m}"><span class="dot a"></span><span class="l"><b>Monatsreflexion ${m}</b><span>${esc(INHALT.werkzeug[m][0])}</span></span>${S.months[m]&&S.months[m].done?'<span class="tag ok">fertig</span>':weekEnded(w)?'<span class="tag">steht an</span>':""}</button>`}
+    rows+=`<button class="it" data-act="openSub" data-t="woche" data-n="${w}"><span class="dot f"></span><span class="l"><b>Wochenreflexion ${w}</b><span>${weekRange(w)} · ${esc(INHALT.wissen[w][0])}</span></span>${wr&&wr.done?'<span class="tag ok">fertig</span>':weekEnded(w)&&has?'<span class="tag">steht an</span>':""}</button>`}
+  const sel=S.test.sel;
+  return `<div><div class="eyebrow">Zurückschauen und nachsteuern</div><h1>Reflexion</h1></div>
+  <div class="page"><div><div class="eyebrow">Meine größte Herausforderung</div><h2>Was hält dich gerade am meisten auf?</h2></div>
+   <div class="hgrid">${HILFE.map(h=>`<button data-act="selH" data-v="${h.id}" aria-pressed="${sel===h.id}"><b>${h.t}</b><span>${h.k}</span></button>`).join("")}</div>
+   ${sel?`<button class="btn" data-act="openSub" data-t="karte" data-n="${sel}">Hilfekarte „${HILFE.find(x=>x.id===sel).t}“ öffnen</button>`:""}
+   <button class="btn sec2" data-act="openSub" data-t="test">Nicht sicher? Kurzer Selbsttest</button>
+  </div>
+  <button class="notice" data-act="openSub" data-t="notfall">Notfallkarte für schlechte Tage ${ICON.r.replace("<svg",'<svg width="18" height="18" style="stroke:currentColor;fill:none;stroke-width:1.8;flex:none"')}</button>
+  <div><div class="eyebrow">Wochen und Monate</div><h2>Meine Reflexionen</h2></div>
+  <div class="list">${rows}</div>`}
+
+// ================= Statistik =================
+function stats(ds){const r={n:ds.length,f:0,a:0,aS:0,aF:0,faS:0,faF:0,td:0,tp:0,h:0,hn:0,abbr:0};
+  ds.forEach(d=>{if(d.typ===1){r.a++;if(d.aArt===0)r.aS++;if(d.aArt===1)r.aF++}else{r.f++;if(d.abbr)r.abbr++;if(d.fa===0)r.faS++;if(d.fa===1)r.faF++;(d.todos||[]).forEach(t=>{if(t.t&&t.t.trim()){r.tp++;if(t.d)r.td++}});if(d.std!=null){r.h+=STD_MID[d.std];r.hn++}}});return r}
+function periodDays(){const ds=sortedDays();if(view.period==="gesamt")return ds;const lim=addDays(today(),view.period==="woche"?-6:-29);return ds.filter(d=>d.date>=lim)}
+function vStatistik(){const ds=periodDays();const st=stats(ds);
+  let h=`<div><div class="eyebrow">Deine Zahlen</div><h1>Statistik</h1><p class="lead">Nur das, was du selbst eingetragen hast. Kein Zählen von Tagen am Stück, keine Wertung.</p></div>
+  <div class="seg" role="group" aria-label="Zeitraum">${[["woche","7 Tage"],["monat","30 Tage"],["gesamt","Gesamt"]].map(([k,l])=>`<button data-act="period" data-p="${k}" aria-pressed="${view.period===k}">${l}</button>`).join("")}</div>`;
+  if(!ds.length)return h+`<div class="card"><p style="margin:0">Für diesen Zeitraum gibt es noch keine Tagesseiten. Sobald du einträgst, erscheinen hier Energie, Schlaf, Stunden und Feierabende.</p></div>`+vSuche();
+  h+=`<div class="tiles">${tile(st.n,"Tagesseiten")}${tile(st.f,"Promotionsarbeitstage")}${tile(st.a,"bewusste Auszeiten")}${tile(st.hn?"ca. "+Math.round(st.h):"–","Stunden am Projekt")}</div>`;
+  h+=`<div class="card stack"><h3>Energielevel</h3>${energyChart(ds)}<div class="legend"><span><i style="background:var(--faden)"></i>morgens</span><span><i style="background:var(--petrol)"></i>abends</span></div>${energyNote(ds)}</div>`;
+  h+=`<div class="card stack"><h3>Schlaf und Energie</h3>${sleepBars(ds)}</div>`;
+  h+=`<div class="card stack"><h3>Was dich rausreißt</h3>${stoerBars(ds)}</div>`;
+  h+=`<div class="card stack"><h3>Stunden am Projekt</h3>${distBars(ds.filter(d=>d.typ!==1),"std",STUNDEN)}<p class="muted" style="margin:0">Summe geschätzt aus deinen Stufen (unter 1 = 0,5 · 1–4 = 2,5 · über 4 = 5 Stunden).</p></div>`;
+  h+=`<div class="card stack"><h3>Selbst gewählt oder fremdbestimmt?</h3><div class="bars">${split("Feierabend",st.faS,st.faF)}${split("Auszeiten",st.aS,st.aF)}</div><div class="legend"><span><i style="background:var(--petrol)"></i>selbst gewählt</span><span><i style="background:var(--faden)"></i>fremdbestimmt</span></div><p class="muted" style="margin:0">${st.abbr} von ${st.f} Promotionsarbeitstagen wurden fremdbestimmt abgebrochen oder nicht umgesetzt.</p></div>`;
+  h+=`<div class="card stack"><h3>Geplante Schritte</h3>${st.tp?`<div class="bars">${bar("erledigt",st.td,st.tp)}</div><p class="muted" style="margin:0">${st.td} von ${st.tp} geplanten Schritten erledigt.</p>`:'<p class="muted" style="margin:0">Noch keine Schritte eingetragen.</p>'}</div>`;
+  h+=`<div class="card stack"><h3>Promotionsarbeitstage und Auszeiten</h3>${calendar(ds)}<div class="legend"><span><i style="background:var(--petrol)"></i>Arbeitstag</span><span><i style="background:var(--gold)"></i>Auszeit selbst gewählt</span><span><i style="background:var(--faden)"></i>Auszeit fremdbestimmt</span></div></div>`;
+  return h+monthTable()+standCompare()+vSuche()}
+function energyChart(ds){const W=600,H=190,pl=26,pr=8,pt=10,pb=24;const n=ds.length;const x=i=>pl+(n<2?(W-pl-pr)/2:i*(W-pl-pr)/(n-1));const y=v=>pt+(9-v)*(H-pt-pb)/8;
+  let g="";for(const v of [1,3,5,7,9])g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${pl-8}" y="${y(v)+4}" text-anchor="end">${v}</text>`;
+  const path=k=>{let p="",on=false;ds.forEach((d,i)=>{if(d[k]){p+=(on?"L":"M")+x(i).toFixed(1)+" "+y(d[k]).toFixed(1);on=true}else on=false});return p};
+  const pts=(k,c)=>ds.map((d,i)=>d[k]?`<circle cx="${x(i).toFixed(1)}" cy="${y(d[k]).toFixed(1)}" r="${i===n-1?4.5:2.6}" fill="${c}"/>`:"").join("");
+  const lbl=[0,Math.floor((n-1)/2),n-1].filter((v,i,a)=>a.indexOf(v)===i&&n>0).map(i=>`<text x="${x(i)}" y="${H-6}" text-anchor="${i===0?"start":i===n-1?"end":"middle"}">${new Date(ds[i].date+"T12:00:00").toLocaleDateString("de-DE",{day:"numeric",month:"short"})}</text>`).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Energielevel morgens und abends">${g}<path d="${path("eM")}" fill="none" stroke="var(--faden)" stroke-width="2.2"/><path d="${path("eA")}" fill="none" stroke="var(--petrol)" stroke-width="2.2"/>${pts("eM","var(--faden)")}${pts("eA","var(--petrol)")}${lbl}</svg>`}
+function avg(a){a=a.filter(v=>v);return a.length?a.reduce((s,v)=>s+v,0)/a.length:null}
+function f1(v){return v==null?"–":v.toFixed(1).replace(".",",")}
+function energyNote(ds){const mf=avg(ds.filter(d=>d.typ!==1).map(d=>d.eM)),ma=avg(ds.filter(d=>d.typ===1).map(d=>d.eM)),m=avg(ds.map(d=>d.eM)),a=avg(ds.map(d=>d.eA));
+  return `<div class="tiles">${tile(f1(m),"Ø morgens")}${tile(f1(a),"Ø abends")}</div>${mf&&ma?`<p class="muted" style="margin:0">An Promotionsarbeitstagen startest du im Schnitt mit ${f1(mf)}, an Auszeiten mit ${f1(ma)}.</p>`:""}`}
+function sleepBars(ds){const rows=SCHLAF.map((l,i)=>{const g=ds.filter(d=>d.schlaf===i);return {l,c:g.length,e:avg(g.map(d=>d.eM))}});const tot=rows.reduce((s,r)=>s+r.c,0);
+  if(!tot)return '<p class="muted" style="margin:0">Noch keine Schlafangaben.</p>';const best=rows.filter(r=>r.e).sort((a,b)=>b.e-a.e)[0];
+  return `<div class="bars">${rows.map(r=>`<div class="bar"><span>${r.l}</span><span class="tr"><i style="width:${(r.e||0)/9*100}%"></i></span><span class="n">${f1(r.e)}</span></div>`).join("")}</div><p class="muted" style="margin:0">Balken: dein Energielevel am Morgen im Schnitt nach so viel Schlaf (Nächte: ${rows.map(r=>r.c).join(" · ")}).${best?` Am meisten Energie hattest du nach ${best.l.replace("Std.","Stunden")}.`:""} Empfohlen für Erwachsene sind mindestens 7 Stunden.</p>`}
+function stoerBars(ds){const g={};ds.forEach(d=>{if(d.st==null||d.st===6)return;const k=d.st===7?(d.stE&&d.stE.trim()?d.stE.trim():"Eigener Störfaktor"):STOER[d.st];(g[k]=g[k]||[]).push(d)});
+  const rows=Object.entries(g).sort((a,b)=>b[1].length-a[1].length);const none=ds.filter(d=>d.st===6);
+  if(!rows.length)return '<p class="muted" style="margin:0">Noch keine Störfaktoren eingetragen. Du findest das Feld auf der Abendseite.</p>';const m=rows[0][1].length;
+  return `<div class="bars">${rows.map(([k,a])=>`<div class="bar"><span>${esc(k)}</span><span class="tr"><i class="r" style="width:${a.length/m*100}%"></i></span><span class="n">${a.length}×</span></div>`).join("")}</div><p class="muted" style="margin:0">Am häufigsten: ${esc(rows[0][0])}. An diesen Tagen lag deine Energie abends im Schnitt bei ${f1(avg(rows[0][1].map(d=>d.eA)))}${none.length?`, an Tagen ohne Störfaktor bei ${f1(avg(none.map(d=>d.eA)))}`:""}.</p>`}
+function distBars(ds,k,labels){const c=labels.map((_,i)=>ds.filter(d=>d[k]===i).length);const m=Math.max(1,...c);return `<div class="bars">${labels.map((l,i)=>`<div class="bar"><span>${l}</span><span class="tr"><i style="width:${c[i]/m*100}%"></i></span><span class="n">${c[i]}</span></div>`).join("")}</div>`}
+function split(l,a,b){const t=a+b;return `<div class="bar"><span>${l}</span><span class="tr">${t?`<i style="width:${a/t*100}%"></i><i class="r" style="width:${b/t*100}%"></i>`:""}</span><span class="n">${t?a+" / "+b:"–"}</span></div>`}
+function bar(l,a,t){return `<div class="bar"><span>${l}</span><span class="tr"><i style="width:${t?a/t*100:0}%"></i></span><span class="n">${t?Math.round(a/t*100)+" %":"–"}</span></div>`}
+function calendar(ds){if(!ds.length)return"";const map={};ds.forEach(d=>map[d.date]=d);let s=ds[0].date;const wd=(new Date(s+"T12:00:00").getDay()+6)%7;s=addDays(s,-wd);const last=ds[ds.length-1].date;
+  let h='<div class="cal">'+"MDMDFSS".split("").map(c=>`<div class="h">${c}</div>`).join("");
+  for(let c=s;c<=last;c=addDays(c,1)){const e=map[c];const k=!e?"":e.typ===1?(e.aArt===1?"af":"as"):"f";h+=`<div class="${k}" title="${c}">${+c.slice(8)}</div>`}return h+"</div>"}
+function monthTable(){const ms=Object.keys(S.months).filter(m=>S.months[m].r&&Object.keys(S.months[m].r).length).sort();if(!ms.length)return"";
+  return `<div class="card stack"><h3>Monatsreflexionen im Vergleich</h3><div class="mtab"><table><tr><th>Bereich</th>${ms.map(m=>`<th>M${m}</th>`).join("")}</tr>${RATE_ITEMS.flatMap(g=>g[1]).map(it=>`<tr><td>${it}</td>${ms.map(m=>{const v=S.months[m].r[it];return `<td class="${v&&v<5?"lo":""}">${v||"–"}</td>`}).join("")}</tr>`).join("")}</table></div><p class="muted" style="margin:0">Rot: Werte unter 5.</p></div>`}
+function standCompare(){const ks=["start","mitte","ende"].filter(k=>S.stand[k]);if(!ks.length)return"";const cnt=a=>(a||[]).filter(x=>x.t&&x.t.trim()).length;const lab={start:"Anfang",mitte:"Halbzeit",ende:"Ende"};
+  return `<div class="card stack"><h3>Mein Stand im Vergleich</h3><div class="mtab"><table><tr><th></th>${ks.map(k=>`<th>${lab[k]}</th>`).join("")}</tr><tr><td>fertig</td>${ks.map(k=>`<td>${cnt(S.stand[k].fertig)}</td>`).join("")}</tr><tr><td>im Entwurf</td>${ks.map(k=>`<td>${cnt(S.stand[k].entwurf)}</td>`).join("")}</tr><tr><td>noch offen</td>${ks.map(k=>`<td>${cnt(S.stand[k].offen)}</td>`).join("")}</tr></table></div></div>`}
+function vSuche(){return `<div class="card stack" id="search"><h3>In allen Einträgen suchen</h3><input type="text" id="q" placeholder="z. B. Interview, Betreuung, Methodenkapitel" value="${esc(view.q)}" aria-label="Suchbegriff"><div id="hits">${hits(view.q)}</div></div>`}
+function hits(q){q=(q||"").trim().toLowerCase();if(q.length<2)return"";const out=[];
+  sortedDays().forEach(d=>{const s=txtOf(d);const i=s.indexOf(q);if(i>=0)out.push(`<button class="it" data-act="openDay" data-id="${d.id}"><span class="dot f"></span><span class="l"><b>${fmtDate(d.date,true)}</b><span>${snip(s,i,q.length)}</span></span></button>`)});
+  for(const [w,o] of Object.entries(S.weeks)){const s=Object.values(o).map(v=>typeof v==="string"?v:Array.isArray(v)?v.map(x=>x.t).join(" "):"").join(" · ");const i=s.toLowerCase().indexOf(q);if(i>=0)out.push(`<button class="it" data-act="openSub" data-t="woche" data-n="${w}"><span class="dot r"></span><span class="l"><b>Wochenreflexion ${w}</b><span>${snip(s,i,q.length)}</span></span></button>`)}
+  return out.length?`<div class="list">${out.join("")}</div>`:'<p class="muted" style="margin:0">Nichts gefunden.</p>'}
+function snip(s,i,l){const a=Math.max(0,i-30);return (a?"…":"")+esc(s.slice(a,i))+`<span class="hit">${esc(s.slice(i,i+l))}</span>`+esc(s.slice(i+l,i+l+50))+"…"}
+
+// ================= Ich =================
+function vMehr(){const r=S.rem;
+  return `<div><div class="eyebrow">Dein Fundament</div><h1>Ich und mein Projekt</h1></div>
+  <button class="notice" data-act="openSub" data-t="feedback">Testphase: Feedback geben ${ICON.r.replace("<svg",'<svg width="18" height="18" style="stroke:currentColor;fill:none;stroke-width:1.8;flex:none"')}</button>
+  <div class="list">
+   <button class="it" data-act="openSub" data-t="stand" data-n="start"><span class="l"><b>Mein Stand am Anfang</b><span>Arbeitstitel, Frage, was fertig und was offen ist</span></span>${S.stand.start?'<span class="tag ok">angelegt</span>':'<span class="tag">offen</span>'}</button>
+   <button class="it" data-act="openSub" data-t="warum"><span class="l"><b>Mein <i>Warum</i></b><span>Was dich dranhält</span></span>${S.warum.satz?'<span class="tag ok">angelegt</span>':'<span class="tag">offen</span>'}</button>
+   ${TESTV?"":`<button class="it" data-act="openSub" data-t="brief"><span class="l"><b>Brief an mein zukünftiges Ich</b><span>Zu lesen nach Woche 26</span></span>${S.brief.sealed?'<span class="tag ok">versiegelt</span>':'<span class="tag">offen</span>'}</button>`}
+  </div>
+  ${S.warum.satz?`<div class="band"><div class="k">Mein Warum</div><p>${esc(S.warum.satz)}</p></div>`:""}
+  <div class="card stack"><h3>Starttag und Erinnerungen</h3><p class="muted" style="margin:0">Die ${TESTV?"vier Testwochen zählen":"26 Wochen zählen"} ab deinem Starttag. Gerade läuft Woche ${Math.min(curWeek(),WK)} (${weekRange(curWeek())}).</p>
+   <div class="row"><input type="date" id="sd2" value="${startDate()}" aria-label="Starttag" style="max-width:200px"><button class="btn sec2 small" data-act="setStart">Übernehmen</button></div>
+   <div class="two"><div><label class="q" for="rm2">Erinnerung morgens</label><input type="time" id="rm2" value="${esc(r.m||"08:30")}"></div><div><label class="q" for="ra2">Erinnerung abends</label><input type="time" id="ra2" value="${esc(r.a||"20:00")}"></div></div>
+   <div class="row"><button class="btn small" data-act="ics">Kalender-Erinnerungen erstellen</button></div><div id="icsbox"></div>${remHelp()}</div>
+  <div class="card stack"><h3>Deine Daten sichern</h3>
+   <p class="muted" style="margin:0">Alles liegt nur auf diesem Gerät. Mit einer Sicherungsdatei nimmst du deine Einträge auf ein neues Handy mit. Als PDF hast du alles zum Ausdrucken oder fürs Coaching.</p>
+   <div class="row"><button class="btn small" data-act="pdf">Als PDF speichern</button><button class="btn sec2 small" data-act="backup">Sicherung herunterladen</button><label class="btn ghost small" for="imp" style="cursor:pointer">Sicherung einspielen</label><input type="file" id="imp" accept="application/json,.json" hidden></div><div id="bk"></div></div>
+  ${installHelp()}
+  <div class="offer"><div class="k">Begleitung</div><p>Dieses Tagebuch hilft dir, dranzubleiben. Wenn du eine feste Gruppe und Coaching an deiner Seite möchtest, schau dir „Promotion im Fokus“ an.</p><div class="row"><a class="btn small" href="${LINKS.pif}" target="_blank" rel="noopener">Promotion im Fokus</a><a class="btn ghost small" href="${LINKS.gespraech}" target="_blank" rel="noopener">Kostenloses Erstgespräch</a></div></div>
+  <div class="card stack"><h3>Neu beginnen</h3><p class="muted" style="margin:0">Löscht alle Einträge auf diesem Gerät. Lade vorher eine Sicherung herunter.</p><div class="row"><button class="btn ghost small" data-act="resetAsk">Alle Einträge löschen</button></div><div id="rs"></div></div>
+  ${storageOK?"":'<p class="tag">Dein Browser erlaubt gerade kein Speichern. Einträge gehen beim Schließen verloren.</p>'}
+  <p class="muted">Forschungstagebuch Promotion · Dr. Mascha Körner · drmaschakoerner.de · Testversion · erster Monat</p>`}
+
+document.addEventListener("input",()=>{const t=document.getElementById("fbtxt");if(t)setTimeout(()=>{t.value=fbText()},0)});
+// ================= Kalenderdatei =================
+function buildIcs(){const st=startDate(),m=(S.rem.m||"08:30").replace(":",""),a=(S.rem.a||"20:00").replace(":","");const d=x=>x.replace(/-/g,"");const now=new Date().toISOString().replace(/[-:]/g,"").slice(0,15)+"Z";const uid=k=>k+"-"+st+"-"+Math.random().toString(36).slice(2,8)+"@forschungstagebuch";
+  const ev=(k,date,time,sum,desc,rule)=>["BEGIN:VEVENT","UID:"+uid(k),"DTSTAMP:"+now,"DTSTART:"+d(date)+"T"+time+"00","DURATION:PT15M","SUMMARY:"+sum,"DESCRIPTION:"+desc,rule,"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+sum,"TRIGGER:PT0M","END:VALARM","END:VEVENT"].join("\r\n");
+  const mEnds=Object.keys(MONATE).map(w=>addDays(st,w*7-1));
+  return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Forschungstagebuch//DE","CALSCALE:GREGORIAN",
+   ev("morgen",st,m,"Forschungstagebuch: Morgenseite","Fünf Minuten für deinen Start in den Tag.","RRULE:FREQ=DAILY;COUNT="+WK*7),
+   ev("abend",st,a,"Forschungstagebuch: Abendseite","Fünf Minuten Rückblick auf deinen Tag.","RRULE:FREQ=DAILY;COUNT="+WK*7),
+   ev("woche",addDays(st,6),a,"Forschungstagebuch: Wochenreflexion","Zeit für deinen Wochenrückblick.","RRULE:FREQ=WEEKLY;COUNT="+WK),
+   ev("monat",mEnds[0],a,"Forschungstagebuch: Monatsreflexion","Zeit für deine Monatsreflexion.",mEnds.length>1?"RDATE:"+mEnds.slice(1).map(x=>d(x)+"T"+a+"00").join(","):"RRULE:FREQ=DAILY;COUNT=1"),
+   "END:VCALENDAR"].join("\r\n")}
+function download(name,txt,type){try{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)}catch(e){}}
+
+// ================= Aktionen =================
+const ACT={
+ remOn(){S.rem.on=true;S.startDate=$("#sd").value||S.startDate;save();keepScroll(render)},
+ remOff(){S.rem.on=false;S.startDate=$("#sd").value||S.startDate;save();keepScroll(render)},
+ start(){S.startDate=($("#sd")&&$("#sd").value)||today();if(S.rem.on){S.rem.m=$("#rm").value||"08:30";S.rem.a=$("#ra").value||"20:00"}S.started=true;save();
+   if(S.rem.on){download("forschungstagebuch-erinnerungen.ics",buildIcs(),"text/calendar");toast("Kalenderdatei erstellt")}
+   go("heute",{sub:{t:"stand",n:"start",first:true}})},
+ setStart(){const v=$("#sd2").value;if(v){S.startDate=v;save();toast("Starttag geändert");render()}},
+ ics(){S.rem.m=$("#rm2").value||"08:30";S.rem.a=$("#ra2").value||"20:00";S.rem.on=true;save();download("forschungstagebuch-erinnerungen.ics",buildIcs(),"text/calendar");
+   $("#icsbox").innerHTML=`<p class="muted" style="margin:0">Die Datei wurde erstellt. Öffne sie und tippe auf „Alle hinzufügen“. Falls nichts passiert, ist das Herunterladen hier gesperrt: In der installierten App funktioniert es.</p>`},
+ newDay(t){const date=($("#nd0")&&$("#nd0").value)||today();if(testOver(date)){toast("Die Testversion umfasst die ersten vier Wochen.");return}const ex=dayOf(date);if(ex){go("heute",{day:ex.id,edit:true});return}
+   const id=Date.now();S.days.push({id,date,typ:+t.dataset.typ});save();go("heute",{day:id,edit:true})},
+ openDay(t){const id=+t.dataset.id;if(!id)return;go("heute",{day:id})},
+ edit(t){const part=t.dataset.part;go("heute",{day:+t.dataset.id,edit:true});if(part==="abend"){const el=$("#abend");el&&el.scrollIntoView()}},
+ saveDay(t){save();toast("Gespeichert");go("heute",{day:+t.dataset.id})},
+ openSub(t){const n=t.dataset.n;go(view.tab,{sub:{t:t.dataset.t,n:n==null?undefined:isNaN(+n)?n:+n,first:!!t.dataset.first},back:{tab:view.tab,day:view.day,sub:view.sub}})},
+ back(){const b=view.back;if(b){view=Object.assign({},view,{tab:b.tab,day:b.day,sub:b.sub&&b.sub.t==="karte"?null:null,edit:false,back:null});render();window.scrollTo(0,0)}else go(view.tab)},
+ go(t){go(t.dataset.tab)},
+ done(t){const wk=t.dataset.t==="woche"?+t.dataset.n:0;const o=(t.dataset.t==="woche"?S.weeks:S.months)[+t.dataset.n];o.done=true;save();if(TESTV&&wk===2&&!S.fb.sent){go("heute",{sub:{t:"testdone"}});return}toast("Gespeichert. Gut gemacht.");render()},
+ period(t){view.period=t.dataset.p;render()},
+ ft(t){view.f.typ=t.dataset.v;render()},fe(t){view.f.e=t.dataset.v;render()},
+ selH(t){S.test.sel=S.test.sel===t.dataset.v?null:t.dataset.v;save();keepScroll(render)},
+ fbSend(){S.fb.sent=today();save();location.href="mailto:kontakt@drmaschakoerner.de?subject="+encodeURIComponent("Feedback Forschungstagebuch Promotion")+"&body="+encodeURIComponent(fbText());toast("E-Mail wird geöffnet")},
+ seal(){if(!S.brief.text||!S.brief.text.trim()){toast("Schreib zuerst deinen Brief.");return}S.brief.sealed=true;S.brief.date=today();save();toast("Brief versiegelt");render()},
+ editDate(t){const d=S.days.find(x=>x.id===+t.dataset.id);$("#confirm").innerHTML=`<div class="card stack"><label class="q" for="nd">Neues Datum</label><input type="date" id="nd" value="${d.date}"><div class="row"><button class="btn small" data-act="saveDate" data-id="${d.id}">Übernehmen</button></div></div>`},
+ saveDate(t){const d=S.days.find(x=>x.id===+t.dataset.id);const v=$("#nd").value;if(v){d.date=v;save();keepScroll(render)}},
+ delDay(t){$("#confirm").innerHTML=`<div class="card stack"><p style="margin:0">Diese Tagesseite wirklich löschen? Das lässt sich nicht rückgängig machen.</p><div class="row"><button class="btn small" data-act="delDayOk" data-id="${t.dataset.id}">Ja, löschen</button></div></div>`},
+ delDayOk(t){S.days=S.days.filter(x=>x.id!==+t.dataset.id);save();go("heute")},
+ resetAsk(){$("#rs").innerHTML=`<div class="row"><button class="btn small" data-act="resetOk">Ja, alles löschen</button></div>`},
+ resetOk(){S=blank();save();toast("Alles gelöscht");go("heute")},
+ demo(){S=demoData();save();go("heute")},
+ clearDemo(){S=blank();save();go("heute")},
+ backup(){const txt=JSON.stringify(S);download("forschungstagebuch-sicherung-"+today()+".json",txt,"application/json");
+   $("#bk").innerHTML=`<p class="muted">Falls kein Download startet: Kopiere den Text und speichere ihn z. B. in einer Notiz.</p><button class="btn ghost small" data-act="copy">Sicherung kopieren</button><textarea id="bktxt" rows="3" readonly aria-label="Sicherung als Text">${esc(txt)}</textarea>`},
+ copy(){const t=$("#bktxt");navigator.clipboard&&navigator.clipboard.writeText(t.value).then(()=>toast("Kopiert"),()=>{t.select()})},
+ pdf(){buildPrint();try{window.print()}catch(e){}toast("Im Druckdialog „Als PDF sichern“ wählen")},
+};
+document.addEventListener("change",e=>{if(e.target.id!=="imp")return;const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||!Array.isArray(o.days))throw 0;S=Object.assign(blank(),o);save();toast("Sicherung eingespielt");go("heute")}catch(err){toast("Diese Datei ist keine Tagebuch-Sicherung.")}};r.readAsText(f)});
+
+// ================= PDF =================
+function buildPrint(){const L=(l,v)=>v&&String(v).trim()?`<p><b>${l}:</b> ${esc(v).replace(/\n/g,"<br>")}</p>`:"";const T=(l,a)=>(a||[]).filter(x=>x.t).length?`<p><b>${l}:</b> ${(a||[]).filter(x=>x.t).map(x=>(x.d?"☑ ":"☐ ")+esc(x.t)).join(" · ")}</p>`:"";
+  let h=`<h1>Forschungstagebuch Promotion</h1><p>Export vom ${fmtDate(today(),true)} · Start am ${fmtDate(startDate(),true)} · ${S.days.length} Tagesseiten</p>`;
+  if(S.warum.satz)h+=`<h2>Mein Warum</h2><p>${esc(S.warum.satz)}</p>`;
+  const st=stats(sortedDays());h+=`<h2>Überblick</h2><p>Promotionsarbeitstage ${st.f} (davon fremdbestimmt abgebrochen ${st.abbr}) · Auszeiten ${st.a} (selbst gewählt ${st.aS}, fremdbestimmt ${st.aF}) · Feierabend selbst gewählt ${st.faS}, fremdbestimmt ${st.faF} · Stunden ca. ${Math.round(st.h)} · Schritte erledigt ${st.td} von ${st.tp}</p>`;
+  for(let w=1;w<=curWeek();w++){const ds=daysInWeek(w);const o=S.weeks[w];if(!ds.length&&!o)continue;h+=`<h2 class="pw">Woche ${w} · ${weekRange(w)}</h2>`;ds.forEach(d=>{h+=`<div class="pd"><h3>${fmtDate(d.date,true)} · ${TYP[d.typ===1?1:0]}${d.abbr?" · fremdbestimmt abgebrochen":""}</h3>${d.eM||d.eA?`<p>Energie morgens ${d.eM||"–"}, abends ${d.eA||"–"} · Schlaf ${d.schlaf!=null?SCHLAF[d.schlaf]:"–"}${d.std!=null?" · Projekt "+STUNDEN[d.std]:""}${d.st!=null&&d.st!==6?" · Störfaktor "+(d.st===7?esc(d.stE||""):STOER[d.st]):""}</p>`:""}${L("Fokus",d.fokus)}${T("Schritte",d.todos)}${L("Affirmation",d.aff)}${L("Energie gegeben",d.plus)}${L("Energie gezogen",d.minus)}${L("Geschafft",d.geschafft)}${L("Daran hänge ich",d.haenge)}${L("Erkenntnis",d.erk)}</div>`});
+   if(o)h+=`<div class="pd"><h3>Wochenreflexion</h3>${L("Vorangebracht",o.frage)}${L("Das hat mich vorangebracht",o.voran)}${L("Ausgebremst",o.bremse)}${L("Wer hat entschieden",o.wer)}${L("Grenzen",o.grenzen)}${T("Nächste Schritte",o.schritte)}${L("Notizen",o.notiz)}</div>`}
+  $("#print").innerHTML=h}
+
+// ================= Beispieldaten =================
+function demoData(){const s=blank();s.demo=true;s.started=true;const st=addDays(today(),-24);s.startDate=st;let id=1;
+  const fok=["Kapitel 4, Auswertung","Kapitel 5.1 Typ A","Methodenkapitel, Sampling","Literatur Vulnerabilität","Kategorie B, Memo","Kapitel 5.1"];
+  const step=["Interview 4 codieren","Gliederung 5.1 überarbeiten","Sampling beschreiben","Zwei Studien exzerpieren","Memo zu Kategorie B schreiben","Absatz zu Merkmal 1 schreiben"];
+  for(let i=0;i<=24;i++){const date=addDays(st,i);const wd=new Date(date+"T12:00:00").getDay();if(wd===0&&i%3)continue;const a=i%7===4;const sl=[1,2,2,0,2,3,1][i%7];
+    s.days.push({id:id++,date,typ:a?1:0,aArt:a?(i%2):null,schlaf:sl,eM:Math.max(2,Math.min(9,[4,6,6,3,7,8,5][i%7]+(i>12?1:0))),eA:Math.max(1,Math.min(9,[3,5,6,2,6,7,4][i%7]+(i>12?1:0))),std:a?null:[1,1,2,0,1,2][i%6],fa:a?null:(i%3===0?1:0),abbr:!a&&i%9===2,abbrW:!a&&i%9===2?"Projektbericht für den Job":"",st:[0,1,6,2,0,6,5][i%7],fokus:a?"":fok[i%6],todos:a?[]:[{t:step[i%6],d:i%4!==0},{t:"Fokusblock 90 Minuten",d:i%3!==0},{t:"Notizen ordnen",d:false}],geschafft:a?"":"Zwei Fokusblöcke durchgezogen.",erk:i%5===0?"Morgens vor den Mails schreibe ich am besten.":"",plus:i%4===0?"Spaziergang mit dem Hund in der Mittagspause":""})}
+  s.weeks[1]={frage:"Ich habe jeden Morgen zuerst am Projekt gearbeitet.",voran:"Feste Startzeit",bremse:"Viele Mails am Mittwoch",done:true};
+  s.warum={satz:"Ich will zeigen, was in meinen Daten steckt."};s.stand.start={titel:"Beispielprojekt",fertig:[{t:"Theorieteil"},{t:"Erhebung"}],entwurf:[{t:"Methodenkapitel",r:"++"}],offen:[{t:"Auswertung",r:"++"},{t:"Literaturverzeichnis",r:"--"}]};
+  s.months[1]={r:{"Fortschritt im Text":6,"Klarheit meiner Argumentation":5,"Zuversicht":7,"Freude am Thema":8,"Energie":5,"Schlaf und Erholung":4,"Störungsfreie Arbeitsumgebung":6,"Social Media im Griff":3,"Grenzen bei Familie und Freunden":6,"Grenzen im Job, Feierabend":4,"Promotion fest im Kalender":7}};
+  return s}
+
+// ================= Start =================
+load();render();
+try{if("serviceWorker" in navigator&&location.protocol==="https:"&&!/claude|anthropic/.test(location.hostname))navigator.serviceWorker.register("sw.js").catch(()=>{})}catch(e){}
+
+</script>
+
+</body></html>
