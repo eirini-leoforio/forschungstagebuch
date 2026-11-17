@@ -269,6 +269,7 @@ const MONATE=Object.fromEntries(Object.entries({4:1,9:2,13:3,17:4,22:5,26:6}).fi
 const MS_WEEKS=[10,13,26].filter(w=>w<=WK);
 function testPhaseDone(){return TESTV&&!!(S.weeks[2]&&S.weeks[2].done)}
 const TEST_DONE_TXT=`<p style="margin:0">Zwei Wochen und zwei Wochenreflexionen: Du hast die Testphase geschafft. Danke, dass du dabei bist! Bitte füll jetzt den kurzen Feedback-Fragebogen aus. Danach bekommst du ab dem Launch kostenlosen Zugang zur Vollversion.</p><p style="margin:0">Du kannst gern noch zwei weitere Wochen weiterschreiben. Die Vollversion mit allen sechs Monaten erscheint im neuen Jahr.</p>`;
+const NL_CARD=`<div class="offer"><div class="k">Danke für dein Feedback!</div><p style="margin:0">Deinen kostenlosen Zugang zur Vollversion bekommst du zum Launch. Wenn du nichts verpassen möchtest: In meinem Newsletter „Post mit rotem Faden“ erfährst du von neuen Angeboten und Rabatten, dazu kommen alle drei Wochen Tipps für dein Forschungsprojekt.</p><div class="row"><a class="btn small" href="https://drmaschakoerner.de/#newsletter" target="_blank" rel="noopener">Zum Newsletter</a></div></div>`;
 function testOver(date){return TESTV&&diffDays(startDate(),date)>=WK*7}
 const RATE_ITEMS=[["Mein Projekt",["Fortschritt im Text","Klarheit meiner Argumentation","Zuversicht","Freude am Thema"]],["Ich",["Energie","Schlaf und Erholung"]],["Meine Rahmenbedingungen",["Störungsfreie Arbeitsumgebung","Social Media im Griff","Grenzen bei Familie und Freunden","Grenzen im Job, Feierabend","Promotion fest im Kalender"]]];
 const SCHLAF=["unter 6 Std.","6–7 Std.","7–9 Std.","über 9 Std."];
@@ -517,6 +518,7 @@ function fbText(){const o=S.fb;return "Feedback zur Testphase – Forschungstage
 const SUB={
  testdone(){return `<div class="ms"><div class="eyebrow">Testversion</div><h1>Testphase geschafft.</h1>${TEST_DONE_TXT}<div class="row"><button class="btn" data-act="openSub" data-t="feedback">Jetzt Feedback geben</button><button class="btn ghost" data-act="go" data-tab="heute">Später</button></div></div>`},
  feedback(){const o=S.fb;return back()+`<div class="page"><div class="eyebrow">Testphase · etwa 10 Minuten</div><h1>Dein Feedback</h1>
+  ${o.sent?NL_CARD:""}
   <p class="muted" style="margin:0">Danke, dass du das Tagebuch testest. Gesendet werden nur diese Antworten, deine Tagebucheinträge bleiben auf deinem Gerät. Sobald dein Feedback da ist, bekommst du ab dem Launch kostenlosen Zugang zur Vollversion.</p>
   ${FBQ.map(([k,q,c])=>k==="#"?`<h3 style="margin:10px 0 0">${q}</h3>`:c?chips(o,k,c,q):k==="fach"?inp(o,k,q,"z. B. Soziologie, Auswertung"):ta(o,k,q,null,3)).join("")}
   <button class="btn" data-act="fbSend">Feedback per E-Mail senden</button>
@@ -710,6 +712,7 @@ function snip(s,i,l){const a=Math.max(0,i-30);return (a?"…":"")+esc(s.slice(a,
 // ================= Ich =================
 function vMehr(){const r=S.rem;
   return `<div><div class="eyebrow">Dein Fundament</div><h1>Ich und mein Projekt</h1></div>
+  ${S.fb.sent?NL_CARD:""}
   <button class="notice" data-act="openSub" data-t="feedback">Testphase: Feedback geben ${ICON.r.replace("<svg",'<svg width="18" height="18" style="stroke:currentColor;fill:none;stroke-width:1.8;flex:none"')}</button>
   <div class="list">
    <button class="it" data-act="openSub" data-t="stand" data-n="start"><span class="l"><b>Mein Stand am Anfang</b><span>Arbeitstitel, Frage, was fertig und was offen ist</span></span>${S.stand.start?'<span class="tag ok">angelegt</span>':'<span class="tag">offen</span>'}</button>
@@ -765,7 +768,7 @@ const ACT={
  period(t){view.period=t.dataset.p;render()},
  ft(t){view.f.typ=t.dataset.v;render()},fe(t){view.f.e=t.dataset.v;render()},
  selH(t){S.test.sel=S.test.sel===t.dataset.v?null:t.dataset.v;save();keepScroll(render)},
- fbSend(){S.fb.sent=today();save();location.href="mailto:kontakt@drmaschakoerner.de?subject="+encodeURIComponent("Feedback Forschungstagebuch Promotion")+"&body="+encodeURIComponent(fbText());toast("E-Mail wird geöffnet")},
+ fbSend(){S.fb.sent=today();save();location.href="mailto:kontakt@drmaschakoerner.de?subject="+encodeURIComponent("Feedback Forschungstagebuch Promotion")+"&body="+encodeURIComponent(fbText());toast("E-Mail wird geöffnet");setTimeout(()=>{render();window.scrollTo(0,0)},400)},
  seal(){if(!S.brief.text||!S.brief.text.trim()){toast("Schreib zuerst deinen Brief.");return}S.brief.sealed=true;S.brief.date=today();save();toast("Brief versiegelt");render()},
  editDate(t){const d=S.days.find(x=>x.id===+t.dataset.id);$("#confirm").innerHTML=`<div class="card stack"><label class="q" for="nd">Neues Datum</label><input type="date" id="nd" value="${d.date}"><div class="row"><button class="btn small" data-act="saveDate" data-id="${d.id}">Übernehmen</button></div></div>`},
  saveDate(t){const d=S.days.find(x=>x.id===+t.dataset.id);const v=$("#nd").value;if(v){d.date=v;save();keepScroll(render)}},
