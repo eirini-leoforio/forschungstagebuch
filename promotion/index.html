@@ -512,7 +512,7 @@ const FBQ=[["#","Deine Nutzung"],
  ["preis","Was wäre dir die Vollversion (sechs Monate) als Einmalkauf wert?",["unter 10 €","10–19 €","20–29 €","30–39 €","40 € oder mehr"]],
  ["satz","Wie würdest du die App einer Freundin in einem Satz beschreiben?"],
  ["fach","Dein Fach und deine aktuelle Phase (freiwillig)"],
- ["zitat","Darf ich dein Feedback anonym zitieren, z. B. auf meiner Website?",["ja, anonym","ja, mit Vorname","lieber nicht"]]];
+ ["zitat","Darf ich deine Antworten, z. B. deinen Satz über die App, auf meiner Website und in der Werbung für das Forschungstagebuch verwenden?",["ja, anonym","ja, mit Vorname","ja, mit Vorname und Fach","lieber nicht"]]];
 function fbText(){const o=S.fb;return "Feedback zur Testphase – Forschungstagebuch Promotion\n\n"+FBQ.filter(x=>x[0]!=="#").map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")}
 const SUB={
  testdone(){return `<div class="ms"><div class="eyebrow">Testversion</div><h1>Testphase geschafft.</h1>${TEST_DONE_TXT}<div class="row"><button class="btn" data-act="openSub" data-t="feedback">Jetzt Feedback geben</button><button class="btn ghost" data-act="go" data-tab="heute">Später</button></div></div>`},
