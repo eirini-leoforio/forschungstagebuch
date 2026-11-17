@@ -488,17 +488,37 @@ function dayForm(d){const [k,t,q]=bandFor(d);const isA=d.typ===1;
   <div class="row"><button class="btn ghost small" data-act="editDate" data-id="${d.id}">Datum ändern</button><button class="btn ghost small" data-act="delDay" data-id="${d.id}">Seite löschen</button></div><div id="confirm"></div>`}
 
 // ================= Unterseiten =================
-const FBQ=[["oft","Wie oft hast du die App in den zwei Wochen genutzt?",["fast täglich","mehrmals pro Woche","selten"]],
+const R5=["1","2","3","4","5"];
+const FBQ=[["#","Deine Nutzung"],
+ ["oft","Wie oft hast du die App in den zwei Wochen genutzt?",["fast täglich","mehrmals pro Woche","ein- bis zweimal pro Woche","selten"]],
+ ["wann","Wann hast du sie meistens ausgefüllt?",["morgens und abends","nur morgens","nur abends","unterschiedlich"]],
  ["dauer","Wie lange hat ein Tageseintrag ungefähr gedauert?",["unter 5 Min.","5–10 Min.","10–20 Min.","länger"]],
- ["hilf","Was hat dir am meisten geholfen?"],["stoer","Was hat dich gestört oder war unklar?"],["selten","Was hast du kaum oder gar nicht genutzt, und warum?"],["fehlt","Was hast du vermisst?"],
- ["weiter","Würdest du die App weiter nutzen?",["sicher","wahrscheinlich","eher nicht","nein"]],["empf","Würdest du sie anderen Promovierenden empfehlen?",["ja","vielleicht","nein"]],
- ["fach","Dein Fach und deine aktuelle Phase (freiwillig)"],["zitat","Darf ich dein Feedback anonym zitieren, z. B. auf meiner Website?",["ja, anonym","ja, mit Vorname","lieber nicht"]]];
-function fbText(){const o=S.fb;return "Feedback zur Testphase – Forschungstagebuch Promotion\n\n"+FBQ.map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")}
+ ["geraet","Auf welchem Gerät hast du sie genutzt?",["iPhone","Android-Handy","Tablet","Computer"]],
+ ["#","Einstieg und Bedienung"],
+ ["start","Wie leicht war der Start (Einrichten, auf den Home-Bildschirm legen)? 1 = sehr schwer, 5 = sehr leicht",R5],
+ ["bedien","Wie gut findest du dich in der App zurecht? 1 = gar nicht, 5 = sehr gut",R5],
+ ["technik","Gab es technische Probleme oder Stellen, an denen du hängen geblieben bist?"],
+ ["#","Die einzelnen Bereiche (1 = wenig hilfreich, 5 = sehr hilfreich)"],
+ ["r_tag","Tagesseite morgens und abends",R5],["r_buch","Buchansicht in Handschrift",R5],["r_woche","Wochenreflexion",R5],["r_hilfe","Hilfekarten und Selbsttest",R5],["r_stat","Statistik",R5],["r_verlauf","Verlauf mit Filter",R5],
+ ["fragen","Welche Fragen auf der Tagesseite haben dir besonders geholfen, welche waren überflüssig?"],
+ ["#","Wirkung"],
+ ["wirk","Hat die App etwas an deiner Arbeit verändert? 1 = gar nicht, 5 = deutlich",R5],
+ ["wirkwie","Wenn ja: Was genau? (z. B. Fokus, Routine, Überblick, weniger schlechtes Gewissen)"],
+ ["hilf","Was hat dir am meisten geholfen?"],["stoer","Was hat dich gestört oder war unklar?"],["fehlt","Was hast du vermisst?"],
+ ["#","Gesamteindruck"],
+ ["gesamt","Wie zufrieden bist du insgesamt? 1 = gar nicht, 5 = sehr",R5],
+ ["weiter","Würdest du die App weiter nutzen?",["sicher","wahrscheinlich","eher nicht","nein"]],
+ ["empf","Würdest du sie anderen Promovierenden empfehlen?",["ja","vielleicht","nein"]],
+ ["preis","Was wäre dir die Vollversion (sechs Monate) als Einmalkauf wert?",["unter 10 €","10–19 €","20–29 €","30–39 €","40 € oder mehr"]],
+ ["satz","Wie würdest du die App einer Freundin in einem Satz beschreiben?"],
+ ["fach","Dein Fach und deine aktuelle Phase (freiwillig)"],
+ ["zitat","Darf ich dein Feedback anonym zitieren, z. B. auf meiner Website?",["ja, anonym","ja, mit Vorname","lieber nicht"]]];
+function fbText(){const o=S.fb;return "Feedback zur Testphase – Forschungstagebuch Promotion\n\n"+FBQ.filter(x=>x[0]!=="#").map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")}
 const SUB={
  testdone(){return `<div class="ms"><div class="eyebrow">Testversion</div><h1>Testphase geschafft.</h1>${TEST_DONE_TXT}<div class="row"><button class="btn" data-act="openSub" data-t="feedback">Jetzt Feedback geben</button><button class="btn ghost" data-act="go" data-tab="heute">Später</button></div></div>`},
- feedback(){const o=S.fb;return back()+`<div class="page"><div class="eyebrow">Testphase · etwa 5 Minuten</div><h1>Dein Feedback</h1>
+ feedback(){const o=S.fb;return back()+`<div class="page"><div class="eyebrow">Testphase · etwa 10 Minuten</div><h1>Dein Feedback</h1>
   <p class="muted" style="margin:0">Danke, dass du das Tagebuch testest. Gesendet werden nur diese Antworten, deine Tagebucheinträge bleiben auf deinem Gerät. Sobald dein Feedback da ist, bekommst du ab dem Launch kostenlosen Zugang zur Vollversion.</p>
-  ${FBQ.map(([k,q,c])=>c?chips(o,k,c,q):k==="fach"?inp(o,k,q,"z. B. Soziologie, Auswertung"):ta(o,k,q,null,3)).join("")}
+  ${FBQ.map(([k,q,c])=>k==="#"?`<h3 style="margin:10px 0 0">${q}</h3>`:c?chips(o,k,c,q):k==="fach"?inp(o,k,q,"z. B. Soziologie, Auswertung"):ta(o,k,q,null,3)).join("")}
   <button class="btn" data-act="fbSend">Feedback per E-Mail senden</button>
   <p class="muted" style="margin:0">Das öffnet dein E-Mail-Programm mit deinen Antworten. Klappt das nicht, kopier den Text unten und schick ihn an kontakt@drmaschakoerner.de.</p>
   <textarea id="fbtxt" rows="5" readonly>${esc(fbText())}</textarea></div>`},
