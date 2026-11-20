@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
-<title>Klarheit statt Chaos</title>
+<title>Reset &amp; Flow</title>
 <meta name="theme-color" content="#A3402F">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Klarheit">
+<meta name="apple-mobile-web-app-title" content="Reset &amp; Flow">
 <style>
 @font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215}
 @font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-ext-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}
@@ -371,7 +371,7 @@ header.top .parkbtn{background:#fff;border-color:#fff;color:var(--kc-red)}
 </style>
 </head><body>
 <header class="top"><div class="in">
-  <div class="brand"><small>Mit rotem Faden</small>Klarheit statt Chaos</div>
+  <div class="brand"><small>30 Tage aus der Blockade</small>Reset &amp; Flow</div>
   <button class="parkbtn" id="parkbtn" aria-label="Gedanke parken" hidden><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Parken</button>
   <span class="pill" id="prog"></span>
 </div></header>
@@ -385,7 +385,7 @@ header.top .parkbtn{background:#fff;border-color:#fff;color:var(--kc-red)}
 </div></nav>
 <div class="toast" id="toast" role="status"></div>
 <script>
-// Inhalte „Klarheit statt Chaos“ (kein Forschungstagebuch, eigene App) · Fassung 1 vom 19.11.2026 (aus Konzept Fassung 3)
+// Inhalte „Reset & Flow“ (früher Klarheit statt Chaos) (kein Forschungstagebuch, eigene App) · Fassung 1 vom 19.11.2026 (aus Konzept Fassung 3)
 // Texte mit [Mascha] sind Platzhalter für ihre eigenen Impulse.
 const INHALT={
  // ---------- Phase 1: Aufräumen ----------
@@ -583,7 +583,7 @@ function vEinrichten(){const ab=S.goal==="abgeben",sp=S.goal==="spur";let prev="
     if(ab&&P.N>30)w.push(`Deine Frist ist mehr als einen Monat entfernt. Phase 2 wird länger. Wenn du lieber genau einen Monat möchtest, starte am ${fmtDate(addDays(S.deadline,-29),true)}.`);
     if(ab&&P.N<1)w.length=0;
     prev=diffDays(S.start,ab?S.deadline:S.start)<0?`<p class="tag" style="align-self:flex-start">Die Frist liegt vor dem Start</p>`:`<div class="stack" style="gap:8px"><span class="q" style="margin:0">Dein Monat</span>${phaseBar(null)}${w.map(x=>`<p class="muted" style="margin:0">${x}</p>`).join("")}</div>`}
-  return `<div class="hero"><img class="logo" src="icons/icon-192.png" alt=""><div class="eyebrow">Ein Monat · ein roter Faden</div><h1>Klarheit statt Chaos</h1><div class="thread"></div>
+  return `<div class="hero"><img class="logo" src="icons/icon-192.png" alt=""><div class="eyebrow">30 Tage aus der Blockade</div><h1>Reset &amp; Flow</h1><div class="thread"></div>
   <p class="lead">In einem Monat wird aus dem Durcheinander eine Liste, die du Schritt für Schritt abarbeitest. Mit wenigen klaren Werkzeugen und Hilfe für die Momente, in denen der Kopf blockiert.${TESTV?" <b>Testversion.</b>":""}</p></div>
   <div class="page">
    <div><span class="q">1. Was ist dein Ziel für diesen Monat?</span>
@@ -781,7 +781,7 @@ function vMehr(){const ab=S.goal==="abgeben";return `<div><div class="eyebrow">I
   <div class="card stack" style="gap:10px"><b>Sicherung</b><p class="muted" style="margin:0">Deine Daten liegen nur auf diesem Gerät. Mit einer Sicherungsdatei kannst du sie auf ein anderes Gerät mitnehmen.</p><div class="row"><button class="btn sec2 small" data-act="export">Sicherung herunterladen</button><button class="btn ghost small" data-act="import">Sicherung laden</button></div><input type="file" id="imp" accept=".json,application/json" hidden></div>
   <div class="row"><button class="btn ghost small" data-act="reset">Alles löschen und neu starten</button></div>
   ${storageOK?"":`<p class="tag">Speichern ist in diesem Browser nicht möglich.</p>`}
-  <p class="muted">Klarheit statt Chaos · Dr. Mascha Körner · Forschung mit rotem Faden</p>`}
+  <p class="muted">Reset &amp; Flow · Dr. Mascha Körner · Forschung mit rotem Faden</p>`}
 
 // ================= Unterseiten =================
 const FBQ=[["#","Deine Nutzung"],
@@ -804,7 +804,7 @@ const FBQ=[["#","Deine Nutzung"],
  ["satz","Wie würdest du die App einer Freundin in einem Satz beschreiben?"],
  ["fach","Dein Fach und die Art deiner Arbeit (freiwillig)"],
  ["zitat","Darf ich deine Antworten, z. B. deinen Satz über die App, auf meiner Website und in der Werbung verwenden?",["ja, anonym","ja, mit Vorname","ja, mit Vorname und Fach","lieber nicht"]]];
-function fbText(){const o=S.fb;return "Feedback zur Testphase – Klarheit statt Chaos\n\n"+FBQ.filter(x=>x[0]!=="#").map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")}
+function fbText(){const o=S.fb;return "Feedback zur Testphase – Reset & Flow\n\n"+FBQ.filter(x=>x[0]!=="#").map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")}
 const SUB={
  feedback(){const o=S.fb;return back()+`<div class="page"><div class="eyebrow">Testphase · etwa 10 Minuten</div><h1>Dein Feedback</h1>${o.sent?NL_CARD:""}
   <p class="muted" style="margin:0">Gesendet werden nur diese Antworten, deine Einträge bleiben auf deinem Gerät. Als Dankeschön bekommst du einen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde.</p>
@@ -876,8 +876,8 @@ const ACT={
  parkSave(){const v=$("#parktxt").value.trim();if(v){S.park.push({t:v,d:today()});save()}view.sub=null;render();toast(v?"Geparkt. Weiter geht’s.":"Nichts geparkt")},
  parkToTask(t){const p=S.park.splice(+t.dataset.i,1)[0];addTask(p.t);save();keepScroll(render)},
  parkDel(t){S.park.splice(+t.dataset.i,1);save();keepScroll(render)},
- fbSend(){S.fb.sent=today();save();location.href="mailto:kontakt@drmaschakoerner.de?subject="+encodeURIComponent("Feedback Testphase Klarheit statt Chaos")+"&body="+encodeURIComponent(fbText());setTimeout(()=>keepScroll(render),400)},
- export(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="klarheit-statt-chaos-sicherung-"+today()+".json";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)},
+ fbSend(){S.fb.sent=today();save();location.href="mailto:kontakt@drmaschakoerner.de?subject="+encodeURIComponent("Feedback Testphase Reset & Flow")+"&body="+encodeURIComponent(fbText());setTimeout(()=>keepScroll(render),400)},
+ export(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="reset-und-flow-sicherung-"+today()+".json";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)},
  import(){const f=$("#imp");f.onchange=()=>{const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||d.v!==1||!Array.isArray(d.tasks))throw 0;S=Object.assign(blank(),d);S.demo=false;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}toast("Sicherung geladen");go("heute")}catch(e){toast("Diese Datei passt nicht.")}};r.readAsText(f.files[0])};f.click()},
  reset(){if(!confirm("Wirklich alles löschen? Das lässt sich nicht rückgängig machen."))return;try{localStorage.removeItem(KEY)}catch(e){}S=blank();go("heute")},
 };
