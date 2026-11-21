@@ -245,7 +245,7 @@ button.box{width:100%;font-size:15px;color:var(--ink)}
 </head><body>
 <header class="top"><div class="in">
   <span class="ttl" id="ttl">Heute</span><span class="day" id="day"></span>
-  <button class="hbtn" id="parkbtn" aria-label="Gedanke parken"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Parken</button>
+  <button class="hbtn" id="parkbtn" aria-label="Gedanken parken"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Gedanken parken</button>
   <button class="hbtn ico" id="ichbtn" aria-label="Ich und Einstellungen"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></button>
 </div></header>
 <main class="wrap" id="app" aria-live="polite"></main>
@@ -339,7 +339,7 @@ const INHALT={
  // ---------- Werkzeugkasten kompakt ----------
  werkzeug:[
   ["Basis",[["Literaturverwaltung","z. B. Zotero, Citavi","Quellen an einem Ort, Literaturverzeichnis per Klick","kostenlos bzw. oft über die Hochschule"],["Dein Kalender","","Time Blocking und Fristen sichtbar","vorhanden"]]],
-  ["Fokus und Störfaktoren",[["Pomodoro","25 Min. arbeiten, 5 Min. Pause","Anfangen und Pausen nicht vergessen. Die Fokuszeit in dieser App zeigt dir die 25 Minuten. Tipp: dazu ein Pomodoro-Video mit Musik auf YouTube","kostenlos"],["Musik nebenbei","Lo-Fi, Study-Musik, Brain.fm","ruhiger Hintergrund ohne Text","kostenlos bis kostenpflichtig"],["Time Blocking","","Denkaufgaben in die klarste Zeit, Fleißaufgaben ins Tief","kostenlos"],["10-Minuten-Regel","nach Nir Eyal","Handy-Impuls 10 Minuten aushalten, dann entscheiden","kostenlos"],["Handy außer Reichweite","Benachrichtigungen aus","Was nicht greifbar ist, lenkt weniger ab","kostenlos"],["one sec bzw. Fokusmodus","","kurze Atempause vor ablenkenden Apps","teilweise kostenlos bzw. eingebaut","richtig gut"],["Gedanken-Parkplatz","Zettel oder „Parken“ in dieser App","Einfälle notieren, weiterarbeiten","kostenlos"]]],
+  ["Fokus und Störfaktoren",[["Pomodoro","25 Min. arbeiten, 5 Min. Pause","Anfangen und Pausen nicht vergessen. Die Fokuszeit in dieser App zeigt dir die 25 Minuten. Tipp: dazu ein Pomodoro-Video mit Musik auf YouTube","kostenlos"],["Musik nebenbei","Lo-Fi, Study-Musik, Brain.fm","ruhiger Hintergrund ohne Text","kostenlos bis kostenpflichtig"],["Time Blocking","","Denkaufgaben in die klarste Zeit, Fleißaufgaben ins Tief","kostenlos"],["10-Minuten-Regel","nach Nir Eyal","Handy-Impuls 10 Minuten aushalten, dann entscheiden","kostenlos"],["Handy außer Reichweite","Benachrichtigungen aus","Was nicht greifbar ist, lenkt weniger ab","kostenlos"],["one sec bzw. Fokusmodus","","kurze Atempause vor ablenkenden Apps","teilweise kostenlos bzw. eingebaut","richtig gut"],["Gedanken-Parkplatz","Zettel oder „Gedanken parken“ in dieser App","Einfälle notieren, weiterarbeiten","kostenlos"]]],
   ["Text und Dokument",[["Word: Formatvorlagen und Navigationsbereich","","Gliederung sehen, automatische Verzeichnisse","vorhanden"],["LanguageTool","","Rechtschreibung, Zeichensetzung, Grammatik","teilweise kostenlos","empfohlen"],["DeepL","","englische Literatur schnell verstehen","teilweise kostenlos","empfohlen. Keine sensiblen Texte in die Gratis-Version, KI-Regeln der Hochschule beachten"],["Plagiat und Zitate","","Zuerst die Hochschule fragen; sonst PlagAware-Gratistest (ca. 10 Seiten) oder kostenpflichtig Scribbr. Zitate selbst abgleichen","unterschiedlich","Vorsicht bei kostenlosen Online-Prüfern"]]]
  ]
 };
@@ -451,9 +451,9 @@ function render(){BIND={};bindId=0;
   const setup=!S.started||view.tour!=null;const full=view.sub&&FULL[view.sub.t];
   document.body.classList.toggle("setup",setup);document.body.classList.toggle("full",!!full);
   const w=S.started?where(today()):null;
-  $("#ttl").textContent=view.sub&&SUBT[view.sub.t]?SUBT[view.sub.t]:(TABS.find(x=>x[0]===view.tab)||["","Ich"])[1]||"Ich";
+  $("#ttl").textContent=(TABS.find(x=>x[0]===view.tab)||["","Ich"])[1];
   if(view.tab==="ich"&&!view.sub)$("#ttl").textContent="Ich";
-  $("#day").textContent=!w?"":w.pre?`Start in ${w.rest} ${pl(w.rest,"Tag","Tagen")}`:w.post?"Geschafft":`Tag ${w.i+1} von ${plan().N}`;
+  $("#day").textContent=!w?"":w.pre?`Start in ${w.rest} ${pl(w.rest,"Tag","Tagen")}`:w.post?"Geschafft":`Tag ${w.i+1}/${plan().N}`;
   const demo=S.demo&&!setup&&!full?`<div class="demo"><span>Beispieldaten. Nichts wird gespeichert.</span><button class="btn" data-act="clearDemo">Selbst starten</button></div>`:"";
   let html;
   if(view.tour!=null)html=vTour();
@@ -465,7 +465,7 @@ function render(){BIND={};bindId=0;
 }
 function back(label){return `<button class="back" data-act="back">‹ ${label||"Zurück"}</button>`}
 function tile(v,l){return `<div class="tile"><b>${v}</b><span>${l}</span></div>`}
-const SUBT={pick:"Aufgaben wählen",karte:"Hilfe",test:"Selbsttest",werkzeug:"Werkzeugkasten",park:"Parken",feedback:"Feedback",nachtragen:"Zeit nachtragen"};
+const SUBT={pick:"Aufgaben wählen",karte:"Hilfe",test:"Selbsttest",werkzeug:"Werkzeugkasten",park:"Gedanken parken",feedback:"Feedback",nachtragen:"Zeit nachtragen"};
 
 // ================= Einstieg =================
 function dots(i,n){return `<div class="dots">${Array.from({length:n},(_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div>`}
@@ -506,7 +506,7 @@ const TOUR=[
  ["Arbeiten","Fokuszeit","Ein Knopf startet die Uhr. Der Kreis zeigt 25 Minuten, danach 5 Minuten Pause. Die Uhr läuft weiter, bis du stoppst. Jede Minute zählt für deine Statistik."],
  ["Aufgaben","Drei Arten","<b>Denkaufgaben</b> brauchen einen klaren Kopf. <b>Klärungsaufgaben</b> dauern 10 bis 15 Minuten. <b>Fleißaufgaben</b> sind viel Arbeit mit wenig Kopf. So passt immer etwas zu deiner Energie."],
  ["Fortschritt","Sichtbar machen","Ein Balken über alle Aufgaben, deine Gliederung und deine Arbeitszeit. Damit du siehst, was du schon geschafft hast, und nicht nur, was fehlt."],
- ["Wenn es hakt","Kopf blockiert?","Unter „Hilfe“ findest du kurze Karten mit Mini-Übungen. Und mit „Parken“ oben schreibst du Gedanken auf, die dich gerade ablenken."]];
+ ["Wenn es hakt","Kopf blockiert?","Unter „Hilfe“ findest du kurze Karten mit Mini-Übungen. Und mit „Gedanken parken“ oben schreibst du schnell auf, was dir beim Arbeiten durch den Kopf schießt. Dann ist es aus dem Kopf, und du arbeitest weiter."]];
 function vTour(){const i=view.tour;const [k,t,p]=TOUR[i];const last=i===TOUR.length-1;
   return `<div class="row"><b style="font-size:15px">Einführung</b><button class="lnk m" data-act="tourEnd">Überspringen</button></div>
   <div class="grow"></div><div class="q" style="gap:12px"><span class="k r">${k}</span><h1 style="font-size:28px">${t}</h1><p style="font-size:17px">${p}</p></div><div class="grow"></div>
@@ -546,7 +546,7 @@ function anweisung(d,w){
   return {head,text,nd,nr,n:nd+nr}}
 function curStep(w){const list=stepsOf(w.ph);const def=w.ph===1?w.n-1:w.c;return view.step!=null&&view.step<list.length?view.step:def}
 function vHeute(){const date=today();const w=where(date);
-  if(w.pre)return `<h1>Dein Monat startet ${w.rest===1?"morgen":"am "+fmtDate(plan().st,true)}.</h1><p>Bis dahin musst du nichts tun. Wenn dir schon etwas einfällt, park es mit „Parken“ oben. Es wartet dann in deiner Aufgabenliste.</p>${ta(S,"warum","Schon mal vorab: Warum ist mir das wichtig?",null,2)}`;
+  if(w.pre)return `<h1>Dein Monat startet ${w.rest===1?"morgen":"am "+fmtDate(plan().st,true)}.</h1><p>Bis dahin musst du nichts tun. Wenn dir schon etwas einfällt, park es mit „Gedanken parken“ oben. Es wartet dann in deiner Aufgabenliste.</p>${ta(S,"warum","Schon mal vorab: Warum ist mir das wichtig?",null,2)}`;
   if(w.post)return vEnde();
   const d=dayObj(date);
   if(!d.ci)return vCheckin(d,w);
@@ -671,8 +671,12 @@ const SUB={
  werkzeug(){return `${back()}<div class="q"><span class="k">Werkzeugkasten</span><h1>So viel wie nötig, so wenig wie möglich.</h1><p class="lead">Nur, was dir in diesem Monat sofort hilft. Systeme, in die du dich erst einarbeiten musst, kosten jetzt mehr Zeit, als sie bringen.</p></div>
   ${INHALT.werkzeug.map(([g,its])=>`<div class="q"><span class="k">${g}</span><div class="tl">${its.map(([n,z,w,k,e])=>`<div class="tool"><b>${n}${z?` <span class="m" style="font-weight:400">· ${z}</span>`:""}</b><p>${w}</p><p class="m">${k}${e?` · <b>Mein Tipp:</b> ${e}`:""}</p></div>`).join("")}</div></div>`).join("")}
   ${offer("Wenn die Auswertung noch offen ist","Steckst du noch mittendrin? Mein MAXQDA-Paket „Sicher durch die Auswertung“ oder ein Coaching helfen dir, schnell wieder Boden unter die Füße zu bekommen.",`<div class="two"><a class="btn o" href="${LINKS.maxqda}" target="_blank" rel="noopener">MAXQDA-Paket</a><a class="btn o" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a></div>`)}`},
- park(){return `${back()}<h1>Was geht dir durch den Kopf?</h1><p class="m">Schreib es auf und arbeite weiter. Es wartet in deiner Aufgabenliste.</p>
-  <textarea id="parktxt" rows="3" placeholder="z. B. Zitat von Meier noch prüfen"></textarea><button class="btn" data-act="parkSave">Parken</button>`},
+ park(){const o=view.sub;const id=bindObj(o);
+  return `${back()}<div class="q"><span class="k r">Gedanken parken</span><h1>Was geht dir durch den Kopf?</h1><p class="m">Dir fällt mitten in der Arbeit etwas ein, das nicht zur Aufgabe gehört? Schreib es hier auf, dann musst du es nicht im Kopf behalten und arbeitest weiter.</p></div>
+  <textarea id="parktxt" rows="3" placeholder="z. B. Zitat von Meier noch prüfen"></textarea>
+  <div class="q"><span class="k">Gleich einsortieren? Freiwillig</span><div class="seg">${[["d","Denken"],["k","Klären"],["f","Fleiß"]].map(([k,l])=>`<button data-act="parkArt" data-v="${k}" aria-pressed="${o.art===k}">${l}</button>`).join("")}</div>
+  <p class="m">${o.art?`Wird als ${ART[o.art]} in deine Aufgabenliste übernommen.`:"Ohne Auswahl wartet der Gedanke oben in deiner Aufgabenliste. Dort sortierst du ihn später ein oder löschst ihn."}</p></div>
+  <button class="btn" data-act="parkSave">${o.art?"Als Aufgabe speichern":"Parken"}</button>`},
  feedback(){const o=S.fb;return `${back()}<div class="q"><span class="k">Testphase · etwa 10 Minuten</span><h1>Dein Feedback</h1></div>
   ${o.sent?`<div class="box fill"><b>Danke für dein Feedback!</b><p>Deinen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde schicke ich dir per E-Mail. In meinem Newsletter „Post mit rotem Faden“ erfährst du von neuen Angeboten und Rabatten, dazu kommen alle drei Wochen Tipps für dein Forschungsprojekt.</p><a class="btn o" href="${LINKS.nl}" target="_blank" rel="noopener">Zum Newsletter</a></div>`:""}
   <p class="m">Gesendet werden nur diese Antworten, deine Einträge bleiben auf deinem Gerät. Als Dankeschön bekommst du einen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde.</p>
@@ -727,7 +731,7 @@ function vAufgaben(){const F=view.f;
   <div class="q">${fseg("st",[["offen","Offen"],["erledigt","Erledigt"],["alle","Alle"]])}${fseg("art",[["alle","Alle"],["d","Denken"],["k","Klären"],["f","Fleiß"],["ohne","Unsortiert"]])}</div>
   ${ts.length?`<div class="tl">${ts.map(t=>taskRow(t)).join("")}</div>`:`<p class="m">${S.tasks.length?"Keine Aufgaben für diesen Filter.":"Noch keine Aufgaben. Leg los mit deinem Braindump."}</p>`}
   <p class="m">Tippe auf eine Aufgabe, um Art, Aufwand, Kapitel und Muss oder Kann festzulegen.</p>`}
-function parkBox(){if(!S.park.length)return"";return `<div class="box acc"><span class="k r">Geparkte Gedanken</span>${S.park.map((p,i)=>`<div class="row" style="align-items:center"><span style="flex:1;min-width:0;overflow-wrap:anywhere">${esc(p.t)} <span class="m">· ${fmtShort(p.d)}</span></span><button class="btn o sm" data-act="parkToTask" data-i="${i}">Als Aufgabe</button><button class="x" data-act="parkDel" data-i="${i}" aria-label="Löschen">×</button></div>`).join("")}</div>`}
+function parkBox(){if(!S.park.length)return"";return `<div class="box acc"><span class="k r">Geparkte Gedanken · ${S.park.length}</span><p class="m">Was ist es? Tippe die Art an, dann rückt es als Aufgabe in deine Liste. Mit × löschst du es.</p>${S.park.map((p,i)=>`<div class="q" style="padding-top:8px;border-top:1px solid var(--line)"><div class="row" style="align-items:center"><span style="flex:1;min-width:0;overflow-wrap:anywhere">${esc(p.t)} <span class="m">· ${fmtShort(p.d)}</span></span><button class="x" data-act="parkDel" data-i="${i}" aria-label="Löschen">×</button></div><div class="seg">${Object.keys(ART).map(k=>`<button data-act="parkToTask" data-i="${i}" data-art="${k}">${ARTK[k]}</button>`).join("")}<button data-act="parkToTask" data-i="${i}" data-art="">weiß nicht</button></div></div>`).join("")}</div>`}
 function formalCard(always){const miss=INHALT.formal.filter(f=>!S.tasks.some(t=>t.t===f));if(!miss.length||S.formalOff&&!always)return"";
   return `<details class="box"><summary>Vorschlag: formale Fleißaufgaben (${miss.length})</summary><p class="m">Wenn du sie schon jetzt einplanst, bleiben die letzten fünf Tage frei fürs Überarbeiten.</p><div class="grp">${miss.map(f=>`<button class="pick" data-act="addFormal" data-t="${esc(f)}"><span class="pl">+</span><span>${esc(f)}</span></button>`).join("")}</div><button class="btn o" data-act="addAllFormal">Alle übernehmen</button></details>`}
 
@@ -902,12 +906,13 @@ const ACT={
   S.blocks.push({id:S.bid++,wd:o.wd,s:o.s,e:o.e,typ:o.typ===1?"t":"w",t:(o.t||"").trim()});o.t="";save();keepScroll(render);toast("Eingetragen")},
  blkDel(t){S.blocks=S.blocks.filter(b=>b.id!==+t.dataset.id);save();keepScroll(render)},
  park(){sub("park");setTimeout(()=>{const p=$("#parktxt");p&&p.focus()},50)},
- parkSave(){const v=$("#parktxt").value.trim();if(v){S.park.push({t:v,d:today()});save()}view.sub=null;render();toast(v?"Geparkt. Weiter geht’s.":"Nichts geparkt")},
- parkToTask(t){const p=S.park.splice(+t.dataset.i,1)[0];addTask(p.t);save();keepScroll(render)},
+ parkArt(t){const o=view.sub;const ta=$("#parktxt");o.txt=ta?ta.value:"";o.art=o.art===t.dataset.v?null:t.dataset.v;render();const n=$("#parktxt");if(n){n.value=o.txt||""}},
+ parkSave(){const v=$("#parktxt").value.trim();const art=view.sub.art;if(v){if(art){const x=addTask(v);x.art=art}else S.park.push({t:v,d:today()});save()}view.sub=null;render();toast(!v?"Nichts geparkt":art?"Als "+ART[art]+" in der Liste. Weiter geht’s.":"Geparkt. Weiter geht’s.")},
+ parkToTask(t){const p=S.park.splice(+t.dataset.i,1)[0];const x=addTask(p.t);if(t.dataset.art)x.art=t.dataset.art;save();keepScroll(render);toast("In der Aufgabenliste")},
  parkDel(t){S.park.splice(+t.dataset.i,1);save();keepScroll(render)},
  ich(){go("ich")},
  fbSend(){S.fb.sent=today();save();location.href="mailto:kontakt@drmaschakoerner.de?subject="+encodeURIComponent("Feedback Testphase Reset & Flow")+"&body="+encodeURIComponent(fbText());setTimeout(()=>keepScroll(render),400)},
- export(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="reset-und-flow-sicherung-"+today()+".json";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)},
+ export(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="reset-and-flow-sicherung-"+today()+".json";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)},
  import(){const f=$("#imp");f.onchange=()=>{const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||d.v!==2||!Array.isArray(d.tasks))throw 0;S=Object.assign(blank(),d);S.demo=false;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}toast("Sicherung geladen");go("heute")}catch(e){toast("Diese Datei passt nicht.")}};r.readAsText(f.files[0])};f.click()},
  reset(){if(!confirm("Wirklich alles löschen? Das lässt sich nicht rückgängig machen."))return;try{localStorage.removeItem(KEY)}catch(e){}S=blank();view.setup=0;go("heute")},
 };
