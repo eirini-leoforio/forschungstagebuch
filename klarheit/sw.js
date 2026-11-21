@@ -1,4 +1,2 @@
-const C="ftb-klarheit-v2";const F=["./","index.html","manifest.webmanifest","icons/icon-192.png","icons/icon-512.png","icons/icon-180.png","fonts/source-sans-3-latin-wght-normal.woff2","fonts/source-sans-3-latin-ext-wght-normal.woff2"];
-self.addEventListener("install",e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(F)));self.skipWaiting()});
-self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C&&x.startsWith("ftb-klarheit")).map(x=>caches.delete(x)))));self.clients.claim()});
-self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;e.respondWith(fetch(e.request).then(r=>{const c=r.clone();caches.open(C).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request)))});
+self.addEventListener("install",()=>self.skipWaiting());
+self.addEventListener("activate",e=>{e.waitUntil(self.registration.unregister().then(()=>self.clients.matchAll()).then(c=>c.forEach(x=>x.navigate("../reset-und-flow/"))))});
