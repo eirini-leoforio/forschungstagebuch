@@ -241,6 +241,15 @@ body.setup nav.tabs,body.full nav.tabs,body.writing nav.tabs{display:none}
 .ckrow:first-child{border-top:0}
 .ckrow[aria-pressed="true"]>span:last-child{color:var(--mute);text-decoration:line-through}
 button.box{width:100%;font-size:15px;color:var(--ink)}
+
+/* Info-Knopf und Pop-up */
+.ib{display:inline-grid;place-items:center;width:28px;height:24px;margin:-4px -4px -4px 2px;padding:0;border:0;background:none;vertical-align:middle}
+.ib::before{content:"i";width:17px;height:17px;border-radius:50%;border:1.5px solid var(--mute);color:var(--mute);font-size:11px;font-weight:700;line-height:14px;text-align:center;text-transform:none;letter-spacing:0;font-family:Georgia,serif;font-style:italic}
+h1 .ib::before{width:19px;height:19px;line-height:16px;font-size:12px}
+.pop{position:fixed;inset:0;z-index:20;background:#0007;display:flex;align-items:flex-end;justify-content:center}
+.pop[hidden]{display:none}
+.pop .sh{background:var(--bg);width:100%;max-width:560px;border-radius:12px 12px 0 0;padding:20px 16px calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}
+.pop p{white-space:pre-line}
 </style>
 </head><body>
 <header class="top"><div class="in">
@@ -251,6 +260,7 @@ button.box{width:100%;font-size:15px;color:var(--ink)}
 <main class="wrap" id="app" aria-live="polite"></main>
 <nav class="tabs" aria-label="Bereiche"><div class="in"></div></nav>
 <div class="toast" id="toast" role="status"></div>
+<div class="pop" id="pop" hidden><div class="sh" role="dialog" aria-modal="true"><b></b><p></p><button class="btn o" id="popx">Verstanden</button></div></div>
 <script>
 // Fassung 2 (21.11.): Karten mit Kurztitel h, Kategorie kat, Übungsdauer min, fokus=Übung startet Fokuszeit
 // Inhalte „Reset & Flow“ (früher Klarheit statt Chaos) (kein Forschungstagebuch, eigene App) · Fassung 1 vom 19.11.2026 (aus Konzept Fassung 3)
@@ -407,6 +417,11 @@ function phName(ph){return ph===1?"Reset":ph===2?"Flow":(S.goal==="spur"?"In die
 function stepsOf(ph){return ph===1?INHALT.p1:(S.goal==="spur"?INHALT.p3s:INHALT.p3a)}
 function stepKey(ph,i){return ph===1?"p1_"+i:(S.goal==="spur"?"p3s_":"p3a_")+i}
 
+// ================= Info-Knopf =================
+let INFOS=[];
+function info(txt,title){INFOS.push([title||"Info",txt]);return `<button class="ib" data-act="info" data-i="${INFOS.length-1}" aria-label="Info${title?": "+esc(title):""}"></button>`}
+function kI(label,txt,cls){return `<span class="k ${cls||""}">${label}${info(txt,label.replace(/<[^>]+>/g,""))}</span>`}
+
 // ================= Bindungen =================
 let BIND={},bindId=0;
 function bindObj(o){const id="o"+(++bindId);BIND[id]=o;return id}
@@ -414,9 +429,9 @@ function ta(o,key,label,hint,rows,ph){const id=bindObj(o);const fid="f_"+id+"_"+
 function inp(o,key,label,ph){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<label class="q" for="${fid}"><span>${label}</span><input type="text" id="${fid}" placeholder="${esc(ph||"")}" data-b="${id}" data-k="${key}" value="${esc(o[key])}"></label>`}
 function dateIn(o,key,label,hint){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<label class="q" for="${fid}"><span>${label}</span>${hint?`<span class="m">${hint}</span>`:""}<input type="date" id="${fid}" data-b="${id}" data-k="${key}" data-re="1" value="${esc(o[key])}"></label>`}
 // Auswahl: kurze Optionen als eckige Segmente, lange als Liste
-function choice(o,key,opts,label,hint,wrap){const id=bindObj(o);const short=opts.length<=5&&opts.every(t=>t.length<=12);
+function choice(o,key,opts,label,hint,wrap,inf){const id=bindObj(o);const short=opts.length<=5&&opts.every(t=>t.length<=12);
   const b=opts.map((t,i)=>`<button data-b="${id}" data-k="${key}" data-v="${i}" aria-pressed="${o[key]===i}">${t}</button>`).join("");
-  return `<div class="q">${label?`<span class="k">${label}</span>`:""}<div class="${short?"seg"+(wrap?" wrap":""):"opts"}" role="group"${label?` aria-label="${esc(label)}"`:""}>${b}</div>${hint||""}</div>`}
+  return `<div class="q">${label?(inf?kI(label,inf):`<span class="k">${label}</span>`):""}<div class="${short?"seg"+(wrap?" wrap":""):"opts"}" role="group"${label?` aria-label="${esc(label)}"`:""}>${b}</div>${hint||""}</div>`}
 function checklist(o,items){const id=bindObj(o);return `<div class="tl">${items.map((t,i)=>`<button class="trow ckrow" data-b="${id}" data-ck="${i}" aria-pressed="${!!o[i]}"><span class="cb" aria-pressed="${!!o[i]}"></span><span>${esc(t)}</span></button>`).join("")}</div>`}
 function todos(o,key,label,n){if(!Array.isArray(o[key]))o[key]=[];while(o[key].length<n)o[key].push({t:"",d:false});const id=bindObj(o[key]);
   return `<div class="q"><span class="k">${label}</span>${o[key].map((t,i)=>`<div class="trow" style="align-items:center"><button class="cb" aria-label="erledigt" data-b="${id}" data-i="${i}" data-todo="1" aria-pressed="${!!t.d}"></button><input type="text" aria-label="${label} ${i+1}" data-b="${id}" data-i="${i}" data-todot="1" value="${esc(t.t)}"></div>`).join("")}</div>`}
@@ -445,7 +460,7 @@ function go(tab,extra){view=Object.assign({tab,sub:null,open:null,bulk:false,ste
 function sub(t,extra){view.sub=Object.assign({t},extra||{});render();window.scrollTo(0,0)}
 const TABS=[["heute","Heute"],["aufgaben","Aufgaben"],["woche","Woche"],["hilfe","Hilfe"],["fortschritt","Fortschritt"]];
 const FULL={timer:1,done:1};
-function render(){BIND={};bindId=0;
+function render(){BIND={};bindId=0;INFOS=[];
   const tabs=TABS.filter(([k])=>k!=="woche"||S.woche);
   $("nav.tabs .in").innerHTML=tabs.map(([k,l])=>`<button data-tab="${k}" aria-current="${view.tab===k?"page":"false"}">${l}</button>`).join("");
   const setup=!S.started||view.tour!=null;const full=view.sub&&FULL[view.sub.t];
@@ -495,7 +510,7 @@ function vSetup(){const s=view.setup;
     ${choice(S,"ki",["Ohne KI","Mit KI"],"Arbeitest du mit KI?",S.ki===1?`<p class="m">Was erlaubt ist, steht in meinem kostenlosen <a href="${LINKS.ki}" target="_blank" rel="noopener">KI-Guide</a>. Im Abschluss bekommst du eine kurze Checkliste.</p>`:"")}
     <div class="grow"></div>${dots(1,3)}<button class="btn" data-act="setup" data-v="2">Weiter</button>`}
   return `<div class="row">${back()}<span class="m">3 / 3</span></div><h1>Fast fertig</h1>
-  ${choice(S,"wocheQ",["Nein, erst mal nicht","Ja"],"Wochenplan anlegen?",`<p class="m">Freiwillig. Du kannst feste Arbeitszeiten und Termine für die Woche eintragen. Sonst reicht der Morgen-Check-in, in dem du jeden Tag deine Zeit angibst. Das kannst du später unter „Ich“ ändern.</p>`)}
+  ${choice(S,"wocheQ",["Nein, erst mal nicht","Ja"],"Wochenplan anlegen? Freiwillig",null,false,"Im Wochenplan trägst du feste Arbeitszeiten und Termine ein, die jede Woche gelten. Sonst reicht der Morgen-Check-in, in dem du jeden Tag deine Zeit angibst. Du kannst den Wochenplan später unter „Ich“ an- oder ausschalten.")}
   ${installHelp()}
   <p class="m">Deine Einträge bleiben nur auf diesem Gerät. Es gibt kein Konto und keine Cloud.</p>
   <div class="grow"></div>${dots(2,3)}
@@ -564,12 +579,12 @@ function vHeute(){const date=today();const w=where(date);
 function vCheckin(d,w){const h=new Date().getHours();const wb=workBlocksOn(today());
   if(d.zeit==null&&wb.length){const m=wb.reduce((a,b)=>a+tmin(b.e)-tmin(b.s),0);d.zeit=Math.max(0,Math.min(3,Math.round(m/60)-1))}
   const A=anweisung(d,w);
-  return `<div class="row"><span class="k">Check-in · 1 Minute</span><span class="m">${phName(w.ph)} · Tag ${w.n}</span></div>
+  return `<div class="row">${kI("Check-in · 1 Minute","Aus Energie, Schlaf und Zeit ergibt sich deine Anweisung: wie viele Aufgaben heute passen und welche Art. Mit guter Energie kommen Denkaufgaben zuerst, solange du frisch bist. Mit wenig Energie passen Klärungs- und Fleißaufgaben. Welche Aufgaben genau, wählst du selbst.")}<span class="m">${phName(w.ph)} · Tag ${w.n}</span></div>
   <h1>${h<12?"Guten Morgen.":h<18?"Kurzer Check-in.":"Guten Abend."}</h1>
   ${choice(d,"e",R5,"Energie",`<div class="row m"><span>leer</span><span>voller Energie</span></div>`)}
   ${choice(d,"schlaf",SCHLAF,"Schlaf")}
   ${choice(d,"zeit",ZEIT,"Zeit für die Arbeit heute",wb.length?`<p class="m">Laut Wochenplan: ${wb.map(b=>tfmt(b.s)+" bis "+tfmt(b.e)+" Uhr").join(", ")}</p>`:"")}
-  ${A?`<div class="box acc"><span class="k r">Deine Anweisung für heute</span><p><b>${A.head}</b> ${A.text}</p></div>`:`<p class="m">Tippe alle drei an. Dann bekommst du deine Anweisung für heute.</p>`}
+  ${A?`<div class="box acc"><span class="k r">Deine Anweisung für heute</span><p><b>${A.head}</b> ${A.text}</p></div>`:`<p class="m">Tippe alle drei an.</p>`}
   <div class="btns"><button class="btn" data-act="ciDone" ${A?"":"disabled style=\"opacity:.45\""}>${w.ph===2?"Aufgaben wählen":"Los geht’s"}</button><button class="lnk m" data-act="ciSkip" style="align-self:center">Heute ohne Check-in</button></div>`}
 function dayFlow(w,d,date,A){const picks=d.pick.map(id=>S.tasks.find(t=>t.id===id)).filter(Boolean);
   const intro=w.n===1?`<div class="box soft"><span class="k">Der Flow beginnt</span><p>Ab heute arbeitest du deine Liste ab. Zwei bis drei Aufgaben am Tag reichen. Die großen Denkaufgaben zuerst.</p></div>`:"";
@@ -619,7 +634,7 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden)tick()});
 function timerText(over){const T=S.timer;
   if(T.mode==="p")return over?`<p style="font-size:17px"><b>Die Pause ist vorbei.</b></p><p class="m">Bereit für den nächsten Block?</p>`:`<p style="font-size:17px"><b>Pause.</b></p><p class="m">Steh auf, trink etwas, schau aus dem Fenster. Nicht aufs Handy.</p>`;
   if(T.mode==="u"){const k=INHALT.karten.find(x=>x.id===T.card);return over?`<p style="font-size:17px"><b>Geschafft.</b></p><p class="m">Wie fühlt es sich jetzt an?</p>`:`<p class="m" style="max-width:300px">${k?k.uebung:""}</p>`}
-  return over?`<p style="font-size:17px"><b>${FOKUS} Minuten geschafft.</b></p><p class="m" style="max-width:260px">Zeit für ${PAUSE} Minuten Pause. Die Uhr läuft weiter, bis du stoppst.</p>`:`<p style="font-size:17px"><b>Fokus. Handy weg.</b></p><p class="m" style="max-width:260px">Der Kreis zeigt ${FOKUS} Minuten. Danach ${PAUSE} Minuten Pause. Die Uhr läuft weiter, bis du stoppst.</p>`}
+  return over?`<p style="font-size:17px"><b>${FOKUS} Minuten geschafft.</b></p><p class="m" style="max-width:260px">Zeit für ${PAUSE} Minuten Pause. Die Uhr läuft weiter, bis du stoppst.</p>`:`<p style="font-size:17px"><b>Fokus. Handy weg.</b>${info(`Der Kreis zeigt ${FOKUS} Minuten. Danach ist Zeit für ${PAUSE} Minuten Pause. Es gibt keinen Alarm: Die Uhr läuft weiter, bis du stoppst. Jede gestoppte Minute zählt für deine Statistik.`,"Fokuszeit")}</p>`}
 function startTimer(mode,o){S.timer=Object.assign({mode,start:Date.now(),len:mode==="p"?PAUSE:FOKUS,task:null},o||{});saveNow();sub("timer")}
 function todayPicks(){const d=S.days[today()];return d?d.pick.map(id=>S.tasks.find(t=>t.id===id)).filter(t=>t&&!t.done):[]}
 const SUB={
@@ -647,35 +662,34 @@ const SUB={
   ${grp||`<p class="m">Noch keine offenen Aufgaben.</p><button class="btn o" data-act="go" data-tab="aufgaben">Aufgaben anlegen</button>`}
   <button class="btn" data-act="back">Fertig</button>`},
  nachtragen(){const o=view.sub;o.m=o.m??1;o.d=o.d??0;
-  return `${back()}<h1>Zeit nachtragen</h1><p class="m">Für Arbeitszeit ohne Timer, zum Beispiel in der Bibliothek.</p>
+  return `${back()}<h1>Zeit nachtragen${info("Für Arbeitszeit ohne Timer, zum Beispiel in der Bibliothek. Sie zählt genauso für deine Statistik.","Zeit nachtragen")}</h1>
   ${choice(o,"m",["15","30","45","60","90","120"],"Minuten",null,true)}${choice(o,"d",["heute","gestern"],"Wann?")}
   <button class="btn" data-act="addManual">Eintragen</button>`},
  karte(s){const k=INHALT.karten.find(x=>x.id===s.n);
   return `<div class="row">${back()}<span class="m">${k.kat}</span></div><h1>${k.h}.</h1><hr>
-  <div class="q"><span class="k">Was passiert?</span><p>${esc(k.was)}</p></div><hr>
+  <div class="q">${k.lit?kI("Was passiert?","Zum Weiterlesen: "+esc(k.lit)):`<span class="k">Was passiert?</span>`}<p>${esc(k.was)}</p></div><hr>
   <div class="q"><span class="k">Was hilft?</span><p>${esc(k.hilft)}</p></div>
   <div class="box fill"><span class="k r">Mini-Übung · ${k.min} ${pl(k.min,"Minute","Minuten")}</span><p>${k.uebung}</p></div>
   ${k.say?`<p class="say">${esc(k.say)}</p>`:""}
-  ${k.lit?`<p class="m">Zum Weiterlesen: ${esc(k.lit)}</p>`:""}
+  
   <div class="btns"><button class="btn" data-act="uebung" data-n="${k.id}">Übung starten · ${k.min} Min.</button><button class="btn o" data-act="go" data-tab="heute">Hat geholfen, zurück zu Heute</button></div>
   <p class="m">Wenn es sich nicht löst: Das kostenlose <a href="${LINKS.sos}" target="_blank" rel="noopener">SOS-Reset-Paket</a> führt dich Schritt für Schritt aus der Blockade. Und manchmal hilft vor allem ein <a href="${LINKS.gespraech}" target="_blank" rel="noopener">Gespräch</a>.</p>`},
  test(s){const T=INHALT.test;const a=S.test.a;const i=s.i??0;
   if(i>=T.length)return `${back()}<h1>Dein Ergebnis</h1>${testResult(a)}<button class="lnk m" data-act="testAgain">Test neu starten</button>`;
   const id=bindObj(a);const [_,txt]=T[i];const nxt=T[i+1];
   return `<div class="row">${back()}<span class="m">Frage ${i+1} von ${T.length}</span></div><div class="bar"><i style="width:${(i+1)/T.length*100}%"></i></div>
-  <h1>Wie geht es mir gerade?</h1><p style="font-size:17px">${txt}</p>
+  <h1>Wie geht es mir gerade?${info("Zehn Aussagen, aus dem Bauch heraus, bezogen auf die letzten Tage. Danach bekommst du die passende Karte. Bei hohen Werten zusätzlich das SOS-Reset-Paket oder ein Gespräch mit mir, bei sehr hoher Belastung einen Hinweis auf professionelle Hilfe.","Selbsttest")}</h1><p style="font-size:17px">${txt}</p>
   <div class="seg" role="group">${TEST_OPT.map((l,v)=>`<button data-act="testAns" data-v="${v}" aria-pressed="${a[i]===v}">${l}</button>`).join("")}</div>
-  ${nxt?`<p class="m" style="opacity:.6">Als Nächstes: ${nxt[1]}</p>`:""}
-  <div class="grow"></div>
-  <div class="box acc"><span class="k r">Danach</span><p class="m">Du bekommst die passende Karte. Bei hohen Werten zusätzlich das SOS-Reset-Paket oder ein Gespräch mit mir, bei sehr hoher Belastung einen Hinweis auf professionelle Hilfe.</p></div>`},
+  
+`},
  werkzeug(){return `${back()}<div class="q"><span class="k">Werkzeugkasten</span><h1>So viel wie nötig, so wenig wie möglich.</h1><p class="lead">Nur, was dir in diesem Monat sofort hilft. Systeme, in die du dich erst einarbeiten musst, kosten jetzt mehr Zeit, als sie bringen.</p></div>
   ${INHALT.werkzeug.map(([g,its])=>`<div class="q"><span class="k">${g}</span><div class="tl">${its.map(([n,z,w,k,e])=>`<div class="tool"><b>${n}${z?` <span class="m" style="font-weight:400">· ${z}</span>`:""}</b><p>${w}</p><p class="m">${k}${e?` · <b>Mein Tipp:</b> ${e}`:""}</p></div>`).join("")}</div></div>`).join("")}
   ${offer("Wenn die Auswertung noch offen ist","Steckst du noch mittendrin? Mein MAXQDA-Paket „Sicher durch die Auswertung“ oder ein Coaching helfen dir, schnell wieder Boden unter die Füße zu bekommen.",`<div class="two"><a class="btn o" href="${LINKS.maxqda}" target="_blank" rel="noopener">MAXQDA-Paket</a><a class="btn o" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a></div>`)}`},
  park(){const o=view.sub;const id=bindObj(o);
-  return `${back()}<div class="q"><span class="k r">Gedanken parken</span><h1>Was geht dir durch den Kopf?</h1><p class="m">Dir fällt mitten in der Arbeit etwas ein, das nicht zur Aufgabe gehört? Schreib es hier auf, dann musst du es nicht im Kopf behalten und arbeitest weiter.</p></div>
+  return `${back()}<div class="q">${kI("Gedanken parken","Dir fällt mitten in der Arbeit etwas ein, das nicht zur Aufgabe gehört? Schreib es hier auf, dann musst du es nicht im Kopf behalten und arbeitest weiter. Wenn du gleich Denken, Klären oder Fleiß antippst, landet es direkt als Aufgabe in deiner Liste. Sonst wartet es oben in der Aufgabenliste, bis du es einsortierst oder löschst.","r")}<h1>Was geht dir durch den Kopf?</h1></div>
   <textarea id="parktxt" rows="3" placeholder="z. B. Zitat von Meier noch prüfen"></textarea>
   <div class="q"><span class="k">Gleich einsortieren? Freiwillig</span><div class="seg">${[["d","Denken"],["k","Klären"],["f","Fleiß"]].map(([k,l])=>`<button data-act="parkArt" data-v="${k}" aria-pressed="${o.art===k}">${l}</button>`).join("")}</div>
-  <p class="m">${o.art?`Wird als ${ART[o.art]} in deine Aufgabenliste übernommen.`:"Ohne Auswahl wartet der Gedanke oben in deiner Aufgabenliste. Dort sortierst du ihn später ein oder löschst ihn."}</p></div>
+  ${o.art?`<p class="m">Wird als ${ART[o.art]} in deine Liste übernommen.</p>`:""}</div>
   <button class="btn" data-act="parkSave">${o.art?"Als Aufgabe speichern":"Parken"}</button>`},
  feedback(){const o=S.fb;return `${back()}<div class="q"><span class="k">Testphase · etwa 10 Minuten</span><h1>Dein Feedback</h1></div>
   ${o.sent?`<div class="box fill"><b>Danke für dein Feedback!</b><p>Deinen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde schicke ich dir per E-Mail. In meinem Newsletter „Post mit rotem Faden“ erfährst du von neuen Angeboten und Rabatten, dazu kommen alle drei Wochen Tipps für dein Forschungsprojekt.</p><a class="btn o" href="${LINKS.nl}" target="_blank" rel="noopener">Zum Newsletter</a></div>`:""}
@@ -713,8 +727,8 @@ function taskEdit(t){const id=bindObj(t);
   <div class="two"><button class="btn" data-act="closeTask">Fertig</button><button class="btn o" data-act="delTask" data-id="${t.id}">Löschen</button></div></div>`}
 document.addEventListener("change",e=>{const t=e.target;if(t.dataset.actSel==="kap"){const x=findT(t.dataset.id);x.kap=t.value?+t.value:null;save();keepScroll(render)}});
 function totalBox(big){const n=S.tasks.length,d=S.tasks.filter(t=>t.done).length,p=n?Math.round(d/n*100):0;
-  return big?`<div class="q"><span class="k">Alle Aufgaben</span><div class="row" style="align-items:flex-end"><span class="bignum">${p} %</span><span class="m">${d} von ${n} erledigt</span></div><div class="bar thick"><i style="width:${p}%"></i></div></div>`
-  :`<div class="q"><div class="row"><span class="k">Aufgaben gesamt</span><b>${d} von ${n} · ${p} %</b></div><div class="bar thick"><i style="width:${p}%"></i></div></div>`}
+  return big?`<div class="q">${kI("Alle Aufgaben","Der große Balken zählt alle Aufgaben zusammen. Darunter siehst du, wie weit du bei Denk-, Klärungs- und Fleißaufgaben bist.")}<div class="row" style="align-items:flex-end"><span class="bignum">${p} %</span><span class="m">${d} von ${n} erledigt</span></div><div class="bar thick"><i style="width:${p}%"></i></div></div>`
+  :`<div class="q"><div class="row">${kI("Aufgaben gesamt","Tippe auf eine Aufgabe, um Art, Aufwand, Kapitel und Muss oder Kann festzulegen. Denkaufgaben brauchen einen klaren Kopf, Klärungsaufgaben sind in 10 bis 15 Minuten erledigt, Fleißaufgaben sind viel Arbeit mit wenig Kopf. „Zuerst“ holt eine Aufgabe nach oben.")}<b>${d} von ${n} · ${p} %</b></div><div class="bar thick"><i style="width:${p}%"></i></div></div>`}
 function typeBars(){const r=Object.keys(ART).map(k=>{const a=S.tasks.filter(t=>t.art===k);return [ARTK[k],a.filter(t=>t.done).length,a.length]});const no=S.tasks.filter(t=>!t.art);if(no.length)r.push(["ohne Art",no.filter(t=>t.done).length,no.length]);
   return `<div class="q">${r.map(([l,d,n])=>`<div class="typ"><span>${l}</span><div class="bar"><i style="width:${n?d/n*100:0}%"></i></div><span class="m">${d}/${n}</span></div>`).join("")}</div>`}
 function vAufgaben(){const F=view.f;
@@ -729,9 +743,8 @@ function vAufgaben(){const F=view.f;
   ${bdLines().length&&!S.bdDone?`<div class="box fill"><p>In deinem Braindump stehen ${bdLines().length} Zeilen. Als Aufgaben übernehmen?</p><button class="btn" data-act="importBD">Aus meinem Braindump übernehmen</button></div>`:""}
   ${parkBox()}${formalCard(true)}
   <div class="q">${fseg("st",[["offen","Offen"],["erledigt","Erledigt"],["alle","Alle"]])}${fseg("art",[["alle","Alle"],["d","Denken"],["k","Klären"],["f","Fleiß"],["ohne","Unsortiert"]])}</div>
-  ${ts.length?`<div class="tl">${ts.map(t=>taskRow(t)).join("")}</div>`:`<p class="m">${S.tasks.length?"Keine Aufgaben für diesen Filter.":"Noch keine Aufgaben. Leg los mit deinem Braindump."}</p>`}
-  <p class="m">Tippe auf eine Aufgabe, um Art, Aufwand, Kapitel und Muss oder Kann festzulegen.</p>`}
-function parkBox(){if(!S.park.length)return"";return `<div class="box acc"><span class="k r">Geparkte Gedanken · ${S.park.length}</span><p class="m">Was ist es? Tippe die Art an, dann rückt es als Aufgabe in deine Liste. Mit × löschst du es.</p>${S.park.map((p,i)=>`<div class="q" style="padding-top:8px;border-top:1px solid var(--line)"><div class="row" style="align-items:center"><span style="flex:1;min-width:0;overflow-wrap:anywhere">${esc(p.t)} <span class="m">· ${fmtShort(p.d)}</span></span><button class="x" data-act="parkDel" data-i="${i}" aria-label="Löschen">×</button></div><div class="seg">${Object.keys(ART).map(k=>`<button data-act="parkToTask" data-i="${i}" data-art="${k}">${ARTK[k]}</button>`).join("")}<button data-act="parkToTask" data-i="${i}" data-art="">weiß nicht</button></div></div>`).join("")}</div>`}
+  ${ts.length?`<div class="tl">${ts.map(t=>taskRow(t)).join("")}</div>`:`<p class="m">${S.tasks.length?"Keine Aufgaben für diesen Filter.":"Noch keine Aufgaben. Leg los mit deinem Braindump."}</p>`}`}
+function parkBox(){if(!S.park.length)return"";return `<div class="box acc">${kI("Geparkte Gedanken · "+S.park.length,"Tippe die Art an, dann rückt der Gedanke als Aufgabe in deine Liste. Mit × löschst du ihn.","r")}${S.park.map((p,i)=>`<div class="q" style="padding-top:8px;border-top:1px solid var(--line)"><div class="row" style="align-items:center"><span style="flex:1;min-width:0;overflow-wrap:anywhere">${esc(p.t)} <span class="m">· ${fmtShort(p.d)}</span></span><button class="x" data-act="parkDel" data-i="${i}" aria-label="Löschen">×</button></div><div class="seg">${Object.keys(ART).map(k=>`<button data-act="parkToTask" data-i="${i}" data-art="${k}">${ARTK[k]}</button>`).join("")}<button data-act="parkToTask" data-i="${i}" data-art="">weiß nicht</button></div></div>`).join("")}</div>`}
 function formalCard(always){const miss=INHALT.formal.filter(f=>!S.tasks.some(t=>t.t===f));if(!miss.length||S.formalOff&&!always)return"";
   return `<details class="box"><summary>Vorschlag: formale Fleißaufgaben (${miss.length})</summary><p class="m">Wenn du sie schon jetzt einplanst, bleiben die letzten fünf Tage frei fürs Überarbeiten.</p><div class="grp">${miss.map(f=>`<button class="pick" data-act="addFormal" data-t="${esc(f)}"><span class="pl">+</span><span>${esc(f)}</span></button>`).join("")}</div><button class="btn o" data-act="addAllFormal">Alle übernehmen</button></details>`}
 
@@ -747,9 +760,8 @@ function zeitBox(){const z=zeitCheck();
   if(z.level==="leer")return `<div class="box"><span class="k">Zeit-Check</span><p class="m">Sobald deine Aufgaben in der Liste stehen, schätzt die App hier, ob die Zeit reicht.</p></div>`;
   if(z.level==="p3")return `<div class="box"><span class="k">Zeit-Check</span><p>Du bist im Abschluss. Offen sind noch ${z.open} Muss-Aufgaben. Jetzt zählt Überarbeiten, nicht Neues.</p></div>`;
   const tx={ok:["Das passt.","Nach grober Schätzung reicht deine Zeit für die Muss-Aufgaben."],knapp:["Knapp, aber machbar.","Bleib bei den Muss-Aufgaben und nutz die Puffertage nur, wenn es nötig ist."],eng:["Das wird eng.","Sortier noch einmal ehrlich: Was ist wirklich Muss? Kann-Aufgaben schiebst du ans Ende. Sprich früh mit deiner Betreuung über eine Verlängerung, falls es sie gibt."]}[z.level];
-  return `<div class="box ${z.level==="eng"?"acc":""}"><span class="k ${z.level==="eng"?"r":""}">Zeit-Check</span><p><b>${tx[0]}</b> ${tx[1]}</p>
+  return `<div class="box ${z.level==="eng"?"acc":""}">${kI("Zeit-Check","Grobe Schätzung: große Denkaufgabe 1 Tag, mittlere Denkaufgabe und Fleißaufgabe je ½ Tag, kleine ¼ Tag, Klärungsaufgaben 10 pro Tag."+(z.kann?" "+z.kann+" Kann-Aufgaben sind nicht mitgezählt.":""),z.level==="eng"?"r":"")}<p><b>${tx[0]}</b> ${tx[1]}</p>
   <div class="two">${tile((Math.round(z.need*2)/2+"").replace(".",","),"Arbeitstage für offene Muss-Aufgaben")}${tile(z.avail,"Arbeitstage bis zum Puffer")}</div>
-  <p class="m">Grobe Schätzung: große Denkaufgabe 1 Tag, mittlere und Fleißaufgaben ½ Tag, kleine ¼ Tag, Klärungsaufgaben 10 pro Tag.${z.kann?" "+z.kann+" Kann-Aufgaben sind nicht mitgezählt.":""}</p>
   ${z.level==="eng"?`<a class="btn o" href="${LINKS.gespraech}" target="_blank" rel="noopener">Endspurt-Coaching: Erstgespräch anfragen</a>`:""}</div>`}
 function vFortschritt(){const t=today();const w=where(t);const P=plan();
   const last=Array.from({length:7},(_,i)=>addDays(t,i-6));const mx=Math.max(60,...last.map(d=>Math.max(minsOn(d),goalOn(d))));
@@ -762,11 +774,11 @@ function vFortschritt(){const t=today();const w=where(t);const P=plan();
   const n=S.gl.length,cnt=[0,1,2].map(a=>S.gl.filter(g=>g.a===a).length);
   return `${totalBox(true)}${typeBars()}<hr>
   <div class="q"><span class="k">Dein Monat</span>${monthBar(t)}<p class="m">${w.pre?"Startet am "+fmtDate(P.st,true):w.post?"Vorbei":countdown()}</p></div><hr>
-  <div class="q"><div class="row"><span class="k">Arbeitszeit · letzte 7 Tage</span><span class="m">Strich = dein Ziel</span></div>${chart}</div>
+  <div class="q">${kI("Arbeitszeit · letzte 7 Tage","Jeder Balken zeigt deine Fokuszeit an einem Tag. Der schwarze Strich ist dein Ziel aus dem Morgen-Check-in. Hast du es erreicht, wird der Balken kräftig rot.")}${chart}</div>
   <div class="tiles">${tile(n1(tot/60),"Stunden gesamt")}${tile(blocks,"Fokusblöcke")}${tile(daysOn+"/"+past,"Tage dran")}</div>
   <p class="m">Diese Woche: ${hm(wkMin)}${eAvg!=null?` · Energie im Schnitt ${n1(eAvg)} von 5`:""}${slMode?` · Schlaf meist ${slMode}`:""}</p><hr>
-  <div class="q"><div class="row"><span class="k">Gliederung · ${cnt[2]} von ${n} fertig</span></div>
-  ${n?`<div class="glbar">${S.gl.map(g=>`<i class="a${g.a}"></i>`).join("")}</div><p class="m">grau offen · hell begonnen · rot fertig</p>`:""}
+  <div class="q">${kI("Gliederung · "+cnt[2]+" von "+n+" fertig","Trag deine Kapitel ein und gib jedem einen Stand. Im Balken ist grau offen, hell begonnen und rot fertig.")}
+  ${n?`<div class="glbar">${S.gl.map(g=>`<i class="a${g.a}"></i>`).join("")}</div>`:""}
   ${S.gl.map((g,i)=>{const id=bindObj(g);return `<div class="gl"><input type="text" aria-label="Kapitel ${i+1}" placeholder="z. B. 2 Theorie" data-b="${id}" data-k="t" value="${esc(g.t)}"><button class="x" data-act="glDel" data-i="${i}" aria-label="Kapitel entfernen">×</button><div class="seg">${STAND.map((l,a)=>`<button class="a${a}" data-act="amp" data-i="${i}" data-v="${a}" aria-pressed="${g.a===a}">${l}</button>`).join("")}</div></div>`}).join("")}
   <button class="btn o" data-act="glAdd">+ Kapitel</button></div><hr>
   ${zeitBox()}`}
@@ -803,14 +815,14 @@ function vHilfe(){return `<h1>Was ist gerade los?</h1><p class="lead">Tipp an, w
 function vIch(){const ab=S.goal==="abgeben";
   return `<h1>Mein Monat</h1>
   <div class="q"><span class="k">Mein Ziel</span><div class="seg"><button data-act="goal" data-v="abgeben" aria-pressed="${ab}">Abgeben</button><button data-act="goal" data-v="spur" aria-pressed="${!ab}">In die Spur</button></div></div>
-  ${ab?`<div class="two">${dateIn(S,"deadline","Abgabefrist")}${dateIn(S,"start","Start")}</div><p class="m">Verlängert? Einfach das neue Datum eintragen.</p>`:dateIn(S,"start","Starttag")}
+  ${ab?`<div class="two">${dateIn(S,"deadline","Abgabefrist")}${dateIn(S,"start","Start")}</div>`:dateIn(S,"start","Starttag")}
   ${ta(S,"warum","Mein Warum",null,2)}
   ${choice(S,"ki",["Ohne KI","Mit KI"],"KI")}
-  <div class="q"><span class="k">Wochenplan</span><div class="seg"><button data-act="woche" data-v="0" aria-pressed="${!S.woche}">Aus</button><button data-act="woche" data-v="1" aria-pressed="${!!S.woche}">An</button></div><p class="m">Feste Arbeitszeiten und Termine für die Woche. Freiwillig, der Morgen-Check-in reicht auch.</p></div>
+  <div class="q">${kI("Wochenplan","Feste Arbeitszeiten und Termine für die Woche. Freiwillig, der Morgen-Check-in reicht auch.")}<div class="seg"><button data-act="woche" data-v="0" aria-pressed="${!S.woche}">Aus</button><button data-act="woche" data-v="1" aria-pressed="${!!S.woche}">An</button></div></div>
   <button class="btn o" data-act="tour">Einführung noch einmal ansehen</button>
   ${TESTV?`<div class="box fill"><span class="k r">Testversion</span><p>Danke, dass du den ganzen Monat testest! Am Ende freue ich mich über dein Feedback. Als Dankeschön bekommst du einen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde.</p><button class="btn" data-act="sub" data-t="feedback">Feedback geben</button></div>`:""}
   ${installHelp()}
-  <div class="box"><span class="k">Sicherung</span><p class="m">Deine Daten liegen nur auf diesem Gerät. Mit einer Sicherungsdatei nimmst du sie auf ein anderes Gerät mit.</p><div class="two"><button class="btn o" data-act="export">Herunterladen</button><button class="btn o" data-act="import">Laden</button></div><input type="file" id="imp" accept=".json,application/json" hidden></div>
+  <div class="box">${kI("Sicherung","Deine Daten liegen nur auf diesem Gerät. Mit einer Sicherungsdatei nimmst du sie auf ein anderes Gerät mit.")}<div class="two"><button class="btn o" data-act="export">Herunterladen</button><button class="btn o" data-act="import">Laden</button></div><input type="file" id="imp" accept=".json,application/json" hidden></div>
   <button class="lnk m" data-act="reset">Alles löschen und neu starten</button>
   ${storageOK?"":`<p class="m"><b>Speichern ist in diesem Browser nicht möglich.</b></p>`}
   <p class="m">Reset &amp; Flow · Dr. Mascha Körner · Forschung mit rotem Faden</p>`}
@@ -911,6 +923,7 @@ const ACT={
  parkToTask(t){const p=S.park.splice(+t.dataset.i,1)[0];const x=addTask(p.t);if(t.dataset.art)x.art=t.dataset.art;save();keepScroll(render);toast("In der Aufgabenliste")},
  parkDel(t){S.park.splice(+t.dataset.i,1);save();keepScroll(render)},
  ich(){go("ich")},
+ info(t){const [h,x]=INFOS[+t.dataset.i]||["",""];const p=$("#pop");p.querySelector("b").textContent=h;p.querySelector("p").textContent=x;p.hidden=false;p.querySelector("button").focus()},
  fbSend(){S.fb.sent=today();save();location.href="mailto:kontakt@drmaschakoerner.de?subject="+encodeURIComponent("Feedback Testphase Reset & Flow")+"&body="+encodeURIComponent(fbText());setTimeout(()=>keepScroll(render),400)},
  export(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="reset-and-flow-sicherung-"+today()+".json";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)},
  import(){const f=$("#imp");f.onchange=()=>{const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||d.v!==2||!Array.isArray(d.tasks))throw 0;S=Object.assign(blank(),d);S.demo=false;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}toast("Sicherung geladen");go("heute")}catch(e){toast("Diese Datei passt nicht.")}};r.readAsText(f.files[0])};f.click()},
@@ -937,6 +950,8 @@ load();
 if(S.timer&&!S.demo)view.sub={t:"timer"};
 render();
 $("#parkbtn").addEventListener("click",()=>{if(S.started)ACT.park()});
+$("#pop").addEventListener("click",e=>{if(e.target.id==="pop"||e.target.id==="popx")$("#pop").hidden=true});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#pop").hidden=true});
 $("#ichbtn").addEventListener("click",()=>{if(S.started)ACT.ich()});
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("sw.js").catch(()=>{})}
 
