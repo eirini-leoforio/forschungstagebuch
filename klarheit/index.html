@@ -1,390 +1,258 @@
 <!doctype html>
 <html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
 <title>Reset &amp; Flow</title>
-<meta name="theme-color" content="#A3402F">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121615" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Reset &amp; Flow">
 <style>
-@font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215}
-@font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-ext-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}
-@font-face{font-family:"Source Serif 4";src:url(fonts/source-serif-4-latin-opsz-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0000-00FF,U+2000-206F,U+20AC}
-@font-face{font-family:"Source Serif 4";src:url(fonts/source-serif-4-latin-opsz-italic.woff2) format("woff2");font-weight:200 900;font-style:italic;font-display:swap;unicode-range:U+0000-00FF,U+2000-206F,U+20AC}
-/* Layout: eine Spalte wie eine Buchseite, rote Faden-Linie links am Innenrand, Navigation unten */
-:root{
-  --paper:#FAF8F4; --sheet:#FFFFFF; --ink:#1F2E2D; --soft:#4F625F; --muted:#7A8A87;
-  --petrol:#2E5D5B; --petrol-dark:#24504E; --nebel:#EEF3F2; --line:#D6DEDC;
-  --faden:#A3402F; --faden-soft:#F3E3DE; --gold:#E9C9A6;
-  --good:#3B7A57; --warn:#B7791F;
-  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
-  --sans:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#14201F; --sheet:#1B2928; --ink:#E7EEEC; --soft:#B5C4C1; --muted:#8FA19E;
-  --petrol:#7FB3AE; --petrol-dark:#9CC7C2; --nebel:#22312F; --line:#33464390;
-  --faden:#E07B66; --faden-soft:#3A2622; --gold:#E9C9A6; --good:#7CC39A; --warn:#E0B060; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --paper:#14201F; --sheet:#1B2928; --ink:#E7EEEC; --soft:#B5C4C1; --muted:#8FA19E;
-  --petrol:#7FB3AE; --petrol-dark:#9CC7C2; --nebel:#22312F; --line:#33464390;
-  --faden:#E07B66; --faden-soft:#3A2622; --gold:#E9C9A6; --good:#7CC39A; --warn:#E0B060; color-scheme:dark}
+/* Reset & Flow · minimalistischer Stil (Fassung 2, 21.11.2026)
+   Eine Schrift (Source Sans 3), drei Größen (13/15/22), eine Akzentfarbe (Rot). */
+@font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-ext-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{--bg:#FFFFFF;--ink:#1C2423;--mute:#6E7876;--line:#E4E7E6;--soft:#F5F5F3;--red:#A3402F;--redsoft:#F6E9E6;--redmid:#E7C8C1;--reddark:#5C2219;--onink:#FFFFFF;--onred:#FFFFFF;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121615;--ink:#E9EDEC;--mute:#98A3A1;--line:#2A3231;--soft:#1B2120;--red:#D0674F;--redsoft:#33201B;--redmid:#6A3A30;--reddark:#F0B6A8;--onink:#121615;--onred:#FFFFFF;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121615;--ink:#E9EDEC;--mute:#98A3A1;--line:#2A3231;--soft:#1B2120;--red:#D0674F;--redsoft:#33201B;--redmid:#6A3A30;--reddark:#F0B6A8;--onink:#121615;--onred:#FFFFFF;color-scheme:dark}
 *{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,sans-serif;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+body.setup,body.full{padding-bottom:0}
 button,input,textarea,select{font:inherit;color:inherit}
-button{cursor:pointer}
-:focus-visible{outline:2px solid var(--faden);outline-offset:2px}
-.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px calc(96px + env(safe-area-inset-bottom,0px))}
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
-header.top .in{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;display:flex;align-items:center;gap:12px}
-.brand{font-family:var(--serif);font-weight:600;font-size:17px;color:var(--petrol-dark);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.brand small{display:block;font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faden)}
-.pill{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--petrol-dark);background:var(--nebel);border-radius:999px;padding:4px 10px;white-space:nowrap;font-variant-numeric:tabular-nums}
-nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--sheet);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
-nav.tabs .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
-nav.tabs button{background:none;border:0;padding:8px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:600;color:var(--muted)}
-nav.tabs button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-nav.tabs button[aria-current="page"]{color:var(--faden)}
-h1,h2,h3{font-family:var(--serif);color:var(--petrol-dark);text-wrap:balance;margin:0}
-h1{font-size:28px;line-height:1.15;font-weight:600}
-h2{font-size:21px;line-height:1.25;font-weight:600}
-h3{font-size:17px;font-weight:600}
-.eyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faden);margin-bottom:4px}
-.lead{color:var(--soft);font-size:16px;margin:6px 0 0}
-.muted{color:var(--muted);font-size:14px}
-.stack{display:flex;flex-direction:column;gap:14px}
-.page{background:var(--sheet);border:1px solid var(--line);border-left:3px solid var(--faden);border-radius:4px;padding:18px 16px;display:flex;flex-direction:column;gap:16px}
-.sec{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--petrol)}
-.sec::after{content:"";flex:1;height:1px;background:var(--line)}
-.sec svg{width:20px;height:20px;stroke:var(--petrol);fill:none;stroke-width:1.5}
-.q{font-weight:600;color:var(--petrol-dark);font-size:15px;margin-bottom:6px;display:block}
-.q .hn{display:block;font-weight:400;color:var(--muted);font-size:13px}
-textarea,input[type=text],input[type=date]{width:100%;background:var(--nebel);border:1px solid transparent;border-bottom:1px solid var(--line);border-radius:3px;padding:9px 10px;font-size:16px;line-height:1.45;resize:vertical}
-textarea{min-height:64px}
-textarea:focus,input:focus{border-color:var(--petrol);outline:none;background:var(--sheet)}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:7px 14px;font-size:15px;font-weight:600;color:var(--soft);min-height:40px}
-.chip[aria-pressed="true"]{background:var(--petrol-dark);border-color:var(--petrol-dark);color:var(--sheet)}
-.scale{display:grid;grid-template-columns:repeat(9,1fr);gap:4px}
-.scale.s10{grid-template-columns:repeat(10,1fr)}
-.scale button{aspect-ratio:1;max-width:100%;border:1px solid var(--line);background:var(--sheet);border-radius:50%;font-weight:700;font-size:15px;color:var(--soft);padding:0;font-variant-numeric:tabular-nums}
-.scale button[aria-pressed="true"]{background:var(--faden);border-color:var(--faden);color:#fff}
-.scale-l{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px}
-.todo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.todo input[type=text]{flex:1;min-width:0}
-.cbx{width:28px;height:28px;flex:none;border:1.5px solid var(--petrol);border-radius:4px;background:var(--sheet);display:grid;place-items:center;padding:0}
-.cbx[aria-pressed="true"]{background:var(--petrol);}
-.cbx[aria-pressed="true"]::after{content:"";width:7px;height:13px;border:solid var(--sheet);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
-.band{background:var(--petrol-dark);color:#fff;border-radius:3px;padding:16px 16px 18px;position:relative}
-:root[data-theme="dark"] .band{background:#0E1918}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .band{background:#0E1918}}
-.band .k{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-.band p{margin:0;font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.45}
-.band .src{display:block;margin-top:8px;font-family:var(--sans);font-style:normal;font-size:12px;color:#C9D8D5}
-.fact{background:var(--nebel);border-radius:3px;padding:14px 16px}
-.fact .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faden);margin-bottom:4px}
-.fact h3{margin-bottom:4px}
-.fact p{margin:0;color:var(--ink)}
-.fact .src{display:block;margin-top:8px;font-size:12px;color:var(--muted)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:4px;padding:12px 18px;font-weight:700;font-size:16px;background:var(--faden);color:#fff;min-height:46px;text-decoration:none}
-.btn.sec2{background:var(--nebel);color:var(--petrol-dark)}
-.btn.ghost{background:none;color:var(--petrol-dark);border:1px solid var(--line)}
-.btn.small{padding:8px 12px;min-height:38px;font-size:14px}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.two>*{min-width:0}
-@media (max-width:420px){.two{grid-template-columns:1fr}}
-.daynav{display:flex;align-items:center;gap:8px}
-.daynav .t{flex:1;min-width:0}
-.iconbtn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--sheet);display:grid;place-items:center;color:var(--petrol-dark);flex:none}
-.iconbtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
-.iconbtn:disabled{opacity:.35}
-.card{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:14px 16px}
-.list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:4px;background:var(--sheet);overflow:hidden}
-.list button.it{display:flex;align-items:center;gap:12px;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:12px 14px;width:100%}
-.list button.it:first-child{border-top:0}
-.list .it .l{flex:1;min-width:0}
-.list .it .l b{display:block;font-weight:600;color:var(--ink)}
-.list .it .l span{font-size:13px;color:var(--muted)}
-.dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--line)}
-.dot.f{background:var(--petrol)} .dot.a{background:var(--gold)} .dot.r{background:var(--faden)}
-.tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--faden-soft);color:var(--faden);white-space:nowrap}
-.tag.ok{background:var(--nebel);color:var(--petrol)}
-.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.tile{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:12px 14px}
-.tile .v{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--petrol-dark);line-height:1.1;font-variant-numeric:tabular-nums}
-.tile .l{font-size:13px;color:var(--muted)}
-.seg{display:inline-flex;background:var(--nebel);border-radius:999px;padding:3px}
-.seg button{border:0;background:none;padding:7px 14px;border-radius:999px;font-weight:600;font-size:14px;color:var(--soft)}
-.seg button[aria-pressed="true"]{background:var(--sheet);color:var(--petrol-dark);box-shadow:0 1px 2px #0002}
-.chart{width:100%;height:auto;display:block}
-.chart text{fill:var(--muted);font-family:var(--sans);font-size:11px}
-.bars{display:flex;flex-direction:column;gap:8px}
-.bar{display:grid;grid-template-columns:96px 1fr 44px;gap:8px;align-items:center;font-size:14px}
-.bar .tr{height:14px;background:var(--nebel);border-radius:2px;overflow:hidden;display:flex}
-.bar .tr i{display:block;height:100%;background:var(--petrol)}
-.bar .tr i.r{background:var(--faden)} .bar .tr i.g{background:var(--gold)}
-.bar .n{text-align:right;font-variant-numeric:tabular-nums;color:var(--soft)}
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--soft)}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
-.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.cal div{aspect-ratio:1;border-radius:3px;background:var(--nebel);font-size:11px;display:grid;place-items:center;color:var(--muted);font-variant-numeric:tabular-nums}
-.cal div.f{background:var(--petrol);color:var(--sheet)} .cal div.as{background:var(--gold);color:#3b2a12} .cal div.af{background:var(--faden);color:#fff}
-.cal div.h{background:none}
-.mtab{overflow-x:auto}
-.mtab table{border-collapse:collapse;font-size:14px;min-width:100%}
-.mtab th,.mtab td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:center;font-variant-numeric:tabular-nums}
-.mtab th:first-child,.mtab td:first-child{text-align:left}
-.mtab td.lo{color:var(--faden);font-weight:700}
-.rateitem{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;margin-bottom:6px}
-.rateitem input{min-width:0}
-.rsel{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
-.rsel button{border:0;background:var(--sheet);padding:6px 9px;font-weight:700;color:var(--soft);font-size:14px;min-width:34px}
-.rsel button[aria-pressed="true"]{background:var(--petrol-dark);color:var(--sheet)}
-.x{border:0;background:none;color:var(--muted);font-size:22px;line-height:1;padding:4px 6px}
-.ms{background:linear-gradient(var(--faden-soft),var(--sheet));border:1px solid var(--line);border-left:3px solid var(--faden);border-radius:4px;padding:18px 16px;display:flex;flex-direction:column;gap:14px}
-.ms h1{font-size:34px}
-.story{border-left:3px solid var(--gold);padding-left:12px;color:var(--soft)}
-.story .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faden)}
-.story p{margin:6px 0 0;font-family:var(--serif);font-style:italic}
-.offer{background:var(--nebel);border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:8px}
-.offer .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faden)}
-.offer p{margin:0}
-a{color:var(--petrol-dark)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:999px;font-size:14px;font-weight:600;z-index:9;opacity:0;transition:opacity .25s;pointer-events:none}
-.toast.on{opacity:1}
-.hit{background:var(--faden-soft);border-radius:2px;padding:0 2px}
-.demo{background:var(--faden-soft);color:var(--faden);border-radius:4px;padding:10px 14px;font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.hero{padding:22px 0 6px}
-.hero h1{font-size:34px}
-.thread{height:3px;width:72px;background:var(--faden);margin:14px 0}
-details.help{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:12px 14px}
-details.help summary{font-weight:600;color:var(--petrol-dark);cursor:pointer}
-details.help ol{margin:8px 0 0;padding-left:20px;color:var(--soft)}
-#print{display:none}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-@media print{
-  body{background:#fff;color:#000}
-  header.top,nav.tabs,.wrap,.toast,body::before{display:none!important}
-  #print{display:block;font-family:var(--sans);font-size:11pt;color:#000}
-  #print h1,#print h2{color:#24504E}
-  #print .pd{break-inside:avoid;border-left:2px solid #A3402F;padding-left:10px;margin:0 0 14px}
-  #print .pw{break-before:page}
-}
-@font-face{font-family:"Caveat";src:url(fonts/caveat-latin.woff2) format("woff2");font-weight:400 600;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2191,U+2193}
-@font-face{font-family:"Caveat";src:url(fonts/caveat-latin-ext.woff2) format("woff2");font-weight:400 600;font-display:swap;unicode-range:U+0100-02BA,U+1E00-1E9F,U+2020,U+20A0-20AB}
-:root{--hand:"Caveat","Segoe Print","Bradley Hand",cursive;--handink:var(--ink);--rule:#DCE4E8}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--rule:#2C3D3B}}
-:root[data-theme="dark"]{--rule:#2C3D3B}
-nav.tabs .in{grid-template-columns:repeat(5,1fr)}
-nav.tabs button{font-size:11px}
-.pill{text-align:right;line-height:1.25}
-.pill small{display:block;font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--muted)}
-body.writing nav.tabs{display:none}
-/* Buchansicht */
-.paperpage{background-color:var(--sheet);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,var(--rule) 33px,var(--rule) 34px);background-position:0 12px;border:1px solid var(--line);border-radius:3px;padding:12px 16px 20px 30px;position:relative;box-shadow:0 1px 0 var(--line),0 6px 18px -12px #0003}
-.paperpage::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--faden);opacity:.75}
-.paperpage .date{font-family:var(--serif);font-size:20px;color:var(--petrol-dark);line-height:34px;font-weight:600}
-.paperpage .lbl{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:17px;margin-top:17px}
-.paperpage .hw{font-family:var(--hand);font-size:23px;line-height:34px;color:var(--handink);white-space:pre-wrap;overflow-wrap:anywhere}
-.paperpage .hw.s{font-size:21px}
-.paperpage .meta{font-family:var(--hand);font-size:22px;line-height:34px;color:var(--handink)}
-.paperpage .circ{display:inline-block;border:1.5px solid var(--handink);border-radius:50%;padding:0 7px;line-height:24px;margin:0 2px}
-.paperpage .tick{font-family:var(--hand);font-size:22px;line-height:34px;color:var(--handink)}
-.paperpage .band{margin:17px -4px 0}
-.paperpage .moonsun{display:flex;align-items:center;gap:8px;margin-top:17px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--petrol);line-height:17px}
-.paperpage .tick{display:flex;align-items:center;gap:8px}
-.paperpage .hbox{width:24px;height:24px;transform:rotate(-2.5deg);flex:none;fill:none;stroke:var(--handink);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
-.paperpage .hbox .hk{stroke-width:2.2}
-.paperpage .penbtn{margin-left:auto;display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:5px 11px;min-height:32px;font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--soft)}
-.paperpage .moonsun .penbtn svg{width:14px;height:14px;stroke:currentColor}
-.paperpage .moonsun svg{width:18px;height:18px;stroke:var(--petrol);fill:none;stroke-width:1.5}
-.paperpage .empty{font-size:14px;color:var(--muted);line-height:34px;font-style:italic}
-.startday{display:flex;flex-direction:column;gap:14px}
-.bigchoice{display:grid;grid-template-columns:1fr;gap:10px}
-.bigchoice button{border:1px solid var(--line);background:var(--sheet);border-radius:4px;padding:16px;text-align:left;font-family:var(--serif);font-size:19px;font-weight:600;color:var(--petrol-dark);display:flex;justify-content:space-between;align-items:center;min-height:60px}
-.bigchoice button span{font-family:var(--sans);font-size:13px;font-weight:400;color:var(--muted);display:block}
-.bigchoice button svg{width:22px;height:22px;stroke:var(--faden);fill:none;stroke-width:1.8;flex:none}
-.switch{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:4px;padding:12px 14px;background:var(--sheet);text-align:left;width:100%}
-.switch .tr{width:46px;height:28px;border-radius:999px;background:var(--line);position:relative;flex:none;transition:background .2s}
-.switch .tr::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:left .2s}
-.switch[aria-checked="true"] .tr{background:var(--faden)}
-.switch[aria-checked="true"] .tr::after{left:21px}
-.switch b{display:block;color:var(--ink);font-weight:600}
-.switch small{color:var(--muted);font-size:13px}
-.notice{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--sheet);border-radius:4px;padding:10px 14px;width:100%;text-align:left;font-weight:600;color:var(--petrol-dark)}
-.filters{display:flex;flex-direction:column;gap:10px;background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:12px}
-.filters .seg{flex-wrap:wrap}
-.karte{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:18px 16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 20px -14px #0004}
-.karte .ic{width:44px;height:44px;border-radius:50%;background:var(--faden-soft);display:grid;place-items:center}
-.karte .ic svg{width:24px;height:24px;stroke:var(--faden);fill:none;stroke-width:1.6}
-.karte ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
-.karte .say{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--petrol-dark);border-left:3px solid var(--gold);padding-left:10px}
-.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.hgrid button{border:1px solid var(--line);background:var(--sheet);border-radius:4px;padding:12px;text-align:left;min-height:74px;display:flex;flex-direction:column;gap:4px}
-.hgrid button b{font-weight:600;color:var(--petrol-dark);font-size:15px;line-height:1.25}
-.hgrid button span{font-size:12px;color:var(--muted)}
-.hgrid button[aria-pressed="true"]{border-color:var(--faden);box-shadow:inset 0 0 0 1px var(--faden)}
-.tq{display:flex;flex-direction:column;gap:6px;padding:10px 0;border-top:1px solid var(--line)}
-.tq:first-child{border-top:0}
-.tq .opts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.tq .opts button{border:1px solid var(--line);background:var(--sheet);border-radius:4px;padding:8px 4px;font-size:12px;font-weight:600;color:var(--soft);min-height:44px;line-height:1.2}
-.tq .opts button[aria-pressed="true"]{background:var(--petrol-dark);border-color:var(--petrol-dark);color:var(--sheet)}
-input[type=date],input[type=time]{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%;box-sizing:border-box;display:block;min-height:44px;text-align:left}
-input[type=time]{width:100%;background:var(--nebel);border:1px solid transparent;border-bottom:1px solid var(--line);border-radius:3px;padding:9px 10px;font-size:16px}
-/* Ergänzungen Klarheit statt Chaos */
-:root{--gelb:#D9A441;--rot:#C0533E;--gruen:#3B7A57;--a-d:var(--petrol);--a-k:#C08A2E;--a-f:#8A6E9E}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--a-k:#E0B060;--a-f:#B89BCB}}
-:root[data-theme="dark"]{--a-k:#E0B060;--a-f:#B89BCB}
-.parkbtn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:5px 11px;min-height:34px;font-size:13px;font-weight:700;color:var(--faden)}
-.parkbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
-body.setup nav.tabs{display:none}
-.hero .logo{width:64px;height:64px;border-radius:15px;display:block;margin-bottom:14px;box-shadow:0 8px 18px -12px #0006}
-.bigchoice button[aria-pressed="true"]{border-color:var(--faden);box-shadow:inset 0 0 0 1px var(--faden);background:var(--faden-soft)}
-.chip.wide{text-align:left;border-radius:12px;line-height:1.3;padding:9px 14px}
-/* Phasenleiste */
-.phbar{position:relative;display:flex;gap:3px;border-radius:4px;overflow:visible}
-.ph{position:relative;min-width:0;background:var(--nebel);border-radius:3px;padding:7px 8px 6px;display:flex;flex-direction:column;gap:0;overflow:hidden}
-.ph b{font-family:var(--serif);font-size:15px;color:var(--petrol-dark);line-height:1}
-.ph span{font-size:12px;font-weight:700;color:var(--petrol-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.35}
-.ph small{font-size:11px;color:var(--muted);white-space:nowrap}
-.ph.on{background:var(--petrol-dark)}
-.ph.on b,.ph.on span{color:#fff}.ph.on small{color:#C9D8D5}
-.ph .buf{position:absolute;right:0;top:0;bottom:0;background:repeating-linear-gradient(135deg,transparent 0 4px,#0000000f 4px 7px)}
-.ph.on .buf{background:repeating-linear-gradient(135deg,transparent 0 4px,#ffffff22 4px 7px)}
-.phbar .mk{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--faden);border-radius:2px}
-.phdates{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
-.phdates .pb{color:var(--soft)}
-.cd{margin:0;font-size:14px;color:var(--soft)}
-.cd b{color:var(--faden)}
-.steps{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
-.steps li::marker{color:var(--faden);font-weight:700}
-.hint{margin:0;font-size:14px;color:var(--soft);background:var(--nebel);border-left:3px solid var(--gold);padding:8px 12px;border-radius:3px}
-.notice svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;flex:none}
-.notice small{display:block;font-weight:400;font-size:13px;color:var(--muted)}
-.notice.help2 span{display:flex;flex-direction:column}
-.notice.help2 span svg{display:none}
-.notice.warn{border-left-color:var(--faden);color:var(--faden)}
-/* Checkliste */
-.ck{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:10px 0;color:var(--ink)}
-.ck:first-of-type{border-top:0}
-.ck .cbx{margin-top:-2px}
-.ck[aria-pressed="true"] .cbx{background:var(--petrol)}
-.ck[aria-pressed="true"] .cbx::after{content:"";width:7px;height:13px;border:solid var(--sheet);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
-.ck[aria-pressed="true"]>span:last-child{color:var(--muted);text-decoration:line-through}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+a{color:var(--red)}
+b,strong{font-weight:700}
+h1,h2,h3{margin:0;line-height:1.2}
+h1{font-size:22px;font-weight:700}
+h3{font-size:15px;font-weight:700}
+p{margin:0}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+/* Kopfzeile */
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);padding-top:env(safe-area-inset-top)}
+header.top .in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:12px 16px 10px}
+header.top .ttl{font-weight:700;font-size:15px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.top .day{font-size:13px;color:var(--mute);white-space:nowrap}
+.hbtn{border:1px solid var(--line);background:var(--bg);border-radius:6px;min-height:34px;padding:4px 10px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:5px}
+.hbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.hbtn.ico{width:34px;padding:0;justify-content:center}
+body.setup header.top,body.full header.top{display:none}
+
+/* Seite */
+main.wrap{max-width:560px;margin:0 auto;padding:6px 16px 28px;display:flex;flex-direction:column;gap:18px}
+body.setup main.wrap,body.full main.wrap{min-height:100svh;padding-top:calc(18px + env(safe-area-inset-top));padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+.stack{display:flex;flex-direction:column;gap:18px}
+.q{display:flex;flex-direction:column;gap:7px}
+.k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.k.r{color:var(--red)}
+.m{color:var(--mute);font-size:13px}
+.lead{color:var(--mute)}
+.row{display:flex;gap:8px;align-items:baseline;justify-content:space-between}
+.row b{font-size:14px}
+.btns{display:flex;flex-direction:column;gap:8px}
+.grow{flex:1}
+hr{border:0;border-top:1px solid var(--line);margin:0}
+
+/* Knöpfe */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;padding:12px 16px;border-radius:6px;border:1px solid var(--red);background:var(--red);color:var(--onred);font-weight:700;font-size:15px;text-decoration:none;text-align:center}
+.btn.o{background:var(--bg);color:var(--ink);border-color:var(--line)}
+.btn.q2{background:var(--bg);color:var(--mute);border-color:var(--line);font-weight:400;font-size:14px}
+.btn.big{min-height:56px;font-size:17px}
+.btn.sm{width:auto;min-height:38px;padding:7px 14px;font-size:14px}
+.btn svg{width:18px;height:18px;fill:currentColor}
+.lnk{background:none;border:0;padding:6px 0;color:var(--red);font-weight:700;font-size:14px;text-align:left}
+.lnk.m{color:var(--mute);font-weight:400}
+.back{background:none;border:0;padding:4px 0;font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:4px;align-self:flex-start}
+
+/* Segmente (eckig) */
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{background:var(--bg);border:0;border-left:1px solid var(--line);padding:9px 4px;min-height:42px;font-size:14px;line-height:1.2}
+.seg button:first-child{border-left:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--onink);font-weight:700}
+.seg.wrap{grid-auto-flow:row;grid-template-columns:repeat(3,1fr)}
+.seg.wrap button{border-top:1px solid var(--line)}
+.opts{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.opts button{display:flex;align-items:center;gap:10px;text-align:left;background:var(--bg);border:0;border-top:1px solid var(--line);padding:11px 12px;min-height:46px}
+.opts button:first-child{border-top:0}
+.opts button::before{content:"";width:16px;height:16px;border:1.5px solid var(--mute);border-radius:3px;flex:none}
+.opts button[aria-pressed="true"]{font-weight:700}
+.opts button[aria-pressed="true"]::before{background:var(--ink);border-color:var(--ink);box-shadow:inset 0 0 0 3px var(--bg)}
+
+/* Felder */
+input[type=text],input[type=date],input[type=time],input[type=number],textarea,select{width:100%;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:10px 12px;font-size:16px;min-height:44px}
+textarea{resize:vertical;line-height:1.45}
+input[type=date],input[type=time]{-webkit-appearance:none;appearance:none}
+label.q>span:first-child{font-weight:700;font-size:14px}
+
+/* Boxen */
+.box{border:1px solid var(--line);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.box.acc{border-color:var(--red);border-left-width:3px}
+.box.fill{background:var(--redsoft);border-color:var(--redsoft)}
+.box.soft{background:var(--soft);border-color:var(--soft)}
+.box .btn{margin-top:2px}
+
+/* Balken */
+.bar{height:6px;background:var(--soft);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--red);border-radius:3px}
+.bar.thick{height:14px;border-radius:4px}
+.bar.thick i{border-radius:4px}
+.typ{display:grid;grid-template-columns:96px 1fr 40px;gap:8px;align-items:center;font-size:14px}
+.typ .m{text-align:right}
+.bignum{font-size:40px;font-weight:300;line-height:1;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+
+/* Monatsleiste */
+.mbar{position:relative;display:flex;gap:3px}
+.mbar>div{height:8px;border-radius:2px;background:var(--line)}
+.mbar>div.past{background:var(--redmid)}
+.mbar>div.on{background:var(--red)}
+.mlab{display:flex;gap:3px;font-size:12px;color:var(--mute)}
+.mlab span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mlab span.on{color:var(--ink);font-weight:700}
+
+/* Schritte Phase 1/3 */
+.steps5{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.steps5 button{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:7px 2px;font-size:12px;line-height:1.15;color:var(--mute);min-height:44px}
+.steps5 button b{display:block;font-size:14px;color:var(--ink)}
+.steps5 button.done{background:var(--soft)}
+.steps5 button.done b::after{content:" ✓";color:var(--red)}
+.steps5 button[aria-current="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);color:var(--ink)}
+ol.list{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+ol.list li::marker{color:var(--red);font-weight:700}
+
+/* Einstieg */
+.phs{display:flex;flex-direction:column;gap:16px}
+.st{display:grid;grid-template-columns:28px 1fr;gap:12px}
+.st .n{width:28px;height:28px;border-radius:6px;border:1px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:14px}
+.st .n.on{background:var(--red);color:var(--onred);border-color:var(--red)}
+.dots{display:flex;gap:6px;justify-content:center}
+.dots i{width:18px;height:3px;background:var(--line);border-radius:2px}
+.dots i.on{background:var(--red)}
+.logo{width:56px;height:56px;border-radius:12px;display:block}
+
 /* Aufgaben */
-.tlist{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:4px;background:var(--sheet);overflow:hidden}
+.tl{display:flex;flex-direction:column}
 .task{border-top:1px solid var(--line)}
 .task:first-child{border-top:0}
-.trow{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 12px}
-.tbody{flex:1;min-width:0;background:none;border:0;text-align:left;padding:4px 0;color:var(--ink)}
-.tl{display:flex;flex-direction:column;gap:3px;min-width:0}
-.tl b{font-weight:600;overflow-wrap:anywhere}
-.task.done .tl b{color:var(--muted);text-decoration:line-through}
-.tags{display:flex;flex-wrap:wrap;gap:5px}
-.tags i{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.04em;padding:1px 7px;border-radius:999px;background:var(--nebel);color:var(--soft)}
-.tags i.a-d{background:var(--a-d);color:#fff}.tags i.a-k{background:var(--a-k);color:#fff}.tags i.a-f{background:var(--a-f);color:#fff}
-.tags i.none{background:none;border:1px dashed var(--line);color:var(--muted)}
-.tags i.kann{background:var(--faden-soft);color:var(--faden)}
-:root[data-theme="dark"] .tags i.a-d,:root[data-theme="dark"] .tags i.a-k,:root[data-theme="dark"] .tags i.a-f{color:#14201F}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tags i.a-d,:root:not([data-theme="light"]) .tags i.a-k,:root:not([data-theme="light"]) .tags i.a-f{color:#14201F}}
-.starb{width:40px;height:40px;flex:none;border:0;background:none;display:grid;place-items:center;color:var(--line)}
-.starb svg{width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linejoin:round}
-.starb[aria-pressed="true"] svg{fill:var(--gold);stroke:#B7791F}
-.tedit{padding:4px 12px 14px 50px;display:flex;flex-direction:column;gap:8px}
-.tedit .q{margin:4px 0 0}
-.tedit .chip{min-height:36px;padding:5px 12px;font-size:14px}
-.pickrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:10px 12px;color:var(--ink)}
-.pickrow:first-child{border-top:0}
-.pickrow .plus{width:26px;height:26px;flex:none;border-radius:50%;background:var(--nebel);color:var(--petrol-dark);display:grid;place-items:center;font-weight:700}
-.addrow{display:flex;gap:8px}.addrow input{flex:1;min-width:0}
-details.sub summary{font-size:14px;font-weight:600;color:var(--petrol-dark);cursor:pointer}
-details.sub textarea{margin-top:8px}
-.parkit{display:flex;align-items:center;gap:8px}
-.parkit>span{flex:1;min-width:0;overflow-wrap:anywhere}
-.parkit small{display:block;font-size:12px;color:var(--muted)}
-.filters .seg{display:flex;flex-wrap:wrap;border-radius:12px}
-.bar .tr i.a-d{background:var(--a-d)}.bar .tr i.a-k{background:var(--a-k)}.bar .tr i.a-f{background:var(--a-f)}
-.arts{display:flex;flex-direction:column;gap:6px}
-.art{border-left:4px solid;padding:6px 10px;background:var(--nebel);border-radius:3px}
-.art b{display:block;font-size:15px}.art span{font-size:13px;color:var(--soft)}
-.art.a-d{border-color:var(--a-d)}.art.a-k{border-color:var(--a-k)}.art.a-f{border-color:var(--a-f)}
-/* Gliederung */
-.glrow{display:flex;align-items:center;gap:8px}
-.glrow input{flex:1;min-width:0}
-.amp{display:inline-flex;gap:5px;flex:none}
-.am{width:26px;height:26px;border-radius:50%;border:2px solid;background:var(--sheet);padding:0}
-.am0{border-color:var(--rot)}.am1{border-color:var(--gelb)}.am2{border-color:var(--gruen)}
-.am0[aria-pressed="true"]{background:var(--rot)}.am1[aria-pressed="true"]{background:var(--gelb)}.am2[aria-pressed="true"]{background:var(--gruen)}
-.glbar{display:flex;height:12px;border-radius:2px;overflow:hidden;background:var(--nebel)}
-.glbar i{display:block}.glbar .g0{background:var(--rot)}.glbar .g1{background:var(--gelb)}.glbar .g2{background:var(--gruen)}
-.dotc{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:-1px}
-.dotc.am0{background:var(--rot)}.dotc.am1{background:var(--gelb)}.dotc.am2{background:var(--gruen)}
-.dotc.ph1{background:var(--gold)}.dotc.ph2{background:var(--petrol)}.dotc.ph3{background:var(--faden)}.dotc.bf{background:#9FB6B3}
-/* Tage */
-.days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.dcell{aspect-ratio:1;border:0;border-radius:4px;padding:0;display:grid;place-items:center;font-size:12px;font-variant-numeric:tabular-nums;color:var(--soft);background:var(--nebel);border-bottom:3px solid transparent}
-.dcell.ph1{border-bottom-color:var(--gold)}.dcell.ph2{border-bottom-color:var(--petrol)}.dcell.ph3{border-bottom-color:var(--faden)}.dcell.bf{border-bottom-color:#9FB6B3}
-.dcell.fill{background:var(--petrol-dark);color:#fff}
-.dcell.now{outline:2px solid var(--faden);outline-offset:1px}
-.dcell:disabled{opacity:.55;cursor:default}
-.warnbox{background:var(--faden-soft)}
-/* Karten */
-.uebung{background:var(--faden-soft);border-radius:4px;padding:12px 14px}
-.uebung .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faden);margin-bottom:4px}
-.uebung p{margin:0;font-weight:600}
-.hgrid .tbtn{background:var(--nebel)}
-.tool{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
-.tool b{color:var(--petrol-dark)}
-.tool p{margin:4px 0 0}
-.tmeta{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px;color:var(--muted);margin-top:4px}
-.tmeta .mine{color:var(--faden);font-weight:600}
-.ms h1{font-size:30px}
+.trow{display:flex;gap:12px;align-items:flex-start;padding:10px 0}
+.cb{width:22px;height:22px;flex:none;border:1.5px solid var(--ink);border-radius:4px;background:var(--bg);margin-top:1px;padding:0;position:relative}
+.cb[aria-pressed="true"]{background:var(--ink)}
+.cb[aria-pressed="true"]::after{content:"";position:absolute;left:6.5px;top:2.5px;width:5px;height:10px;border:solid var(--onink);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.tb{flex:1;min-width:0;background:none;border:0;padding:0;text-align:left;display:flex;flex-direction:column;gap:1px}
+.tb .t{overflow-wrap:anywhere}
+.tb .s{font-size:12px;color:var(--mute)}
+.tb .s .pr{color:var(--red);font-weight:700}
+.task.done .tb .t{color:var(--mute);text-decoration:line-through}
+.tedit{padding:0 0 14px 34px;display:flex;flex-direction:column;gap:10px}
+.pick{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:10px 0}
+.pick:first-child{border-top:0}
+.pick .pl{width:22px;height:22px;flex:none;border:1px solid var(--line);border-radius:4px;display:grid;place-items:center;font-weight:700;color:var(--red)}
+.pick[aria-pressed="true"] .pl{background:var(--red);border-color:var(--red);color:var(--onred)}
+.grp{display:flex;flex-direction:column}
+.addrow{display:flex;gap:8px}.addrow input{flex:1;min-width:0}.addrow .btn{width:auto}
+.x{background:none;border:0;color:var(--mute);font-size:20px;line-height:1;width:34px;height:34px;flex:none}
+details summary{cursor:pointer;font-weight:700;font-size:14px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";color:var(--mute);font-weight:400}
+details[open] summary::after{content:"–"}
+details>*:not(summary){margin-top:10px}
 
-.ph{min-width:23%}
-.ph.ph2{min-width:0}
-.fuel{display:grid;grid-template-columns:64px 1fr;gap:8px;align-items:center}
-.fuel>span{font-size:14px;color:var(--soft);font-weight:600}
-.chip.sm{min-height:34px;padding:4px 11px;font-size:14px}
-.fuel .chips{gap:6px}
-.phbar .mk{top:auto;bottom:-8px;height:6px;width:6px;border-radius:50%;margin-left:-2px}
-.phbar{margin-bottom:6px}
-/* Eigenständiger Look, mehr Rot (19.11.) */
-:root{--kc-red:#A3402F;--kc-red-dark:#7E2F22}
-header.top{background:var(--kc-red);border-bottom:0}
-body::before{background:var(--kc-red)}
-header.top .brand{color:#fff}
-header.top .brand small{color:#F3D9CF}
-header.top .pill{background:#ffffff26;color:#fff}
-header.top .parkbtn{background:#fff;border-color:#fff;color:var(--kc-red)}
-.band{background:var(--kc-red-dark)}
-.band .k{color:#F6D7B8}
-.band .src{color:#F3D9CF}
-:root[data-theme="dark"] .band{background:#4A1E17}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .band{background:#4A1E17}}
-.ph.on{background:var(--kc-red)}
-.ph.on small{color:#F3D9CF}
-.phbar .mk{background:var(--petrol-dark)}
-.cd b{color:var(--kc-red)}
-.hero .logo{border-radius:15px}
+/* Gliederung */
+.gl{display:grid;grid-template-columns:1fr 34px;gap:6px;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.gl .seg{grid-column:1/-1}
+.gl .seg button{padding:6px 8px;min-height:40px;font-size:12px}
+.gl .seg button[aria-pressed="true"].a0{background:var(--line);color:var(--ink)}
+.gl .seg button[aria-pressed="true"].a1{background:var(--redmid);color:var(--ink)}
+.gl .seg button[aria-pressed="true"].a2{background:var(--red);color:var(--onred)}
+.glbar{display:flex;gap:3px}
+.glbar i{flex:1;height:8px;border-radius:2px;background:var(--line)}
+.glbar i.a1{background:var(--redmid)}.glbar i.a2{background:var(--red)}
+
+/* Wochenbalken Statistik */
+.days{position:relative;display:flex;align-items:flex-end;gap:7px;height:120px;border-bottom:1px solid var(--line)}
+.days>div{flex:1;position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.days i{display:block;width:100%;background:var(--redmid);border-radius:3px 3px 0 0}
+.days i.ok{background:var(--red)}
+.days em{position:absolute;left:-2px;right:-2px;border-top:2px solid var(--ink)}
+.dlab{display:flex;gap:7px;font-size:11px;color:var(--mute)}
+.dlab span{flex:1;text-align:center}
+.tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.tile{border:1px solid var(--line);border-radius:6px;padding:10px 10px 8px}
+.tile b{display:block;font-size:22px;font-weight:400;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile span{font-size:12px;color:var(--mute);line-height:1.25;display:block;margin-top:3px}
+
+/* Timer */
+.timer{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:10px 0}
+.ring{width:min(240px,64vw);height:min(240px,64vw)}
+.ring .tr{stroke:var(--soft)}.ring .pg{stroke:var(--red);transition:stroke-dashoffset .9s linear}
+.ring.pause .pg{stroke:var(--ink)}
+.ring text{fill:var(--ink);font-family:"Source Sans 3",sans-serif;font-weight:300;font-variant-numeric:tabular-nums}
+.timer .btn{max-width:240px}
+.ttask{font-size:13px;color:var(--mute);max-width:280px}
+
+/* Woche */
+.week{display:grid;grid-template-columns:26px repeat(7,1fr);gap:3px;font-size:10px;color:var(--mute)}
+.week .h{text-align:center;font-weight:700;color:var(--ink);font-size:11px;padding-bottom:2px}
+.week .h.now{color:var(--red)}
+.week .hrs{position:relative}
+.week .hrs span{position:absolute;left:0;transform:translateY(-50%)}
+.col{position:relative;background:var(--soft);border-radius:4px}
+.ev{position:absolute;left:2px;right:2px;border-radius:3px;font-size:9px;padding:1px 2px;line-height:1.1;overflow:hidden;color:var(--mute)}
+.ev.w{background:var(--red);color:var(--onred)}
+.ev.w.d{background:var(--reddark);color:var(--bg)}
+.ev.t{background:var(--bg);border:1px solid var(--line)}
+.leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mute);align-items:center}
+.leg i{display:inline-block;width:12px;height:8px;border-radius:2px;margin-right:5px}
+.blk{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding:6px 0;font-size:14px}
+.blk:first-child{border-top:0}
+.blk .sw{width:10px;height:10px;border-radius:2px;flex:none;background:var(--red)}
+.blk .sw.t{background:var(--bg);border:1px solid var(--mute)}
+.blk span{flex:1}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* Hilfe */
+.hl{display:flex;flex-direction:column}
+.hl button{display:flex;align-items:center;gap:10px;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:13px 0}
+.hl button:first-child{border-top:0}
+.hl button span{flex:1;display:flex;flex-direction:column;font-size:16px}
+.hl button small{font-size:13px;color:var(--mute)}
+.hl button::after{content:"›";color:var(--mute);font-size:20px}
+.say{font-size:17px;font-weight:600;border-left:3px solid var(--red);padding-left:12px}
+.foot{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px}
+.foot a,.foot button{color:var(--mute);background:none;border:0;padding:4px 0;text-decoration:none;font-size:13px}
+.foot a:hover,.foot button:hover{color:var(--ink)}
+.tool{border-top:1px solid var(--line);padding:10px 0;display:flex;flex-direction:column;gap:2px}
+.tool:first-child{border-top:0}
+.tool .m b{color:var(--red)}
+
+/* Untere Leiste */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--bg);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs .in{max-width:560px;margin:0 auto;display:grid;grid-auto-flow:column;grid-auto-columns:1fr}
+nav.tabs button{background:none;border:0;padding:9px 0 10px;font-size:12px;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:7px;min-height:56px}
+nav.tabs button::before{content:"";width:20px;height:2px;border-radius:2px;background:currentColor}
+nav.tabs button[aria-current="page"]{color:var(--red);font-weight:700}
+body.setup nav.tabs,body.full nav.tabs,body.writing nav.tabs{display:none}
+
+.toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:var(--onink);padding:10px 16px;border-radius:6px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:9;max-width:90vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.demo{background:var(--redsoft);border-radius:6px;padding:10px 12px;font-size:13px;display:flex;align-items:center;gap:10px;justify-content:space-between}
+.demo .btn{width:auto;min-height:34px;padding:5px 10px;font-size:13px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.ckrow{width:100%;background:none;border:0;border-top:1px solid var(--line);text-align:left;align-items:flex-start}
+.ckrow:first-child{border-top:0}
+.ckrow[aria-pressed="true"]>span:last-child{color:var(--mute);text-decoration:line-through}
+button.box{width:100%;font-size:15px;color:var(--ink)}
 </style>
 </head><body>
 <header class="top"><div class="in">
-  <div class="brand"><small>30 Tage aus der Blockade</small>Reset &amp; Flow</div>
-  <button class="parkbtn" id="parkbtn" aria-label="Gedanke parken" hidden><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Parken</button>
-  <span class="pill" id="prog"></span>
+  <span class="ttl" id="ttl">Heute</span><span class="day" id="day"></span>
+  <button class="hbtn" id="parkbtn" aria-label="Gedanke parken"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Parken</button>
+  <button class="hbtn ico" id="ichbtn" aria-label="Ich und Einstellungen"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></button>
 </div></header>
 <main class="wrap" id="app" aria-live="polite"></main>
-<nav class="tabs" aria-label="Bereiche"><div class="in">
-  <button data-tab="heute"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 10h8M8 14h8M8 18h5"/></svg>Heute</button>
-  <button data-tab="aufgaben"><svg viewBox="0 0 24 24"><path d="M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6h9M11 12h9M11 18h9"/></svg>Aufgaben</button>
-  <button data-tab="fortschritt"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Fortschritt</button>
-  <button data-tab="hilfe"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Hilfe</button>
-  <button data-tab="mehr"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg>Ich</button>
-</div></nav>
+<nav class="tabs" aria-label="Bereiche"><div class="in"></div></nav>
 <div class="toast" id="toast" role="status"></div>
 <script>
+// Fassung 2 (21.11.): Karten mit Kurztitel h, Kategorie kat, Übungsdauer min, fokus=Übung startet Fokuszeit
 // Inhalte „Reset & Flow“ (früher Klarheit statt Chaos) (kein Forschungstagebuch, eigene App) · Fassung 1 vom 19.11.2026 (aus Konzept Fassung 3)
 // Texte mit [Mascha] sind Platzhalter für ihre eigenen Impulse.
 const INHALT={
@@ -400,13 +268,13 @@ const INHALT={
    check:["Arbeitsplatz frei","Eine aktuelle Arbeitsdatei, alte Versionen im Archiv","Literatur an einem Ort","Tabs geschlossen","Lose Notizen eingesammelt"]},
   {t:"Übertragen",dauer:"60 bis 90 Minuten",
    impuls:"Heute wird aus dem Zettel ein Plan. Alles, was in der App steht, musst du nicht mehr im Kopf behalten.",
-   schritte:["Trag deine Gliederung unter „Fortschritt“ ein, Kapitel für Kapitel.","Gib jedem Kapitel eine Ampel: rot offen, gelb begonnen, grün fertig.","Übertrag alle Aufgaben aus deinem Braindump in die Aufgabenliste. Du kannst mehrere auf einmal einfügen, eine pro Zeile.","Sortieren musst du heute noch nicht. Das kommt morgen."]},
+   schritte:["Trag deine Gliederung unter „Fortschritt“ ein, Kapitel für Kapitel.","Gib jedem Kapitel einen Stand: offen, begonnen oder fertig.","Übertrag alle Aufgaben aus deinem Braindump in die Aufgabenliste. Du kannst mehrere auf einmal einfügen, eine pro Zeile.","Sortieren musst du heute noch nicht. Das kommt morgen."]},
   {t:"Kategorisieren",dauer:"45 bis 60 Minuten",
    impuls:"Nicht jede Aufgabe braucht deinen besten Kopf. Heute findest du heraus, welche es tun.",
    schritte:["Gib jeder Aufgabe eine Art: Denkaufgabe, Klärungsaufgabe oder Fleißaufgabe.","Schätz bei Denkaufgaben den Aufwand: + groß, o mittel, – klein.","Ordne jede Aufgabe einem Kapitel zu, wenn sie zu einem gehört.","Entscheide ehrlich: Muss das in die Arbeit, oder kann es? Kann-Aufgaben erledigst du nur, wenn Zeit bleibt."]},
   {t:"Planen",dauer:"etwa 45 Minuten",
    impuls:"Du musst nicht wissen, wie alles ausgeht. Du musst nur wissen, womit du morgen anfängst.",
-   schritte:["Schau dir unter „Fortschritt“ den Zeit-Check an.","Wird es eng? Schieb Kann-Aufgaben nach hinten und sprich früh mit deiner Betreuung.","Markier die großen Denkaufgaben (+) mit einem Stern. Sie kommen zuerst, solange du noch frisch bist.","Leg formale Fleißaufgaben schon jetzt in die Liste, damit die letzten fünf Tage frei bleiben.","Wähl zwei bis drei Aufgaben für den ersten Tag in Phase 2 und gib ihnen einen Stern."],
+   schritte:["Schau dir unter „Fortschritt“ den Zeit-Check an.","Wird es eng? Schieb Kann-Aufgaben nach hinten und sprich früh mit deiner Betreuung.","Markier die großen Denkaufgaben (+) mit „Zuerst“. Sie kommen dran, solange du noch frisch bist.","Leg formale Fleißaufgaben schon jetzt in die Liste, damit die letzten fünf Tage frei bleiben.","Wähl zwei bis drei Aufgaben für den ersten Flow-Tag und markier sie mit „Zuerst“."],
    ende:"Grundstein gelegt."}
  ],
  // ---------- Phase 3 bei „Abgeben“ ----------
@@ -417,7 +285,7 @@ const INHALT={
    check:["Erste Hälfte der markierten Stellen abgearbeitet","Übergänge zwischen den Kapiteln geprüft","Begriffe einheitlich","Umfang geprüft"]},
   {t:"Überarbeiten und Korrektur",schritte:["Arbeite die restlichen markierten Stellen ab.","Lass die Rechtschreibprüfung laufen und arbeite Rückmeldungen deiner Korrekturleser:innen ein."],
    check:["Alle markierten Stellen abgearbeitet","Rechtschreibprüfung gelaufen","Rückmeldungen aus dem Korrekturlesen eingearbeitet","Mit etwas Abstand noch einmal quergelesen"]},
-  {t:"Formalia- und KI-Check",schritte:["Viele Punkte hast du vielleicht schon in Phase 2 erledigt. Dann hakst du sie heute nur noch ab."],
+  {t:"Formalia- und KI-Check",schritte:["Viele Punkte hast du vielleicht schon im Flow erledigt. Dann hakst du sie heute nur noch ab."],
    check:["Zitierweise einheitlich","Jede Quelle im Verzeichnis und umgekehrt","Abbildungs- und Tabellenverzeichnis aktuell","Seitenränder, Schrift, Seitenzahlen","Deckblatt","Anhang vollständig"],
    ki:["Regeln der Hochschule zur KI-Nutzung geprüft","KI-Nutzung gekennzeichnet bzw. dokumentiert","Eigenständigkeitserklärung passt zu deinem Vorgehen"]},
   {t:"Letzter Blick und Abgabe",schritte:["Erstell das PDF und blättere es einmal komplett durch.","Dann drucken bzw. hochladen und abgeben."],
@@ -427,7 +295,7 @@ const INHALT={
  // ---------- Phase 3 bei „In die Spur“ ----------
  p3s:[
   {t:"Wochenroutine festlegen",schritte:["Leg fest, wann, wo und wie lange du in Zukunft an deiner Arbeit sitzt. Lieber realistisch als ehrgeizig."],felder:[["wann","Wann arbeite ich? (Tage, Uhrzeit)"],["wo","Wo arbeite ich?"],["wielange","Wie lange am Stück?"]]},
-  {t:"Gliederung und Ampel aktualisieren",schritte:["Geh deine Gliederung unter „Fortschritt“ durch und setz die Ampel neu. Was ist in diesem Monat grün geworden?"],felder:[["gruen","Das ist in diesem Monat vorangekommen"]]},
+  {t:"Gliederung aktualisieren",schritte:["Geh deine Gliederung unter „Fortschritt“ durch und setz den Stand neu. Was ist in diesem Monat fertig geworden?"],felder:[["gruen","Das ist in diesem Monat vorangekommen"]]},
   {t:"Zeitplan bis zur Abgabe",schritte:["Stell deinen Zeitplan bis zur Abgabe neu auf. Plan am Ende geschützte Tage nur für Überarbeiten und Korrektur ein.","Eine kostenlose Gantt-Vorlage findest du auf meiner Website."],felder:[["abgabe","Mein Abgabetermin"],["plan","Meine wichtigsten Etappen bis dahin"]]},
   {t:"Gespräch mit der Betreuung vorbereiten",schritte:["Ein kurzes, gut vorbereitetes Gespräch spart dir Wochen. Schreib auf, was du mitnehmen willst."],felder:[["stand","Wo stehe ich?"],["fragen","Meine Fragen"],["brauche","Was brauche ich von meiner Betreuung?"]]},
   {t:"Nächste Schritte sortieren",schritte:["Wähl die drei nächsten Schritte, mit denen du nach diesem Monat weitermachst."],todos:"next",ende:"Du bist wieder in der Spur."}
@@ -436,31 +304,31 @@ const INHALT={
  formal:["Literaturverzeichnis prüfen und vervollständigen","Abbildungs- und Tabellenverzeichnis aktualisieren","Deckblatt nach Vorgabe gestalten","Anhang zusammenstellen","Seitenränder, Schrift und Seitenzahlen nach Vorgabe einstellen","Eigenständigkeitserklärung vorbereiten","Korrekturleser:in anfragen","Abgabeweg, Exemplare und Druck klären"],
  // ---------- Mentale Stärkung: Was passiert da gerade? ----------
  karten:[
-  {id:"ueber",t:"Überforderung und Chaos im Kopf",k:"Alles ist gleichzeitig wichtig.",
+  {id:"ueber",h:"Alles ist gleichzeitig wichtig",kat:"Überforderung",min:5,t:"Überforderung und Chaos im Kopf",k:"Alles ist gleichzeitig wichtig.",
    was:"Unerledigte Aufgaben bleiben im Kopf aktiv und drängen sich immer wieder auf. Studien zeigen: Schon ein konkreter Plan, wann und wie man eine Aufgabe erledigt, beruhigt den Kopf, auch bevor sie erledigt ist.",
-   hilft:"Alles aufschreiben und jeder Aufgabe einen Platz geben. Genau das passiert in Phase 1.",
-   uebung:"5 Minuten Braindump auf Papier, dann eine einzige Aufgabe für die nächste Stunde wählen.",
+   hilft:"Alles aufschreiben und jeder Aufgabe einen Platz geben. Genau das passiert in den Reset-Tagen.",
+   uebung:"<b>Kopf leeren.</b> 5 Minuten alles auf Papier schreiben, was dich gerade beschäftigt. Dann eine einzige Aufgabe für die nächste Stunde wählen.",
    lit:"Masicampo, E. J. & Baumeister, R. F. (2011). Consider it done! Plan making can eliminate the cognitive effects of unfulfilled goals. Journal of Personality and Social Psychology, 101(4), 667–683."},
-  {id:"prok",t:"Prokrastination",k:"Ich weiß, was zu tun ist, und fange nicht an.",
+  {id:"prok",h:"Ich fange einfach nicht an",kat:"Prokrastination",min:10,fokus:true,t:"Prokrastination",k:"Ich weiß, was zu tun ist, und fange nicht an.",
    was:"Aufschieben ist meist kein Zeitproblem, sondern ein Gefühlsproblem: Wir weichen dem unangenehmen Gefühl aus, das die Aufgabe auslöst, und holen uns kurzfristig gute Laune.",
    hilft:"Die Aufgabe so klein machen, dass das Gefühl kleiner wird. Mit einer Klärungsaufgabe einsteigen.",
-   uebung:"„Nur 10 Minuten“: Timer stellen, nur anfangen. Danach darfst du aufhören.",
+   uebung:"<b>Nur anfangen.</b> Timer starten, eine Sache öffnen. Nach 10 Minuten darfst du aufhören.",
    lit:"Sirois, F. & Pychyl, T. (2013). Procrastination and the priority of short-term mood regulation. Social and Personality Psychology Compass, 7(2), 115–127."},
-  {id:"panik",t:"Panik vor der Frist",k:"Ich sehe nur noch das Datum.",
+  {id:"panik",h:"Ich sehe nur noch die Frist",kat:"Panik",min:2,t:"Panik vor der Frist",k:"Ich sehe nur noch das Datum.",
    was:"Unter starkem Stress verengt sich der Blick. Etwas Anspannung macht wach, zu viel blockiert das klare Denken und Planen.",
    hilft:"Erst den Körper beruhigen, dann planen. Der Blick auf deinen Fortschritt zeigt, was schon geschafft ist.",
-   uebung:"2 Minuten langsam atmen, länger aus als ein, zum Beispiel 4 Sekunden ein und 6 aus. Oder 10 Minuten NSDR.",
+   uebung:"<b>Langsam atmen.</b> 2 Minuten lang länger aus als ein, zum Beispiel 4 Sekunden ein und 6 Sekunden aus. Wenn du mehr Zeit hast: 10 Minuten NSDR (geführte Tiefenentspannung).",
    lit:""},
-  {id:"perf",t:"Perfektionismus",k:"Nichts ist gut genug.",
+  {id:"perf",h:"Nichts ist gut genug",kat:"Perfektionismus",min:10,fokus:true,t:"Perfektionismus",k:"Nichts ist gut genug.",
    was:"Hinter Perfektionismus steckt oft die Angst vor Bewertung. Der Anspruch „perfekt“ macht jeden Anfang schwer, weil nichts gut genug ist.",
-   hilft:"Zwischen Rohfassung und Feinschliff trennen. Phase 2 ist zum Schreiben, Phase 3 zum Schönmachen.",
-   uebung:"Einen Absatz bewusst „gut genug“ schreiben und weitergehen.",
+   hilft:"Zwischen Rohfassung und Feinschliff trennen. Im Flow wird geschrieben, im Abschluss schön gemacht.",
+   uebung:"<b>Gut genug.</b> 10 Minuten lang einen Absatz bewusst „gut genug“ schreiben und dann weitergehen, ohne ihn zu überarbeiten.",
    say:"Eine schlechte Seite kannst du überarbeiten, eine leere nicht.",
    lit:""},
-  {id:"zweifel",t:"Unzufriedenheit und Selbstzweifel",k:"Ich sehe nur, was fehlt.",
+  {id:"zweifel",h:"Ich sehe nur, was fehlt",kat:"Selbstzweifel",min:3,t:"Unzufriedenheit und Selbstzweifel",k:"Ich sehe nur, was fehlt.",
    was:"Unser Gehirn gewichtet Negatives stärker als Positives. Was fehlt, sehen wir sofort, was geschafft ist, übersehen wir.",
    hilft:"Fortschritt sichtbar machen, auch kleinen.",
-   uebung:"Abends drei Dinge aufschreiben, die heute erledigt wurden, auch Klärungs- und Fleißaufgaben.",
+   uebung:"<b>Drei Dinge.</b> Schreib drei Dinge auf, die du schon geschafft hast, auch Klärungs- und Fleißaufgaben. Ein Blick auf „Fortschritt“ hilft dabei.",
    lit:"Baumeister, R. F., Bratslavsky, E., Finkenauer, C. & Vohs, K. D. (2001). Bad is stronger than good. Review of General Psychology, 5(4), 323–370."}
  ],
  test:[["ueber","Ich habe das Gefühl, alles gleichzeitig erledigen zu müssen."],["ueber","Offene Aufgaben gehen mir auch abends nicht aus dem Kopf."],
@@ -471,7 +339,7 @@ const INHALT={
  // ---------- Werkzeugkasten kompakt ----------
  werkzeug:[
   ["Basis",[["Literaturverwaltung","z. B. Zotero, Citavi","Quellen an einem Ort, Literaturverzeichnis per Klick","kostenlos bzw. oft über die Hochschule"],["Dein Kalender","","Time Blocking und Fristen sichtbar","vorhanden"]]],
-  ["Fokus und Störfaktoren",[["Pomodoro","25 Min. arbeiten, 5 Min. Pause","Anfangen und Pausen nicht vergessen. Tipp: ein Pomodoro-Video mit Musik auf YouTube","kostenlos"],["Musik nebenbei","Lo-Fi, Study-Musik, Brain.fm","ruhiger Hintergrund ohne Text","kostenlos bis kostenpflichtig"],["Time Blocking","","Denkaufgaben in die klarste Zeit, Fleißaufgaben ins Tief","kostenlos"],["10-Minuten-Regel","nach Nir Eyal","Handy-Impuls 10 Minuten aushalten, dann entscheiden","kostenlos"],["Handy außer Reichweite","Benachrichtigungen aus","Was nicht greifbar ist, lenkt weniger ab","kostenlos"],["one sec bzw. Fokusmodus","","kurze Atempause vor ablenkenden Apps","teilweise kostenlos bzw. eingebaut","richtig gut"],["Gedanken-Parkplatz","Zettel oder Knopf in dieser App","Einfälle notieren, weiterarbeiten","kostenlos"]]],
+  ["Fokus und Störfaktoren",[["Pomodoro","25 Min. arbeiten, 5 Min. Pause","Anfangen und Pausen nicht vergessen. Die Fokuszeit in dieser App zeigt dir die 25 Minuten. Tipp: dazu ein Pomodoro-Video mit Musik auf YouTube","kostenlos"],["Musik nebenbei","Lo-Fi, Study-Musik, Brain.fm","ruhiger Hintergrund ohne Text","kostenlos bis kostenpflichtig"],["Time Blocking","","Denkaufgaben in die klarste Zeit, Fleißaufgaben ins Tief","kostenlos"],["10-Minuten-Regel","nach Nir Eyal","Handy-Impuls 10 Minuten aushalten, dann entscheiden","kostenlos"],["Handy außer Reichweite","Benachrichtigungen aus","Was nicht greifbar ist, lenkt weniger ab","kostenlos"],["one sec bzw. Fokusmodus","","kurze Atempause vor ablenkenden Apps","teilweise kostenlos bzw. eingebaut","richtig gut"],["Gedanken-Parkplatz","Zettel oder „Parken“ in dieser App","Einfälle notieren, weiterarbeiten","kostenlos"]]],
   ["Text und Dokument",[["Word: Formatvorlagen und Navigationsbereich","","Gliederung sehen, automatische Verzeichnisse","vorhanden"],["LanguageTool","","Rechtschreibung, Zeichensetzung, Grammatik","teilweise kostenlos","empfohlen"],["DeepL","","englische Literatur schnell verstehen","teilweise kostenlos","empfohlen. Keine sensiblen Texte in die Gratis-Version, KI-Regeln der Hochschule beachten"],["Plagiat und Zitate","","Zuerst die Hochschule fragen; sonst PlagAware-Gratistest (ca. 10 Seiten) oder kostenpflichtig Scribbr. Zitate selbst abgleichen","unterschiedlich","Vorsicht bei kostenlosen Online-Prüfern"]]]
  ]
 };
@@ -479,27 +347,34 @@ const INHALT={
 </script>
 <script>
 "use strict";
-// ================= Grunddaten =================
+// Reset & Flow · Fassung 2 (21.11.2026): minimalistischer Umbau
+// Morgen-Check-in mit Anweisung, Fokuszeit (zählt hoch), Fortschritt mit Gesamtbalken, Hilfe-Seite, optionaler Wochenplan, Einführung.
 const KEY="ftb-klarheit-v1";
 const TESTV=true;
 const LINKS={gespraech:"https://drmaschakoerner.de/erstgespraech/#formular",gantt:"https://drmaschakoerner.de/gantt-vorlagen/",sos:"https://drmaschakoerner.de/schnelle-hilfe/",ki:"https://drmaschakoerner.de/ki-in-der-abschlussarbeit/",maxqda:"https://drmaschakoerner.mytentary.com/p/Bvukys",nl:"https://drmaschakoerner.de/#newsletter"};
-const NL_CARD=`<div class="offer"><div class="k">Danke für dein Feedback!</div><p style="margin:0">Dein Dankeschön, den Gutschein über 30 Prozent auf eine Coaching-Einzelstunde, schicke ich dir per E-Mail. Wenn du nichts verpassen möchtest: In meinem Newsletter „Post mit rotem Faden“ erfährst du von neuen Angeboten und Rabatten, dazu kommen alle drei Wochen Tipps für dein Forschungsprojekt.</p><div class="row"><a class="btn small" href="${LINKS.nl}" target="_blank" rel="noopener">Zum Newsletter</a></div></div>`;
-const SCHLAF=["unter 6 Std.","6–7 Std.","7–9 Std.","über 9 Std."];
-const GUT=["gut","geht so","kaum"];
-const STUNDEN=["unter 1 Std.","1–2 Std.","2–4 Std.","über 4 Std."];
 const ART={d:"Denkaufgabe",k:"Klärungsaufgabe",f:"Fleißaufgabe"};
 const ARTK={d:"Denken",k:"Klären",f:"Fleiß"};
 const ARTH={d:"braucht einen klaren Kopf",k:"in 10 bis 15 Minuten erledigt",f:"viel Arbeit, wenig Kopf"};
-const AMPEL=["offen","begonnen","fertig"];
-const LAGE=["Ich habe vor allem Chaos.","Ein großer inhaltlicher Teil ist noch nicht fertig, z. B. die Auswertung.","Die Rohfassung steht weitgehend."];
-const TEST_OPT=["trifft nicht zu","eher nicht","eher ja","trifft voll zu"];
+const AUF={"+":"groß","o":"mittel","-":"klein"};
+const STAND=["offen","begonnen","fertig"];
+const LAGE=["Ich habe vor allem Chaos im Kopf.","Ein großer inhaltlicher Teil ist noch nicht fertig, z. B. die Auswertung.","Die Rohfassung steht weitgehend."];
+const SCHLAF=["wenig","okay","gut"];
+const ZEIT=["1 Std.","2 Std.","3 Std.","4+"];
+const ZEITL=["1 Stunde","2 Stunden","3 Stunden","4 Stunden oder mehr"];
+const ZIELMIN=[60,120,180,240];
+const TEST_OPT=["trifft nicht zu","eher nicht","eher ja","voll"];
 const R5=["1","2","3","4","5"];
+const WD=["Mo","Di","Mi","Do","Fr","Sa","So"];
+const FOKUS=25,PAUSE=5;
+const SHORT={p1:["Braindump","Aufräumen","Übertragen","Sortieren","Planen"],p3a:["Lesen","Überarb. 1","Überarb. 2","Formalia","Abgabe"],p3s:["Routine","Gliederung","Zeitplan","Betreuung","Weiter"]};
+const CRISIS="Wenn du über längere Zeit erschöpft bist oder in einer Krise steckst, ist ärztliche oder psychologische Hilfe der richtige Weg, zum Beispiel die psychologische Beratung deiner Hochschule oder die Telefonseelsorge (0800 111 0 111, kostenlos, rund um die Uhr).";
 
-function blank(){return {v:1,started:false,goal:null,start:today(),deadline:"",lage:[],ki:null,warum:"",braindump:"",bdDone:false,tasks:[],nid:1,park:[],gl:[],gid:1,days:{},pd:{},formalOff:false,fb:{},test:{},demo:false,created:today()}}
+function blank(){return {v:2,started:false,goal:null,start:today(),deadline:"",lage:[],ki:null,warum:"",braindump:"",bdDone:false,tasks:[],nid:1,park:[],gl:[],gid:1,days:{},pd:{},steps:{},sessions:[],timer:null,woche:false,blocks:[],bid:1,formalOff:false,fb:{},test:{a:{}},demo:false,created:today()}}
 let S=blank();let storageOK=true;
-function load(){try{const r=localStorage.getItem(KEY);if(r){S=Object.assign(blank(),JSON.parse(r))}}catch(e){storageOK=false}}
+function load(){try{const r=localStorage.getItem(KEY);if(r){const d=JSON.parse(r);S=Object.assign(blank(),d);if(d.v!==2){S.v=2;S.days={};S.test={a:{}}}}}catch(e){storageOK=false}}
 let saveT=null;
-function save(){if(S.demo)return;clearTimeout(saveT);saveT=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){storageOK=false}},250)}
+function save(){if(S.demo)return;clearTimeout(saveT);saveT=setTimeout(saveNow,250)}
+function saveNow(){if(S.demo)return;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){storageOK=false}}
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
 
 // ================= Datum =================
@@ -509,9 +384,15 @@ function addDays(s,n){const d=new Date(s+"T12:00:00");d.setDate(d.getDate()+n);r
 function fmtDate(s,long){if(!s)return"";const d=new Date(s+"T12:00:00");return d.toLocaleDateString("de-DE",long?{weekday:"long",day:"numeric",month:"long"}:{weekday:"short",day:"numeric",month:"short"})}
 function fmtShort(s){return new Date(s+"T12:00:00").toLocaleDateString("de-DE",{day:"numeric",month:"short"})}
 function diffDays(a,b){return Math.round((new Date(b+"T12:00:00")-new Date(a+"T12:00:00"))/864e5)}
+function wday(s){return (new Date(s+"T12:00:00").getDay()+6)%7}
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function n1(v){return (Math.round(v*10)/10).toString().replace(".",",")}
+function hm(min){min=Math.round(min);if(min<60)return min+" Min.";const h=Math.floor(min/60),m=min%60;return h+" Std."+(m?" "+m+" Min.":"")}
+function tmin(t){const [h,m]=(t||"0:0").split(":").map(Number);return h*60+m}
+function tfmt(t){const [h,m]=t.split(":");return +h+(m!=="00"?":"+m:"")}
 const $=s=>document.querySelector(s);
-function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),2000)}
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),2200)}
+function pl(n,a,b){return n===1?a:b}
 
 // ================= Der Monat =================
 function plan(){const st=S.start||today();const end=S.goal==="abgeben"&&S.deadline?S.deadline:addDays(st,29);
@@ -522,24 +403,27 @@ function where(date){const P=plan();const i=diffDays(P.st,date);
   if(i<P.p1)return {ph:1,n:i+1,of:P.p1,i};
   if(i<P.p1+P.p2){const n=i-P.p1+1;return {ph:2,n,of:P.p2,buf:n>P.p2-P.buf,i}}
   const n=i-P.p1-P.p2+1;return {ph:3,n,of:P.p3,c:n-1+(5-P.p3),i}}
-function phName(ph){return ph===1?"Aufräumen":ph===2?(S.goal==="spur"?"Aufgaben erledigen":"Lücken schließen"):(S.goal==="spur"?"In die Spur":"Feinschliff und Abgabe")}
-function phShort(ph){return ph===3?(S.goal==="spur"?"In die Spur":"Feinschliff"):phName(ph)}
-function slogan(){return S.goal==="spur"?"In einem Monat zurück in die Spur":"In einem Monat sicher zur Abgabe"}
+function phName(ph){return ph===1?"Reset":ph===2?"Flow":(S.goal==="spur"?"In die Spur":"Abschluss")}
+function stepsOf(ph){return ph===1?INHALT.p1:(S.goal==="spur"?INHALT.p3s:INHALT.p3a)}
+function stepKey(ph,i){return ph===1?"p1_"+i:(S.goal==="spur"?"p3s_":"p3a_")+i}
 
 // ================= Bindungen =================
 let BIND={},bindId=0;
 function bindObj(o){const id="o"+(++bindId);BIND[id]=o;return id}
-function ta(o,key,label,hint,rows,ph){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<div><label class="q" for="${fid}">${label}${hint?`<span class="hn">${hint}</span>`:""}</label><textarea id="${fid}" rows="${rows||2}" placeholder="${esc(ph||"")}" data-b="${id}" data-k="${key}">${esc(o[key])}</textarea></div>`}
-function inp(o,key,label,ph,hint){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<div><label class="q" for="${fid}">${label}${hint?`<span class="hn">${hint}</span>`:""}</label><input type="text" id="${fid}" placeholder="${esc(ph||"")}" data-b="${id}" data-k="${key}" value="${esc(o[key])}"></div>`}
-function chips(o,key,opts,label,hint){const id=bindObj(o);return `<div>${label?`<span class="q">${label}${hint?`<span class="hn">${hint}</span>`:""}</span>`:""}<div class="chips" role="group">${opts.map((t,i)=>`<button class="chip" data-b="${id}" data-k="${key}" data-v="${i}" aria-pressed="${o[key]===i}">${t}</button>`).join("")}</div></div>`}
-function scale(o,key,label){const id=bindObj(o);return `<div><span class="q">${label}</span><div class="scale" role="group" aria-label="${label}">${Array.from({length:9},(_,i)=>`<button data-b="${id}" data-k="${key}" data-v="${i+1}" aria-pressed="${o[key]===i+1}" aria-label="${i+1}">${i+1}</button>`).join("")}</div><div class="scale-l"><span>leer</span><span>voller Energie</span></div></div>`}
-function checklist(o,items,label){const id=bindObj(o);return `<div>${label?`<span class="q">${label}</span>`:""}${items.map((t,i)=>`<button class="ck" data-b="${id}" data-ck="${i}" aria-pressed="${!!o[i]}"><span class="cbx" aria-hidden="true"></span><span>${esc(t)}</span></button>`).join("")}</div>`}
-function todos(o,key,label,n){if(!Array.isArray(o[key]))o[key]=[];while(o[key].length<n)o[key].push({t:"",d:false});const id=bindObj(o[key]);return `<div><span class="q">${label}</span>${o[key].map((t,i)=>`<div class="todo"><button class="cbx" aria-label="erledigt" data-b="${id}" data-i="${i}" data-todo="1" aria-pressed="${!!t.d}"></button><input type="text" aria-label="${label} ${i+1}" data-b="${id}" data-i="${i}" data-todot="1" value="${esc(t.t)}"></div>`).join("")}</div>`}
-function dateIn(o,key,label,hint){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<div><label class="q" for="${fid}">${label}${hint?`<span class="hn">${hint}</span>`:""}</label><input type="date" id="${fid}" data-b="${id}" data-k="${key}" data-re="1" value="${esc(o[key])}"></div>`}
+function ta(o,key,label,hint,rows,ph){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<label class="q" for="${fid}"><span>${label}</span>${hint?`<span class="m">${hint}</span>`:""}<textarea id="${fid}" rows="${rows||2}" placeholder="${esc(ph||"")}" data-b="${id}" data-k="${key}">${esc(o[key])}</textarea></label>`}
+function inp(o,key,label,ph){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<label class="q" for="${fid}"><span>${label}</span><input type="text" id="${fid}" placeholder="${esc(ph||"")}" data-b="${id}" data-k="${key}" value="${esc(o[key])}"></label>`}
+function dateIn(o,key,label,hint){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<label class="q" for="${fid}"><span>${label}</span>${hint?`<span class="m">${hint}</span>`:""}<input type="date" id="${fid}" data-b="${id}" data-k="${key}" data-re="1" value="${esc(o[key])}"></label>`}
+// Auswahl: kurze Optionen als eckige Segmente, lange als Liste
+function choice(o,key,opts,label,hint,wrap){const id=bindObj(o);const short=opts.length<=5&&opts.every(t=>t.length<=12);
+  const b=opts.map((t,i)=>`<button data-b="${id}" data-k="${key}" data-v="${i}" aria-pressed="${o[key]===i}">${t}</button>`).join("");
+  return `<div class="q">${label?`<span class="k">${label}</span>`:""}<div class="${short?"seg"+(wrap?" wrap":""):"opts"}" role="group"${label?` aria-label="${esc(label)}"`:""}>${b}</div>${hint||""}</div>`}
+function checklist(o,items){const id=bindObj(o);return `<div class="tl">${items.map((t,i)=>`<button class="trow ckrow" data-b="${id}" data-ck="${i}" aria-pressed="${!!o[i]}"><span class="cb" aria-pressed="${!!o[i]}"></span><span>${esc(t)}</span></button>`).join("")}</div>`}
+function todos(o,key,label,n){if(!Array.isArray(o[key]))o[key]=[];while(o[key].length<n)o[key].push({t:"",d:false});const id=bindObj(o[key]);
+  return `<div class="q"><span class="k">${label}</span>${o[key].map((t,i)=>`<div class="trow" style="align-items:center"><button class="cb" aria-label="erledigt" data-b="${id}" data-i="${i}" data-todo="1" aria-pressed="${!!t.d}"></button><input type="text" aria-label="${label} ${i+1}" data-b="${id}" data-i="${i}" data-todot="1" value="${esc(t.t)}"></div>`).join("")}</div>`}
 
 document.addEventListener("input",e=>{const t=e.target;const o=BIND[t.dataset.b];if(!o)return;
   if(t.dataset.todot){o[+t.dataset.i].t=t.value}else if(t.dataset.k){o[t.dataset.k]=t.value}save()});
-document.addEventListener("change",e=>{if(e.target.dataset.re){save();keepScroll(render)}});
+document.addEventListener("change",e=>{const t=e.target;if(t.dataset.re){save();keepScroll(render)}if(t.id==="ttask"&&S.timer){S.timer.task=t.value?+t.value:null;save()}});
 document.addEventListener("focusin",e=>{if(e.target.matches("textarea,input[type=text]"))document.body.classList.add("writing")});
 document.addEventListener("focusout",e=>{if(e.target.matches("textarea,input[type=text]"))document.body.classList.remove("writing")});
 document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="newtask"){e.preventDefault();ACT.addTask()}});
@@ -548,254 +432,398 @@ document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)r
   const o=BIND[t.dataset.b];
   if(o){
     if(t.dataset.todo){const it=o[+t.dataset.i];it.d=!it.d;t.setAttribute("aria-pressed",it.d);save();return}
-    if(t.dataset.ck!=null){const i=t.dataset.ck;o[i]=!o[i];t.setAttribute("aria-pressed",!!o[i]);save();return}
-    if(t.dataset.k){const v=+t.dataset.v;o[t.dataset.k]=o[t.dataset.k]===v?null:v;save();keepScroll(render);return}
+    if(t.dataset.ck!=null){const i=t.dataset.ck;o[i]=!o[i];t.setAttribute("aria-pressed",!!o[i]);t.querySelector(".cb").setAttribute("aria-pressed",!!o[i]);save();return}
+    if(t.dataset.k){o[t.dataset.k]=+t.dataset.v;save();keepScroll(render);return}
   }
   const a=t.dataset.act;if(a&&ACT[a])ACT[a](t);
 });
 function keepScroll(fn){const y=window.scrollY;fn();window.scrollTo(0,y)}
 
 // ================= Ansicht =================
-let view={tab:"heute",date:null,sub:null,open:null,bulk:false,f:{art:"alle",st:"offen",mk:"alle",kap:"alle"}};
-function go(tab,extra){view=Object.assign({tab,date:null,sub:null,open:null,bulk:false,f:view.f},extra||{});render();window.scrollTo(0,0)}
+let view={tab:"heute",sub:null,open:null,bulk:false,step:null,setup:0,tour:null,f:{art:"alle",st:"offen"}};
+function go(tab,extra){view=Object.assign({tab,sub:null,open:null,bulk:false,step:null,setup:view.setup,tour:null,f:view.f},extra||{});render();window.scrollTo(0,0)}
+function sub(t,extra){view.sub=Object.assign({t},extra||{});render();window.scrollTo(0,0)}
+const TABS=[["heute","Heute"],["aufgaben","Aufgaben"],["woche","Woche"],["hilfe","Hilfe"],["fortschritt","Fortschritt"]];
+const FULL={timer:1,done:1};
 function render(){BIND={};bindId=0;
-  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===view.tab?"page":"false"));
+  const tabs=TABS.filter(([k])=>k!=="woche"||S.woche);
+  $("nav.tabs .in").innerHTML=tabs.map(([k,l])=>`<button data-tab="${k}" aria-current="${view.tab===k?"page":"false"}">${l}</button>`).join("");
+  const setup=!S.started||view.tour!=null;const full=view.sub&&FULL[view.sub.t];
+  document.body.classList.toggle("setup",setup);document.body.classList.toggle("full",!!full);
   const w=S.started?where(today()):null;
-  $("#prog").innerHTML=!S.started?"Start":w.pre?`Start in ${w.rest} ${w.rest===1?"Tag":"Tagen"}`:w.post?"Geschafft":`Tag ${w.i+1} von ${plan().N}`;
-  $("#parkbtn").hidden=!S.started;
-  document.body.classList.toggle("setup",!S.started);
-  const demo=S.demo?`<div class="demo">Du siehst Beispieldaten. Änderungen werden nicht gespeichert.<button class="btn small" data-act="clearDemo">Selbst starten</button></div>`:"";
-  const fn=!S.started?vEinrichten:{heute:vHeute,aufgaben:vAufgaben,fortschritt:vFortschritt,hilfe:vHilfe,mehr:vMehr}[view.tab];
-  $("#app").innerHTML=`<div class="stack">${demo}${view.sub?SUB[view.sub.t](view.sub):fn()}</div>`;
+  $("#ttl").textContent=view.sub&&SUBT[view.sub.t]?SUBT[view.sub.t]:(TABS.find(x=>x[0]===view.tab)||["","Ich"])[1]||"Ich";
+  if(view.tab==="ich"&&!view.sub)$("#ttl").textContent="Ich";
+  $("#day").textContent=!w?"":w.pre?`Start in ${w.rest} ${pl(w.rest,"Tag","Tagen")}`:w.post?"Geschafft":`Tag ${w.i+1} von ${plan().N}`;
+  const demo=S.demo&&!setup&&!full?`<div class="demo"><span>Beispieldaten. Nichts wird gespeichert.</span><button class="btn" data-act="clearDemo">Selbst starten</button></div>`:"";
+  let html;
+  if(view.tour!=null)html=vTour();
+  else if(!S.started)html=vSetup();
+  else if(view.sub)html=SUB[view.sub.t](view.sub);
+  else html={heute:vHeute,aufgaben:vAufgaben,woche:vWoche,hilfe:vHilfe,fortschritt:vFortschritt,ich:vIch}[view.tab]();
+  $("#app").innerHTML=demo+html;
+  tick();
 }
-function back(){return `<button class="btn ghost small" data-act="back" style="align-self:flex-start">${ICON.l} Zurück</button>`}
-function tile(v,l){return `<div class="tile"><div class="v">${v}</div><div class="l">${l}</div></div>`}
-const ICON={l:'<svg width="18" height="18" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.8"><path d="M15 5l-7 7 7 7"/></svg>',
- r:'<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>',
- star:'<svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8z"/></svg>',
- brain:'<svg viewBox="0 0 24 24"><path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 6 1V5a2 2 0 0 0-3-1zM15 4a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-6 1"/></svg>'};
+function back(label){return `<button class="back" data-act="back">‹ ${label||"Zurück"}</button>`}
+function tile(v,l){return `<div class="tile"><b>${v}</b><span>${l}</span></div>`}
+const SUBT={pick:"Aufgaben wählen",karte:"Hilfe",test:"Selbsttest",werkzeug:"Werkzeugkasten",park:"Parken",feedback:"Feedback",nachtragen:"Zeit nachtragen"};
 
-// ================= Einrichten =================
-function vEinrichten(){const ab=S.goal==="abgeben",sp=S.goal==="spur";let prev="";
-  if(S.goal&&(sp||S.deadline)){const P=plan();const w=[];
-    if(ab&&P.N<10)w.push("Bis zur Abgabe sind es weniger als zehn Tage. Das ist sehr knapp. Konzentrier dich auf die Muss-Aufgaben, und wenn du Unterstützung brauchst, melde dich bei mir.");
-    else if(ab&&P.N<30)w.push(`Bis zur Abgabe sind es ${P.N} Tage. Phase 2 wird entsprechend kürzer, Phase 1 und Phase 3 bleiben.`);
-    if(ab&&P.N>30)w.push(`Deine Frist ist mehr als einen Monat entfernt. Phase 2 wird länger. Wenn du lieber genau einen Monat möchtest, starte am ${fmtDate(addDays(S.deadline,-29),true)}.`);
-    if(ab&&P.N<1)w.length=0;
-    prev=diffDays(S.start,ab?S.deadline:S.start)<0?`<p class="tag" style="align-self:flex-start">Die Frist liegt vor dem Start</p>`:`<div class="stack" style="gap:8px"><span class="q" style="margin:0">Dein Monat</span>${phaseBar(null)}${w.map(x=>`<p class="muted" style="margin:0">${x}</p>`).join("")}</div>`}
-  return `<div class="hero"><img class="logo" src="icons/icon-192.png" alt=""><div class="eyebrow">30 Tage aus der Blockade</div><h1>Reset &amp; Flow</h1><div class="thread"></div>
-  <p class="lead">In einem Monat wird aus dem Durcheinander eine Liste, die du Schritt für Schritt abarbeitest. Mit wenigen klaren Werkzeugen und Hilfe für die Momente, in denen der Kopf blockiert.${TESTV?" <b>Testversion.</b>":""}</p></div>
-  <div class="page">
-   <div><span class="q">1. Was ist dein Ziel für diesen Monat?</span>
-   <div class="bigchoice"><button data-act="goal" data-v="abgeben" aria-pressed="${ab}"><div>Ich will abgeben<span>In einem Monat sicher zur Abgabe</span></div></button>
-   <button data-act="goal" data-v="spur" aria-pressed="${sp}"><div>Ich will wieder in die Spur<span>In einem Monat zurück in die Spur</span></div></button></div></div>
-   ${ab?`<div class="two">${dateIn(S,"deadline","Meine Abgabefrist","Bei einer Verlängerung änderst du sie später einfach.")}${dateIn(S,"start","Ich starte am")}</div>`:sp?dateIn(S,"start","Mein Starttag","Ab hier läuft dein Monat."):""}
-   ${prev}
-   <div><span class="q">2. Wo stehst du gerade?<span class="hn">Mehrfachauswahl</span></span><div class="chips">${LAGE.map((l,i)=>`<button class="chip wide" data-act="lage" data-v="${i}" aria-pressed="${S.lage.includes(i)}">${l}</button>`).join("")}</div></div>
-   ${S.lage.includes(1)?lageHint():""}
-   ${chips(S,"ki",["Ohne KI","Mit KI"],"3. Arbeitest du mit KI?","Das kannst du später ändern.")}
-   ${S.ki===1?kiHint():""}
-   <button class="btn" data-act="start">Los geht’s</button>
-  </div>
-  <button class="btn ghost" data-act="demo">Erst ein Beispiel ansehen</button>
+// ================= Einstieg =================
+function dots(i,n){return `<div class="dots">${Array.from({length:n},(_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div>`}
+function vSetup(){const s=view.setup;
+  if(s===0)return `<div class="row"><b style="font-size:15px">Reset &amp; Flow</b><span class="m">1 / 3</span></div>
+  <img class="logo" src="icons/icon-192.png" alt="">
+  <div class="q"><h1>So funktioniert dein Monat</h1><p class="lead">30 Tage aus der Blockade. Drei Schritte, jeden Tag nur das Nötigste.${TESTV?" <b>Testversion.</b>":""}</p></div>
+  <div class="phs"><div class="st"><div class="n on">1</div><div><b>Reset · 5 Tage</b><p class="m">Alles aus dem Kopf, sortieren, planen. Die App führt dich Tag für Tag.</p></div></div>
+  <div class="st"><div class="n">2</div><div><b>Flow · 20 Tage</b><p class="m">Morgens kurzer Check-in, dann 2 bis 3 Aufgaben. Fokuszeit starten, arbeiten.</p></div></div>
+  <div class="st"><div class="n">3</div><div><b>Abschluss · 5 Tage</b><p class="m">Überarbeiten und abgeben, oder zurück in die Spur.</p></div></div></div>
+  <div class="grow"></div>${dots(0,3)}
+  <div class="btns"><button class="btn" data-act="setup" data-v="1">Weiter</button><button class="btn o" data-act="demo">Erst ein Beispiel ansehen</button></div>`;
+  if(s===2&&S.wocheQ==null)S.wocheQ=0;
+  if(s===1){const ab=S.goal==="abgeben",sp=S.goal==="spur";let prev="";
+    if(S.goal&&(sp||S.deadline)){const P=plan();const w=[];
+      if(ab&&diffDays(S.start,S.deadline)<0)w.push("Die Frist liegt vor dem Start.");
+      else if(ab&&P.N<10)w.push("Bis zur Abgabe sind es weniger als zehn Tage. Das ist sehr knapp. Konzentrier dich auf die Muss-Aufgaben.");
+      else if(ab&&P.N<30)w.push(`Bis zur Abgabe sind es ${P.N} Tage. Der Flow wird kürzer, Reset und Abschluss bleiben.`);
+      else if(ab&&P.N>30)w.push(`Deine Frist ist mehr als einen Monat entfernt. Der Flow wird länger. Für genau einen Monat startest du am ${fmtDate(addDays(S.deadline,-29),true)}.`);
+      prev=`<div class="q"><span class="k">Dein Monat</span>${monthBar(null)}${w.map(x=>`<p class="m">${x}</p>`).join("")}</div>`}
+    return `<div class="row">${back()}<span class="m">2 / 3</span></div><h1>Dein Ziel</h1>
+    <div class="q"><span class="k">Was willst du in diesem Monat?</span><div class="opts"><button data-act="goal" data-v="abgeben" aria-pressed="${ab}">Ich will abgeben</button><button data-act="goal" data-v="spur" aria-pressed="${sp}">Ich will wieder in die Spur</button></div></div>
+    ${ab?`<div class="two">${dateIn(S,"deadline","Abgabefrist")}${dateIn(S,"start","Ich starte am")}</div>`:sp?dateIn(S,"start","Mein Starttag"):""}
+    ${prev}
+    <div class="q"><span class="k">Wo stehst du gerade? Mehrfachauswahl</span><div class="opts">${LAGE.map((l,i)=>`<button data-act="lage" data-v="${i}" aria-pressed="${S.lage.includes(i)}">${l}</button>`).join("")}</div></div>
+    ${S.lage.includes(1)?`<p class="m">Dafür ist dieser Monat knapp. Plane den Teil als ersten Block ein. Wenn du feststeckst, helfen mein <a href="${LINKS.maxqda}" target="_blank" rel="noopener">MAXQDA-Paket</a> oder ein <a href="${LINKS.gespraech}" target="_blank" rel="noopener">Coaching</a>.</p>`:""}
+    ${choice(S,"ki",["Ohne KI","Mit KI"],"Arbeitest du mit KI?",S.ki===1?`<p class="m">Was erlaubt ist, steht in meinem kostenlosen <a href="${LINKS.ki}" target="_blank" rel="noopener">KI-Guide</a>. Im Abschluss bekommst du eine kurze Checkliste.</p>`:"")}
+    <div class="grow"></div>${dots(1,3)}<button class="btn" data-act="setup" data-v="2">Weiter</button>`}
+  return `<div class="row">${back()}<span class="m">3 / 3</span></div><h1>Fast fertig</h1>
+  ${choice(S,"wocheQ",["Nein, erst mal nicht","Ja"],"Wochenplan anlegen?",`<p class="m">Freiwillig. Du kannst feste Arbeitszeiten und Termine für die Woche eintragen. Sonst reicht der Morgen-Check-in, in dem du jeden Tag deine Zeit angibst. Das kannst du später unter „Ich“ ändern.</p>`)}
   ${installHelp()}
-  <p class="muted">Deine Einträge bleiben nur auf diesem Gerät. Es gibt kein Konto und keine Cloud.</p>`}
-function lageHint(){return `<div class="offer"><p>Dafür ist dieser Monat knapp. Plane den Teil als ersten Block ein. Wenn du dabei feststeckst, hilft mein MAXQDA-Paket oder ein Coaching.</p><div class="row"><a class="btn small" href="${LINKS.maxqda}" target="_blank" rel="noopener">MAXQDA-Paket</a><a class="btn ghost small" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a></div></div>`}
-function kiHint(){return `<p class="muted" style="margin:0">Was erlaubt ist und wie du KI sauber dokumentierst, steht in meinem kostenlosen <a href="${LINKS.ki}" target="_blank" rel="noopener">KI-Guide für die Abschlussarbeit</a>. In Phase 3 bekommst du dazu eine kurze Checkliste.</p>`}
-function installHelp(){return `<details class="help"><summary>Auf den Home-Bildschirm legen</summary><ol><li><b>iPhone (Safari):</b> unten auf das Teilen-Symbol tippen, dann „Zum Home-Bildschirm“.</li><li><b>Android (Chrome):</b> oben rechts auf die drei Punkte, dann „App installieren“.</li><li>Öffne die App danach immer über das neue Symbol. Auf dem iPhone bleiben deine Daten nur so dauerhaft gespeichert.</li></ol></details>`}
+  <p class="m">Deine Einträge bleiben nur auf diesem Gerät. Es gibt kein Konto und keine Cloud.</p>
+  <div class="grow"></div>${dots(2,3)}
+  <div class="btns"><button class="btn" data-act="start">Los geht’s</button><button class="btn o" data-act="start" data-tour="1">Erst kurze Einführung (1 Minute)</button></div>`}
+function installHelp(){return `<details class="box"><summary>Auf den Home-Bildschirm legen</summary><ol class="list"><li><b>iPhone (Safari):</b> unten auf das Teilen-Symbol, dann „Zum Home-Bildschirm“.</li><li><b>Android (Chrome):</b> oben rechts auf die drei Punkte, dann „App installieren“.</li><li>Öffne die App danach immer über das neue Symbol. Auf dem iPhone bleiben deine Daten nur so dauerhaft gespeichert.</li></ol></details>`}
+const TOUR=[
+ ["Morgens · 1 Minute","Check-in","Energie, Schlaf und Zeit antippen. Die App sagt dir, welche Art von Aufgaben heute passt und wie viele. Welche genau, wählst du selbst, weil nur du die Zusammenhänge kennst."],
+ ["Arbeiten","Fokuszeit","Ein Knopf startet die Uhr. Der Kreis zeigt 25 Minuten, danach 5 Minuten Pause. Die Uhr läuft weiter, bis du stoppst. Jede Minute zählt für deine Statistik."],
+ ["Aufgaben","Drei Arten","<b>Denkaufgaben</b> brauchen einen klaren Kopf. <b>Klärungsaufgaben</b> dauern 10 bis 15 Minuten. <b>Fleißaufgaben</b> sind viel Arbeit mit wenig Kopf. So passt immer etwas zu deiner Energie."],
+ ["Fortschritt","Sichtbar machen","Ein Balken über alle Aufgaben, deine Gliederung und deine Arbeitszeit. Damit du siehst, was du schon geschafft hast, und nicht nur, was fehlt."],
+ ["Wenn es hakt","Kopf blockiert?","Unter „Hilfe“ findest du kurze Karten mit Mini-Übungen. Und mit „Parken“ oben schreibst du Gedanken auf, die dich gerade ablenken."]];
+function vTour(){const i=view.tour;const [k,t,p]=TOUR[i];const last=i===TOUR.length-1;
+  return `<div class="row"><b style="font-size:15px">Einführung</b><button class="lnk m" data-act="tourEnd">Überspringen</button></div>
+  <div class="grow"></div><div class="q" style="gap:12px"><span class="k r">${k}</span><h1 style="font-size:28px">${t}</h1><p style="font-size:17px">${p}</p></div><div class="grow"></div>
+  ${dots(i,TOUR.length)}<button class="btn" data-act="${last?"tourEnd":"tourNext"}">${last?"Los geht’s":"Weiter"}</button>`}
 
-// ================= Phasenleiste =================
-function phaseBar(date){const P=plan();const w=date?where(date):null;const seg=(ph,d)=>d?`<div class="ph ph${ph} ${w&&w.ph===ph?"on":""}" style="flex:${d}"><b>${ph}</b><span>${phShort(ph)}</span><small>${d} ${d===1?"Tag":"Tage"}</small>${ph===2&&P.buf?`<i class="buf" style="width:${P.buf/d*100}%" title="Puffer"></i>`:""}</div>`:"";
-  const mk=w&&!w.pre&&!w.post?`<div class="mk" style="left:calc(${(w.i+.5)/P.N*100}% - 1px)"></div>`:"";
-  return `<div class="phbar" aria-label="Phasen">${seg(1,P.p1)}${seg(2,P.p2)}${seg(3,P.p3)}${mk}</div>
-  <div class="phdates"><span>${fmtShort(P.st)}</span>${P.buf?`<span class="pb">Puffer ab ${fmtShort(P.bufS)}</span>`:""}<span>${S.goal==="abgeben"?"Abgabe ":""}${fmtShort(P.end)}</span></div>`}
-function countdown(){const P=plan(),t=today();const w=where(t);if(w.pre||w.post)return"";
-  const r=diffDays(t,P.end);const parts=[];
-  if(S.goal==="abgeben"){parts.push(r===0?"<b>Heute ist Abgabe.</b>":`<b>Noch ${r} ${r===1?"Tag":"Tage"}</b> bis zur Abgabe`);if(w.ph<3){const rr=diffDays(t,P.roh);parts.push(rr>0?`Rohfassung fertig in ${rr} ${rr===1?"Tag":"Tagen"} (${fmtShort(P.roh)})`:rr===0?"Heute: Rohfassung fertig":"")}}
-  else{parts.push(`<b>Noch ${r} ${r===1?"Tag":"Tage"}</b> in deinem Monat`);if(w.ph<3){const d=diffDays(t,P.p3s);parts.push(`Phase 3 beginnt in ${d} ${d===1?"Tag":"Tagen"}`)}}
-  return `<p class="cd">${parts.filter(Boolean).join(" · ")}</p>`}
+// ================= Monatsleiste =================
+function monthBar(date){const P=plan();const w=date?where(date):null;
+  const seg=(ph,d)=>d?`<div class="${w&&w.ph===ph?"on":w&&(w.post||w.ph>ph)?"past":""}" style="flex:${d}"></div>`:"";
+  const lab=(ph,d)=>d?`<span class="${w&&w.ph===ph?"on":""}" style="flex:${d}">${phName(ph)}</span>`:"";
+  return `<div class="mbar">${seg(1,P.p1)}${seg(2,P.p2)}${seg(3,P.p3)}</div><div class="mlab">${lab(1,P.p1)}${lab(2,P.p2)}${lab(3,P.p3)}</div>
+  <div class="row m"><span>${fmtShort(P.st)}</span><span>${S.goal==="abgeben"?"Abgabe ":""}${fmtShort(P.end)}</span></div>`}
+function countdown(){const P=plan(),t=today();const r=diffDays(t,P.end);
+  return S.goal==="abgeben"?(r===0?"Heute ist Abgabe":`${r} ${pl(r,"Tag","Tage")} bis zur Abgabe`):`${r} ${pl(r,"Tag","Tage")} bis Monatsende`}
+
+// ================= Zeit =================
+function minsOn(d){return S.sessions.filter(s=>s.d===d).reduce((a,s)=>a+s.min,0)}
+function blocksOn(d){return S.woche?S.blocks.filter(b=>b.wd===wday(d)).sort((a,b)=>tmin(a.s)-tmin(b.s)):[]}
+function workBlocksOn(d){return blocksOn(d).filter(b=>b.typ==="w")}
+function goalOn(d){const x=S.days[d];if(x&&x.zeit!=null)return ZIELMIN[x.zeit];const wb=workBlocksOn(d);return wb.length?wb.reduce((a,b)=>a+tmin(b.e)-tmin(b.s),0):0}
 
 // ================= Heute =================
 function dayObj(date){return S.days[date]||(S.days[date]={pick:[]})}
 function pdObj(k){return S.pd[k]||(S.pd[k]={})}
-function vHeute(){const date=view.date||today();const isToday=date===today();const w=where(date);
-  let nav="";if(view.date&&!isToday)nav=`<div class="row">${back()}<span class="muted">Du siehst ${fmtDate(date,true)}.</span></div>`;
-  const head=`${nav}<div class="stack" style="gap:6px">${phaseBar(date)}${isToday?countdown():""}</div>`;
-  if(w.pre)return head+`<div class="page"><div class="eyebrow">Bald geht’s los</div><h1>Dein Monat startet ${w.rest===1?"morgen":"am "+fmtDate(plan().st,true)}.</h1><p style="margin:0">Bis dahin musst du nichts tun. Wenn dir schon etwas einfällt, park es mit dem Knopf oben rechts. Es wartet dann in deiner Aufgabenliste.</p>${S.warum?"":ta(S,"warum","Schon mal vorab: Warum ist mir das wichtig?",null,2)}</div>`;
-  if(w.post)return head+vEnde();
+// d.e ist der Index 0–4 (angezeigt 1–5)
+function lvl(d){if(d.e==null)return 1;const E=d.e+1;if(E<=2||(E===3&&d.schlaf===0))return 0;if(E>=4&&d.schlaf!==0)return 2;return 1}
+function anweisung(d,w){
+  if(d.e==null||d.schlaf==null||d.zeit==null)return null;
+  const L=lvl(d);const head=["Wenig Energie","Mittlere Energie","Gute Energie"][L]+", "+ZEITL[d.zeit]+".";
+  if(w.ph!==2){const c=stepsOf(w.ph)[curStep(w)];const t=`Heute steht „${c.t}“ an${c.dauer?", etwa "+c.dauer:""}.`;
+    return {head,text:t+(L===0?" Mach heute nur den ersten Teil. Der Rest darf morgen folgen.":"")+(d.schlaf===0?" Erst etwas essen und trinken.":""),nd:0,nr:0}}
+  const T=[2,3,3,4][d.zeit];const openD=S.tasks.some(t=>!t.done&&t.art==="d");
+  let nd,nr,text;
+  if(L===0){nd=0;nr=Math.min(T,3);text=`Heute keine große Denkaufgabe. Wähle ${nr} Klärungs- oder Fleißaufgaben. Das ist kein verlorener Tag.`}
+  else if(!openD){nd=0;nr=T;text=`Wähle ${T} Aufgaben aus deiner Liste.`}
+  else{nd=L===2&&d.zeit>=2?2:1;nr=T-nd;text=`Wähle ${nd} ${pl(nd,"Denkaufgabe","Denkaufgaben")} für den Anfang${L===2?", solange du frisch bist,":""} und ${nr} Fleiß- oder ${pl(nr,"Klärungsaufgabe","Klärungsaufgaben")} für danach.`}
+  if(d.schlaf===0&&L!==0)text+=" Wenig Schlaf: Plan eine echte Pause ein.";
+  return {head,text,nd,nr,n:nd+nr}}
+function curStep(w){const list=stepsOf(w.ph);const def=w.ph===1?w.n-1:w.c;return view.step!=null&&view.step<list.length?view.step:def}
+function vHeute(){const date=today();const w=where(date);
+  if(w.pre)return `<h1>Dein Monat startet ${w.rest===1?"morgen":"am "+fmtDate(plan().st,true)}.</h1><p>Bis dahin musst du nichts tun. Wenn dir schon etwas einfällt, park es mit „Parken“ oben. Es wartet dann in deiner Aufgabenliste.</p>${ta(S,"warum","Schon mal vorab: Warum ist mir das wichtig?",null,2)}`;
+  if(w.post)return vEnde();
   const d=dayObj(date);
-  const body=w.ph===1?dayP1(w,d):w.ph===2?dayP2(w,d,date):dayP3(w,d);
-  const fbN=TESTV&&isToday&&w.i>=plan().N-3&&!S.fb.sent?`<button class="notice" data-act="openSub" data-t="feedback">Testphase: Dein Monat ist fast geschafft. Magst du mir dein Feedback geben?${ICON.r}</button>`:"";
-  const prevOpen=isToday&&w.i>0?prevNotice(addDays(date,-1)):"";
-  return head+fbN+prevOpen+body+`<button class="notice help2" data-act="go" data-tab="hilfe"><span>${ICON.brain}Was passiert da gerade?<small>Wenn der Kopf blockiert: kurze Karten mit Mini-Übung</small></span>${ICON.r}</button>`}
-function prevNotice(y){const w=where(y);if(w.ph!==1)return"";const d=S.days[y];if(!d||d.status==null||d.status===0)return"";return `<button class="notice" data-act="openDay" data-d="${y}">Gestern (${INHALT.p1[w.n-1].t}) ist noch offen. Ansehen${ICON.r}</button>`}
-function morning(d){return `<div class="sec">Morgens</div>${scale(d,"e","Wie viel Energie habe ich heute?")}
-  <div class="stack" style="gap:10px"><span class="q" style="margin:0">Treibstoff-Check</span>${fuel(d,"schlaf",SCHLAF,"Schlaf")}${fuel(d,"essen",GUT,"Essen")}${fuel(d,"trinken",GUT,"Trinken")}</div>
-  ${fuelNote(d)}`}
-function fuel(o,key,opts,label){const id=bindObj(o);return `<div class="fuel"><span>${label}</span><div class="chips">${opts.map((t,i)=>`<button class="chip sm" data-b="${id}" data-k="${key}" data-v="${i}" aria-pressed="${o[key]===i}">${t}</button>`).join("")}</div></div>`}
-function fuelNote(d){const low=(d.e!=null&&d.e<=3)||d.schlaf===0||d.essen===2||d.trinken===2;return low?`<p class="hint">Dein Tank ist heute eher leer. Erst etwas essen und trinken, dann eine Klärungs- oder Fleißaufgabe. Das ist kein verlorener Tag.</p>`:""}
-function dayP1(w,d){const c=INHALT.p1[w.n-1];const o=pdObj("p1d"+w.n);let extra="";
-  if(w.n===1)extra=`<div class="fact"><div class="k">Dein Ziel</div><p><b>${S.goal==="spur"?"Ich will wieder in die Spur.":"Ich will abgeben, am "+fmtDate(S.deadline,true)+"."}</b></p></div>${ta(S,"warum","Warum ist mir das wichtig? Ein Satz.",null,2)}${ta(S,"braindump","Mein Braindump","Hier oder auf Papier. Eine Aufgabe pro Zeile macht das Übertragen an Tag 3 leichter.",10,"Kapitel 2: Theorie kürzen\nKapitel 4: Interviews 5 bis 8 auswerten\nLiteraturverzeichnis prüfen\nFrage an Betreuung: Umfang Anhang?")}`;
-  if(w.n===2)extra=checklist(o,c.check,"Abhaken");
-  if(w.n===3){const lines=bdLines();extra=`<div class="row"><button class="btn sec2" data-act="go" data-tab="fortschritt">Gliederung eintragen</button><button class="btn sec2" data-act="goBulk">Aufgaben übertragen</button></div>${lines.length&&!S.bdDone?`<div class="offer"><p>In deinem Braindump stehen ${lines.length} Zeilen. Soll ich sie als Aufgaben übernehmen? Du kannst danach alles bearbeiten oder löschen.</p><button class="btn small" data-act="importBD" style="align-self:flex-start">${lines.length} Aufgaben übernehmen</button></div>`:""}<p class="muted" style="margin:0">Bisher: ${S.gl.length} Kapitel, ${S.tasks.length} Aufgaben.</p>`}
-  if(w.n===4){const noArt=S.tasks.filter(t=>!t.art).length,noM=S.tasks.filter(t=>t.muss==null).length;extra=`${artTable()}<div class="tiles">${tile(noArt,"Aufgaben ohne Art")}${tile(noM,"ohne Muss oder Kann")}</div><button class="btn sec2" data-act="goFilter" data-art="ohne">Unsortierte Aufgaben ansehen</button>`}
-  if(w.n===5){const z=zeitCheck();extra=`${zeitCard(z)}<p class="muted" style="margin:0">Mit Stern markiert: ${S.tasks.filter(t=>t.star&&!t.done).length} Aufgaben.</p>${formalCard()}<button class="btn sec2" data-act="go" data-tab="aufgaben">Zur Aufgabenliste</button>`}
-  return `<div class="page"><div class="eyebrow">Phase 1 · Aufräumen · Tag ${w.n} von ${w.of}</div><h1>${c.t}</h1><p class="muted" style="margin:0">Heute etwa ${c.dauer}</p>
-  <div class="band"><div class="k">Impuls</div><p>${esc(c.impuls)}</p></div>
-  ${morning(dayObj(view.date||today()))}
-  <div class="sec">Deine Aufgabe heute</div><ol class="steps">${c.schritte.map(s=>`<li>${esc(s)}</li>`).join("")}</ol>${extra}
-  <div class="sec">Abends</div>${chips(d,"status",["erledigt","teilweise","morgen weiter"],"Wie weit bin ich gekommen?")}
-  ${w.n===5&&d.status===0?`<div class="ms"><h1>${c.ende}</h1><p style="margin:0">Alles ist aus deinem Kopf und hat einen Platz. Ab morgen arbeitest du deine Liste ab.</p></div>${offerBox("Du siehst den Wald vor lauter Bäumen nicht?","Lass uns gemeinsam sortieren. In einem Coaching schauen wir auf deine Liste und deinen Zeitplan.")}`:""}</div>`}
+  if(!d.ci)return vCheckin(d,w);
+  const goal=goalOn(date),done=minsOn(date);
+  const run=S.timer?`<button class="box acc" data-act="openTimer" style="text-align:left;background:var(--bg)"><span class="row"><b>${S.timer.mode==="p"?"Pause läuft":S.timer.mode==="u"?"Übung läuft":"Fokuszeit läuft"}</b><b id="runclock" style="font-variant-numeric:tabular-nums">0:00</b></span><span class="m">Tippen zum Öffnen</span></button>`:"";
+  const fbN=TESTV&&w.i>=plan().N-3&&!S.fb.sent?`<button class="box fill" data-act="sub" data-t="feedback" style="text-align:left"><b>Testphase: Dein Monat ist fast geschafft.</b><span class="m">Magst du mir dein Feedback geben?</span></button>`:"";
+  const A=anweisung(d,w);
+  const top=`<div class="q"><div class="row"><span class="k">Heute gearbeitet</span><b>${done} ${goal?"von "+goal+" ":""}Min.</b></div><div class="bar"><i style="width:${goal?Math.min(100,done/goal*100):done?100:0}%"></i></div></div>
+  ${run||`<button class="btn big" data-act="startFokus"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg>Fokuszeit starten</button>`}`;
+  const instr=A?`<div class="box acc"><span class="k r">Deine Anweisung für heute</span><p><b>${A.head}</b> ${A.text}</p><button class="lnk m" data-act="redoCheckin" style="align-self:flex-start;padding:0">Check-in ändern</button></div>`:`<button class="lnk" data-act="redoCheckin">Check-in nachholen</button>`;
+  const body=w.ph===2?dayFlow(w,d,date,A):dayStep(w,d);
+  const mon=`<div class="box"><div class="row"><span class="k">Monat</span><span class="m">${phName(w.ph)} · Tag ${w.n} von ${w.of}</span></div><div class="bar"><i style="width:${(w.i+1)/plan().N*100}%"></i></div><p class="m">${countdown()} · ${S.tasks.filter(t=>t.done).length} von ${S.tasks.length} Aufgaben erledigt</p></div>`;
+  return `${fbN}${top}${w.ph===2?instr:""}${body}${w.ph!==2?instr:""}${mon}
+  <div class="btns"><button class="btn q2" data-act="go" data-tab="hilfe">Kopf blockiert? Kurze Hilfe</button><button class="lnk m" data-act="sub" data-t="nachtragen" style="align-self:center">Ohne Timer gearbeitet? Zeit nachtragen</button></div>`}
+function vCheckin(d,w){const h=new Date().getHours();const wb=workBlocksOn(today());
+  if(d.zeit==null&&wb.length){const m=wb.reduce((a,b)=>a+tmin(b.e)-tmin(b.s),0);d.zeit=Math.max(0,Math.min(3,Math.round(m/60)-1))}
+  const A=anweisung(d,w);
+  return `<div class="row"><span class="k">Check-in · 1 Minute</span><span class="m">${phName(w.ph)} · Tag ${w.n}</span></div>
+  <h1>${h<12?"Guten Morgen.":h<18?"Kurzer Check-in.":"Guten Abend."}</h1>
+  ${choice(d,"e",R5,"Energie",`<div class="row m"><span>leer</span><span>voller Energie</span></div>`)}
+  ${choice(d,"schlaf",SCHLAF,"Schlaf")}
+  ${choice(d,"zeit",ZEIT,"Zeit für die Arbeit heute",wb.length?`<p class="m">Laut Wochenplan: ${wb.map(b=>tfmt(b.s)+" bis "+tfmt(b.e)+" Uhr").join(", ")}</p>`:"")}
+  ${A?`<div class="box acc"><span class="k r">Deine Anweisung für heute</span><p><b>${A.head}</b> ${A.text}</p></div>`:`<p class="m">Tippe alle drei an. Dann bekommst du deine Anweisung für heute.</p>`}
+  <div class="btns"><button class="btn" data-act="ciDone" ${A?"":"disabled style=\"opacity:.45\""}>${w.ph===2?"Aufgaben wählen":"Los geht’s"}</button><button class="lnk m" data-act="ciSkip" style="align-self:center">Heute ohne Check-in</button></div>`}
+function dayFlow(w,d,date,A){const picks=d.pick.map(id=>S.tasks.find(t=>t.id===id)).filter(Boolean);
+  const intro=w.n===1?`<div class="box soft"><span class="k">Der Flow beginnt</span><p>Ab heute arbeitest du deine Liste ab. Zwei bis drei Aufgaben am Tag reichen. Die großen Denkaufgaben zuerst.</p></div>`:"";
+  const buf=w.buf?`<div class="box soft"><span class="k">Puffertag</span><p>Heute fängst du auf, was liegen geblieben ist. Ist alles erledigt, darfst du schon mit dem Abschluss beginnen oder dir frei nehmen.</p></div>`:"";
+  return `${intro}${buf}<div class="q"><div class="row"><span class="k">Jetzt dran</span>${picks.length?`<button class="lnk" data-act="sub" data-t="pick" style="padding:0">Ändern</button>`:""}</div>
+  ${picks.length?`<div class="tl">${picks.map(t=>taskRow(t,{today:1})).join("")}</div>`:S.tasks.some(t=>!t.done)?`<button class="btn o" data-act="sub" data-t="pick">Aufgaben wählen</button>`:S.tasks.length?`<p class="m">Alle Aufgaben erledigt. Stark.</p>`:`<button class="btn o" data-act="go" data-tab="aufgaben">Aufgaben anlegen</button>`}</div>`}
+function dayStep(w,d){const list=stepsOf(w.ph);const i=curStep(w);const c=list[i];const key=stepKey(w.ph,i);const sp=S.goal==="spur";
+  const first=w.ph===1?0:5-plan().p3;
+  const nav=`<div class="steps5">${list.map((x,k)=>k<first?"":`<button data-act="step" data-v="${k}" class="${S.steps[stepKey(w.ph,k)]?"done":""}" aria-current="${k===i}"><b>${k+1}</b>${SHORT[w.ph===1?"p1":S.goal==="spur"?"p3s":"p3a"][k]}</button>`).join("")}</div>`;
+  let extra="";
+  if(w.ph===1){const o=pdObj("p1d"+(i+1));
+    if(i===0)extra=`<div class="box soft"><span class="k">Dein Ziel</span><p><b>${S.goal==="spur"?"Ich will wieder in die Spur.":"Ich will abgeben, am "+fmtDate(S.deadline,true)+"."}</b></p></div>${ta(S,"warum","Warum ist mir das wichtig? Ein Satz.",null,2)}${ta(S,"braindump","Mein Braindump","Hier oder auf Papier. Eine Aufgabe pro Zeile macht das Übertragen leichter.",10,"Kapitel 2: Theorie kürzen\nKapitel 4: Interviews 5 bis 8 auswerten\nLiteraturverzeichnis prüfen\nFrage an Betreuung: Umfang Anhang?")}`;
+    if(i===1)extra=checklist(o,c.check);
+    if(i===2){const n=bdLines().length;extra=`${n&&!S.bdDone?`<div class="box fill"><p>In deinem Braindump stehen ${n} Zeilen. Als Aufgaben übernehmen? Du kannst danach alles bearbeiten.</p><button class="btn" data-act="importBD">${n} Aufgaben übernehmen</button></div>`:""}<div class="two"><button class="btn o" data-act="go" data-tab="fortschritt">Gliederung</button><button class="btn o" data-act="goBulk">Aufgaben</button></div><p class="m">Bisher: ${S.gl.length} Kapitel, ${S.tasks.length} Aufgaben.</p>`}
+    if(i===3){const noArt=S.tasks.filter(t=>!t.art).length,noM=S.tasks.filter(t=>t.muss==null).length;extra=`${artTable()}<p class="m">Noch ohne Art: ${noArt} · ohne Muss oder Kann: ${noM}</p><button class="btn o" data-act="goFilter" data-art="ohne">Unsortierte Aufgaben ansehen</button>`}
+    if(i===4)extra=`${zeitBox()}<p class="m">Mit „Zuerst“ markiert: ${S.tasks.filter(t=>t.star&&!t.done).length} Aufgaben.</p>${formalCard()}<button class="btn o" data-act="go" data-tab="aufgaben">Zur Aufgabenliste</button>`}
+  else if(sp){const o=pdObj("p3s"+(i+1));extra=(c.felder||[]).map(([k,l])=>ta(o,k,l,null,k==="plan"?4:2)).join("")+(c.todos?todos(o,c.todos,"Meine nächsten drei Schritte",3):"")+(i===2?`<a class="btn o" href="${LINKS.gantt}" target="_blank" rel="noopener">Gantt-Vorlagen</a>`:"")+(i===1?`<button class="btn o" data-act="go" data-tab="fortschritt">Zur Gliederung</button>`:"")}
+  else{extra=checklist(pdObj("p3a"+(i+1)),c.check)+(c.ki&&S.ki===1?`<span class="k">KI</span>`+checklist(pdObj("p3ki"),c.ki):"")+(c.ki&&S.ki!==1?`<p class="m">Du arbeitest ohne KI. Prüf trotzdem kurz, ob deine Eigenständigkeitserklärung dazu passt.</p>`:"")}
+  const wechsel=w.ph===3&&i===first?`<div class="box soft"><span class="k">Der Abschluss beginnt</span><p>${sp?"Jetzt sortierst du, wie es nach diesem Monat weitergeht.":"Ab jetzt schreibst du nichts Neues mehr. Jetzt machst du gut, was da ist."}</p></div>`:"";
+  const fertig=S.steps[key];
+  const fin=c.ende&&fertig?`<div class="box fill"><h1>${c.ende}</h1><p>${w.ph===1?"Alles ist aus deinem Kopf und hat einen Platz. Ab morgen arbeitest du deine Liste ab.":sp?"Du hast einen Plan, eine Routine und weißt, womit du weitermachst.":"Du hast es geschafft. Gönn dir etwas Schönes."}</p></div>${offer(w.ph===1?"Du siehst den Wald vor lauter Bäumen nicht?":"Wie geht es weiter?",w.ph===1?"In einem Coaching schauen wir gemeinsam auf deine Liste und deinen Zeitplan.":"Wenn du für die nächste Etappe Begleitung möchtest: Im kostenlosen Erstgespräch schauen wir, was zu dir passt.")}`:"";
+  const lekt=w.ph===3&&!sp&&i===first?offer("Ein zweiter Blick?","Wenn du dir bei einem Kapitel unsicher bist, zum Beispiel beim Methodenteil oder der Diskussion: Ein punktuelles Fachlektorat schaut genau dort hin."):"";
+  return `${nav}${wechsel}<div class="q"><span class="k">${phName(w.ph)} · Schritt ${i+1} von 5</span><h1>${c.t}</h1>${c.dauer?`<p class="m">Etwa ${c.dauer}</p>`:""}</div>
+  ${c.impuls?`<p class="say" style="font-size:15px;font-weight:400">${esc(c.impuls)}</p>`:""}
+  <ol class="list">${c.schritte.map(s=>`<li>${esc(s)}</li>`).join("")}</ol>${extra}
+  <button class="btn ${fertig?"o":""}" data-act="stepDone" data-k="${key}">${fertig?"Erledigt ✓":"Schritt erledigt"}</button>${fin}${lekt}`}
 function bdLines(){return (S.braindump||"").split("\n").map(x=>x.replace(/^[\s\-–•*·]+/,"").trim()).filter(Boolean)}
-function artTable(){return `<div class="arts">${Object.keys(ART).map(k=>`<div class="art a-${k}"><b>${ART[k]}</b><span>${ARTH[k]}</span></div>`).join("")}</div>`}
-function dayP2(w,d,date){const open=S.tasks.filter(t=>!t.done);const picks=d.pick.map(id=>S.tasks.find(t=>t.id===id)).filter(Boolean);
-  const low=d.e!=null&&d.e<=4;
-  const cand=open.filter(t=>!d.pick.includes(t.id)).sort((a,b)=>score(b,low)-score(a,low)).slice(0,view.more?999:8);
-  const intro=w.n===1?`<div class="band"><div class="k">Phase 2 beginnt</div><p>Ab heute arbeitest du deine Liste ab. Zwei bis drei Aufgaben am Tag reichen. Die großen Denkaufgaben zuerst.</p></div>`:"";
-  return `<div class="page"><div class="eyebrow">Phase 2 · ${phName(2)} · Tag ${w.n} von ${w.of}</div><h1>${w.buf?"Puffertag":fmtDate(date,true)}</h1>
-  ${w.buf?`<p style="margin:0">Heute fängst du auf, was liegen geblieben ist. Ist alles erledigt, darfst du schon mit Phase 3 beginnen oder dir frei nehmen.</p>`:""}${intro}
-  ${morning(d)}
-  <div class="sec">Heute dran</div>
-  ${picks.length?`<div class="tlist">${picks.map(t=>taskRow(t,{pick:date})).join("")}</div>`:`<p class="muted" style="margin:0">Wähl zwei bis drei Aufgaben aus deiner Liste.</p>`}
-  ${low?`<p class="hint">Wenig Energie heute? Dann passen Klärungs- und Fleißaufgaben besonders gut. Sie stehen unten oben.</p>`:""}
-  ${open.length>picks.length?`<details class="help" ${picks.length<2?"open":""}><summary>Aufgaben auswählen</summary><div class="tlist" style="margin-top:8px">${cand.map(t=>`<button class="pickrow" data-act="pick" data-id="${t.id}" data-d="${date}"><span class="plus">+</span>${taskLabel(t)}</button>`).join("")}</div>${!view.more&&open.length-picks.length>8?`<button class="btn ghost small" data-act="more" style="margin-top:8px">Alle ${open.length-picks.length} anzeigen</button>`:""}</details>`:S.tasks.length?`<p class="tag ok" style="align-self:flex-start">Alle Aufgaben erledigt</p>`:`<button class="btn sec2" data-act="go" data-tab="aufgaben">Aufgaben anlegen</button>`}
-  ${formalCard()}
-  ${ta(d,"liegen","Was bleibt heute bewusst liegen?",null,2)}
-  <div class="sec">Abends</div>
-  ${chips(d,"std",STUNDEN,"Wie lange habe ich gearbeitet?")}
-  ${ta(d,"half","Was hat heute geholfen?",null,2)}
-  ${zeitMini()}</div>`}
-function score(t,low){let s=0;if(t.star)s+=100;if(t.muss!==false)s+=10;if(low){if(t.art==="k")s+=8;if(t.art==="f")s+=7}else{if(t.art==="d")s+=t.auf==="+"?9:t.auf==="o"?7:5}return s-t.id/1000}
-function zeitMini(){const z=zeitCheck();return z.level==="eng"?`<button class="notice warn" data-act="go" data-tab="fortschritt">Zeit-Check: Das wird eng. Ansehen${ICON.r}</button>`:""}
-function dayP3(w,d){const sp=S.goal==="spur";const c=(sp?INHALT.p3s:INHALT.p3a)[w.c];const o=pdObj("p3"+(sp?"s":"a")+(w.c+1));let body="";
-  if(sp){body=(c.felder||[]).map(([k,l])=>ta(o,k,l,null,k==="plan"?4:2)).join("")+(c.todos?todos(o,c.todos,"Meine nächsten drei Schritte",3):"")+(w.c===2?`<a class="btn sec2" href="${LINKS.gantt}" target="_blank" rel="noopener">Gantt-Vorlagen</a>`:"")+(w.c===1?`<button class="btn sec2" data-act="go" data-tab="fortschritt">Zur Gliederung</button>`:"")}
-  else{body=checklist(o,c.check,"Checkliste")+(c.ki&&S.ki===1?checklist(pdObj("p3ki"),c.ki,"KI"):"")+(c.ki&&S.ki!==1?`<p class="muted" style="margin:0">Du arbeitest ohne KI. Prüf trotzdem kurz, ob deine Eigenständigkeitserklärung dazu passt.</p>`:"")}
-  const wechsel=!sp&&w.c===0?`<div class="band"><div class="k">Phase 3 beginnt</div><p>Ab jetzt schreibst du nichts Neues mehr. Jetzt machst du gut, was da ist.</p></div>`:"";
-  const fin=c.ende?`<div class="ms"><h1>${c.ende}</h1><p style="margin:0">${sp?"Du hast einen Plan, eine Routine und weißt, womit du weitermachst.":"Du hast es geschafft. Gönn dir etwas Schönes."}</p></div>${sp?offerBox("Wie geht es weiter?","Für eine qualitative Abschlussarbeit begleitet dich bald die 12-Wochen-App. Für Promovierende gibt es „Promotion im Fokus“, und für alles andere ein Coaching."):""}`:"";
-  const lekt=!sp&&w.c===0?offerBox("Ein zweiter Blick?","Wenn du dir bei einem Kapitel unsicher bist, zum Beispiel beim Methodenteil oder der Diskussion: Ein punktuelles Fachlektorat schaut genau dort hin."):"";
-  return `<div class="page"><div class="eyebrow">Phase 3 · ${phName(3)} · Tag ${w.n} von ${w.of}</div><h1>${c.t}</h1>${wechsel}
-  ${morning(d)}
-  <div class="sec">Schwerpunkt heute</div><ol class="steps">${c.schritte.map(s=>`<li>${esc(s)}</li>`).join("")}</ol>${body}${lekt}
-  <div class="sec">Abends</div>${chips(d,"std",STUNDEN,"Wie lange habe ich gearbeitet?")}${ta(d,"half","Was hat heute geholfen?",null,2)}${fin}</div>`}
-function vEnde(){const st=stats();return `<div class="ms"><div class="eyebrow">Dein Monat ist vorbei</div><h1>${S.goal==="spur"?"Du bist wieder in der Spur.":"Geschafft."}</h1>
-  <div class="tiles">${tile(st.done,"Aufgaben erledigt")}${tile(st.days,"Tage eingetragen")}${tile(st.green+"/"+S.gl.length,"Kapitel grün")}${tile(st.h?"ca. "+Math.round(st.h):"–","Stunden")}</div>
-  <p style="margin:0">Alles bleibt dir erhalten. Schau gern unter „Fortschritt“ zurück, wie viel du in diesem Monat bewegt hast.</p></div>
-  ${offerBox("Wie geht es weiter?","Wenn du für die nächste Etappe Begleitung möchtest: Im kostenlosen Erstgespräch schauen wir, was zu dir passt.")}
-  ${TESTV&&!S.fb.sent?`<button class="btn" data-act="openSub" data-t="feedback">Feedback geben</button>`:""}`}
-function offerBox(k,t){return `<div class="offer"><div class="k">${k}</div><p>${t}</p><div class="row"><a class="btn small" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch anfragen</a></div></div>`}
+function artTable(){return `<div class="tl">${Object.keys(ART).map(k=>`<div class="trow"><b style="width:120px;flex:none">${ART[k]}</b><span class="m">${ARTH[k]}</span></div>`).join("")}</div>`}
+function offer(k,t,btns){return `<div class="box"><span class="k">${k}</span><p>${t}</p>${btns||`<a class="btn o" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch anfragen</a>`}</div>`}
+function vEnde(){const tot=S.sessions.reduce((a,s)=>a+s.min,0);
+  return `<div class="q"><span class="k r">Dein Monat ist vorbei</span><h1>${S.goal==="spur"?"Du bist wieder in der Spur.":"Geschafft."}</h1></div>
+  <div class="tiles">${tile(S.tasks.filter(t=>t.done).length,"Aufgaben erledigt")}${tile(n1(tot/60),"Stunden Fokuszeit")}${tile(S.gl.filter(g=>g.a===2).length+"/"+S.gl.length,"Kapitel fertig")}</div>
+  <p>Alles bleibt dir erhalten. Schau gern unter „Fortschritt“ zurück, wie viel du in diesem Monat bewegt hast.</p>
+  ${offer("Wie geht es weiter?","Wenn du für die nächste Etappe Begleitung möchtest: Im kostenlosen Erstgespräch schauen wir, was zu dir passt.")}
+  ${TESTV&&!S.fb.sent?`<button class="btn" data-act="sub" data-t="feedback">Feedback geben</button>`:""}`}
+
+// ================= Timer =================
+const C=2*Math.PI*45;
+function elapsed(){return S.timer?Math.max(0,Date.now()-S.timer.start):0}
+function clock(ms){const s=Math.floor(ms/1000);const h=Math.floor(s/3600),m=Math.floor(s/60)%60,x=s%60;return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0")}
+function tick(){if(!S.timer)return;const ms=elapsed();const c=$("#runclock");if(c)c.textContent=clock(ms);
+  const tc=$("#tclock");if(!tc)return;tc.textContent=clock(ms);
+  const len=S.timer.len*60000;const fr=Math.min(1,ms/len);$("#tpg").setAttribute("stroke-dashoffset",C*(1-fr));
+  const over=ms>=len;const st=$("#tstat");if(st&&st.dataset.over!==String(over)){st.dataset.over=over;st.innerHTML=timerText(over)}}
+setInterval(tick,1000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)tick()});
+function timerText(over){const T=S.timer;
+  if(T.mode==="p")return over?`<p style="font-size:17px"><b>Die Pause ist vorbei.</b></p><p class="m">Bereit für den nächsten Block?</p>`:`<p style="font-size:17px"><b>Pause.</b></p><p class="m">Steh auf, trink etwas, schau aus dem Fenster. Nicht aufs Handy.</p>`;
+  if(T.mode==="u"){const k=INHALT.karten.find(x=>x.id===T.card);return over?`<p style="font-size:17px"><b>Geschafft.</b></p><p class="m">Wie fühlt es sich jetzt an?</p>`:`<p class="m" style="max-width:300px">${k?k.uebung:""}</p>`}
+  return over?`<p style="font-size:17px"><b>${FOKUS} Minuten geschafft.</b></p><p class="m" style="max-width:260px">Zeit für ${PAUSE} Minuten Pause. Die Uhr läuft weiter, bis du stoppst.</p>`:`<p style="font-size:17px"><b>Fokus. Handy weg.</b></p><p class="m" style="max-width:260px">Der Kreis zeigt ${FOKUS} Minuten. Danach ${PAUSE} Minuten Pause. Die Uhr läuft weiter, bis du stoppst.</p>`}
+function startTimer(mode,o){S.timer=Object.assign({mode,start:Date.now(),len:mode==="p"?PAUSE:FOKUS,task:null},o||{});saveNow();sub("timer")}
+function todayPicks(){const d=S.days[today()];return d?d.pick.map(id=>S.tasks.find(t=>t.id===id)).filter(t=>t&&!t.done):[]}
+const SUB={
+ timer(){const T=S.timer;if(!T)return vHeute();const ms=elapsed(),over=ms>=T.len*60000;
+  const picks=todayPicks();const cur=T.task&&S.tasks.find(t=>t.id===T.task);
+  const sel=T.mode==="f"?((picks.length||cur)?`<select id="ttask" aria-label="Woran arbeitest du?" style="max-width:300px;font-size:15px"><option value="">Ohne bestimmte Aufgabe</option>${(cur&&!picks.includes(cur)?[cur].concat(picks):picks).map(t=>`<option value="${t.id}" ${T.task===t.id?"selected":""}>${esc(t.t)}</option>`).join("")}</select>`:""):"";
+  const title=T.mode==="p"?"Pause":T.mode==="u"?"Übung":"Fokuszeit";
+  return `<div class="row"><button class="back" data-act="timerHide">‹ Heute</button><span class="m">${title}</span></div>
+  <div class="timer"><svg class="ring ${T.mode!=="f"?"pause":""}" viewBox="0 0 100 100"><circle class="tr" cx="50" cy="50" r="45" fill="none" stroke-width="4"/><circle id="tpg" class="pg" cx="50" cy="50" r="45" fill="none" stroke-width="4" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-Math.min(1,ms/(T.len*60000)))}" transform="rotate(-90 50 50)" stroke-linecap="round"/><text id="tclock" x="50" y="56" text-anchor="middle" font-size="18">${clock(ms)}</text></svg>
+  <div id="tstat" data-over="${over}" class="q" style="align-items:center">${timerText(over)}</div>${sel}
+  ${T.mode==="f"?`<button class="btn" data-act="stopFokus">Stopp</button>`:T.mode==="p"?`<button class="btn" data-act="startFokus">Weiter arbeiten</button><button class="btn o" data-act="stopPause">Pause beenden</button>`:`<button class="btn" data-act="stopUebung">Fertig</button>`}
+  ${T.mode==="f"?`<p class="m">Heute schon: ${S.sessions.filter(s=>s.d===today()).length} ${pl(S.sessions.filter(s=>s.d===today()).length,"Block","Blöcke")} · ${minsOn(today())} Min.</p>`:""}</div>`},
+ done(s){const n=S.sessions.filter(x=>x.d===today()).length,m=minsOn(today()),g=goalOn(today());const t=s.task&&S.tasks.find(x=>x.id===s.task);
+  return `<div class="grow"></div><div class="timer" style="flex:0"><span class="k r">Fokuszeit gespeichert</span><h1 style="font-size:28px">Gut gemacht.</h1><div class="bignum">${s.min} Min.</div>
+  <p class="m">Heute: ${n} ${pl(n,"Block","Blöcke")} · ${m}${g?" von "+g:""} Min.</p>${g?`<div class="bar" style="width:220px"><i style="width:${Math.min(100,m/g*100)}%"></i></div>`:""}</div><div class="grow"></div>
+  <div class="btns">${t&&!t.done?`<button class="btn o" data-act="doneTask" data-id="${t.id}">„${esc(t.t)}“ ist erledigt</button>`:""}<button class="btn" data-act="startPause">${PAUSE} Minuten Pause</button><button class="btn o" data-act="back">Zurück zu Heute</button></div>`},
+ pick(){const d=dayObj(today());const A=anweisung(d,where(today()))||{};const L=lvl(d);
+  const open=S.tasks.filter(t=>!t.done);const order=L===0?["k","f","d",null]:["d","k","f",null];
+  const sortT=(a,b)=>((b.star?1:0)-(a.star?1:0))||((a.muss===false)-(b.muss===false))||("+o-".indexOf(a.auf||"o")-"+o-".indexOf(b.auf||"o"))||a.id-b.id;
+  const grp=order.map(k=>{const ts=open.filter(t=>(t.art||null)===k).sort(sortT);if(!ts.length)return"";
+    return `<div class="q"><span class="k">${k?ART[k]+"n":"Noch ohne Art"} · ${ts.length}</span><div class="grp">${ts.map(t=>`<button class="pick" data-act="pick" data-id="${t.id}" aria-pressed="${d.pick.includes(t.id)}"><span class="pl">${d.pick.includes(t.id)?"✓":"+"}</span>${taskLabel(t)}</button>`).join("")}</div></div>`}).join("");
+  return `${back()}<h1>Aufgaben für heute</h1>
+  ${A.text?`<div class="box acc"><p><b>${A.head}</b> ${A.text}</p></div>`:""}
+  <div class="row"><span class="k">${d.pick.length} gewählt</span>${A.n?`<span class="m">empfohlen: ${A.n}</span>`:""}</div>
+  ${grp||`<p class="m">Noch keine offenen Aufgaben.</p><button class="btn o" data-act="go" data-tab="aufgaben">Aufgaben anlegen</button>`}
+  <button class="btn" data-act="back">Fertig</button>`},
+ nachtragen(){const o=view.sub;o.m=o.m??1;o.d=o.d??0;
+  return `${back()}<h1>Zeit nachtragen</h1><p class="m">Für Arbeitszeit ohne Timer, zum Beispiel in der Bibliothek.</p>
+  ${choice(o,"m",["15","30","45","60","90","120"],"Minuten",null,true)}${choice(o,"d",["heute","gestern"],"Wann?")}
+  <button class="btn" data-act="addManual">Eintragen</button>`},
+ karte(s){const k=INHALT.karten.find(x=>x.id===s.n);
+  return `<div class="row">${back()}<span class="m">${k.kat}</span></div><h1>${k.h}.</h1><hr>
+  <div class="q"><span class="k">Was passiert?</span><p>${esc(k.was)}</p></div><hr>
+  <div class="q"><span class="k">Was hilft?</span><p>${esc(k.hilft)}</p></div>
+  <div class="box fill"><span class="k r">Mini-Übung · ${k.min} ${pl(k.min,"Minute","Minuten")}</span><p>${k.uebung}</p></div>
+  ${k.say?`<p class="say">${esc(k.say)}</p>`:""}
+  ${k.lit?`<p class="m">Zum Weiterlesen: ${esc(k.lit)}</p>`:""}
+  <div class="btns"><button class="btn" data-act="uebung" data-n="${k.id}">Übung starten · ${k.min} Min.</button><button class="btn o" data-act="go" data-tab="heute">Hat geholfen, zurück zu Heute</button></div>
+  <p class="m">Wenn es sich nicht löst: Das kostenlose <a href="${LINKS.sos}" target="_blank" rel="noopener">SOS-Reset-Paket</a> führt dich Schritt für Schritt aus der Blockade. Und manchmal hilft vor allem ein <a href="${LINKS.gespraech}" target="_blank" rel="noopener">Gespräch</a>.</p>`},
+ test(s){const T=INHALT.test;const a=S.test.a;const i=s.i??0;
+  if(i>=T.length)return `${back()}<h1>Dein Ergebnis</h1>${testResult(a)}<button class="lnk m" data-act="testAgain">Test neu starten</button>`;
+  const id=bindObj(a);const [_,txt]=T[i];const nxt=T[i+1];
+  return `<div class="row">${back()}<span class="m">Frage ${i+1} von ${T.length}</span></div><div class="bar"><i style="width:${(i+1)/T.length*100}%"></i></div>
+  <h1>Wie geht es mir gerade?</h1><p style="font-size:17px">${txt}</p>
+  <div class="seg" role="group">${TEST_OPT.map((l,v)=>`<button data-act="testAns" data-v="${v}" aria-pressed="${a[i]===v}">${l}</button>`).join("")}</div>
+  ${nxt?`<p class="m" style="opacity:.6">Als Nächstes: ${nxt[1]}</p>`:""}
+  <div class="grow"></div>
+  <div class="box acc"><span class="k r">Danach</span><p class="m">Du bekommst die passende Karte. Bei hohen Werten zusätzlich das SOS-Reset-Paket oder ein Gespräch mit mir, bei sehr hoher Belastung einen Hinweis auf professionelle Hilfe.</p></div>`},
+ werkzeug(){return `${back()}<div class="q"><span class="k">Werkzeugkasten</span><h1>So viel wie nötig, so wenig wie möglich.</h1><p class="lead">Nur, was dir in diesem Monat sofort hilft. Systeme, in die du dich erst einarbeiten musst, kosten jetzt mehr Zeit, als sie bringen.</p></div>
+  ${INHALT.werkzeug.map(([g,its])=>`<div class="q"><span class="k">${g}</span><div class="tl">${its.map(([n,z,w,k,e])=>`<div class="tool"><b>${n}${z?` <span class="m" style="font-weight:400">· ${z}</span>`:""}</b><p>${w}</p><p class="m">${k}${e?` · <b>Mein Tipp:</b> ${e}`:""}</p></div>`).join("")}</div></div>`).join("")}
+  ${offer("Wenn die Auswertung noch offen ist","Steckst du noch mittendrin? Mein MAXQDA-Paket „Sicher durch die Auswertung“ oder ein Coaching helfen dir, schnell wieder Boden unter die Füße zu bekommen.",`<div class="two"><a class="btn o" href="${LINKS.maxqda}" target="_blank" rel="noopener">MAXQDA-Paket</a><a class="btn o" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a></div>`)}`},
+ park(){return `${back()}<h1>Was geht dir durch den Kopf?</h1><p class="m">Schreib es auf und arbeite weiter. Es wartet in deiner Aufgabenliste.</p>
+  <textarea id="parktxt" rows="3" placeholder="z. B. Zitat von Meier noch prüfen"></textarea><button class="btn" data-act="parkSave">Parken</button>`},
+ feedback(){const o=S.fb;return `${back()}<div class="q"><span class="k">Testphase · etwa 10 Minuten</span><h1>Dein Feedback</h1></div>
+  ${o.sent?`<div class="box fill"><b>Danke für dein Feedback!</b><p>Deinen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde schicke ich dir per E-Mail. In meinem Newsletter „Post mit rotem Faden“ erfährst du von neuen Angeboten und Rabatten, dazu kommen alle drei Wochen Tipps für dein Forschungsprojekt.</p><a class="btn o" href="${LINKS.nl}" target="_blank" rel="noopener">Zum Newsletter</a></div>`:""}
+  <p class="m">Gesendet werden nur diese Antworten, deine Einträge bleiben auf deinem Gerät. Als Dankeschön bekommst du einen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde.</p>
+  ${FBQ.map(([k,q,c])=>k==="#"?`<h3 style="margin-top:8px">${q}</h3>`:c?choice(o,k,c,null,null).replace('<div class="q">',`<div class="q"><span style="font-weight:700;font-size:14px">${q}</span>`):k==="fach"?inp(o,k,q,"z. B. Soziale Arbeit, Masterarbeit"):ta(o,k,q,null,3)).join("")}
+  <button class="btn" data-act="fbSend">Feedback per E-Mail senden</button>
+  <p class="m">Das öffnet dein E-Mail-Programm mit deinen Antworten. Klappt das nicht, kopier den Text unten und schick ihn an kontakt@drmaschakoerner.de.</p>
+  <textarea rows="5" readonly>${esc(fbText())}</textarea>`},
+};
+function testResult(a){const T=INHALT.test;const sc={};T.forEach(([c],i)=>sc[c]=(sc[c]||0)+(a[i]||0));const tot=Object.values(sc).reduce((s,v)=>s+v,0);
+  const sorted=Object.entries(sc).sort((x,y)=>y[1]-x[1]);const k=INHALT.karten.find(x=>x.id===sorted[0][0]);const top=sorted[0][1];
+  const kb=`<button class="btn" data-act="sub" data-t="karte" data-n="${k.id}">Karte „${k.h}“</button>`;
+  let rec;if(tot>=22||top>=6)rec=`<div class="box acc"><span class="k r">Meine Empfehlung</span><p>Deine Werte sind gerade hoch. Du musst das nicht allein lösen: Lass uns in einem kostenlosen Erstgespräch auf deine Situation schauen.</p><a class="btn" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch anfragen</a>${kb.replace('class="btn"','class="btn o"')}</div><p class="m">${CRISIS}</p>`;
+  else if(top>=4)rec=`<div class="box acc"><span class="k r">Meine Empfehlung</span><p>Schau dir die Karte „${k.h}“ an. Wenn sich die Blockade damit nicht löst, hilft dir das kostenlose SOS-Reset-Paket Schritt für Schritt weiter.</p>${kb}<a class="btn o" href="${LINKS.sos}" target="_blank" rel="noopener">SOS-Reset-Paket</a></div>`;
+  else rec=`<div class="box acc"><span class="k r">Meine Empfehlung</span><p>Gerade sieht es recht stabil aus. Am ehesten lohnt sich ein Blick auf „${k.h}“.</p>${kb}</div>`;
+  return `<div class="q">${sorted.map(([c,v])=>`<div class="typ"><span>${INHALT.karten.find(x=>x.id===c).kat.replace("Prokrastination","Aufschieben").replace("Perfektionismus","Perfektion")}</span><div class="bar"><i style="width:${v/6*100}%"></i></div><span class="m">${v}/6</span></div>`).join("")}</div>${rec}`}
 
 // ================= Aufgaben =================
-function taskLabel(t){const kap=t.kap&&S.gl.find(g=>g.id===t.kap);return `<span class="tl"><b>${esc(t.t)}</b><span class="tags">${t.art?`<i class="a-${t.art}">${ARTK[t.art]}${t.art==="d"&&t.auf?" "+t.auf:""}</i>`:`<i class="none">ohne Art</i>`}${kap?`<i>${esc(kap.t)}</i>`:""}${t.muss===false?`<i class="kann">Kann</i>`:""}</span></span>`}
-function taskRow(t,o){o=o||{};const op=view.open===t.id&&!o.pick;
-  return `<div class="task ${t.done?"done":""}"><div class="trow"><button class="cbx" aria-label="erledigt" data-act="togTask" data-id="${t.id}" aria-pressed="${t.done}"></button>
-  <button class="tbody" data-act="${o.pick?"unpick":"openTask"}" data-id="${t.id}" ${o.pick?`data-d="${o.pick}" aria-label="Aus Heute entfernen"`:""}>${taskLabel(t)}</button>
-  <button class="starb" data-act="star" data-id="${t.id}" aria-pressed="${!!t.star}" aria-label="Stern">${ICON.star}</button></div>
-  ${op?taskEdit(t):""}</div>`}
-function taskEdit(t){const id=bindObj(t);const seg=(k,opts)=>`<div class="chips">${opts.map(([v,l])=>`<button class="chip" data-act="setT" data-id="${t.id}" data-k="${k}" data-v="${v}" aria-pressed="${t[k]===(v==="true"?true:v==="false"?false:v)}">${l}</button>`).join("")}</div>`;
+function taskMeta(t){const kap=t.kap&&S.gl.find(g=>g.id===t.kap);const p=[];
+  if(t.star)p.push(`<span class="pr">Zuerst</span>`);p.push(t.art?ART[t.art]+(t.art==="d"&&t.auf?" · "+AUF[t.auf]:""):"ohne Art");
+  if(kap)p.push(esc(kap.t));if(t.muss===false)p.push("Kann");return p.join(" · ")}
+function taskLabel(t){return `<span class="tb"><span class="t">${esc(t.t)}</span><span class="s">${taskMeta(t)}</span></span>`}
+function taskRow(t,o){o=o||{};const op=view.open===t.id&&!o.today;
+  return `<div class="task ${t.done?"done":""}"><div class="trow"><button class="cb" aria-label="erledigt" data-act="togTask" data-id="${t.id}" aria-pressed="${t.done}"></button>
+  <button class="tb" data-act="${o.today?"timerFor":"openTask"}" data-id="${t.id}">${taskLabel(t).replace(/^<span class="tb">|<\/span>$/g,"")}</button>
+  ${o.today?`<button class="x" data-act="unpick" data-id="${t.id}" aria-label="Aus Heute entfernen">×</button>`:""}</div>${op?taskEdit(t):""}</div>`}
+function taskEdit(t){const id=bindObj(t);
+  const seg=(k,opts)=>`<div class="seg">${opts.map(([v,l])=>`<button data-act="setT" data-id="${t.id}" data-k="${k}" data-v="${v}" aria-pressed="${t[k]===(v==="true"?true:v==="false"?false:v)}">${l}</button>`).join("")}</div>`;
   return `<div class="tedit"><input type="text" aria-label="Aufgabe" data-b="${id}" data-k="t" value="${esc(t.t)}">
-  <span class="q">Art</span>${seg("art",Object.keys(ART).map(k=>[k,ART[k]]))}
-  ${t.art==="d"?`<span class="q">Aufwand</span>${seg("auf",[["+","+ groß"],["o","o mittel"],["-","– klein"]])}`:""}
-  <span class="q">Muss oder Kann?</span>${seg("muss",[["true","Muss"],["false","Kann"]])}
-  ${S.gl.length?`<span class="q">Kapitel</span><div class="chips">${S.gl.map(g=>`<button class="chip" data-act="setT" data-id="${t.id}" data-k="kap" data-v="${g.id}" aria-pressed="${t.kap===g.id}">${esc(g.t||"Kapitel")}</button>`).join("")}</div>`:""}
-  <div class="row"><button class="btn small" data-act="closeTask">Fertig</button><button class="btn ghost small" data-act="delTask" data-id="${t.id}">Löschen</button></div></div>`}
-function typeBars(){const r=Object.keys(ART).map(k=>{const a=S.tasks.filter(t=>t.art===k);return [k,a.filter(t=>t.done).length,a.length]});const no=S.tasks.filter(t=>!t.art);
-  return `<div class="bars">${r.map(([k,d,n])=>`<div class="bar"><span>${ARTK[k]}</span><span class="tr"><i class="a-${k}" style="width:${n?d/n*100:0}%"></i></span><span class="n">${d}/${n}</span></div>`).join("")}${no.length?`<div class="bar"><span>ohne Art</span><span class="tr"><i style="width:${no.filter(t=>t.done).length/no.length*100}%"></i></span><span class="n">${no.filter(t=>t.done).length}/${no.length}</span></div>`:""}</div>`}
-function vAufgaben(){const F=view.f;const done=S.tasks.filter(t=>t.done).length;
+  <div class="q"><span class="k">Art</span>${seg("art",Object.keys(ART).map(k=>[k,ARTK[k]]))}</div>
+  ${t.art==="d"?`<div class="q"><span class="k">Aufwand</span>${seg("auf",[["+","groß"],["o","mittel"],["-","klein"]])}</div>`:""}
+  <div class="q"><span class="k">Muss oder Kann?</span>${seg("muss",[["true","Muss"],["false","Kann"]])}</div>
+  ${S.gl.length?`<label class="q"><span class="k">Kapitel</span><select data-act-sel="kap" data-id="${t.id}"><option value="">kein Kapitel</option>${S.gl.map(g=>`<option value="${g.id}" ${t.kap===g.id?"selected":""}>${esc(g.t||"Kapitel")}</option>`).join("")}</select></label>`:""}
+  <div class="opts"><button data-act="star" data-id="${t.id}" aria-pressed="${!!t.star}">Zuerst erledigen</button></div>
+  <div class="two"><button class="btn" data-act="closeTask">Fertig</button><button class="btn o" data-act="delTask" data-id="${t.id}">Löschen</button></div></div>`}
+document.addEventListener("change",e=>{const t=e.target;if(t.dataset.actSel==="kap"){const x=findT(t.dataset.id);x.kap=t.value?+t.value:null;save();keepScroll(render)}});
+function totalBox(big){const n=S.tasks.length,d=S.tasks.filter(t=>t.done).length,p=n?Math.round(d/n*100):0;
+  return big?`<div class="q"><span class="k">Alle Aufgaben</span><div class="row" style="align-items:flex-end"><span class="bignum">${p} %</span><span class="m">${d} von ${n} erledigt</span></div><div class="bar thick"><i style="width:${p}%"></i></div></div>`
+  :`<div class="q"><div class="row"><span class="k">Aufgaben gesamt</span><b>${d} von ${n} · ${p} %</b></div><div class="bar thick"><i style="width:${p}%"></i></div></div>`}
+function typeBars(){const r=Object.keys(ART).map(k=>{const a=S.tasks.filter(t=>t.art===k);return [ARTK[k],a.filter(t=>t.done).length,a.length]});const no=S.tasks.filter(t=>!t.art);if(no.length)r.push(["ohne Art",no.filter(t=>t.done).length,no.length]);
+  return `<div class="q">${r.map(([l,d,n])=>`<div class="typ"><span>${l}</span><div class="bar"><i style="width:${n?d/n*100:0}%"></i></div><span class="m">${d}/${n}</span></div>`).join("")}</div>`}
+function vAufgaben(){const F=view.f;
   let ts=S.tasks.slice();
   if(F.st==="offen")ts=ts.filter(t=>!t.done);else if(F.st==="erledigt")ts=ts.filter(t=>t.done);
   if(F.art==="ohne")ts=ts.filter(t=>!t.art||t.muss==null);else if(F.art!=="alle")ts=ts.filter(t=>t.art===F.art);
-  if(F.mk==="muss")ts=ts.filter(t=>t.muss!==false);else if(F.mk==="kann")ts=ts.filter(t=>t.muss===false);
-  if(F.kap!=="alle")ts=ts.filter(t=>String(t.kap)===F.kap);
   ts.sort((a,b)=>(a.done-b.done)||((b.star?1:0)-(a.star?1:0))||a.id-b.id);
   const fseg=(k,opts)=>`<div class="seg">${opts.map(([v,l])=>`<button data-act="filt" data-k="${k}" data-v="${v}" aria-pressed="${F[k]===v}">${l}</button>`).join("")}</div>`;
-  return `<div><div class="eyebrow">Herzstück</div><h1>Meine Aufgaben</h1></div>
-  <div class="card stack" style="gap:10px"><div class="row" style="justify-content:space-between"><b>${done} von ${S.tasks.length} erledigt</b><span class="muted">${S.tasks.length?Math.round(done/S.tasks.length*100):0} %</span></div>${typeBars()}</div>
-  <div class="card stack" style="gap:10px"><div class="addrow"><input type="text" id="newtask" placeholder="Neue Aufgabe" aria-label="Neue Aufgabe"><button class="btn small" data-act="addTask">Hinzufügen</button></div>
-  <details class="sub" ${view.bulk?"open":""}><summary>Mehrere auf einmal einfügen</summary><textarea id="bulk" rows="6" placeholder="Eine Aufgabe pro Zeile"></textarea><button class="btn small" data-act="bulkAdd" style="margin-top:8px">Alle hinzufügen</button></details></div>
-  ${bdLines().length&&!S.bdDone?`<div class="offer"><p>In deinem Braindump stehen ${bdLines().length} Zeilen. Als Aufgaben übernehmen?</p><button class="btn small" data-act="importBD" style="align-self:flex-start">Aus meinem Braindump übernehmen</button></div>`:""}
-  ${parkBox()}
-  ${formalCard(true)}
-  <div class="filters">${fseg("st",[["offen","Offen"],["erledigt","Erledigt"],["alle","Alle"]])}${fseg("art",[["alle","Alle"],["d","Denken"],["k","Klären"],["f","Fleiß"],["ohne","Unsortiert"]])}${fseg("mk",[["alle","Muss + Kann"],["muss","Muss"],["kann","Kann"]])}
-  ${S.gl.length?`<div class="seg">${[["alle","Alle Kapitel"]].concat(S.gl.map(g=>[String(g.id),g.t||"Kapitel"])).map(([v,l])=>`<button data-act="filt" data-k="kap" data-v="${v}" aria-pressed="${F.kap===v}">${esc(l)}</button>`).join("")}</div>`:""}</div>
-  ${ts.length?`<div class="tlist">${ts.map(t=>taskRow(t)).join("")}</div>`:`<p class="muted">${S.tasks.length?"Keine Aufgaben für diesen Filter.":"Noch keine Aufgaben. Leg los mit deinem Braindump."}</p>`}
-  <p class="muted">Tippe auf eine Aufgabe, um Art, Aufwand, Kapitel und Muss oder Kann festzulegen. Der Stern holt sie nach oben.</p>`}
-function parkBox(){if(!S.park.length)return"";return `<div class="card stack" style="gap:8px;border-left:3px solid var(--gold)"><b>Geparkte Gedanken</b>${S.park.map((p,i)=>`<div class="parkit"><span>${esc(p.t)}<small>${fmtShort(p.d)}</small></span><button class="btn ghost small" data-act="parkToTask" data-i="${i}">Als Aufgabe</button><button class="x" data-act="parkDel" data-i="${i}" aria-label="Löschen">×</button></div>`).join("")}</div>`}
-function formalCard(always){const miss=INHALT.formal.filter(f=>!S.tasks.some(t=>t.t===f));if(!miss.length||S.formalOff&&!always)return"";const w=S.started?where(today()):{};
-  if(!always&&!(w.ph===2||(w.ph===1&&w.n>=4)))return"";
-  return `<details class="help"><summary>Vorschlag: formale Fleißaufgaben schon jetzt einplanen (${miss.length})</summary><p class="muted" style="margin:8px 0">Dann bleiben die letzten fünf Tage frei fürs Überarbeiten.</p><div class="tlist">${miss.map(f=>`<button class="pickrow" data-act="addFormal" data-t="${esc(f)}"><span class="plus">+</span><span class="tl"><b>${esc(f)}</b></span></button>`).join("")}</div><div class="row" style="margin-top:8px"><button class="btn small" data-act="addAllFormal">Alle übernehmen</button>${always?"":`<button class="btn ghost small" data-act="formalOff">Nicht mehr zeigen</button>`}</div></details>`}
+  return `${totalBox()}
+  <div class="q"><div class="addrow"><input type="text" id="newtask" placeholder="Neue Aufgabe" aria-label="Neue Aufgabe"><button class="btn" data-act="addTask">Hinzufügen</button></div>
+  <details ${view.bulk?"open":""}><summary>Mehrere auf einmal einfügen</summary><textarea id="bulk" rows="6" placeholder="Eine Aufgabe pro Zeile"></textarea><button class="btn o" data-act="bulkAdd">Alle hinzufügen</button></details></div>
+  ${bdLines().length&&!S.bdDone?`<div class="box fill"><p>In deinem Braindump stehen ${bdLines().length} Zeilen. Als Aufgaben übernehmen?</p><button class="btn" data-act="importBD">Aus meinem Braindump übernehmen</button></div>`:""}
+  ${parkBox()}${formalCard(true)}
+  <div class="q">${fseg("st",[["offen","Offen"],["erledigt","Erledigt"],["alle","Alle"]])}${fseg("art",[["alle","Alle"],["d","Denken"],["k","Klären"],["f","Fleiß"],["ohne","Unsortiert"]])}</div>
+  ${ts.length?`<div class="tl">${ts.map(t=>taskRow(t)).join("")}</div>`:`<p class="m">${S.tasks.length?"Keine Aufgaben für diesen Filter.":"Noch keine Aufgaben. Leg los mit deinem Braindump."}</p>`}
+  <p class="m">Tippe auf eine Aufgabe, um Art, Aufwand, Kapitel und Muss oder Kann festzulegen.</p>`}
+function parkBox(){if(!S.park.length)return"";return `<div class="box acc"><span class="k r">Geparkte Gedanken</span>${S.park.map((p,i)=>`<div class="row" style="align-items:center"><span style="flex:1;min-width:0;overflow-wrap:anywhere">${esc(p.t)} <span class="m">· ${fmtShort(p.d)}</span></span><button class="btn o sm" data-act="parkToTask" data-i="${i}">Als Aufgabe</button><button class="x" data-act="parkDel" data-i="${i}" aria-label="Löschen">×</button></div>`).join("")}</div>`}
+function formalCard(always){const miss=INHALT.formal.filter(f=>!S.tasks.some(t=>t.t===f));if(!miss.length||S.formalOff&&!always)return"";
+  return `<details class="box"><summary>Vorschlag: formale Fleißaufgaben (${miss.length})</summary><p class="m">Wenn du sie schon jetzt einplanst, bleiben die letzten fünf Tage frei fürs Überarbeiten.</p><div class="grp">${miss.map(f=>`<button class="pick" data-act="addFormal" data-t="${esc(f)}"><span class="pl">+</span><span>${esc(f)}</span></button>`).join("")}</div><button class="btn o" data-act="addAllFormal">Alle übernehmen</button></details>`}
 
 // ================= Fortschritt =================
 function zeitCheck(){const P=plan(),t=today();const w=where(t);
   const om=S.tasks.filter(x=>!x.done&&x.muss!==false);const kann=S.tasks.filter(x=>!x.done&&x.muss===false).length;
   const u=x=>x.art==="d"?(x.auf==="+"?1:x.auf==="-"?.25:.5):x.art==="f"?.5:x.art==="k"?.1:.3;
   const need=om.reduce((s,x)=>s+u(x),0);
-  let from=w.pre||w.ph===1?P.p2s:t;const to=addDays(P.bufS,-1);let avail=w.post||w.ph===3?0:Math.max(0,diffDays(from,to)+1);
+  const from=w.pre||w.ph===1?P.p2s:t;const to=addDays(P.bufS,-1);const avail=w.post||w.ph===3?0:Math.max(0,diffDays(from,to)+1);
   const level=!S.tasks.length?"leer":w.ph===3||w.post?"p3":need>avail?"eng":need>avail*.8?"knapp":"ok";
   return {need,avail,level,open:om.length,kann}}
-function zeitCard(z){if(z.level==="leer")return `<div class="fact"><div class="k">Zeit-Check</div><p>Sobald deine Aufgaben in der Liste stehen, schätzt die App hier, ob die Zeit reicht.</p></div>`;
-  if(z.level==="p3")return `<div class="fact"><div class="k">Zeit-Check</div><p>Du bist in Phase 3. Offen sind noch ${z.open} Muss-Aufgaben. Jetzt zählt Überarbeiten, nicht Neues.</p></div>`;
+function zeitBox(){const z=zeitCheck();
+  if(z.level==="leer")return `<div class="box"><span class="k">Zeit-Check</span><p class="m">Sobald deine Aufgaben in der Liste stehen, schätzt die App hier, ob die Zeit reicht.</p></div>`;
+  if(z.level==="p3")return `<div class="box"><span class="k">Zeit-Check</span><p>Du bist im Abschluss. Offen sind noch ${z.open} Muss-Aufgaben. Jetzt zählt Überarbeiten, nicht Neues.</p></div>`;
   const tx={ok:["Das passt.","Nach grober Schätzung reicht deine Zeit für die Muss-Aufgaben."],knapp:["Knapp, aber machbar.","Bleib bei den Muss-Aufgaben und nutz die Puffertage nur, wenn es nötig ist."],eng:["Das wird eng.","Sortier noch einmal ehrlich: Was ist wirklich Muss? Kann-Aufgaben schiebst du ans Ende. Sprich früh mit deiner Betreuung über eine Verlängerung, falls es sie gibt."]}[z.level];
-  return `<div class="fact ${z.level==="eng"?"warnbox":""}"><div class="k">Zeit-Check</div><h3>${tx[0]}</h3><p>${tx[1]}</p>
-  <div class="tiles" style="margin-top:10px">${tile(fmt1(z.need),"Arbeitstage für offene Muss-Aufgaben")}${tile(z.avail,"Arbeitstage bis zum Puffer")}</div>
-  <span class="src">Grobe Schätzung: große Denkaufgabe 1 Tag, mittlere und Fleißaufgaben ½ Tag, kleine ¼ Tag, Klärungsaufgaben 10 pro Tag. ${z.kann?z.kann+" Kann-Aufgaben sind nicht mitgezählt.":""}</span></div>
-  ${z.level==="eng"?offerBox("Allein wird es knapp?","Im Endspurt-Coaching sortieren wir gemeinsam, was wirklich in die Arbeit muss, und machen einen Plan, der aufgeht."):""}`}
-function fmt1(v){return (Math.round(v*2)/2).toString().replace(".",",")}
-function stats(){const ds=Object.values(S.days);const h=ds.reduce((s,d)=>s+(d.std!=null?[0.5,1.5,3,5][d.std]:0),0);
-  return {done:S.tasks.filter(t=>t.done).length,days:ds.filter(d=>d.e!=null||d.std!=null||d.status!=null).length,green:S.gl.filter(g=>g.a===2).length,h}}
-function vFortschritt(){const P=plan(),t=today();const w=where(t);const z=zeitCheck();
-  const cnt=[0,1,2].map(a=>S.gl.filter(g=>g.a===a).length);const n=S.gl.length;
-  const glid=bindObj(S.gl);
-  return `<div><div class="eyebrow">${slogan()}</div><h1>Mein Fortschritt</h1></div>
-  ${phaseBar(t)}${countdown()}
-  <div class="tiles">${tile(w.pre?"–":w.post?P.N:w.i+1,"Tag von "+P.N)}${tile(S.goal==="abgeben"?Math.max(0,diffDays(t,P.end)):Math.max(0,diffDays(t,P.end)),S.goal==="abgeben"?"Tage bis zur Abgabe":"Tage bis Monatsende")}${S.goal==="abgeben"?tile(fmtShort(P.roh),"Rohfassung fertig"):tile(fmtShort(P.p3s),"Start Phase 3")}${tile(S.tasks.filter(x=>x.done).length+"/"+S.tasks.length,"Aufgaben erledigt")}</div>
-  <div class="card stack" style="gap:10px"><b>Aufgaben nach Art</b>${typeBars()}</div>
-  ${zeitCard(z)}
-  <div class="card stack" style="gap:10px"><div class="row" style="justify-content:space-between"><b>Meine Gliederung</b>${n?`<span class="muted">${cnt[2]} von ${n} grün</span>`:""}</div>
-  ${n?`<div class="glbar"><i class="g0" style="flex:${cnt[0]}"></i><i class="g1" style="flex:${cnt[1]}"></i><i class="g2" style="flex:${cnt[2]}"></i></div>`:""}
-  ${S.gl.map((g,i)=>{const id=bindObj(g);return `<div class="glrow"><input type="text" aria-label="Kapitel ${i+1}" placeholder="z. B. 2 Theorie" data-b="${id}" data-k="t" value="${esc(g.t)}"><span class="amp">${AMPEL.map((l,a)=>`<button class="am am${a}" data-act="amp" data-i="${i}" data-v="${a}" aria-pressed="${g.a===a}" aria-label="${l}" title="${l}"></button>`).join("")}</span><button class="x" data-act="glDel" data-i="${i}" aria-label="Kapitel entfernen">×</button></div>`}).join("")}
-  <button class="btn ghost small" data-act="glAdd" style="align-self:flex-start">+ Kapitel</button>
-  <p class="muted" style="margin:0"><span class="dotc am0"></span> offen · <span class="dotc am1"></span> begonnen · <span class="dotc am2"></span> fertig</p></div>
-  <div class="card stack" style="gap:6px"><b>Dein Monat Tag für Tag</b><p class="muted" style="margin:0">Tippe auf einen Tag, um ihn anzusehen oder nachzutragen.</p><div class="days">${Array.from({length:P.N},(_,i)=>{const dt=addDays(P.st,i);const ww=where(dt);const d=S.days[dt];const filled=d&&(d.e!=null||d.std!=null||d.status!=null);return `<button class="dcell ph${ww.ph} ${ww.buf?"bf":""} ${dt===t?"now":""} ${filled?"fill":""}" data-act="openDay" data-d="${dt}" ${dt>t?"disabled":""} aria-label="${fmtDate(dt)}"><b>${new Date(dt+"T12:00:00").getDate()}</b></button>`}).join("")}</div>
-  <p class="muted" style="margin:0"><span class="dotc ph1"></span> Phase 1 · <span class="dotc ph2"></span> Phase 2 · <span class="dotc bf"></span> Puffer · <span class="dotc ph3"></span> Phase 3</p></div>`}
+  return `<div class="box ${z.level==="eng"?"acc":""}"><span class="k ${z.level==="eng"?"r":""}">Zeit-Check</span><p><b>${tx[0]}</b> ${tx[1]}</p>
+  <div class="two">${tile((Math.round(z.need*2)/2+"").replace(".",","),"Arbeitstage für offene Muss-Aufgaben")}${tile(z.avail,"Arbeitstage bis zum Puffer")}</div>
+  <p class="m">Grobe Schätzung: große Denkaufgabe 1 Tag, mittlere und Fleißaufgaben ½ Tag, kleine ¼ Tag, Klärungsaufgaben 10 pro Tag.${z.kann?" "+z.kann+" Kann-Aufgaben sind nicht mitgezählt.":""}</p>
+  ${z.level==="eng"?`<a class="btn o" href="${LINKS.gespraech}" target="_blank" rel="noopener">Endspurt-Coaching: Erstgespräch anfragen</a>`:""}</div>`}
+function vFortschritt(){const t=today();const w=where(t);const P=plan();
+  const last=Array.from({length:7},(_,i)=>addDays(t,i-6));const mx=Math.max(60,...last.map(d=>Math.max(minsOn(d),goalOn(d))));
+  const chart=`<div class="days">${last.map(d=>{const m=minsOn(d),g=goalOn(d);return `<div title="${fmtDate(d)}: ${m} Min.">${g?`<em style="bottom:${g/mx*100}%"></em>`:""}<i class="${g&&m>=g?"ok":""}" style="height:${m/mx*100}%"></i></div>`}).join("")}</div><div class="dlab">${last.map(d=>`<span>${WD[wday(d)]}</span>`).join("")}</div>`;
+  const tot=S.sessions.reduce((a,s)=>a+s.min,0),blocks=S.sessions.filter(s=>!s.manual).length;
+  const past=Math.max(0,Math.min(P.N,diffDays(P.st,t)+1));const daysOn=new Set(S.sessions.map(s=>s.d)).size;
+  const wk=addDays(t,-wday(t));const wkMin=Array.from({length:7},(_,i)=>minsOn(addDays(wk,i))).reduce((a,b)=>a+b,0);
+  const ci=last.map(d=>S.days[d]).filter(x=>x&&x.e!=null);const eAvg=ci.length?ci.reduce((a,x)=>a+x.e+1,0)/ci.length:null;
+  const sl=ci.filter(x=>x.schlaf!=null);const slMode=sl.length?SCHLAF[[0,1,2].sort((a,b)=>sl.filter(x=>x.schlaf===b).length-sl.filter(x=>x.schlaf===a).length)[0]]:null;
+  const n=S.gl.length,cnt=[0,1,2].map(a=>S.gl.filter(g=>g.a===a).length);
+  return `${totalBox(true)}${typeBars()}<hr>
+  <div class="q"><span class="k">Dein Monat</span>${monthBar(t)}<p class="m">${w.pre?"Startet am "+fmtDate(P.st,true):w.post?"Vorbei":countdown()}</p></div><hr>
+  <div class="q"><div class="row"><span class="k">Arbeitszeit · letzte 7 Tage</span><span class="m">Strich = dein Ziel</span></div>${chart}</div>
+  <div class="tiles">${tile(n1(tot/60),"Stunden gesamt")}${tile(blocks,"Fokusblöcke")}${tile(daysOn+"/"+past,"Tage dran")}</div>
+  <p class="m">Diese Woche: ${hm(wkMin)}${eAvg!=null?` · Energie im Schnitt ${n1(eAvg)} von 5`:""}${slMode?` · Schlaf meist ${slMode}`:""}</p><hr>
+  <div class="q"><div class="row"><span class="k">Gliederung · ${cnt[2]} von ${n} fertig</span></div>
+  ${n?`<div class="glbar">${S.gl.map(g=>`<i class="a${g.a}"></i>`).join("")}</div><p class="m">grau offen · hell begonnen · rot fertig</p>`:""}
+  ${S.gl.map((g,i)=>{const id=bindObj(g);return `<div class="gl"><input type="text" aria-label="Kapitel ${i+1}" placeholder="z. B. 2 Theorie" data-b="${id}" data-k="t" value="${esc(g.t)}"><button class="x" data-act="glDel" data-i="${i}" aria-label="Kapitel entfernen">×</button><div class="seg">${STAND.map((l,a)=>`<button class="a${a}" data-act="amp" data-i="${i}" data-v="${a}" aria-pressed="${g.a===a}">${l}</button>`).join("")}</div></div>`}).join("")}
+  <button class="btn o" data-act="glAdd">+ Kapitel</button></div><hr>
+  ${zeitBox()}`}
+
+// ================= Woche (optional) =================
+const H0=7,H1=22,PX=.5;
+function vWoche(){if(!S.woche)return vIch();const t=today();const mon=addDays(t,-wday(t));const ds=Array.from({length:7},(_,i)=>addDays(mon,i));
+  const plannedMin=S.blocks.filter(b=>b.typ==="w").reduce((a,b)=>a+tmin(b.e)-tmin(b.s),0);const wkMin=ds.reduce((a,d)=>a+minsOn(d),0);
+  const H=(H1-H0)*60*PX;
+  const col=d=>{let acc=0;const W=minsOn(d);return `<div class="col" style="height:${H}px">${blocksOn(d).map(b=>{const s=Math.max(tmin(b.s),H0*60),e=Math.min(tmin(b.e),H1*60);if(e<=s)return"";let dn="";if(b.typ==="w"){acc+=tmin(b.e)-tmin(b.s);if(d<=t&&W>=acc)dn=" d"}return `<div class="ev ${b.typ}${dn}" style="top:${(s-H0*60)*PX}px;height:${(e-s)*PX}px">${esc(b.t||"")}</div>`}).join("")}</div>`};
+  const o=view.nb||(view.nb={wd:wday(t),s:"09:00",e:"11:00",typ:0,t:""});const id=bindObj(o);
+  return `<div class="q"><div class="row"><span class="k">Diese Woche</span><b>${n1(wkMin/60)} von ${n1(plannedMin/60)} Std.</b></div><div class="bar"><i style="width:${plannedMin?Math.min(100,wkMin/plannedMin*100):0}%"></i></div></div>
+  <div class="week"><div></div>${ds.map(d=>`<div class="h ${d===t?"now":""}">${WD[wday(d)]}</div>`).join("")}
+  <div class="hrs" style="height:${H}px">${Array.from({length:(H1-H0)/2+1},(_,i)=>`<span style="top:${i*120*PX}px">${H0+i*2}</span>`).join("")}</div>${ds.map(col).join("")}</div>
+  <div class="leg"><span><i style="background:var(--red)"></i>Arbeitszeit</span><span><i style="background:var(--reddark)"></i>geschafft</span><span><i style="background:var(--bg);border:1px solid var(--line)"></i>Termine</span></div><hr>
+  <div class="q"><span class="k">Wochenplan · gilt jede Woche</span>
+  ${S.blocks.length?`<div class="tl">${S.blocks.slice().sort((a,b)=>a.wd-b.wd||tmin(a.s)-tmin(b.s)).map(b=>`<div class="blk"><i class="sw ${b.typ}"></i><span><b>${WD[b.wd]}</b> ${tfmt(b.s)} bis ${tfmt(b.e)} Uhr${b.t?" · "+esc(b.t):""}</span><button class="x" data-act="blkDel" data-id="${b.id}" aria-label="Entfernen">×</button></div>`).join("")}</div>`:`<p class="m">Noch leer. Trag zuerst feste Termine ein, dann deine Arbeitszeiten in die Lücken. Deine klarste Zeit für Denkaufgaben.</p>`}</div>
+  <div class="box"><span class="k">Neuer Block</span>
+  <div class="seg">${WD.map((l,i)=>`<button data-b="${id}" data-k="wd" data-v="${i}" aria-pressed="${o.wd===i}">${l}</button>`).join("")}</div>
+  <div class="two"><label class="q"><span class="m">von</span><input type="time" data-b="${id}" data-k="s" value="${o.s}"></label><label class="q"><span class="m">bis</span><input type="time" data-b="${id}" data-k="e" value="${o.e}"></label></div>
+  <div class="seg"><button data-b="${id}" data-k="typ" data-v="0" aria-pressed="${o.typ===0}">Arbeitszeit</button><button data-b="${id}" data-k="typ" data-v="1" aria-pressed="${o.typ===1}">Termin</button></div>
+  <input type="text" placeholder="Bezeichnung (freiwillig)" data-b="${id}" data-k="t" value="${esc(o.t)}" aria-label="Bezeichnung">
+  <button class="btn" data-act="blkAdd">Eintragen</button></div>`}
 
 // ================= Hilfe =================
-function vHilfe(){return `<div><div class="eyebrow">Mentale Stärkung</div><h1>Was passiert da gerade?</h1><p class="lead">Wenn du verstehst, was in deinem Kopf passiert, kannst du gezielt gegensteuern. Jede Karte hat eine Mini-Übung für zwei bis fünf Minuten.</p></div>
-  <div class="hgrid">${INHALT.karten.map(k=>`<button data-act="openSub" data-t="karte" data-n="${k.id}"><b>${k.t}</b><span>${esc(k.k)}</span></button>`).join("")}<button data-act="openSub" data-t="test" class="tbtn"><b>Wie geht es mir gerade?</b><span>Kurzer Selbsttest, 2 Minuten</span></button></div>
-  <div class="sec">Werkzeugkasten</div>
-  <button class="notice" data-act="openSub" data-t="werkzeug"><span>Werkzeugkasten kompakt<small>So viel wie nötig, so wenig wie möglich</small></span>${ICON.r}</button>
-  <div class="offer"><div class="k">Wenn es sich nicht löst</div><p>Im kostenlosen SOS-Reset-Paket gehst du eine Blockade Schritt für Schritt an. Und manchmal hilft vor allem ein Gespräch.</p><div class="row"><a class="btn small" href="${LINKS.sos}" target="_blank" rel="noopener">SOS-Reset-Paket</a><a class="btn ghost small" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a></div></div>
-  <p class="muted">${CRISIS}</p>`}
-const CRISIS="Wenn du über längere Zeit erschöpft bist oder in einer Krise steckst, ist ärztliche oder psychologische Hilfe der richtige Weg, zum Beispiel die psychologische Beratung deiner Hochschule oder die Telefonseelsorge (0800 111 0 111, kostenlos, rund um die Uhr).";
+function vHilfe(){return `<h1>Was ist gerade los?</h1><p class="lead">Tipp an, was am ehesten passt. Jede Karte hat eine kurze Übung.</p>
+  <div class="hl">${INHALT.karten.map(k=>`<button data-act="sub" data-t="karte" data-n="${k.id}"><span>${k.h}<small>${k.kat}</small></span></button>`).join("")}</div>
+  <button class="box" data-act="testStart" style="text-align:left;background:var(--bg)"><b>Ich weiß nicht genau</b><span class="m">Kurzer Selbsttest, 10 Fragen, 2 Minuten</span></button>
+  <div class="grow"></div>
+  <div class="foot"><button data-act="sub" data-t="werkzeug">Werkzeugkasten</button><span class="m">·</span><a href="${LINKS.sos}" target="_blank" rel="noopener">SOS-Reset-Paket</a><span class="m">·</span><a href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a></div>
+  <p class="m">${CRISIS}</p>`}
 
 // ================= Ich =================
-function vMehr(){const ab=S.goal==="abgeben";return `<div><div class="eyebrow">Ich</div><h1>Mein Monat</h1></div>
-  <div class="page">
-  <div><span class="q">Mein Ziel</span><div class="chips"><button class="chip" data-act="goal" data-v="abgeben" aria-pressed="${ab}">Ich will abgeben</button><button class="chip" data-act="goal" data-v="spur" aria-pressed="${!ab}">Ich will wieder in die Spur</button></div></div>
-  ${ab?`<div class="two">${dateIn(S,"deadline","Abgabefrist","Verlängert? Neues Datum eintragen.")}${dateIn(S,"start","Start")}</div>`:dateIn(S,"start","Starttag")}
+function vIch(){const ab=S.goal==="abgeben";
+  return `<h1>Mein Monat</h1>
+  <div class="q"><span class="k">Mein Ziel</span><div class="seg"><button data-act="goal" data-v="abgeben" aria-pressed="${ab}">Abgeben</button><button data-act="goal" data-v="spur" aria-pressed="${!ab}">In die Spur</button></div></div>
+  ${ab?`<div class="two">${dateIn(S,"deadline","Abgabefrist")}${dateIn(S,"start","Start")}</div><p class="m">Verlängert? Einfach das neue Datum eintragen.</p>`:dateIn(S,"start","Starttag")}
   ${ta(S,"warum","Mein Warum",null,2)}
-  <div><span class="q">Wo ich gestartet bin</span><div class="chips">${LAGE.map((l,i)=>`<button class="chip wide" data-act="lage" data-v="${i}" aria-pressed="${S.lage.includes(i)}">${l}</button>`).join("")}</div></div>
-  ${chips(S,"ki",["Ohne KI","Mit KI"],"KI")}${S.ki===1?kiHint():""}
-  </div>
-  ${TESTV?`<div class="offer"><div class="k">Testversion</div><p>Danke, dass du den ganzen Monat testest! Am Ende freue ich mich über dein Feedback. Als Dankeschön bekommst du einen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde.</p><button class="btn small" data-act="openSub" data-t="feedback" style="align-self:flex-start">Feedback geben</button></div>`:""}
+  ${choice(S,"ki",["Ohne KI","Mit KI"],"KI")}
+  <div class="q"><span class="k">Wochenplan</span><div class="seg"><button data-act="woche" data-v="0" aria-pressed="${!S.woche}">Aus</button><button data-act="woche" data-v="1" aria-pressed="${!!S.woche}">An</button></div><p class="m">Feste Arbeitszeiten und Termine für die Woche. Freiwillig, der Morgen-Check-in reicht auch.</p></div>
+  <button class="btn o" data-act="tour">Einführung noch einmal ansehen</button>
+  ${TESTV?`<div class="box fill"><span class="k r">Testversion</span><p>Danke, dass du den ganzen Monat testest! Am Ende freue ich mich über dein Feedback. Als Dankeschön bekommst du einen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde.</p><button class="btn" data-act="sub" data-t="feedback">Feedback geben</button></div>`:""}
   ${installHelp()}
-  <div class="card stack" style="gap:10px"><b>Sicherung</b><p class="muted" style="margin:0">Deine Daten liegen nur auf diesem Gerät. Mit einer Sicherungsdatei kannst du sie auf ein anderes Gerät mitnehmen.</p><div class="row"><button class="btn sec2 small" data-act="export">Sicherung herunterladen</button><button class="btn ghost small" data-act="import">Sicherung laden</button></div><input type="file" id="imp" accept=".json,application/json" hidden></div>
-  <div class="row"><button class="btn ghost small" data-act="reset">Alles löschen und neu starten</button></div>
-  ${storageOK?"":`<p class="tag">Speichern ist in diesem Browser nicht möglich.</p>`}
-  <p class="muted">Reset &amp; Flow · Dr. Mascha Körner · Forschung mit rotem Faden</p>`}
+  <div class="box"><span class="k">Sicherung</span><p class="m">Deine Daten liegen nur auf diesem Gerät. Mit einer Sicherungsdatei nimmst du sie auf ein anderes Gerät mit.</p><div class="two"><button class="btn o" data-act="export">Herunterladen</button><button class="btn o" data-act="import">Laden</button></div><input type="file" id="imp" accept=".json,application/json" hidden></div>
+  <button class="lnk m" data-act="reset">Alles löschen und neu starten</button>
+  ${storageOK?"":`<p class="m"><b>Speichern ist in diesem Browser nicht möglich.</b></p>`}
+  <p class="m">Reset &amp; Flow · Dr. Mascha Körner · Forschung mit rotem Faden</p>`}
 
-// ================= Unterseiten =================
+// ================= Feedback =================
 const FBQ=[["#","Deine Nutzung"],
  ["oft","Wie oft hast du die App in diesem Monat genutzt?",["fast täglich","mehrmals pro Woche","ein- bis zweimal pro Woche","selten"]],
- ["geraet","Auf welchem Gerät hast du sie genutzt?",["iPhone","Android-Handy","Tablet","Computer"]],
+ ["geraet","Auf welchem Gerät hast du sie genutzt?",["iPhone","Android","Tablet","Computer"]],
  ["ziel","Welches Ziel hast du gewählt?",["Ich will abgeben","Ich will wieder in die Spur"]],
  ["#","Einstieg und Bedienung"],
  ["start","Wie leicht war der Start? 1 = sehr schwer, 5 = sehr leicht",R5],
  ["bedien","Wie gut findest du dich in der App zurecht? 1 = gar nicht, 5 = sehr gut",R5],
  ["technik","Gab es technische Probleme oder Stellen, an denen du hängen geblieben bist?"],
  ["#","Die einzelnen Bereiche (1 = wenig hilfreich, 5 = sehr hilfreich)"],
- ["r_p1","Phase 1 „Aufräumen“ mit Anleitung",R5],["r_liste","Aufgabenliste mit Arten und Filtern",R5],["r_gl","Gliederung mit Ampel",R5],["r_zeit","Zeit-Check und Countdown",R5],["r_tag","Tagesseite mit Treibstoff-Check",R5],["r_karten","Karten „Was passiert da gerade?“",R5],["r_wk","Werkzeugkasten",R5],
+ ["r_p1","Reset-Tage mit Anleitung",R5],["r_ci","Morgen-Check-in mit Anweisung",R5],["r_timer","Fokuszeit (Timer)",R5],["r_liste","Aufgabenliste mit drei Arten",R5],["r_fort","Fortschritt und Arbeitszeit",R5],["r_gl","Gliederung",R5],["r_hilfe","Hilfe: Karten und Selbsttest",R5],["r_woche","Wochenplan (falls genutzt)",["1","2","3","4","5","nicht genutzt"]],
  ["#","Wirkung"],
- ["wirk","Hat dir die App mehr Klarheit gebracht? 1 = gar nicht, 5 = deutlich",R5],
+ ["wirk","Bist du mit der App aus der Blockade gekommen? 1 = gar nicht, 5 = deutlich",R5],
  ["hilf","Was hat dir am meisten geholfen?"],["stoer","Was hat dich gestört oder war unklar?"],["fehlt","Was hast du vermisst?"],
  ["#","Gesamteindruck"],
  ["gesamt","Wie zufrieden bist du insgesamt? 1 = gar nicht, 5 = sehr",R5],
@@ -804,101 +832,107 @@ const FBQ=[["#","Deine Nutzung"],
  ["satz","Wie würdest du die App einer Freundin in einem Satz beschreiben?"],
  ["fach","Dein Fach und die Art deiner Arbeit (freiwillig)"],
  ["zitat","Darf ich deine Antworten, z. B. deinen Satz über die App, auf meiner Website und in der Werbung verwenden?",["ja, anonym","ja, mit Vorname","ja, mit Vorname und Fach","lieber nicht"]]];
-function fbText(){const o=S.fb;return "Feedback zur Testphase – Reset & Flow\n\n"+FBQ.filter(x=>x[0]!=="#").map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")}
-const SUB={
- feedback(){const o=S.fb;return back()+`<div class="page"><div class="eyebrow">Testphase · etwa 10 Minuten</div><h1>Dein Feedback</h1>${o.sent?NL_CARD:""}
-  <p class="muted" style="margin:0">Gesendet werden nur diese Antworten, deine Einträge bleiben auf deinem Gerät. Als Dankeschön bekommst du einen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde.</p>
-  ${FBQ.map(([k,q,c])=>k==="#"?`<h3 style="margin:10px 0 0">${q}</h3>`:c?chips(o,k,c,q):k==="fach"?inp(o,k,q,"z. B. Soziale Arbeit, Masterarbeit"):ta(o,k,q,null,3)).join("")}
-  <button class="btn" data-act="fbSend">Feedback per E-Mail senden</button>
-  <p class="muted" style="margin:0">Das öffnet dein E-Mail-Programm mit deinen Antworten. Klappt das nicht, kopier den Text unten und schick ihn an kontakt@drmaschakoerner.de.</p>
-  <textarea rows="5" readonly>${esc(fbText())}</textarea></div>`},
- karte(s){const k=INHALT.karten.find(x=>x.id===s.n);return back()+`<div class="karte"><div><div class="eyebrow" style="margin:0">Was passiert da gerade?</div><h2>${k.t}</h2></div>
-  <div><div class="q">Was passiert?</div><p style="margin:0">${esc(k.was)}</p></div>
-  <div><div class="q">Was hilft?</div><p style="margin:0">${esc(k.hilft)}</p></div>
-  <div class="uebung"><div class="k">Mini-Übung · 2 bis 5 Minuten</div><p>${esc(k.uebung)}</p></div>
-  ${k.say?`<div class="say">${esc(k.say)}</div>`:""}
-  ${k.lit?`<p class="muted" style="margin:0">Zum Weiterlesen: ${esc(k.lit)}</p>`:""}</div>
-  <div class="offer"><div class="k">Wenn es sich nicht löst</div><p>Im kostenlosen SOS-Reset-Paket gehst du deine Blockade Schritt für Schritt an. Und manchmal hilft vor allem ein Gespräch.</p><div class="row"><a class="btn small" href="${LINKS.sos}" target="_blank" rel="noopener">SOS-Reset-Paket</a><a class="btn ghost small" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a></div></div>`},
- test(){const o=S.test;o.a=o.a||{};const id=bindObj(o.a);const T=INHALT.test;const done=T.every((_,i)=>o.a[i]!=null);
-  return back()+`<div class="page"><div class="eyebrow">Kurzer Selbsttest · 2 Minuten</div><h1>Wie geht es mir gerade?</h1>
-  <p class="muted" style="margin:0">Zehn Aussagen. Antworte aus dem Bauch heraus, bezogen auf die letzten Tage.</p>
-  <div>${T.map(([c,txt],i)=>`<div class="tq"><span style="font-weight:600">${txt}</span><div class="opts">${TEST_OPT.map((l,v)=>`<button data-b="${id}" data-k="${i}" data-v="${v}" aria-pressed="${o.a[i]===v}">${l}</button>`).join("")}</div></div>`).join("")}</div>
-  ${done?testResult(o.a):`<p class="muted" style="margin:0">Dein Ergebnis erscheint, sobald alle zehn Aussagen beantwortet sind.</p>`}</div>`},
- werkzeug(){return back()+`<div><div class="eyebrow">Werkzeugkasten kompakt</div><h1>So viel wie nötig, so wenig wie möglich.</h1><p class="lead">Hier findest du nur, was dir in diesem Monat sofort hilft. Systeme, in die du dich erst einarbeiten musst, kosten jetzt mehr Zeit, als sie bringen.</p></div>
-  ${INHALT.werkzeug.map(([g,its])=>`<div class="sec">${g}</div><div class="stack" style="gap:8px">${its.map(([n,z,w,k,e])=>`<div class="tool"><b>${n}</b>${z?`<span class="muted">${z}</span>`:""}<p>${w}</p><div class="tmeta"><span>${k}</span>${e?`<span class="mine">Mein Tipp: ${e}</span>`:""}</div></div>`).join("")}</div>`).join("")}
-  <div class="offer"><div class="k">Wenn die Auswertung noch offen ist</div><p>Die Auswertung sollte im Idealfall schon gelaufen sein. Steckst du noch mittendrin? Mein MAXQDA-Paket „Sicher durch die Auswertung“ oder ein Coaching helfen dir, schnell wieder Boden unter die Füße zu bekommen.</p><div class="row"><a class="btn small" href="${LINKS.maxqda}" target="_blank" rel="noopener">MAXQDA-Paket</a><a class="btn ghost small" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a></div></div>`},
- park(){const o=view.sub;return back()+`<div class="page"><div class="eyebrow">Gedanke parken</div><h1>Was geht dir durch den Kopf?</h1><p class="muted" style="margin:0">Schreib es auf und arbeite weiter. Es wartet in deiner Aufgabenliste.</p>
-  <textarea id="parktxt" rows="3" placeholder="z. B. Zitat von Meier noch prüfen"></textarea><button class="btn" data-act="parkSave">Parken</button></div>`},
-};
-function testResult(a){const T=INHALT.test;const sc={};T.forEach(([c],i)=>sc[c]=(sc[c]||0)+a[i]);const tot=Object.values(sc).reduce((s,v)=>s+v,0);
-  const sorted=Object.entries(sc).sort((x,y)=>y[1]-x[1]);const k=INHALT.karten.find(x=>x.id===sorted[0][0]);const top=sorted[0][1];
-  let rec;if(tot>=22||top>=6)rec=`<div class="offer"><div class="k">Meine Empfehlung</div><p>Deine Werte sind gerade hoch. Du musst das nicht allein lösen: Lass uns in einem kostenlosen Erstgespräch auf deine Situation schauen.</p><div class="row"><a class="btn small" href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch anfragen</a><button class="btn ghost small" data-act="openSub" data-t="karte" data-n="${k.id}">Karte „${k.t}“</button></div></div><p class="muted" style="margin:0">${CRISIS}</p>`;
-  else if(top>=4)rec=`<div class="offer"><div class="k">Meine Empfehlung</div><p>Schau dir die Karte „${k.t}“ an. Wenn sich die Blockade damit nicht löst, hilft dir das kostenlose SOS-Reset-Paket Schritt für Schritt weiter.</p><div class="row"><button class="btn small" data-act="openSub" data-t="karte" data-n="${k.id}">Karte öffnen</button><a class="btn ghost small" href="${LINKS.sos}" target="_blank" rel="noopener">SOS-Reset-Paket</a></div></div>`;
-  else rec=`<div class="offer"><div class="k">Meine Empfehlung</div><p>Gerade sieht es recht stabil aus. Am ehesten lohnt sich ein Blick auf „${k.t}“.</p><button class="btn small" data-act="openSub" data-t="karte" data-n="${k.id}" style="align-self:flex-start">Karte öffnen</button></div>`;
-  return `<div class="stack" style="gap:10px"><div class="sec">Dein Ergebnis</div><div class="bars">${sorted.map(([c,v])=>`<div class="bar"><span>${INHALT.karten.find(x=>x.id===c).t.split(" ")[0]}</span><span class="tr"><i class="${v>=4?"r":""}" style="width:${v/6*100}%"></i></span><span class="n">${v}/6</span></div>`).join("")}</div>${rec}</div>`}
+function fbText(){const o=S.fb;const tot=S.sessions.reduce((a,s)=>a+s.min,0);
+  return "Feedback zur Testphase – Reset & Flow\n\n"+FBQ.filter(x=>x[0]!=="#").map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")
+  +`\n\n(Automatisch: ${S.tasks.filter(t=>t.done).length} von ${S.tasks.length} Aufgaben erledigt, ${n1(tot/60)} Std. Fokuszeit, ${Object.values(S.days).filter(d=>d.ci).length} Check-ins, Wochenplan ${S.woche?"an":"aus"})`}
 
 // ================= Aktionen =================
 function findT(id){return S.tasks.find(t=>t.id===+id)}
 function addTask(txt){txt=txt.trim();if(!txt)return null;const t={id:S.nid++,t:txt,art:null,auf:null,kap:null,muss:null,done:false,star:false};S.tasks.push(t);return t}
+function doneToast(){const n=S.tasks.length,d=S.tasks.filter(t=>t.done).length;toast(`Erledigt. ${n?Math.round(d/n*100):0} % geschafft.`)}
 const ACT={
- back(){if(view.sub)view.sub=null;else view.date=null;render();window.scrollTo(0,0)},
+ back(){if(view.sub&&view.sub.t==="test"&&view.sub.i>0&&view.sub.i<INHALT.test.length){view.sub.i--;render();return}
+  if(view.setup>0&&!S.started){view.setup--;render();window.scrollTo(0,0);return}
+  view.sub=null;render();window.scrollTo(0,0)},
  go(t){go(t.dataset.tab)},
- openSub(t){view.sub={t:t.dataset.t,n:t.dataset.n};render();window.scrollTo(0,0)},
+ sub(t){sub(t.dataset.t,{n:t.dataset.n})},
+ setup(t){if(+t.dataset.v===2&&!S.goal){toast("Wähl zuerst dein Ziel.");return}
+  if(+t.dataset.v===2&&S.goal==="abgeben"&&(!S.deadline||S.deadline<S.start)){toast("Bitte eine Abgabefrist nach dem Start eintragen.");return}
+  view.setup=+t.dataset.v;render();window.scrollTo(0,0)},
  goal(t){S.goal=t.dataset.v;if(S.goal==="abgeben"&&!S.deadline)S.deadline=addDays(S.start||today(),29);save();keepScroll(render)},
  lage(t){const v=+t.dataset.v;S.lage=S.lage.includes(v)?S.lage.filter(x=>x!==v):S.lage.concat(v);save();keepScroll(render)},
- start(){if(!S.goal){toast("Wähl zuerst dein Ziel.");return}if(S.goal==="abgeben"&&(!S.deadline||S.deadline<S.start)){toast("Bitte eine Abgabefrist nach dem Start eintragen.");return}
-  S.started=true;save();go("heute")},
+ start(t){S.started=true;S.woche=S.wocheQ===1;delete S.wocheQ;save();if(t.dataset.tour){view.tour=0;render();window.scrollTo(0,0)}else go(S.woche?"woche":"heute")},
+ tour(){view.tour=0;render();window.scrollTo(0,0)},
+ tourNext(){view.tour++;render()},
+ tourEnd(){view.tour=null;go(S.woche&&!S.blocks.length?"woche":"heute")},
  demo(){S=demoData();go("heute")},
- clearDemo(){S=blank();load();if(S.demo)S=blank();go("heute")},
- openDay(t){go("heute",{date:t.dataset.d})},
+ clearDemo(){S=blank();load();if(S.demo)S=blank();view.setup=0;go("heute")},
+ ciDone(){const d=dayObj(today());d.ci=true;save();const w=where(today());if(w.ph===2&&!d.pick.length&&S.tasks.some(t=>!t.done))sub("pick");else go("heute")},
+ ciSkip(){const d=dayObj(today());d.ci=true;save();go("heute")},
+ redoCheckin(){const d=dayObj(today());d.ci=false;go("heute")},
+ step(t){view.step=+t.dataset.v;render()},
+ stepDone(t){const k=t.dataset.k;S.steps[k]=!S.steps[k];save();keepScroll(render);if(S.steps[k])toast("Schritt erledigt.")},
+ startFokus(){const p=todayPicks();startTimer("f",{task:p.length?p[0].id:null})},
+ timerFor(t){if(S.timer&&S.timer.mode==="f"){S.timer.task=+t.dataset.id;save();sub("timer");return}startTimer("f",{task:+t.dataset.id})},
+ openTimer(){sub("timer")},
+ timerHide(){go("heute")},
+ stopFokus(){const T=S.timer;const min=Math.floor(elapsed()/60000);const d=iso(new Date(T.start));S.timer=null;
+  if(min<1){saveNow();toast("Unter einer Minute, nicht gezählt.");go("heute");return}
+  S.sessions.push({d,min,task:T.task||null,at:T.start});saveNow();sub("done",{min,task:T.task})},
+ startPause(){startTimer("p")},
+ stopPause(){S.timer=null;saveNow();go("heute")},
+ uebung(t){const k=INHALT.karten.find(x=>x.id===t.dataset.n);if(k.fokus)startTimer("f",{len:k.min});else startTimer("u",{len:k.min,card:k.id})},
+ stopUebung(){S.timer=null;saveNow();toast("Gut gemacht.");go("heute")},
+ doneTask(t){const x=findT(t.dataset.id);x.done=true;x.doneAt=today();save();doneToast();go("heute")},
+ addManual(){const o=view.sub;const m=[15,30,45,60,90,120][o.m];S.sessions.push({d:addDays(today(),-o.d),min:m,task:null,manual:true});save();toast(m+" Minuten eingetragen.");go("heute")},
+ testStart(){sub("test",{i:0})},
+ testAns(t){const i=view.sub.i||0;S.test.a[i]=+t.dataset.v;save();view.sub.i=i+1;render();window.scrollTo(0,0)},
+ testAgain(){S.test.a={};save();view.sub.i=0;render()},
  goBulk(){go("aufgaben",{bulk:true})},
  goFilter(t){view.f=Object.assign({},view.f,{art:t.dataset.art,st:"offen"});go("aufgaben")},
  importBD(){const ex=new Set(S.tasks.map(t=>t.t));let n=0;bdLines().forEach(l=>{if(!ex.has(l)){addTask(l);n++}});S.bdDone=true;save();toast(n+" Aufgaben übernommen");keepScroll(render)},
  addTask(){const el=$("#newtask");if(!el)return;if(addTask(el.value)){save();keepScroll(render);const n=$("#newtask");n&&n.focus();toast("Hinzugefügt")}},
  bulkAdd(){const el=$("#bulk");const ls=el.value.split("\n").map(x=>x.replace(/^[\s\-–•*·]+/,"").trim()).filter(Boolean);ls.forEach(addTask);save();view.bulk=false;keepScroll(render);toast(ls.length+" Aufgaben hinzugefügt")},
- togTask(t){const x=findT(t.dataset.id);x.done=!x.done;x.doneAt=x.done?today():null;save();keepScroll(render);if(x.done)toast("Erledigt. Gut gemacht.")},
+ togTask(t){const x=findT(t.dataset.id);x.done=!x.done;x.doneAt=x.done?today():null;save();keepScroll(render);if(x.done)doneToast()},
  star(t){const x=findT(t.dataset.id);x.star=!x.star;save();keepScroll(render)},
  openTask(t){view.open=view.open===+t.dataset.id?null:+t.dataset.id;keepScroll(render)},
  closeTask(){view.open=null;keepScroll(render)},
  delTask(t){const id=+t.dataset.id;S.tasks=S.tasks.filter(x=>x.id!==id);Object.values(S.days).forEach(d=>d.pick&&(d.pick=d.pick.filter(p=>p!==id)));view.open=null;save();keepScroll(render)},
- setT(t){const x=findT(t.dataset.id);const k=t.dataset.k;let v=t.dataset.v;if(k==="muss")v=v==="true";if(k==="kap")v=+v;x[k]=x[k]===v?null:v;if(k==="art"&&v!=="d")x.auf=null;save();keepScroll(render)},
+ setT(t){const x=findT(t.dataset.id);const k=t.dataset.k;let v=t.dataset.v;if(k==="muss")v=v==="true";x[k]=x[k]===v?null:v;if(k==="art"&&v!=="d")x.auf=null;save();keepScroll(render)},
  filt(t){view.f[t.dataset.k]=t.dataset.v;keepScroll(render)},
- more(){view.more=true;keepScroll(render)},
- pick(t){const d=dayObj(t.dataset.d);const id=+t.dataset.id;if(!d.pick.includes(id))d.pick.push(id);save();keepScroll(render)},
- unpick(t){const d=dayObj(t.dataset.d);d.pick=d.pick.filter(x=>x!==+t.dataset.id);save();keepScroll(render);toast("Aus „Heute“ entfernt")},
- addFormal(t){addTask(t.dataset.t).art="f";save();keepScroll(render)},
+ pick(t){const d=dayObj(today());const id=+t.dataset.id;d.pick=d.pick.includes(id)?d.pick.filter(x=>x!==id):d.pick.concat(id);save();keepScroll(render)},
+ unpick(t){const d=dayObj(today());d.pick=d.pick.filter(x=>x!==+t.dataset.id);save();keepScroll(render)},
+ addFormal(t){const x=addTask(t.dataset.t);x.art="f";x.muss=true;save();keepScroll(render)},
  addAllFormal(){INHALT.formal.filter(f=>!S.tasks.some(t=>t.t===f)).forEach(f=>{const x=addTask(f);x.art="f";x.muss=true});save();keepScroll(render);toast("Übernommen")},
- formalOff(){S.formalOff=true;save();keepScroll(render)},
- glAdd(){S.gl.push({id:S.gid++,t:"",a:0});save();keepScroll(render);const ins=document.querySelectorAll(".glrow input");ins.length&&ins[ins.length-1].focus()},
+ glAdd(){S.gl.push({id:S.gid++,t:"",a:0});save();keepScroll(render);const ins=document.querySelectorAll(".gl input");ins.length&&ins[ins.length-1].focus()},
  glDel(t){const g=S.gl[+t.dataset.i];S.gl.splice(+t.dataset.i,1);S.tasks.forEach(x=>{if(x.kap===g.id)x.kap=null});save();keepScroll(render)},
  amp(t){S.gl[+t.dataset.i].a=+t.dataset.v;save();keepScroll(render)},
- park(){view.sub={t:"park"};render();window.scrollTo(0,0);setTimeout(()=>{const p=$("#parktxt");p&&p.focus()},50)},
+ woche(t){S.woche=t.dataset.v==="1";save();if(S.woche)go("woche");else keepScroll(render)},
+ blkAdd(){const o=view.nb;if(!o.s||!o.e||tmin(o.e)<=tmin(o.s)){toast("Bitte eine Endzeit nach der Startzeit.");return}
+  S.blocks.push({id:S.bid++,wd:o.wd,s:o.s,e:o.e,typ:o.typ===1?"t":"w",t:(o.t||"").trim()});o.t="";save();keepScroll(render);toast("Eingetragen")},
+ blkDel(t){S.blocks=S.blocks.filter(b=>b.id!==+t.dataset.id);save();keepScroll(render)},
+ park(){sub("park");setTimeout(()=>{const p=$("#parktxt");p&&p.focus()},50)},
  parkSave(){const v=$("#parktxt").value.trim();if(v){S.park.push({t:v,d:today()});save()}view.sub=null;render();toast(v?"Geparkt. Weiter geht’s.":"Nichts geparkt")},
  parkToTask(t){const p=S.park.splice(+t.dataset.i,1)[0];addTask(p.t);save();keepScroll(render)},
  parkDel(t){S.park.splice(+t.dataset.i,1);save();keepScroll(render)},
+ ich(){go("ich")},
  fbSend(){S.fb.sent=today();save();location.href="mailto:kontakt@drmaschakoerner.de?subject="+encodeURIComponent("Feedback Testphase Reset & Flow")+"&body="+encodeURIComponent(fbText());setTimeout(()=>keepScroll(render),400)},
  export(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="reset-und-flow-sicherung-"+today()+".json";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)},
- import(){const f=$("#imp");f.onchange=()=>{const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||d.v!==1||!Array.isArray(d.tasks))throw 0;S=Object.assign(blank(),d);S.demo=false;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}toast("Sicherung geladen");go("heute")}catch(e){toast("Diese Datei passt nicht.")}};r.readAsText(f.files[0])};f.click()},
- reset(){if(!confirm("Wirklich alles löschen? Das lässt sich nicht rückgängig machen."))return;try{localStorage.removeItem(KEY)}catch(e){}S=blank();go("heute")},
+ import(){const f=$("#imp");f.onchange=()=>{const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||d.v!==2||!Array.isArray(d.tasks))throw 0;S=Object.assign(blank(),d);S.demo=false;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}toast("Sicherung geladen");go("heute")}catch(e){toast("Diese Datei passt nicht.")}};r.readAsText(f.files[0])};f.click()},
+ reset(){if(!confirm("Wirklich alles löschen? Das lässt sich nicht rückgängig machen."))return;try{localStorage.removeItem(KEY)}catch(e){}S=blank();view.setup=0;go("heute")},
 };
 
 // ================= Beispieldaten =================
-function demoData(){const s=blank();s.demo=true;s.started=true;s.goal="abgeben";s.start=addDays(today(),-8);s.deadline=addDays(s.start,29);s.lage=[0];s.ki=1;
+function demoData(){const s=blank();s.demo=true;s.started=true;s.goal="abgeben";s.start=addDays(today(),-8);s.deadline=addDays(s.start,29);s.lage=[0];s.ki=1;s.woche=true;
   s.warum="Ich will endlich wieder frei durchatmen und stolz auf diese Arbeit sein.";
-  s.braindump="Kapitel 2 kürzen\nInterviews 5 bis 8 fertig codieren\nDiskussion schreiben\nFazit schreiben\nLiteraturverzeichnis prüfen\nFrage an Betreuung: Umfang Anhang?";s.bdDone=true;
-  const gl=[["1 Einleitung",1],["2 Theorie",1],["3 Forschungsstand",2],["4 Methode",2],["5 Ergebnisse",1],["6 Diskussion",0],["7 Fazit",0]];
-  gl.forEach(([t,a])=>s.gl.push({id:s.gid++,t,a}));
+  s.braindump="Kapitel 2 kürzen\nInterviews 5 bis 8 fertig codieren\nDiskussion schreiben";s.bdDone=true;
+  [["1 Einleitung",1],["2 Theorie",2],["3 Forschungsstand",2],["4 Methode",2],["5 Ergebnisse",1],["6 Diskussion",0],["7 Fazit",0]].forEach(([t,a])=>s.gl.push({id:s.gid++,t,a}));
   const T=[["Interviews 5 bis 8 fertig codieren","d","+",5,true,true],["Ergebnisse Kategorie 3 schreiben","d","+",5,true,false,true],["Diskussion schreiben","d","+",6,true,false,true],["Fazit schreiben","d","o",7,true],["Kapitel 2 um drei Seiten kürzen","d","o",2,true,true],["Einleitung an Ergebnisse anpassen","d","-",1,true],["Frage an Betreuung: Umfang Anhang?","k",null,null,true,true],["Auflage von Mayring prüfen","k",null,3,true,true],["Formatvorgaben im Prüfungsamt nachlesen","k",null,null,true,true],["Literaturverzeichnis prüfen und vervollständigen","f",null,null,true],["Transkripte in den Anhang","f",null,null,true],["Abbildungsverzeichnis aktualisieren","f",null,null,true],["Exkurs zur Geschichte der Methode","d","o",4,false],["Grafik zum Kategoriensystem","f",null,5,false]];
   T.forEach(([t,art,auf,kap,muss,done,star])=>s.tasks.push({id:s.nid++,t,art,auf,kap:kap?s.gl[kap-1].id:null,muss,done:!!done,star:!!star}));
   s.park.push({t:"Zitat von Kuckartz zur Kategorienbildung noch einbauen?",d:addDays(today(),-1)});
-  for(let i=0;i<8;i++){const dt=addDays(s.start,i);s.days[dt]={pick:[],e:[4,5,6,5,7,6,3,6][i],schlaf:[1,1,2,2,2,1,0,2][i],essen:0,trinken:i===6?1:0,status:i<5?0:null,std:i>=5?[2,1,1][i-5]:null,half:i===5?"Handy im Flur, Pomodoro mit Musik.":""}}
-  s.pd.p1d2={0:true,1:true,2:true,3:true,4:false};
-  s.days[today()]={pick:[1,2],e:6,schlaf:2,essen:0,trinken:0};
+  for(let i=0;i<5;i++)s.steps["p1_"+i]=true;
+  const M=[[50,25,50],[75,50],[40,35,50],[30],[60,25,90],[90,45,50],[25],[55,50,25]];
+  for(let i=0;i<8;i++){const dt=addDays(s.start,i);s.days[dt]={pick:[],ci:true,e:[2,3,3,2,4,3,1,3][i],schlaf:[1,1,2,2,2,1,0,2][i],zeit:[1,1,1,0,2,2,0,1][i]};M[i].forEach(m=>s.sessions.push({d:dt,min:m,task:null}))}
+  s.days[today()]={pick:[1,2,12],ci:true,e:2,schlaf:1,zeit:1};s.sessions.push({d:today(),min:45,task:1});
+  s.blocks=[{id:1,wd:0,s:"09:00",e:"11:00",typ:"w",t:""},{id:2,wd:0,s:"14:00",e:"15:00",typ:"t",t:"Kita"},{id:3,wd:1,s:"07:00",e:"11:00",typ:"t",t:"Job"},{id:4,wd:1,s:"13:00",e:"15:00",typ:"w",t:""},{id:5,wd:2,s:"09:00",e:"11:00",typ:"w",t:""},{id:6,wd:2,s:"12:00",e:"16:00",typ:"t",t:"Job"},{id:7,wd:3,s:"13:00",e:"15:00",typ:"w",t:""},{id:8,wd:4,s:"09:00",e:"10:30",typ:"w",t:""},{id:9,wd:5,s:"10:00",e:"12:00",typ:"w",t:""},{id:10,wd:6,s:"15:00",e:"17:00",typ:"t",t:"Familie"}];s.bid=11;
   return s}
 
 // ================= Start =================
-load();render();
-$("#parkbtn").addEventListener("click",()=>ACT.park());
+load();
+if(S.timer&&!S.demo)view.sub={t:"timer"};
+render();
+$("#parkbtn").addEventListener("click",()=>{if(S.started)ACT.park()});
+$("#ichbtn").addEventListener("click",()=>{if(S.started)ACT.ich()});
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("sw.js").catch(()=>{})}
 
 </script>
