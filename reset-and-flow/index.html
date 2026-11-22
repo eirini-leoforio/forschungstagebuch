@@ -398,7 +398,8 @@ function wday(s){return (new Date(s+"T12:00:00").getDay()+6)%7}
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function n1(v){return (Math.round(v*10)/10).toString().replace(".",",")}
 function hm(min){min=Math.round(min);if(min<60)return min+" Min.";const h=Math.floor(min/60),m=min%60;return h+" Std."+(m?" "+m+" Min.":"")}
-function tmin(t){const [h,m]=(t||"0:0").split(":").map(Number);return h*60+m}
+// Zeiten vor 5 Uhr zählen zur Nacht danach (Raster 5 bis 1 Uhr)
+function tmin(t){const [h,m]=(t||"0:0").split(":").map(Number);const x=h*60+m;return x<300?x+1440:x}
 function tfmt(t){const [h,m]=t.split(":");return +h+(m!=="00"?":"+m:"")}
 const $=s=>document.querySelector(s);
 function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),2200)}
@@ -784,7 +785,7 @@ function vFortschritt(){const t=today();const w=where(t);const P=plan();
   ${zeitBox()}`}
 
 // ================= Woche (optional) =================
-const H0=7,H1=22,PX=.5;
+const H0=5,H1=25,PX=.4;
 function vWoche(){if(!S.woche)return vIch();const t=today();const mon=addDays(t,-wday(t));const ds=Array.from({length:7},(_,i)=>addDays(mon,i));
   const plannedMin=S.blocks.filter(b=>b.typ==="w").reduce((a,b)=>a+tmin(b.e)-tmin(b.s),0);const wkMin=ds.reduce((a,d)=>a+minsOn(d),0);
   const H=(H1-H0)*60*PX;
@@ -792,7 +793,7 @@ function vWoche(){if(!S.woche)return vIch();const t=today();const mon=addDays(t,
   const o=view.nb||(view.nb={wd:wday(t),s:"09:00",e:"11:00",typ:0,t:""});const id=bindObj(o);
   return `<div class="q"><div class="row"><span class="k">Diese Woche</span><b>${n1(wkMin/60)} von ${n1(plannedMin/60)} Std.</b></div><div class="bar"><i style="width:${plannedMin?Math.min(100,wkMin/plannedMin*100):0}%"></i></div></div>
   <div class="week"><div></div>${ds.map(d=>`<div class="h ${d===t?"now":""}">${WD[wday(d)]}</div>`).join("")}
-  <div class="hrs" style="height:${H}px">${Array.from({length:(H1-H0)/2+1},(_,i)=>`<span style="top:${i*120*PX}px">${H0+i*2}</span>`).join("")}</div>${ds.map(col).join("")}</div>
+  <div class="hrs" style="height:${H}px">${Array.from({length:(H1-H0)/2+1},(_,i)=>`<span style="top:${i*120*PX}px">${(H0+i*2)%24}</span>`).join("")}</div>${ds.map(col).join("")}</div>
   <div class="leg"><span><i style="background:var(--red)"></i>Arbeitszeit</span><span><i style="background:var(--reddark)"></i>geschafft</span><span><i style="background:var(--bg);border:1px solid var(--line)"></i>Termine</span></div><hr>
   <div class="q"><span class="k">Wochenplan · gilt jede Woche</span>
   ${S.blocks.length?`<div class="tl">${S.blocks.slice().sort((a,b)=>a.wd-b.wd||tmin(a.s)-tmin(b.s)).map(b=>`<div class="blk"><i class="sw ${b.typ}"></i><span><b>${WD[b.wd]}</b> ${tfmt(b.s)} bis ${tfmt(b.e)} Uhr${b.t?" · "+esc(b.t):""}</span><button class="x" data-act="blkDel" data-id="${b.id}" aria-label="Entfernen">×</button></div>`).join("")}</div>`:`<p class="m">Noch leer. Trag zuerst feste Termine ein, dann deine Arbeitszeiten in die Lücken. Deine klarste Zeit für Denkaufgaben.</p>`}</div>
