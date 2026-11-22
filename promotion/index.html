@@ -30,6 +30,27 @@
   --petrol:#7FB3AE; --petrol-dark:#9CC7C2; --nebel:#22312F; --line:#33464390;
   --faden:#E07B66; --faden-soft:#3A2622; --gold:#E9C9A6; --good:#7CC39A; --warn:#E0B060; color-scheme:dark}
 *{box-sizing:border-box}
+/* Time-Blocking (freiwillig, 22.11.2026) – Farben wie Kachel „Feierabend ist auch ein Termin“ */
+.tbw{display:grid;grid-template-columns:22px repeat(7,1fr);gap:3px;font-size:10px;color:var(--muted)}
+.tbw .h{text-align:center;font-weight:700;color:var(--petrol-dark);font-size:13px;padding-bottom:2px}
+.tbw .h.we{color:var(--faden)}.tbw .h.now{text-decoration:underline;text-underline-offset:3px}
+.tbw .hrs{position:relative}.tbw .hrs span{position:absolute;left:0;transform:translateY(-50%);font-variant-numeric:tabular-nums}
+.tbc{position:relative;background:repeating-linear-gradient(to bottom,var(--nebel) 0 1px,transparent 1px 27px);border-radius:3px}
+.tbb{position:absolute;left:1px;right:1px;border:0;border-radius:4px;padding:2px 3px;font-size:9.5px;font-weight:700;line-height:1.15;text-align:left;overflow:hidden;cursor:pointer}
+.tbb.v{display:flex;align-items:center;justify-content:center}.tbb.v span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:12px;letter-spacing:.04em}
+.tbleg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--soft)}
+.tbleg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.tbcats{display:flex;flex-wrap:wrap;gap:6px}
+.tbcats button{border:2px solid transparent;border-radius:6px;padding:7px 10px;font-size:14px;font-weight:700;min-height:40px}
+.tbcats button[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 2px var(--sheet) inset}
+.tbdays{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.tbdays button{border:0;border-left:1px solid var(--line);background:var(--sheet);padding:9px 0;font-size:14px;min-height:42px}
+.tbdays button:first-child{border-left:0}
+.tbdays button[aria-pressed="true"]{background:var(--petrol-dark);color:var(--paper);font-weight:700}
+.tbsum{display:grid;grid-template-columns:104px 1fr 68px;gap:8px;align-items:center;font-size:14px}
+.tbsum .tr{height:8px;background:var(--nebel);border-radius:4px;overflow:hidden}.tbsum .tr i{display:block;height:100%;border-radius:4px}
+.tbsum .n{text-align:right;white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}
+
 html,body{height:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
@@ -414,8 +435,8 @@ function vHeute(){
   if(!S.started)return vEinrichten();
   const pend=(testPhaseDone()&&!S.fb.sent?`<div class="offer"><div class="k">Testphase geschafft</div>${TEST_DONE_TXT}<div class="row"><button class="btn small" data-act="openSub" data-t="feedback">Feedback geben</button></div></div>`:"")+pendingNotice();
   let d=view.day?S.days.find(x=>x.id===view.day):dayOf(today());
-  if(!d)return pend+vNeuerTag();
-  return pend+(view.edit?dayForm(d):bookPage(d));
+  if(!d)return pend+vNeuerTag()+tbNotice();
+  return pend+(view.edit?dayForm(d):bookPage(d)+(view.day?"":tbNotice()));
 }
 function vNeuerTag(){if(testOver(today()))return `<div class="page"><div class="eyebrow">Testversion</div><h2>Deine vier Testwochen sind geschafft.</h2><p style="margin:0">Danke, dass du das Forschungstagebuch getestet hast. Alle deine Seiten, Reflexionen und die Statistik bleiben dir erhalten. Neue Tagesseiten gibt es in der Vollversion.</p><button class="btn" data-act="openSub" data-t="feedback">Feedback geben</button></div>`;const last=sortedDays().slice(-1)[0];const [k,t,q]=bandForDate(today());
   return `<div class="page startday"><div><div class="eyebrow">Neue Tagesseite</div><label class="q" for="nd0" style="margin-top:6px">Datum</label><input type="date" id="nd0" value="${today()}"></div>
@@ -515,7 +536,54 @@ const FBQ=[["#","Deine Nutzung"],
  ["fach","Dein Fach und deine aktuelle Phase (freiwillig)"],
  ["zitat","Darf ich deine Antworten, z. B. deinen Satz über die App, auf meiner Website und in der Werbung für das Forschungstagebuch verwenden?",["ja, anonym","ja, mit Vorname","ja, mit Vorname und Fach","lieber nicht"]]];
 function fbText(){const o=S.fb;return "Feedback zur Testphase – Forschungstagebuch Promotion\n\n"+FBQ.filter(x=>x[0]!=="#").map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")}
+
+// ================= Meine Woche: Time-Blocking (freiwillig) =================
+const TBK=[["p","Promotion","#0B3B40","#FFFFFF"],["a","Arbeit","#A8D1CD","#0B3B40"],["t","Termine","#5E8C89","#FFFFFF"],["e","Ehrenamt","#B5853F","#FFFFFF"],["s","Sport","#EADBB8","#0B3B40"],["l","Alltag & Pause","#DDE3E1","#4F625F"],["f","Feierabend","#A3402F","#FFFFFF"]];
+const TBWD=["Mo","Di","Mi","Do","Fr","Sa","So"];const TB0=6,TB1=22,TBPX=0.45;
+function tb(){return S.tb||(S.tb={blocks:[],bid:1})}
+function tbCat(k){return TBK.find(x=>x[0]===k)||TBK[5]}
+function tbMin(t){const [h,m]=(t||"0:0").split(":").map(Number);return h*60+(m||0)}
+function tbFmt(t){const [h,m]=t.split(":");return +h+(m!=="00"?":"+m:"")}
+function tbWd(d){return (new Date(d+"T12:00:00").getDay()+6)%7}
+function tbHours(k,wd){return tb().blocks.filter(b=>b.cat===k&&(wd==null||b.wd===wd)).reduce((a,b)=>a+tbMin(b.e)-tbMin(b.s),0)/60}
+function tbH(v){return (Math.round(v*10)/10).toString().replace(".",",")}
+function tbNotice(){const B=tb().blocks;if(!B.length)return"";const h=tbHours("p",tbWd(today()));
+  return `<button class="notice" data-act="openSub" data-t="tbwoche"><span>Meine Woche<small style="display:block;font-weight:400;font-size:13px;color:var(--muted)">${h?`Heute sind ${tbH(h)} Std. für deine Promotion reserviert.`:"Heute ist keine Promotionszeit reserviert."}</small></span>${ICON.r.replace("<svg",'<svg width="18" height="18" style="stroke:currentColor;fill:none;stroke-width:1.8;flex:none"')}</button>`}
+function tbKeep(){const f=view.sub.f;["s","e","t"].forEach(k=>{const el=$("#tb"+k);if(el)f[k]=el.value})}
+function tbGrid(){const B=tb().blocks;const H=(TB1-TB0)*60*TBPX;const t=tbWd(today());
+  const col=wd=>`<div class="tbc" style="height:${H}px">${B.filter(b=>b.wd===wd).sort((a,b)=>tbMin(a.s)-tbMin(b.s)).map(b=>{const s=Math.max(tbMin(b.s),TB0*60),e=Math.min(tbMin(b.e),TB1*60);if(e<=s)return"";const c=tbCat(b.cat);const h=(e-s)*TBPX;const lab=b.t||c[1];const vert=(b.cat==="f")&&h>70;
+    return `<button class="tbb ${vert?"v":""}" data-act="tbEdit" data-id="${b.id}" style="top:${(s-TB0*60)*TBPX}px;height:${h-2}px;background:${c[2]};color:${c[3]};font-weight:${b.cat==="l"?400:700}" aria-label="${TBWD[b.wd]} ${tbFmt(b.s)} bis ${tbFmt(b.e)}: ${esc(lab)}"><span>${h>=12?esc(lab):""}</span></button>`}).join("")}</div>`;
+  return `<div class="tbw"><div></div>${TBWD.map((l,i)=>`<div class="h ${i>4?"we":""} ${i===t?"now":""}">${l}</div>`).join("")}
+  <div class="hrs" style="height:${H}px">${Array.from({length:(TB1-TB0)/2+1},(_,i)=>`<span style="top:${i*120*TBPX}px">${TB0+i*2}</span>`).join("")}</div>${TBWD.map((_,i)=>col(i)).join("")}</div>
+  <div class="tbleg">${TBK.map(c=>`<span><i style="background:${c[2]}"></i>${c[1]}</span>`).join("")}</div>`}
+function tbSum(){const tot=TBK.map(c=>[c,tbHours(c[0])]).filter(x=>x[1]>0);if(!tot.length)return"";const mx=Math.max(...tot.map(x=>x[1]));
+  return `<div class="card stack" style="gap:8px"><h3>So verteilt sich deine Woche</h3>${tot.map(([c,h])=>`<div class="tbsum"><span>${c[1]}</span><span class="tr"><i style="width:${h/mx*100}%;background:${c[2]};${c[0]==="l"||c[0]==="s"||c[0]==="a"?"box-shadow:inset 0 0 0 1px #0002":""}"></i></span><span class="n">${tbH(h)} Std.</span></div>`).join("")}</div>`}
+function tbExample(){const B=[];const add=(wd,s,e,cat,t)=>B.push({id:B.length+1,wd,s,e,cat,t:t||""});
+  for(let d=0;d<5;d++){add(d,"07:00","07:30","l","Hund");add(d,"12:00","13:00","l","Mittag");add(d,"18:00","21:00","f")}
+  [[0,"Kapitel 3"],[1,"Literatur"],[2,"Auswertung"],[3,"Kapitel 4"],[4,"Gliederung"]].forEach(([d,t])=>add(d,"08:00",d===3?"10:00":"09:30","p",t));
+  add(0,"09:30","12:00","a","Bericht");add(0,"13:00","14:00","t","Projekttreffen");add(0,"14:00","15:30","a","E-Mails");add(0,"15:30","16:30","e","Ehrenamt");add(0,"17:00","18:00","s","Sport");
+  add(1,"09:30","12:00","t","Lehre");add(1,"13:00","14:00","t","Besprechung");add(1,"14:00","16:00","a","E-Mails");add(1,"17:00","18:00","e","Ehrenamt");
+  add(2,"09:30","12:00","a","Konzept");add(2,"13:00","14:30","t","Meeting");add(2,"14:30","16:00","a","E-Mails");add(2,"16:30","17:30","s","Sport");
+  add(3,"10:30","12:30","p","Kapitel 4");add(3,"13:30","14:30","a","E-Mails");add(3,"15:00","17:30","e","Ehrenamt");
+  add(4,"09:30","12:00","a","Analyse");add(4,"13:00","14:00","t","Teamsitzung");add(4,"14:00","15:30","a","E-Mails");add(4,"17:00","18:00","s","Sport");
+  add(5,"08:30","10:30","p","Kapitel 3");add(5,"11:00","13:00","p","Kapitel 3");add(5,"13:00","14:30","l","Mittag + Hund");add(5,"14:30","16:00","p","Literatur");add(5,"16:00","17:30","p","Formales");add(5,"18:00","19:30","p","Zitate");add(5,"19:30","21:00","f");
+  add(6,"07:00","21:00","f","Freizeit");return B}
+const TB_WHY="Beim Time-Blocking reservierst du feste Zeitfenster: für deine Promotion und für alles andere, das in deiner Woche Zeit braucht, zum Beispiel Arbeit, Nebenjob, Familie, Sport oder Ehrenamt. Es geht nicht darum, jeden einzelnen Termin einzutragen. Das darfst du, musst du aber nicht. Wichtig ist, dass deine Promotionszeit einen festen Platz bekommt und nicht nebenbei verdrängt wird. Und: Auch Feierabend ist ein Termin.";
+function tbPage(s){const B=tb().blocks;s.f=s.f||{days:[tbWd(today())],cat:"p",s:"08:00",e:"10:00",t:""};const f=s.f;const ed=s.edit&&B.find(b=>b.id===s.edit);
+  const form=`<div class="card stack" id="tbform"><h3>${ed?"Block ändern":"Zeitfenster reservieren"}</h3>
+   <div><span class="q">${ed?"Tag":"Tage"}${ed?"":`<span class="hn">Mehrere möglich, z. B. Mo bis Fr</span>`}</span><div class="tbdays">${TBWD.map((l,i)=>`<button data-act="tbDay" data-v="${i}" aria-pressed="${f.days.includes(i)}">${l}</button>`).join("")}</div></div>
+   <div class="two"><div><label class="q" for="tbs">von</label><input type="time" id="tbs" step="900" value="${esc(f.s)}"></div><div><label class="q" for="tbe">bis</label><input type="time" id="tbe" step="900" value="${esc(f.e)}"></div></div>
+   <div><span class="q">Bereich</span><div class="tbcats">${TBK.map(c=>`<button data-act="tbCatSet" data-v="${c[0]}" aria-pressed="${f.cat===c[0]}" style="background:${c[2]};color:${c[3]}">${c[1]}</button>`).join("")}</div></div>
+   <div><label class="q" for="tbt">Bezeichnung<span class="hn">Freiwillig, z. B. Kapitel 3, Lehre, Kita</span></label><input type="text" id="tbt" value="${esc(f.t)}" placeholder="z. B. Kapitel 3"></div>
+   <div class="row"><button class="btn small" data-act="tbSave">${ed?"Änderung speichern":"Eintragen"}</button>${ed?`<button class="btn ghost small" data-act="tbDel" data-id="${ed.id}">Löschen</button><button class="btn ghost small" data-act="tbNew">Abbrechen</button>`:""}</div></div>`;
+  return back()+`<div><div class="eyebrow">Freiwillig · Time-Blocking</div><h1>Meine Woche</h1></div>
+  <p class="lead" style="margin:0">Feierabend ist auch ein Termin. Reserviere feste Zeitfenster für deine Promotion und alles andere, was in deiner Woche Platz braucht.</p>
+  <details class="help"><summary>Worum geht es beim Time-Blocking?</summary><p>${TB_WHY}</p><p>Nutze diesen Bereich, wenn du merkst, dass viele verschiedene Themen in deiner Woche deine Promotionszeit immer wieder verdrängen. Der Plan gilt für jede Woche, bis du ihn änderst. Dein Tagebuch bleibt davon unberührt.</p></details>
+  ${B.length?`<div class="card stack" style="gap:10px;padding:12px 10px">${tbGrid()}<p class="muted" style="margin:0;font-size:13px">Tippe auf einen Block, um ihn zu ändern oder zu löschen.</p></div>${tbSum()}`:`<div class="card stack"><p style="margin:0">Noch leer. Fang mit deinen Promotionszeiten an, dann kommen die festen Bereiche wie Arbeit oder Familie dazu. Und vergiss den Feierabend nicht.</p><div class="row"><button class="btn ghost small" data-act="tbEx">Beispielwoche ansehen</button></div></div>`}
+  ${form}
+  ${B.length?`<div class="row"><button class="btn ghost small" data-act="tbClear">Ganze Woche leeren</button></div><div id="tbcl"></div>`:""}`}
 const SUB={
+ tbwoche(s){return tbPage(s)},
  testdone(){return `<div class="ms"><div class="eyebrow">Testversion</div><h1>Testphase geschafft.</h1>${TEST_DONE_TXT}<div class="row"><button class="btn" data-act="openSub" data-t="feedback">Jetzt Feedback geben</button><button class="btn ghost" data-act="go" data-tab="heute">Später</button></div></div>`},
  feedback(){const o=S.fb;return back()+`<div class="page"><div class="eyebrow">Testphase · etwa 10 Minuten</div><h1>Dein Feedback</h1>
   ${o.sent?NL_CARD:""}
@@ -717,6 +785,7 @@ function vMehr(){const r=S.rem;
   <div class="list">
    <button class="it" data-act="openSub" data-t="stand" data-n="start"><span class="l"><b>Mein Stand am Anfang</b><span>Arbeitstitel, Frage, was fertig und was offen ist</span></span>${S.stand.start?'<span class="tag ok">angelegt</span>':'<span class="tag">offen</span>'}</button>
    <button class="it" data-act="openSub" data-t="warum"><span class="l"><b>Mein <i>Warum</i></b><span>Was dich dranhält</span></span>${S.warum.satz?'<span class="tag ok">angelegt</span>':'<span class="tag">offen</span>'}</button>
+   <button class="it" data-act="openSub" data-t="tbwoche"><span class="l"><b>Meine Woche</b><span>Time-Blocking: Zeitfenster für Promotion und Alltag reservieren</span></span>${tb().blocks.length?'<span class="tag ok">angelegt</span>':'<span class="tag">freiwillig</span>'}</button>
    ${TESTV?"":`<button class="it" data-act="openSub" data-t="brief"><span class="l"><b>Brief an mein zukünftiges Ich</b><span>Zu lesen nach Woche 26</span></span>${S.brief.sealed?'<span class="tag ok">versiegelt</span>':'<span class="tag">offen</span>'}</button>`}
   </div>
   ${S.warum.satz?`<div class="band"><div class="k">Mein Warum</div><p>${esc(S.warum.satz)}</p></div>`:""}
@@ -761,6 +830,18 @@ const ACT={
  openDay(t){const id=+t.dataset.id;if(!id)return;go("heute",{day:id})},
  edit(t){const part=t.dataset.part;go("heute",{day:+t.dataset.id,edit:true});if(part==="abend"){const el=$("#abend");el&&el.scrollIntoView()}},
  saveDay(t){save();toast("Gespeichert");go("heute",{day:+t.dataset.id})},
+ tbDay(t){tbKeep();const f=view.sub.f;const v=+t.dataset.v;if(view.sub.edit)f.days=[v];else f.days=f.days.includes(v)?f.days.filter(x=>x!==v):f.days.concat(v).sort();keepScroll(render)},
+ tbCatSet(t){tbKeep();view.sub.f.cat=t.dataset.v;keepScroll(render)},
+ tbSave(){tbKeep();const f=view.sub.f;if(!f.days.length){toast("Wähl mindestens einen Tag.");return}if(!f.s||!f.e||tbMin(f.e)<=tbMin(f.s)){toast("Die Endzeit muss nach der Startzeit liegen.");return}
+  const T=tb();if(view.sub.edit){const b=T.blocks.find(x=>x.id===view.sub.edit);Object.assign(b,{wd:f.days[0],s:f.s,e:f.e,cat:f.cat,t:(f.t||"").trim()});view.sub.edit=null;toast("Geändert")}
+  else{f.days.forEach(wd=>T.blocks.push({id:T.bid++,wd,s:f.s,e:f.e,cat:f.cat,t:(f.t||"").trim()}));toast(f.days.length>1?f.days.length+" Blöcke eingetragen":"Eingetragen")}
+  f.t="";save();keepScroll(render)},
+ tbEdit(t){const b=tb().blocks.find(x=>x.id===+t.dataset.id);view.sub.edit=b.id;view.sub.f={days:[b.wd],cat:b.cat,s:b.s,e:b.e,t:b.t};render();const el=$("#tbform");el&&el.scrollIntoView({behavior:"smooth",block:"start"})},
+ tbNew(){view.sub.edit=null;view.sub.f=null;keepScroll(render)},
+ tbDel(t){const T=tb();T.blocks=T.blocks.filter(x=>x.id!==+t.dataset.id);view.sub.edit=null;view.sub.f=null;save();keepScroll(render);toast("Gelöscht")},
+ tbEx(){const T=tb();T.blocks=tbExample();T.bid=T.blocks.length+1;save();keepScroll(render);toast("Beispielwoche geladen. Du kannst alles ändern oder löschen.")},
+ tbClear(){$("#tbcl").innerHTML=`<div class="card stack"><p style="margin:0">Wirklich alle Blöcke löschen?</p><div class="row"><button class="btn small" data-act="tbClearOk">Ja, Woche leeren</button></div></div>`},
+ tbClearOk(){tb().blocks=[];view.sub.edit=null;view.sub.f=null;save();keepScroll(render)},
  openSub(t){const n=t.dataset.n;go(view.tab,{sub:{t:t.dataset.t,n:n==null?undefined:isNaN(+n)?n:+n,first:!!t.dataset.first},back:{tab:view.tab,day:view.day,sub:view.sub}})},
  back(){const b=view.back;if(b){view=Object.assign({},view,{tab:b.tab,day:b.day,sub:b.sub&&b.sub.t==="karte"?null:null,edit:false,back:null});render();window.scrollTo(0,0)}else go(view.tab)},
  go(t){go(t.dataset.tab)},
