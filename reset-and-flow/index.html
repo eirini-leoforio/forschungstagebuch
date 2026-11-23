@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
 <title>Reset &amp; Flow</title>
-<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121615" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,9 +11,9 @@
    Eine Schrift (Source Sans 3), drei Größen (13/15/22), eine Akzentfarbe (Rot). */
 @font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-ext-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-:root{--bg:#FFFFFF;--ink:#1C2423;--mute:#6E7876;--line:#E4E7E6;--soft:#F5F5F3;--red:#A3402F;--redsoft:#F6E9E6;--redmid:#E7C8C1;--reddark:#5C2219;--onink:#FFFFFF;--onred:#FFFFFF;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121615;--ink:#E9EDEC;--mute:#98A3A1;--line:#2A3231;--soft:#1B2120;--red:#D0674F;--redsoft:#33201B;--redmid:#6A3A30;--reddark:#F0B6A8;--onink:#121615;--onred:#FFFFFF;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#121615;--ink:#E9EDEC;--mute:#98A3A1;--line:#2A3231;--soft:#1B2120;--red:#D0674F;--redsoft:#33201B;--redmid:#6A3A30;--reddark:#F0B6A8;--onink:#121615;--onred:#FFFFFF;color-scheme:dark}
+:root{--bg:#FFFFFF;--ink:#1A1A1A;--mute:#6B6B6B;--line:#E2E2E2;--soft:#F4F4F4;--red:#2E5D5B;--redsoft:#E7F0EF;--redmid:#BFD5D3;--reddark:#1D3D3B;--onink:#FFFFFF;--onred:#FFFFFF;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121212;--ink:#ECECEC;--mute:#9A9A9A;--line:#2C2C2C;--soft:#1C1C1C;--red:#6FAAA5;--redsoft:#1A2928;--redmid:#2E4746;--reddark:#B3D6D2;--onink:#121212;--onred:#0E1A19;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121212;--ink:#ECECEC;--mute:#9A9A9A;--line:#2C2C2C;--soft:#1C1C1C;--red:#6FAAA5;--redsoft:#1A2928;--redmid:#2E4746;--reddark:#B3D6D2;--onink:#121212;--onred:#0E1A19;color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,sans-serif;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:calc(64px + env(safe-area-inset-bottom))}
