@@ -10,7 +10,7 @@
 /* PRJCT · College-Stil: Schwarz, Grau, Weiß, Bordeaux #7B1B38 #591427 #A94A63 #D27C91 (23.11.2026) */
 @font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-ext-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-:root{--bg:#FFFFFF;--ink:#111111;--mute:#666666;--line:#DCDCDC;--soft:#EFEFEF;--red:#7B1B38;--redsoft:#F6E4E9;--redmid:#D27C91;--reddark:#591427;--b3:#A94A63;--onink:#FFFFFF;--onred:#FFFFFF;color-scheme:light}
+:root{--bg:#FFFFFF;--ink:#111111;--mute:#666666;--line:#DCDCDC;--soft:#EFEFEF;--red:#591427;--redsoft:#F6E4E9;--redmid:#D27C91;--reddark:#591427;--b3:#A94A63;--onink:#FFFFFF;--onred:#FFFFFF;color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--ink:#ECECEC;--mute:#9C9C9C;--line:#2E2E2E;--soft:#1E1E1E;--red:#D27C91;--redsoft:#2A1820;--redmid:#A94A63;--reddark:#F2C4CF;--b3:#A94A63;--onink:#141414;--onred:#111111;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#141414;--ink:#ECECEC;--mute:#9C9C9C;--line:#2E2E2E;--soft:#1E1E1E;--red:#D27C91;--redsoft:#2A1820;--redmid:#A94A63;--reddark:#F2C4CF;--b3:#A94A63;--onink:#141414;--onred:#111111;color-scheme:dark}
 *{box-sizing:border-box}
@@ -323,12 +323,6 @@ h1{font-weight:800}
 .phcard .bar{background:#333}.phcard .bar i{background:#D27C91}
 .pn.ok{background:#111;color:#fff;border-color:#111}
 .gr i{background:#D27C91}.gr i.on{background:var(--red)}.gr i.f{background:#BDBDBD}
-.typ:nth-child(4n+1) .bar i{background:#7B1B38}.typ:nth-child(4n+2) .bar i{background:#A94A63}.typ:nth-child(4n+3) .bar i{background:#591427}.typ:nth-child(4n) .bar i{background:#D27C91}
-.kk:nth-child(5n+1) .reiter{background:#7B1B38;color:#fff;border-color:#7B1B38}
-.kk:nth-child(5n+2) .reiter{background:#111;color:#fff;border-color:#111}
-.kk:nth-child(5n+3) .reiter{background:#A94A63;color:#fff;border-color:#A94A63}
-.kk:nth-child(5n+4) .reiter{background:#D27C91;color:#111;border-color:#D27C91}
-.kk:nth-child(5n) .reiter{background:#591427;color:#fff;border-color:#591427}
 .kk .kv{background-image:repeating-linear-gradient(transparent 0 25px,var(--line) 25px 26px)}
 .kk.bk{background:#111;border-color:#111;color:#fff}
 .kk.bk .kb b{color:#D27C91}.kk.bk .kb.ue{border-color:#D27C91}.kk.bk .m{color:#BDBDBD}
@@ -336,6 +330,24 @@ h1{font-weight:800}
 .btn.o{border-color:var(--ink);border-width:1.5px}
 .kw div{background:var(--soft)}
 .phcard .pht{color:#fff}
+
+/* 23.11. abends: dunkles Bordeaux für Knöpfe, helle Töne als Flächen */
+.btn{background:#591427;border-color:#591427}
+.bar i{background:#7B1B38}
+.box.fill{background:#F6E4E9;border-color:#F6E4E9}
+.kk{background:#F6E4E9;border-color:#EBC3CD;box-shadow:0 1px 0 #EBC3CD,0 3px 0 -1px var(--bg),0 4px 0 -1px #EBC3CD}
+.kk .reiter{background:#591427;color:#fff;border-color:#591427}
+.kk .kv{background-image:repeating-linear-gradient(transparent 0 25px,#EBC3CD 25px 26px)}
+.kk.bk{background:#591427;border-color:#591427;color:#fff}
+.kk.bk .reiter{background:#111;border-color:#111}
+.kk.bk .kb b{color:#F2C4CF}.kk.bk .kb.ue{border-color:#F2C4CF}.kk.bk .m{color:#E6C9D0}
+.chip{background:#F6E4E9;border-color:#F6E4E9}
+.kw div{background:#F6E4E9;border-color:#F6E4E9}
+.pn.ok{background:#F6E4E9;color:#591427;border-color:#F6E4E9}
+.gr div{background:#F3F0F1}.gr i{background:#EBC3CD}.gr i.on{background:#591427}.gr i.f{background:#D27C91}
+.phcard .bar i{background:#D27C91}
+nav.tabs button[aria-current="page"]::before{background:#D27C91}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .box.fill,:root:not([data-theme="light"]) .chip,:root:not([data-theme="light"]) .kw div{background:#2A1820;border-color:#2A1820;color:var(--ink)}:root:not([data-theme="light"]) .kk{background:#2A1820;border-color:#4A2230}:root:not([data-theme="light"]) .btn{background:#A94A63;border-color:#A94A63;color:#fff}}
 </style>
 </head><body>
 <header class="top"><div class="in">
