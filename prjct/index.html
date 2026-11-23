@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
+<title>PRJCT</title>
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121615" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="PRJCT">
+<style>
+/* Abschlussarbeit mit rotem Faden · Stil aus Reset & Flow, Akzent Ocker (23.11.2026) */
+@font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-ext-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{--bg:#FFFFFF;--ink:#1C2423;--mute:#6E7876;--line:#E4E7E6;--soft:#F5F5F3;--red:#8A5F1E;--redsoft:#F6EFE3;--redmid:#E6D2AC;--reddark:#4E3510;--onink:#FFFFFF;--onred:#FFFFFF;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121615;--ink:#E9EDEC;--mute:#98A3A1;--line:#2A3231;--soft:#1B2120;--red:#D6A657;--redsoft:#2C2417;--redmid:#5E4A28;--reddark:#EBCB8C;--onink:#121615;--onred:#FFFFFF;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121615;--ink:#E9EDEC;--mute:#98A3A1;--line:#2A3231;--soft:#1B2120;--red:#D6A657;--redsoft:#2C2417;--redmid:#5E4A28;--reddark:#EBCB8C;--onink:#121615;--onred:#FFFFFF;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,sans-serif;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+body.setup,body.full{padding-bottom:0}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+a{color:var(--red)}
+b,strong{font-weight:700}
+h1,h2,h3{margin:0;line-height:1.2}
+h1{font-size:22px;font-weight:700}
+h3{font-size:15px;font-weight:700}
+p{margin:0}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+/* Kopfzeile */
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);padding-top:env(safe-area-inset-top)}
+header.top .in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:12px 16px 10px}
+header.top .ttl{font-weight:700;font-size:15px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.top .day{font-size:13px;color:var(--mute);white-space:nowrap}
+.hbtn{border:1px solid var(--line);background:var(--bg);border-radius:6px;min-height:34px;padding:4px 10px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:5px}
+.hbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.hbtn.ico{width:34px;padding:0;justify-content:center}
+body.setup header.top,body.full header.top{display:none}
+
+/* Seite */
+main.wrap{max-width:560px;margin:0 auto;padding:6px 16px 28px;display:flex;flex-direction:column;gap:18px}
+body.setup main.wrap,body.full main.wrap{min-height:100svh;padding-top:calc(18px + env(safe-area-inset-top));padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+.stack{display:flex;flex-direction:column;gap:18px}
+.q{display:flex;flex-direction:column;gap:7px}
+.k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.k.r{color:var(--red)}
+.m{color:var(--mute);font-size:13px}
+.lead{color:var(--mute)}
+.row{display:flex;gap:8px;align-items:baseline;justify-content:space-between}
+.row b{font-size:14px}
+.btns{display:flex;flex-direction:column;gap:8px}
+.grow{flex:1}
+hr{border:0;border-top:1px solid var(--line);margin:0}
+
+/* Knöpfe */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;padding:12px 16px;border-radius:6px;border:1px solid var(--red);background:var(--red);color:var(--onred);font-weight:700;font-size:15px;text-decoration:none;text-align:center}
+.btn.o{background:var(--bg);color:var(--ink);border-color:var(--line)}
+.btn.q2{background:var(--bg);color:var(--mute);border-color:var(--line);font-weight:400;font-size:14px}
+.btn.big{min-height:56px;font-size:17px}
+.btn.sm{width:auto;min-height:38px;padding:7px 14px;font-size:14px}
+.btn svg{width:18px;height:18px;fill:currentColor}
+.lnk{background:none;border:0;padding:6px 0;color:var(--red);font-weight:700;font-size:14px;text-align:left}
+.lnk.m{color:var(--mute);font-weight:400}
+.back{background:none;border:0;padding:4px 0;font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:4px;align-self:flex-start}
+
+/* Segmente (eckig) */
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{background:var(--bg);border:0;border-left:1px solid var(--line);padding:9px 4px;min-height:42px;font-size:14px;line-height:1.2}
+.seg button:first-child{border-left:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--onink);font-weight:700}
+.seg.wrap{grid-auto-flow:row;grid-template-columns:repeat(3,1fr)}
+.seg.wrap button{border-top:1px solid var(--line)}
+.opts{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.opts button{display:flex;align-items:center;gap:10px;text-align:left;background:var(--bg);border:0;border-top:1px solid var(--line);padding:11px 12px;min-height:46px}
+.opts button:first-child{border-top:0}
+.opts button::before{content:"";width:16px;height:16px;border:1.5px solid var(--mute);border-radius:3px;flex:none}
+.opts button[aria-pressed="true"]{font-weight:700}
+.opts button[aria-pressed="true"]::before{background:var(--ink);border-color:var(--ink);box-shadow:inset 0 0 0 3px var(--bg)}
+
+/* Felder */
+input[type=text],input[type=date],input[type=time],input[type=number],textarea,select{width:100%;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:10px 12px;font-size:16px;min-height:44px}
+textarea{resize:vertical;line-height:1.45}
+input[type=date],input[type=time]{-webkit-appearance:none;appearance:none}
+label.q>span:first-child{font-weight:700;font-size:14px}
+
+/* Boxen */
+.box{border:1px solid var(--line);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.box.acc{border-color:var(--red);border-left-width:3px}
+.box.fill{background:var(--redsoft);border-color:var(--redsoft)}
+.box.soft{background:var(--soft);border-color:var(--soft)}
+.box .btn{margin-top:2px}
+
+/* Balken */
+.bar{height:6px;background:var(--soft);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--red);border-radius:3px}
+.bar.thick{height:14px;border-radius:4px}
+.bar.thick i{border-radius:4px}
+.typ{display:grid;grid-template-columns:96px 1fr 40px;gap:8px;align-items:center;font-size:14px}
+.typ .m{text-align:right}
+.bignum{font-size:40px;font-weight:300;line-height:1;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+
+/* Monatsleiste */
+.mbar{position:relative;display:flex;gap:3px}
+.mbar>div{height:8px;border-radius:2px;background:var(--line)}
+.mbar>div.past{background:var(--redmid)}
+.mbar>div.on{background:var(--red)}
+.mlab{display:flex;gap:3px;font-size:12px;color:var(--mute)}
+.mlab span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mlab span.on{color:var(--ink);font-weight:700}
+
+/* Schritte Phase 1/3 */
+.steps5{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.steps5 button{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:7px 2px;font-size:12px;line-height:1.15;color:var(--mute);min-height:44px}
+.steps5 button b{display:block;font-size:14px;color:var(--ink)}
+.steps5 button.done{background:var(--soft)}
+.steps5 button.done b::after{content:" ✓";color:var(--red)}
+.steps5 button[aria-current="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);color:var(--ink)}
+ol.list{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+ol.list li::marker{color:var(--red);font-weight:700}
+
+/* Einstieg */
+.phs{display:flex;flex-direction:column;gap:16px}
+.st{display:grid;grid-template-columns:28px 1fr;gap:12px}
+.st .n{width:28px;height:28px;border-radius:6px;border:1px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:14px}
+.st .n.on{background:var(--red);color:var(--onred);border-color:var(--red)}
+.dots{display:flex;gap:6px;justify-content:center}
+.dots i{width:18px;height:3px;background:var(--line);border-radius:2px}
+.dots i.on{background:var(--red)}
+.logo{width:56px;height:56px;border-radius:12px;display:block}
+
+/* Aufgaben */
+.tl{display:flex;flex-direction:column}
+.task{border-top:1px solid var(--line)}
+.task:first-child{border-top:0}
+.trow{display:flex;gap:12px;align-items:flex-start;padding:10px 0}
+.cb{width:22px;height:22px;flex:none;border:1.5px solid var(--ink);border-radius:4px;background:var(--bg);margin-top:1px;padding:0;position:relative}
+.cb[aria-pressed="true"]{background:var(--ink)}
+.cb[aria-pressed="true"]::after{content:"";position:absolute;left:6.5px;top:2.5px;width:5px;height:10px;border:solid var(--onink);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.tb{flex:1;min-width:0;background:none;border:0;padding:0;text-align:left;display:flex;flex-direction:column;gap:1px}
+.tb .t{overflow-wrap:anywhere}
+.tb .s{font-size:12px;color:var(--mute)}
+.tb .s .pr{color:var(--red);font-weight:700}
+.task.done .tb .t{color:var(--mute);text-decoration:line-through}
+.tedit{padding:0 0 14px 34px;display:flex;flex-direction:column;gap:10px}
+.pick{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:10px 0}
+.pick:first-child{border-top:0}
+.pick .pl{width:22px;height:22px;flex:none;border:1px solid var(--line);border-radius:4px;display:grid;place-items:center;font-weight:700;color:var(--red)}
+.pick[aria-pressed="true"] .pl{background:var(--red);border-color:var(--red);color:var(--onred)}
+.grp{display:flex;flex-direction:column}
+.addrow{display:flex;gap:8px}.addrow input{flex:1;min-width:0}.addrow .btn{width:auto}
+.x{background:none;border:0;color:var(--mute);font-size:20px;line-height:1;width:34px;height:34px;flex:none}
+details summary{cursor:pointer;font-weight:700;font-size:14px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";color:var(--mute);font-weight:400}
+details[open] summary::after{content:"–"}
+details>*:not(summary){margin-top:10px}
+
+/* Gliederung */
+.gl{display:grid;grid-template-columns:1fr 34px;gap:6px;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.gl .seg{grid-column:1/-1}
+.gl .seg button{padding:6px 8px;min-height:40px;font-size:12px}
+.gl .seg button[aria-pressed="true"].a0{background:var(--line);color:var(--ink)}
+.gl .seg button[aria-pressed="true"].a1{background:var(--redmid);color:var(--ink)}
+.gl .seg button[aria-pressed="true"].a2{background:var(--red);color:var(--onred)}
+.glbar{display:flex;gap:3px}
+.glbar i{flex:1;height:8px;border-radius:2px;background:var(--line)}
+.glbar i.a1{background:var(--redmid)}.glbar i.a2{background:var(--red)}
+
+/* Wochenbalken Statistik */
+.days{position:relative;display:flex;align-items:flex-end;gap:7px;height:120px;border-bottom:1px solid var(--line)}
+.days>div{flex:1;position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.days i{display:block;width:100%;background:var(--redmid);border-radius:3px 3px 0 0}
+.days i.ok{background:var(--red)}
+.days em{position:absolute;left:-2px;right:-2px;border-top:2px solid var(--ink)}
+.dlab{display:flex;gap:7px;font-size:11px;color:var(--mute)}
+.dlab span{flex:1;text-align:center}
+.tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.tile{border:1px solid var(--line);border-radius:6px;padding:10px 10px 8px}
+.tile b{display:block;font-size:22px;font-weight:400;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile span{font-size:12px;color:var(--mute);line-height:1.25;display:block;margin-top:3px}
+
+/* Timer */
+.timer{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:10px 0}
+.ring{width:min(240px,64vw);height:min(240px,64vw)}
+.ring .tr{stroke:var(--soft)}.ring .pg{stroke:var(--red);transition:stroke-dashoffset .9s linear}
+.ring.pause .pg{stroke:var(--ink)}
+.ring text{fill:var(--ink);font-family:"Source Sans 3",sans-serif;font-weight:300;font-variant-numeric:tabular-nums}
+.timer .btn{max-width:240px}
+.ttask{font-size:13px;color:var(--mute);max-width:280px}
+
+/* Woche */
+.week{display:grid;grid-template-columns:26px repeat(7,1fr);gap:3px;font-size:10px;color:var(--mute)}
+.week .h{text-align:center;font-weight:700;color:var(--ink);font-size:11px;padding-bottom:2px}
+.week .h.now{color:var(--red)}
+.week .hrs{position:relative}
+.week .hrs span{position:absolute;left:0;transform:translateY(-50%)}
+.col{position:relative;background:var(--soft);border-radius:4px}
+.ev{position:absolute;left:2px;right:2px;border-radius:3px;font-size:9px;padding:1px 2px;line-height:1.1;overflow:hidden;color:var(--mute)}
+.ev.w{background:var(--red);color:var(--onred)}
+.ev.w.d{background:var(--reddark);color:var(--bg)}
+.ev.t{background:var(--bg);border:1px solid var(--line)}
+.leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mute);align-items:center}
+.leg i{display:inline-block;width:12px;height:8px;border-radius:2px;margin-right:5px}
+.blk{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding:6px 0;font-size:14px}
+.blk:first-child{border-top:0}
+.blk .sw{width:10px;height:10px;border-radius:2px;flex:none;background:var(--red)}
+.blk .sw.t{background:var(--bg);border:1px solid var(--mute)}
+.blk span{flex:1}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* Hilfe */
+.hl{display:flex;flex-direction:column}
+.hl button{display:flex;align-items:center;gap:10px;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:13px 0}
+.hl button:first-child{border-top:0}
+.hl button span{flex:1;display:flex;flex-direction:column;font-size:16px}
+.hl button small{font-size:13px;color:var(--mute)}
+.hl button::after{content:"›";color:var(--mute);font-size:20px}
+.say{font-size:17px;font-weight:600;border-left:3px solid var(--red);padding-left:12px}
+.foot{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px}
+.foot a,.foot button{color:var(--mute);background:none;border:0;padding:4px 0;text-decoration:none;font-size:13px}
+.foot a:hover,.foot button:hover{color:var(--ink)}
+.tool{border-top:1px solid var(--line);padding:10px 0;display:flex;flex-direction:column;gap:2px}
+.tool:first-child{border-top:0}
+.tool .m b{color:var(--red)}
+
+/* Untere Leiste */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--bg);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs .in{max-width:560px;margin:0 auto;display:grid;grid-auto-flow:column;grid-auto-columns:1fr}
+nav.tabs button{background:none;border:0;padding:9px 0 10px;font-size:12px;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:7px;min-height:56px}
+nav.tabs button::before{content:"";width:20px;height:2px;border-radius:2px;background:currentColor}
+nav.tabs button[aria-current="page"]{color:var(--red);font-weight:700}
+body.setup nav.tabs,body.full nav.tabs,body.writing nav.tabs{display:none}
+
+.toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:var(--onink);padding:10px 16px;border-radius:6px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:9;max-width:90vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.demo{background:var(--redsoft);border-radius:6px;padding:10px 12px;font-size:13px;display:flex;align-items:center;gap:10px;justify-content:space-between}
+.demo .btn{width:auto;min-height:34px;padding:5px 10px;font-size:13px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.ckrow{width:100%;background:none;border:0;border-top:1px solid var(--line);text-align:left;align-items:flex-start}
+.ckrow:first-child{border-top:0}
+.ckrow[aria-pressed="true"]>span:last-child{color:var(--mute);text-decoration:line-through}
+button.box{width:100%;font-size:15px;color:var(--ink)}
+
+/* Info-Knopf und Pop-up */
+.ib{display:inline-grid;place-items:center;width:28px;height:24px;margin:-4px -4px -4px 2px;padding:0;border:0;background:none;vertical-align:middle}
+.ib::before{content:"i";width:17px;height:17px;border-radius:50%;border:1.5px solid var(--mute);color:var(--mute);font-size:11px;font-weight:700;line-height:14px;text-align:center;text-transform:none;letter-spacing:0;font-family:Georgia,serif;font-style:italic}
+h1 .ib::before{width:19px;height:19px;line-height:16px;font-size:12px}
+.pop{position:fixed;inset:0;z-index:20;background:#0007;display:flex;align-items:flex-end;justify-content:center}
+.pop[hidden]{display:none}
+.pop .sh{background:var(--bg);width:100%;max-width:560px;border-radius:12px 12px 0 0;padding:20px 16px calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}
+.pop p{white-space:pre-line}
+.seg.klar button{display:flex;align-items:center;justify-content:center;min-height:48px;color:var(--ink)}
+.seg.klar button[aria-pressed="true"]{color:var(--onink)}
+
+/* Abschlussarbeit */
+.frage{border-left:3px solid var(--red);padding:2px 0 2px 12px;display:flex;flex-direction:column;gap:2px}
+.frage p{font-size:16px;font-weight:600}
+.phcard{display:flex;flex-direction:column;gap:6px;background:var(--bg)}
+.pht{font-size:19px;line-height:1.25}
+.bignum small{font-size:18px;margin-left:1px}
+.bar{position:relative}
+.bar.two em,.gantt em{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);border-radius:1px}
+.plr{width:100%;background:none;border:0;border-top:1px solid var(--line);align-items:center;color:var(--ink)}
+.plr:first-child{border-top:0}
+.plr.old{opacity:.55}
+.pn{width:28px;height:28px;flex:none;border-radius:6px;border:1px solid var(--line);display:grid;place-items:center;font-size:14px}
+.pn.ok{background:var(--redsoft);color:var(--red);border-color:var(--redsoft)}
+.plr.cur .pn{background:var(--red);color:var(--onred);border-color:var(--red)}
+.gantt{position:relative;display:flex;flex-direction:column;gap:3px}
+.gr{display:grid;grid-template-columns:18px 1fr;gap:4px;align-items:center;font-size:11px;color:var(--mute)}
+.gr div{position:relative;height:9px;background:var(--soft);border-radius:2px}
+.gr i{position:absolute;top:0;bottom:0;background:var(--redmid);border-radius:2px}
+.gr i.on{background:var(--red)}.gr i.f{background:var(--line)}
+.ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px}
+.ul li::marker{color:var(--red)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 10px;font-size:13px;text-align:left}
+.kl{color:var(--ink)}
+.gi{border-top:1px solid var(--line);padding:10px 0;display:flex;flex-direction:column;gap:2px}
+.gi:first-child{border-top:0}
+.add{display:grid;grid-template-columns:1fr 48px;gap:6px}
+.add .btn{min-height:44px;padding:0}
+a.tool{text-decoration:none;color:var(--ink)}
+a.tool b{color:var(--red)}
+.kw{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.kw div{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:6px;padding:4px 0 6px}
+.kw small{font-size:11px;color:var(--mute)}
+.lg{width:100%;background:none;border:0;border-top:1px solid var(--line);color:var(--ink);align-items:center}
+.lg:first-child{border-top:0}
+/* Karteikasten */
+.kasten{display:flex;flex-direction:column;gap:14px;padding-top:10px}
+.kk{position:relative;display:flex;flex-direction:column;gap:10px;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:3px 8px 8px 8px;padding:18px 14px 14px;color:var(--ink);box-shadow:0 1px 0 var(--line),0 3px 0 -1px var(--bg),0 4px 0 -1px var(--line);transition:transform .25s}
+.kk .reiter{position:absolute;top:-11px;left:-1px;background:var(--redsoft);color:var(--reddark);border:1px solid var(--line);border-bottom:0;border-radius:6px 6px 0 0;padding:2px 10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.kk .kv{font-size:18px;font-weight:600;line-height:1.3;background-image:repeating-linear-gradient(transparent 0 25px,var(--redsoft) 25px 26px);padding-bottom:2px}
+.kk.bk{background:var(--redsoft);border-color:var(--redmid);animation:flip .3s}
+.kk.bk .reiter{background:var(--red);color:var(--onred);border-color:var(--red)}
+.kb{display:flex;flex-direction:column;gap:2px}
+.kb b{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--red)}
+.kb.ue{border-left:3px solid var(--red);padding-left:10px}
+@keyframes flip{from{transform:perspective(600px) rotateX(-60deg)}to{transform:none}}
+.typ{grid-template-columns:130px 1fr 34px}
+.say{font-size:16px;font-weight:500}
+.wm{font-weight:900;font-size:44px;letter-spacing:.04em;line-height:1;color:var(--red)}
+.wm.s{font-size:inherit;letter-spacing:.06em}
+</style>
+</head><body>
+<header class="top"><div class="in">
+  <span class="ttl" id="ttl">Jetzt</span><span class="day" id="day"></span>
+  <button class="hbtn" id="notbtn" aria-label="Notieren"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Notieren</button>
+  <button class="hbtn ico" id="ichbtn" aria-label="Meine Arbeit und Einstellungen"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></button>
+</div></header>
+<main class="wrap" id="app" aria-live="polite"></main>
+<nav class="tabs" aria-label="Bereiche"><div class="in"></div></nav>
+<div class="toast" id="toast" role="status"></div>
+<div class="pop" id="pop" hidden><div class="sh" role="dialog" aria-modal="true"><b></b><p></p><button class="btn o" id="popx">Verstanden</button></div></div>
+<script>
+"use strict";
+// Inhalte „Abschlussarbeit mit rotem Faden“ (Arbeitstitel) · Entwurf 1 vom 23.11.2026
+// Qualitative empirische Bachelor- und Masterarbeiten. Phasen in Arbeitsreihenfolge, w = Anteil an der Gesamtzeit (Wochen bei 5 Monaten).
+const PHASEN=[
+ {id:"start",t:"Ankommen und Fundament",kurz:"Fundament",w:1,kap:"Gliederung und Rohskizze der Einleitung",
+  ziel:"Dein Exposé ist genehmigt. Jetzt machst du daraus einen Arbeitsplan: eine Forschungsfrage, mit der du arbeiten kannst, eine erste Gliederung und einen Zeitplan, der zu deinem Leben passt.",
+  ergebnis:"Eine Arbeitsversion deiner Forschungsfrage, eine Gliederung mit Kapiteln und Unterkapiteln und ein Zeitplan mit festen Arbeitszeiten.",
+  schritte:["Exposé noch einmal lesen und markieren, was sich seitdem verändert hat","Forschungsfrage als Arbeitsversion aufschreiben (darf sich noch verändern)","Erste Gliederung anlegen, in Word mit Formatvorlagen","Zeitplan erstellen: Phasen, Abgabe, Puffer, feste Arbeitszeiten in der Woche","Ordnerstruktur und Literaturverwaltung einrichten","Mit der Betreuung klären: Erwartungen, Erreichbarkeit, nächster Termin"],
+  stolper:["Die Forschungsfrage ist zu groß. Eine Masterarbeit beantwortet eine Frage gut, nicht fünf halb.","Der Zeitplan hat keinen Puffer. Rechne damit, dass Interviews ausfallen und Rückmeldungen dauern."],
+  blick:["Passt die Forschungsfrage zu einer qualitativen Herangehensweise? Fragen nach dem Wie und Warum, nach Erleben und Deutungen eignen sich, Fragen nach dem Wie viel nicht.","Zieht sich die Forschungsfrage durch die ganze Arbeit? Genau das ist der rote Faden."],
+  tipp:"Schreib die Forschungsfrage auf einen Zettel und häng ihn über den Schreibtisch. Du wirst sie in den nächsten Monaten öfter brauchen, als du denkst.",
+  mat:["gantt"]},
+ {id:"theorie",t:"Literatur und Theorie",kurz:"Theorie",w:3,kap:"Kapitel 2: Theorie und Forschungsstand",
+  ziel:"Du klärst, was über dein Thema schon bekannt ist und mit welchen Begriffen und Theorien du auf dein Feld schaust. Daraus entsteht dein theoretischer Rahmen. Er ist kein Lexikon, sondern die Brille für deine Forschung.",
+  ergebnis:"Eine Rohfassung von Theorie und Forschungsstand und eine klare Vorstellung, welche Lücke deine Arbeit bearbeitet.",
+  schritte:["Suchbegriffe festlegen, auch auf Englisch","In Fachdatenbanken und im Katalog recherchieren","Literatur sichten und auswählen: Was brauche ich wirklich für meine Frage?","Zentrale Begriffe definieren","Theoretischen Rahmen festlegen","Forschungsstand zusammenfassen und die Forschungslücke benennen","Rohfassung Kapitel 2 schreiben"],
+  stolper:["Endlos lesen, ohne zu schreiben. Lesen fühlt sich produktiv an, ersetzt aber nicht das Schreiben.","Alles zusammenfassen, was es zum Thema gibt. Gefragt ist eine Auswahl, die zu deiner Frage passt."],
+  blick:["Wird die Theorie später in der Diskussion wieder aufgegriffen? Theorie, die nur im Theorieteil vorkommt, wirkt wie Pflichtprogramm.","Ist der Forschungsstand aktuell und wird erkennbar, was deine Arbeit Neues beiträgt?"],
+  tipp:"Schreib zu jedem wichtigen Text sofort drei Sätze: Worum geht es, was ist das Ergebnis, was bedeutet es für meine Arbeit? Das spart dir später Wochen.",
+  lit:["Esselborn-Krumbiegel, H. (2022). Von der Idee zum Text. Eine Anleitung zum wissenschaftlichen Schreiben (6. Aufl.). Brill Schöningh (UTB)."],
+  mat:["ki"]},
+ {id:"design",t:"Forschungsdesign und Leitfaden",kurz:"Forschungsdesign",w:2.5,kap:"Kapitel 3: Methodik, erster Teil",
+  ziel:"Du entscheidest, wie du deine Frage empirisch beantwortest: welche Erhebungsform, welche Menschen, welche Auswertungsmethode. Und du begründest jede Entscheidung. Das Forschungsdesign ist das Herzstück einer empirischen Arbeit.",
+  ergebnis:"Ein begründetes Forschungsdesign, ein getesteter Interviewleitfaden, eine Einverständniserklärung und eine Rohfassung des Methodenteils.",
+  schritte:["Erhebungsform wählen und begründen (z. B. Leitfadeninterview, Expert:inneninterview, narratives Interview)","Sampling festlegen: Wen befrage ich, warum, wie viele?","Auswertungsmethode festlegen (z. B. qualitative Inhaltsanalyse)","Interviewleitfaden entwickeln","Pretest durchführen und den Leitfaden anpassen","Einverständniserklärung und Datenschutz klären","Entscheidungen im Entscheidungs-Logbuch festhalten"],
+  stolper:["Die Methode wird gewählt, weil sie bekannt ist, nicht weil sie zur Frage passt.","Der Leitfaden wird zum Fragebogen: zu viele, zu geschlossene Fragen."],
+  blick:["Passen Forschungsfrage, Erhebung und Auswertung zusammen? Brüche fallen hier sofort auf.","Ist jede Entscheidung begründet und mit Methodenliteratur belegt?"],
+  tipp:"Formuliere jede Leitfadenfrage so, dass man nicht mit Ja oder Nein antworten kann. „Erzählen Sie mal, wie …“ öffnet mehr als „Finden Sie, dass …“.",
+  lit:["Helfferich, C. (2011). Die Qualität qualitativer Daten. Manual für die Durchführung qualitativer Interviews (4. Aufl.). VS Verlag.","Flick, U. (2021). Qualitative Sozialforschung. Eine Einführung (10. Aufl.). Rowohlt.","Przyborski, A. & Wohlrab-Sahr, M. (2021). Qualitative Sozialforschung. Ein Arbeitsbuch (5. Aufl.). De Gruyter Oldenbourg."],
+  mat:["finder","interview"]},
+ {id:"feld",t:"Feldzugang und Erhebung",kurz:"Erhebung",w:3,kap:"Kapitel 3: Durchführung der Erhebung",
+  ziel:"Jetzt gehst du ins Feld. Du gewinnst Interviewpartner:innen, führst die Gespräche und hältst direkt danach fest, was dir aufgefallen ist.",
+  ergebnis:"Alle geplanten Interviews als Aufnahme, zu jedem ein Postskript, und eine Übersicht über dein Sample.",
+  schritte:["Interviewpartner:innen ansprechen (Anschreiben, Gatekeeper, Netzwerke)","Termine vereinbaren und Technik testen","Interviews führen","Nach jedem Interview ein Postskript schreiben","Sample-Übersicht führen (anonymisiert)","Wartezeiten zum Schreiben am Theorieteil nutzen"],
+  stolper:["Zu spät mit der Suche nach Interviewpartner:innen anfangen. Zusagen dauern fast immer länger als gedacht.","Im Interview zu viel selbst reden oder Antworten vorwegnehmen."],
+  blick:["Wird der Feldzugang nachvollziehbar beschrieben, inklusive Schwierigkeiten?","Wird die eigene Rolle im Interview reflektiert?"],
+  tipp:"Aushalten, wenn es still wird. Die interessantesten Sätze kommen oft nach einer Pause, die sich für dich unangenehm lang anfühlt.",
+  lit:["Helfferich, C. (2011). Die Qualität qualitativer Daten (4. Aufl.). VS Verlag."],
+  mat:["interview"]},
+ {id:"aufb",t:"Aufbereitung",kurz:"Aufbereitung",w:1.5,kap:"Kapitel 3: Aufbereitung der Daten",
+  ziel:"Aus Aufnahmen werden Texte, mit denen du arbeiten kannst. Du transkribierst nach festen Regeln und anonymisierst alles, was Rückschlüsse auf Personen erlaubt.",
+  ergebnis:"Vollständige, anonymisierte Transkripte nach einheitlichen Regeln und eine kurze Beschreibung deines Vorgehens.",
+  schritte:["Transkriptionsregeln festlegen (z. B. nach Dresing und Pehl)","Transkribieren oder Transkripte prüfen, wenn Software oder ein Dienst geholfen hat","Anonymisieren: Namen, Orte, Einrichtungen","Transkripte sicher speichern, Aufnahmen nach den Vorgaben löschen","Vorgehen für den Methodenteil festhalten"],
+  stolper:["Automatische Transkripte ungeprüft übernehmen. Gerade bei Dialekt und Fachbegriffen passieren viele Fehler.","Den Aufwand unterschätzen. Für eine Stunde Interview rechnet man ohne Software mehrere Stunden Transkription."],
+  blick:["Sind Transkriptionsregeln und Anonymisierung nachvollziehbar beschrieben?","Wurde Datenschutz ernst genommen, vor allem bei KI-Transkription?"],
+  tipp:"Beim Prüfen der Transkripte hörst du dein Material noch einmal ganz. Notier dir dabei erste Auffälligkeiten als Memo. Das ist schon der Einstieg in die Auswertung.",
+  lit:["Dresing, T. & Pehl, T. (2018). Praxisbuch Interview, Transkription & Analyse (8. Aufl.). Eigenverlag, Marburg. Kostenlos online verfügbar."],
+  mat:["ki"]},
+ {id:"ausw",t:"Auswertung",kurz:"Auswertung",w:3.5,kap:"Kapitel 3: Auswertung, Vorbereitung von Kapitel 4",
+  ziel:"Du arbeitest systematisch heraus, was in deinem Material steckt. Mit einem Kategoriensystem ordnest du die Aussagen und machst sichtbar, was deine Forschungsfrage beantwortet.",
+  ergebnis:"Ein Kategoriensystem mit Definitionen und Ankerbeispielen, vollständig codiertes Material und erste Memos zu den wichtigsten Ergebnissen.",
+  schritte:["Material einmal ganz lesen, ohne zu codieren","Hauptkategorien bilden: deduktiv aus Theorie und Leitfaden, induktiv aus dem Material","Kategoriensystem mit Definition, Ankerbeispiel und Codierregel festhalten","Probecodierung an einem Interview und das System anpassen","Gesamtes Material codieren","Memos schreiben: Was fällt auf, was hängt zusammen?","Auswertungsvorgehen für den Methodenteil festhalten"],
+  stolper:["Zu viele, zu kleine Codes. Am Ende hat man 300 Codes und keinen Überblick.","Die Software wird mit der Methode verwechselt. MAXQDA ordnet, das Denken macht der Mensch."],
+  blick:["Ist das Vorgehen intersubjektiv nachvollziehbar, also so beschrieben, dass andere es verstehen und prüfen können?","Gibt es ein Kategoriensystem mit Definitionen, am besten im Anhang?"],
+  tipp:"Entwickle dein Kategoriensystem erst außerhalb von MAXQDA, ganz analog mit Papier und Schere. Wenn du deine Kategorien vor dir liegen siehst, erkennst du Zusammenhänge, die am Bildschirm untergehen.",
+  lit:["Kuckartz, U. & Rädiker, S. (2022). Qualitative Inhaltsanalyse. Methoden, Praxis, Computerunterstützung (5. Aufl.). Beltz Juventa.","Mayring, P. (2022). Qualitative Inhaltsanalyse. Grundlagen und Techniken (13. Aufl.). Beltz."],
+  mat:["maxqda"]},
+ {id:"ergeb",t:"Ergebnisse darstellen",kurz:"Ergebnisse",w:2,kap:"Kapitel 4: Ergebnisse",
+  ziel:"Du zeigst, was du gefunden hast, geordnet nach deinen Kategorien und belegt mit Zitaten. Hier wird noch nicht interpretiert und verglichen, das kommt in der Diskussion.",
+  ergebnis:"Eine Rohfassung des Ergebniskapitels mit einer klaren Struktur, passenden Zitaten und kurzen Zwischenfazits.",
+  schritte:["Struktur des Kapitels festlegen, meist entlang der Hauptkategorien","Deine *Diamanten* bestimmen: die Ergebnisse, die deine Forschungsfrage wirklich beantworten","Passende Zitate auswählen, nicht zu viele","Rohfassung schreiben","Kurze Zwischenfazits am Ende der Unterkapitel","Prüfen: Wird schon interpretiert? Dann in die Diskussion verschieben"],
+  stolper:["Zitate aneinanderreihen, ohne sie einzuordnen. Ein Zitat belegt deine Aussage, es ersetzt sie nicht.","Ergebnisse und Interpretation vermischen."],
+  blick:["Ist erkennbar, welche *Story* die Ergebnisse erzählen, oder ist es eine Sammlung von Einzelbefunden?","Sind Zitate sauber belegt (Interview, Zeilennummer)?"],
+  tipp:"Frag dich vor jedem Unterkapitel: Was soll die Leserin danach wissen? Schreib diesen Satz zuerst. Alles andere ist Beleg.",
+  mat:[]},
+ {id:"disk",t:"Diskussion und Fazit",kurz:"Diskussion",w:2,kap:"Kapitel 5 und 6: Diskussion, Fazit und Ausblick",
+  ziel:"Du verknüpfst deine Ergebnisse mit Theorie und Forschungsstand und beantwortest deine Forschungsfrage. Hier zeigst du, was deine Arbeit bedeutet.",
+  ergebnis:"Eine Diskussion, die Ergebnisse, Theorie und Forschungsstand zusammenbringt, eine klare Antwort auf die Forschungsfrage, Limitationen und ein Fazit mit Ausblick.",
+  schritte:["Ergebnisse mit dem Forschungsstand vergleichen: Was bestätigt sich, was ist neu, was widerspricht?","Ergebnisse mit dem theoretischen Rahmen verknüpfen","Forschungsfrage ausdrücklich beantworten","Limitationen benennen, ohne die Arbeit kleinzureden","Fazit und Ausblick schreiben (Praxis, weitere Forschung)"],
+  stolper:["Die Diskussion wiederholt nur die Ergebnisse.","Die Forschungsfrage wird nie ausdrücklich beantwortet."],
+  blick:["Wird die Forschungsfrage klar beantwortet? Für viele Gutachter:innen ist das der wichtigste Punkt der ganzen Arbeit.","Werden Theorie und Forschungsstand aus Kapitel 2 wieder aufgegriffen? Hier schließt sich der rote Faden."],
+  tipp:"Leg Kapitel 2 und Kapitel 4 nebeneinander und zieh Linien. Jede Verbindung ist ein Absatz in deiner Diskussion.",
+  mat:[]},
+ {id:"abgabe",t:"Einleitung, Überarbeitung und Abgabe",kurz:"Abgabe",w:2.5,kap:"Kapitel 1 und die ganze Arbeit",
+  ziel:"Jetzt schreibst du die Einleitung fertig, denn erst jetzt weißt du, was du einleitest. Danach überarbeitest du, prüfst Formalia und gibst ab. In dieser Phase steckt auch dein Puffer.",
+  ergebnis:"Eine abgabefertige Arbeit: stimmige Einleitung, überarbeiteter Text, saubere Formalia, gedruckt oder hochgeladen.",
+  schritte:["Einleitung final schreiben: Hinführung, Relevanz, Forschungsfrage, Aufbau der Arbeit","Abstract schreiben, falls verlangt","Ganze Arbeit am Stück lesen und überarbeiten: roter Faden, Übergänge, Begriffe","Formalia prüfen: Zitierweise, Literaturverzeichnis, Abbildungen, Anhang","Korrekturlesen lassen oder Fachlektorat","Eidesstattliche Erklärung, Druck oder Upload, Abgabe"],
+  stolper:["Keine Zeit mehr für das Überarbeiten einplanen. Die letzte Woche gehört dem Feinschliff, nicht neuen Kapiteln.","Erst am Abgabetag klären, wie gedruckt, gebunden oder hochgeladen wird."],
+  blick:["Hält die Einleitung, was der Rest verspricht? Gutachter:innen lesen Einleitung und Fazit oft zuerst.","Sind Formalia sauber? Sie entscheiden selten über die Note, prägen aber den ersten Eindruck."],
+  tipp:"Lies deine Arbeit einmal ausgedruckt und laut, mindestens die Einleitung und das Fazit. Was holpert, fällt dir dann sofort auf.",
+  mat:["lektorat"]}
+];
+
+// Material und Angebote je Phase
+const MAT={
+ gantt:["Gantt-Vorlagen (kostenlos)","Zeitplan vom Groben ins Feine","https://drmaschakoerner.de/gantt-vorlagen/"],
+ ki:["KI-Guide (kostenlos)","Was in der Abschlussarbeit erlaubt ist","https://drmaschakoerner.de/ki-in-der-abschlussarbeit/"],
+ finder:["Interview-Finder (kostenlos)","Factsheets zu allen gängigen Interviewformen","https://drmaschakoerner.de/schnelle-hilfe/"],
+ interview:["Interview-Paket: Sicher durchs Interview","Gesprächsführung aus der Forschungspraxis","https://drmaschakoerner.mytentary.com/p/nZ6u0I"],
+ maxqda:["MAXQDA-Paket: Sicher durch die Auswertung","Kategoriensystem, Codierleitfaden, Memos","https://drmaschakoerner.mytentary.com/p/Bvukys"],
+ lektorat:["Fachlektorat","auch für einzelne Kapitel","https://drmaschakoerner.de/erstgespraech/#formular"]
+};
+
+// Karteikasten: mentale Blockaden. v = Vorderseite (so fühlt es sich an), dann Rückseite
+const KARTEN=[
+ {id:"anfang",kat:"Aufschieben",v:"Ich fange einfach nicht an.",
+  was:"Aufschieben ist meist kein Zeitproblem, sondern ein Gefühlsproblem. Wir weichen dem unangenehmen Gefühl aus, das die Aufgabe auslöst.",
+  hilft:"Die Aufgabe so klein machen, dass das Gefühl kleiner wird.",
+  uebung:"Stell einen Timer auf 10 Minuten und öffne nur die Datei. Schreib einen einzigen Satz. Nach 10 Minuten darfst du aufhören.",
+  lit:"Sirois, F. & Pychyl, T. (2013). Procrastination and the priority of short-term mood regulation. Social and Personality Psychology Compass, 7(2), 115–127."},
+ {id:"ueber",kat:"Überforderung",v:"Es ist alles zu viel auf einmal.",
+  was:"Unerledigtes bleibt im Kopf aktiv und drängt sich immer wieder auf. Schon ein konkreter Plan beruhigt den Kopf, auch bevor die Aufgabe erledigt ist.",
+  hilft:"Alles aus dem Kopf aufs Papier holen und nur den nächsten Schritt anschauen.",
+  uebung:"5 Minuten alles aufschreiben, was dich gerade beschäftigt. Dann eine einzige Sache für die nächste Stunde auswählen.",
+  lit:"Masicampo, E. J. & Baumeister, R. F. (2011). Consider it done! Journal of Personality and Social Psychology, 101(4), 667–683."},
+ {id:"perf",kat:"Perfektionismus",v:"Nichts ist gut genug.",
+  was:"Hinter Perfektionismus steckt oft die Angst vor Bewertung. Wenn alles sofort perfekt sein muss, wird jeder Anfang schwer.",
+  hilft:"Rohfassung und Feinschliff trennen. Erst schreiben, später schön machen.",
+  uebung:"Schreib 10 Minuten lang bewusst „gut genug“ und geh dann weiter, ohne zu überarbeiten. Eine schlechte Seite kannst du überarbeiten, eine leere nicht."},
+ {id:"vergleich",kat:"Vergleich",v:"Die anderen sind alle weiter als ich.",
+  was:"Wir vergleichen unser Inneres mit dem Äußeren der anderen. Du siehst ihre fertigen Kapitel, nicht ihre Zweifel.",
+  hilft:"Den Blick zurück auf deinen eigenen Weg lenken: Wo standest du vor vier Wochen?",
+  uebung:"Schreib drei Dinge auf, die du seit dem Start geschafft hast. Ein Blick auf deinen Fortschritt hilft dabei."},
+ {id:"zweifel",kat:"Selbstzweifel",v:"Ich weiß nicht, ob ich das kann.",
+  was:"Zweifel gehören zum Forschen dazu, gerade bei qualitativer Forschung, wo es keine eine richtige Lösung gibt. Sie sind kein Beweis dafür, dass du es nicht kannst.",
+  hilft:"Zweifel konkret machen: Woran genau zweifle ich? Aus einem diffusen Gefühl wird eine Frage, die man klären kann.",
+  uebung:"Schreib deinen Zweifel als Frage auf und notier sie unter „Fragen für die Betreuung“. Dann ist sie aus dem Kopf und auf dem Weg zu einer Antwort."},
+ {id:"feld",kat:"Feldzugang",v:"Ich traue mich nicht, Leute anzuschreiben.",
+  was:"Die Angst vor Absagen ist normal. Absagen haben fast nie mit dir zu tun, sondern mit Zeit und Umständen der anderen.",
+  hilft:"Anfragen als Routine behandeln, nicht als Mutprobe. Mehr Anfragen bedeuten auch mehr Zusagen.",
+  uebung:"Schreib heute drei Anfragen nach derselben Vorlage. Nicht mehr, nicht weniger. Dann ist für heute Schluss."},
+ {id:"material",kat:"Datenflut",v:"Ich ertrinke in meinem Material.",
+  was:"Qualitative Daten sind reich. Am Anfang der Auswertung fühlt sich das oft chaotisch an. Das ist kein Fehler, sondern ein normaler Teil des Prozesses.",
+  hilft:"Zurück zur Forschungsfrage. Sie entscheidet, was wichtig ist und was liegen bleiben darf.",
+  uebung:"Lies deine Forschungsfrage laut. Dann wähl ein einziges Interview und markier nur, was zu dieser Frage passt."},
+ {id:"feedback",kat:"Feedback",v:"Ich habe Angst vor der Rückmeldung.",
+  was:"Feedback auf einen Text fühlt sich oft an wie Feedback auf die eigene Person. Dabei geht es um den Text, und Texte lassen sich verbessern.",
+  hilft:"Früh und in kleinen Teilen Rückmeldung holen. Dann ist jede Rückmeldung kleiner.",
+  uebung:"Schreib zu deinem Text drei konkrete Fragen, auf die du eine Rückmeldung möchtest. So steuerst du das Gespräch mit."},
+ {id:"schreib",kat:"Schreibblockade",v:"Ich sitze vor der leeren Seite.",
+  was:"Die leere Seite will sofort einen fertigen Text. Denken und Formulieren gleichzeitig überfordert.",
+  hilft:"Erst sprechen oder Stichpunkte, dann Sätze.",
+  uebung:"Erklär einer imaginären Freundin in 5 Minuten, was in diesem Abschnitt stehen soll. Sprich es als Sprachnachricht ein und schreib es dann ab."},
+ {id:"panik",kat:"Zeitdruck",v:"Ich schaffe das nie bis zur Abgabe.",
+  was:"Unter starkem Stress verengt sich der Blick. Etwas Anspannung macht wach, zu viel blockiert das klare Denken.",
+  hilft:"Erst den Körper beruhigen, dann planen. Danach den Plan ehrlich anschauen und bei Bedarf neu verteilen.",
+  uebung:"2 Minuten lang länger aus- als einatmen, zum Beispiel 4 Sekunden ein und 6 Sekunden aus. Danach unter „Phasen“ prüfen, ob du deinen Plan neu verteilen möchtest."}
+];
+
+const GLOSSAR=[
+ ["Forschungsfrage","Die zentrale Frage, die deine Arbeit beantwortet. In qualitativer Forschung meist eine offene Wie- oder Warum-Frage. Sie ist der rote Faden der ganzen Arbeit."],
+ ["Erkenntnisinteresse","Was du mit deiner Forschung herausfinden oder verstehen möchtest. Es begründet, warum die Forschungsfrage relevant ist."],
+ ["Forschungsstand","Was bisherige Studien zu deinem Thema herausgefunden haben. Er zeigt, wo deine Arbeit ansetzt."],
+ ["Forschungslücke","Das, was bisher nicht oder kaum untersucht wurde. Deine Arbeit hilft, sie ein Stück weit zu schließen."],
+ ["Theoretischer Rahmen","Die Theorien und Begriffe, mit denen du auf dein Feld schaust. Er bestimmt, worauf du achtest, und wird in der Diskussion wieder aufgegriffen."],
+ ["Sensibilisierendes Konzept","Ein Begriff aus der Theorie, der die Aufmerksamkeit lenkt, ohne festzulegen, was man finden muss. Typisch für offene qualitative Forschung."],
+ ["Forschungsdesign","Der Gesamtplan deiner empirischen Untersuchung: Erhebung, Sampling, Auswertung und wie alles zusammenpasst."],
+ ["Leitfadeninterview","Ein Interview mit vorbereiteten offenen Fragen, die flexibel gestellt werden. Die häufigste Form in Abschlussarbeiten."],
+ ["Expert:inneninterview","Ein Leitfadeninterview mit Menschen, die über besonderes Wissen zu einem Bereich verfügen, oft beruflich."],
+ ["Narratives Interview","Ein Interview, das mit einer offenen Erzählaufforderung beginnt und den Befragten viel Raum für ihre eigene Geschichte lässt."],
+ ["Sampling","Die Auswahl deiner Interviewpartner:innen. In qualitativer Forschung bewusst nach Kriterien, nicht zufällig."],
+ ["Gatekeeper","Personen, die dir den Zugang zum Feld öffnen, zum Beispiel Leitungen von Einrichtungen oder Vereinen."],
+ ["Pretest","Ein Probeinterview, um den Leitfaden zu testen. Danach wird er angepasst."],
+ ["Einverständniserklärung","Schriftliche Zustimmung der Befragten zur Aufnahme, Auswertung und anonymisierten Veröffentlichung."],
+ ["Postskript","Notizen direkt nach dem Interview: Atmosphäre, Auffälligkeiten, was vor oder nach der Aufnahme gesagt wurde."],
+ ["Transkription","Die Verschriftlichung der Aufnahmen nach festen Regeln."],
+ ["Anonymisierung","Das Entfernen oder Verändern aller Angaben, die Rückschlüsse auf Personen erlauben. Bei Pseudonymisierung werden Namen durch Kürzel ersetzt."],
+ ["Memo","Eine Notiz während der Auswertung: Gedanken, Auffälligkeiten, Zusammenhänge. Memos sind Rohmaterial für Ergebnisse und Diskussion."],
+ ["Codieren","Textstellen einer Kategorie zuordnen."],
+ ["Kategoriensystem","Die geordnete Übersicht aller Kategorien und Unterkategorien, mit denen du dein Material auswertest."],
+ ["Deduktiv und induktiv","Deduktive Kategorien leitest du aus Theorie und Leitfaden ab, induktive entwickelst du aus dem Material. Oft wird beides kombiniert."],
+ ["Ankerbeispiel","Ein typisches Zitat, das zeigt, was zu einer Kategorie gehört."],
+ ["Codierleitfaden","Die Beschreibung jeder Kategorie mit Definition, Ankerbeispiel und Codierregel. Er macht deine Auswertung nachvollziehbar."],
+ ["Qualitative Inhaltsanalyse","Eine verbreitete Methode, Textmaterial systematisch mit Kategorien auszuwerten, zum Beispiel nach Kuckartz und Rädiker oder nach Mayring."],
+ ["Intersubjektive Nachvollziehbarkeit","Ein zentrales Gütekriterium qualitativer Forschung: Andere können verstehen und prüfen, wie du zu deinen Ergebnissen gekommen bist."],
+ ["Gütekriterien","Maßstäbe für die Qualität von Forschung. In qualitativer Forschung unter anderem Nachvollziehbarkeit, Regelgeleitetheit und Reflexion der eigenen Rolle."],
+ ["Theoretische Sättigung","Der Punkt, an dem weitere Interviews kaum noch neue Erkenntnisse bringen."],
+ ["Reflexivität","Das Nachdenken über die eigene Rolle als Forscherin oder Forscher und darüber, wie sie die Daten beeinflusst."],
+ ["Limitationen","Die Grenzen deiner Untersuchung, offen benannt. Sie zeigen methodisches Bewusstsein, keine Schwäche."],
+ ["Diskussion","Das Kapitel, in dem Ergebnisse mit Theorie und Forschungsstand verknüpft und die Forschungsfrage beantwortet wird."]
+];
+
+// ================= Datum =================
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function today(){return iso(new Date())}
+function addDays(s,n){const d=new Date(s+"T12:00:00");d.setDate(d.getDate()+n);return iso(d)}
+function fmtDate(s,long){if(!s)return"";const d=new Date(s+"T12:00:00");return d.toLocaleDateString("de-DE",long?{weekday:"long",day:"numeric",month:"long"}:{weekday:"short",day:"numeric",month:"short"})}
+function fmtShort(s){return new Date(s+"T12:00:00").toLocaleDateString("de-DE",{day:"numeric",month:"short"})}
+function diffDays(a,b){return Math.round((new Date(b+"T12:00:00")-new Date(a+"T12:00:00"))/864e5)}
+function wday(s){return (new Date(s+"T12:00:00").getDay()+6)%7}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function n1(v){return (Math.round(v*10)/10).toString().replace(".",",")}
+function hm(min){min=Math.round(min);if(min<60)return min+" Min.";const h=Math.floor(min/60),m=min%60;return h+" Std."+(m?" "+m+" Min.":"")}
+// Zeiten vor 5 Uhr zählen zur Nacht danach (Raster 5 bis 1 Uhr)
+const $=s=>document.querySelector(s);
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),2200)}
+function pl(n,a,b){return n===1?a:b}
+
+// ================= Info-Knopf =================
+let INFOS=[];
+function info(txt,title){INFOS.push([title||"Info",txt]);return `<button class="ib" data-act="info" data-i="${INFOS.length-1}" aria-label="Info${title?": "+esc(title):""}"></button>`}
+function kI(label,txt,cls){return `<span class="k ${cls||""}">${label}${info(txt,label.replace(/<[^>]+>/g,""))}</span>`}
+
+// ================= Bindungen =================
+let BIND={},bindId=0;
+function bindObj(o){const id="o"+(++bindId);BIND[id]=o;return id}
+function ta(o,key,label,hint,rows,ph){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<label class="q" for="${fid}"><span>${label}</span>${hint?`<span class="m">${hint}</span>`:""}<textarea id="${fid}" rows="${rows||2}" placeholder="${esc(ph||"")}" data-b="${id}" data-k="${key}">${esc(o[key])}</textarea></label>`}
+function inp(o,key,label,ph){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<label class="q" for="${fid}"><span>${label}</span><input type="text" id="${fid}" placeholder="${esc(ph||"")}" data-b="${id}" data-k="${key}" value="${esc(o[key])}"></label>`}
+function dateIn(o,key,label,hint){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<label class="q" for="${fid}"><span>${label}</span>${hint?`<span class="m">${hint}</span>`:""}<input type="date" id="${fid}" data-b="${id}" data-k="${key}" data-re="1" value="${esc(o[key])}"></label>`}
+// Auswahl: kurze Optionen als eckige Segmente, lange als Liste
+function choice(o,key,opts,label,hint,wrap,inf){const id=bindObj(o);const short=opts.length<=5&&opts.every(t=>t.length<=12);
+  const b=opts.map((t,i)=>`<button data-b="${id}" data-k="${key}" data-v="${i}" aria-pressed="${o[key]===i}">${t}</button>`).join("");
+  return `<div class="q">${label?(inf?kI(label,inf):`<span class="k">${label}</span>`):""}<div class="${short?"seg"+(wrap?" wrap":""):"opts"}" role="group"${label?` aria-label="${esc(label)}"`:""}>${b}</div>${hint||""}</div>`}
+function checklist(o,items){const id=bindObj(o);return `<div class="tl">${items.map((t,i)=>`<button class="trow ckrow" data-b="${id}" data-ck="${i}" aria-pressed="${!!o[i]}"><span class="cb" aria-pressed="${!!o[i]}"></span><span>${esc(t)}</span></button>`).join("")}</div>`}
+function todos(o,key,label,n){if(!Array.isArray(o[key]))o[key]=[];while(o[key].length<n)o[key].push({t:"",d:false});const id=bindObj(o[key]);
+  return `<div class="q"><span class="k">${label}</span>${o[key].map((t,i)=>`<div class="trow" style="align-items:center"><button class="cb" aria-label="erledigt" data-b="${id}" data-i="${i}" data-todo="1" aria-pressed="${!!t.d}"></button><input type="text" aria-label="${label} ${i+1}" data-b="${id}" data-i="${i}" data-todot="1" value="${esc(t.t)}"></div>`).join("")}</div>`}
+
+document.addEventListener("input",e=>{const t=e.target;if(t.id==="gq"){glFilter(t.value);return}const o=BIND[t.dataset.b];if(!o)return;
+  if(t.dataset.todot){o[+t.dataset.i].t=t.value}else if(t.dataset.k){o[t.dataset.k]=t.value}save()});
+document.addEventListener("change",e=>{const t=e.target;if(t.dataset.re){save();keepScroll(render)}});
+document.addEventListener("focusin",e=>{if(e.target.matches("textarea,input[type=text]"))document.body.classList.add("writing")});
+document.addEventListener("focusout",e=>{if(e.target.matches("textarea,input[type=text]"))document.body.classList.remove("writing")});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="newq"){e.preventDefault();ACT.addQ()}});
+document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
+  if(t.dataset.tab){go(t.dataset.tab);return}
+  const o=BIND[t.dataset.b];
+  if(o){
+    if(t.dataset.todo){const it=o[+t.dataset.i];it.d=!it.d;t.setAttribute("aria-pressed",it.d);save();return}
+    if(t.dataset.ck!=null){const i=t.dataset.ck;o[i]=!o[i];t.setAttribute("aria-pressed",!!o[i]);t.querySelector(".cb").setAttribute("aria-pressed",!!o[i]);save();return}
+    if(t.dataset.k){o[t.dataset.k]=+t.dataset.v;save();keepScroll(render);return}
+  }
+  const a=t.dataset.act;if(a&&ACT[a])ACT[a](t);
+});
+
+
+// ================= PRJCT · Begleitung qualitativer Abschlussarbeiten · Testversion 1 (23.11.2026) =================
+const KEY="ftb-abschluss-v1";
+const TESTV=true;
+const LINKS={gespraech:"https://drmaschakoerner.de/erstgespraech/#formular",sos:"https://drmaschakoerner.de/schnelle-hilfe/",nl:"https://drmaschakoerner.de/#newsletter"};
+const CRISIS="Wenn du über längere Zeit erschöpft bist oder in einer Krise steckst, ist ärztliche oder psychologische Hilfe der richtige Weg, zum Beispiel die psychologische Beratung deiner Hochschule oder die Telefonseelsorge (0800 111 0 111, kostenlos, rund um die Uhr).";
+const R5=["1","2","3","4","5"];
+const STAND=["offen","begonnen","fertig"];
+const DUR=[3,4,5,6];
+const PLANG=["Ich liege im Plan","Etwas hinterher","Deutlich hinterher"];
+const NOTART=["Frage für die Betreuung","Entscheidung","Gedanke"];
+const KLAR=["Alles noch im Nebel.","Ich ahne, worum es geht.","Ein Schritt ist klar, der Rest noch nicht.","Zwei, drei Schritte sind klar.","Glasklar: Ich kenne meine nächsten drei Schritte."];
+
+function blank(){return {v:1,started:false,start:today(),end:"",dur:null,art:1,from:0,frage:"",plan:[],done:{},gl:[],gid:1,wk:{},log:[],fragen:[],ideen:[],nid:1,fb:{},created:today()}}
+let S=blank();let storageOK=true;
+function load(){try{const r=localStorage.getItem(KEY);if(r){S=Object.assign(blank(),JSON.parse(r))}}catch(e){storageOK=false}}
+let saveT=null;
+function save(){clearTimeout(saveT);saveT=setTimeout(saveNow,250)}
+function saveNow(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){storageOK=false}}
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+function keepScroll(fn){const y=window.scrollY;fn();window.scrollTo(0,y)}
+function md(s){return String(s||"").replace(/\*([^*]+)\*/g,"<i>$1</i>")}
+function addMonths(s,n){const d=new Date(s+"T12:00:00");d.setMonth(d.getMonth()+n);d.setDate(d.getDate()-1);return iso(d)}
+function monday(s){return addDays(s,-wday(s))}
+
+// ================= Plan =================
+// Verteilt die Phasen ab „from“ anteilig auf die Zeit von st bis end. Frühere Phasen bekommen kein Datum.
+function makePlan(from,st,end){const N=Math.max(9,diffDays(st,end)+1);const ph=PHASEN.slice(from);const W=ph.reduce((a,p)=>a+p.w,0);
+  let acc=0,prev=0;const out=PHASEN.map(()=>null);
+  ph.forEach((p,k)=>{acc+=p.w;const cut=k===ph.length-1?N:Math.max(prev+1,Math.round(acc/W*N));out[from+k]={s:addDays(st,prev),e:addDays(st,cut-1)};prev=cut});
+  return out}
+function P(){const st=S.start,end=S.end||addMonths(st,5);return {st,end,N:diffDays(st,end)+1}}
+function phaseAt(date){const p=P();if(date<p.st)return -1;if(date>p.end)return 99;for(let i=0;i<PHASEN.length;i++){const x=S.plan[i];if(x&&date>=x.s&&date<=x.e)return i}return 99}
+function sk(i,j){return PHASEN[i].id+"_"+j}
+function phDone(i){return PHASEN[i].schritte.filter((_,j)=>S.done[sk(i,j)]).length}
+function phFull(i){return phDone(i)===PHASEN[i].schritte.length}
+function arbeit(){const i=PHASEN.findIndex((_,k)=>!phFull(k));return i<0?PHASEN.length-1:i}
+function totSteps(){return PHASEN.reduce((a,p)=>a+p.schritte.length,0)}
+function doneSteps(){return PHASEN.reduce((a,_,i)=>a+phDone(i),0)}
+function pct(){return Math.round(doneSteps()/totSteps()*100)}
+function rangeTxt(x){return x?fmtShort(x.s)+" bis "+fmtShort(x.e):"vor deinem Start"}
+function restDays(){return diffDays(today(),P().end)}
+function weekNo(){const p=P();return {n:Math.floor(diffDays(p.st,today())/7)+1,of:Math.ceil(p.N/7)}}
+
+// ================= Klarheit (wie in Reset & Flow) =================
+function klarIcon(i,sz){const b=[3.2,2.2,1.3,.6,0][i];sz=sz||1;return `<span aria-hidden="true" style="display:inline-flex;padding:${6*sz}px;filter:blur(${b*sz}px)"><svg viewBox="0 0 32 24" width="${30*sz}" height="${22*sz}"><rect x="3" y="3" width="26" height="3.4" rx="1.7" fill="currentColor"/><rect x="3" y="10.3" width="20" height="3.4" rx="1.7" fill="currentColor"/><rect x="3" y="17.6" width="14" height="3.4" rx="1.7" fill="currentColor"/></svg></span>`}
+function klarScale(o){const id=bindObj(o);const v=o.klar;return `<div class="q">${kI("Klarheit","Klarheit heißt: Du weißt, was als Nächstes konkret zu tun ist. Nicht das ganze Kapitel, sondern die nächsten drei kleinen Schritte. Je klarer sie sind, desto leichter fängst du an.")}<p class="m">Kennst du deine nächsten drei kleinen Schritte?</p><div class="seg klar" role="group" aria-label="Klarheit">${[0,1,2,3,4].map(i=>`<button data-b="${id}" data-k="klar" data-v="${i}" aria-pressed="${v===i}" aria-label="${i+1} von 5: ${KLAR[i]}">${klarIcon(i)}</button>`).join("")}</div><div class="row m"><span>neblig</span><span>glasklar</span></div>${v!=null?`<p class="m"><b>${KLAR[v]}</b></p>`:""}</div>`}
+
+// ================= Ansicht =================
+let view={tab:"jetzt",sub:null,setup:0,flip:null};
+function go(tab,extra){view=Object.assign({tab,sub:null,setup:view.setup,flip:null},extra||{});render();window.scrollTo(0,0)}
+function sub(t,extra){view.sub=Object.assign({t},extra||{});render();window.scrollTo(0,0)}
+const TABS=[["jetzt","Jetzt"],["phasen","Phasen"],["fortschritt","Fortschritt"],["notizen","Notizen"],["hilfe","Hilfe"]];
+const FULL={wcheck:1};
+function render(){BIND={};bindId=0;INFOS=[];
+  $("nav.tabs .in").innerHTML=TABS.map(([k,l])=>`<button data-tab="${k}" aria-current="${view.tab===k?"page":"false"}">${l}</button>`).join("");
+  const setup=!S.started;const full=view.sub&&FULL[view.sub.t];
+  document.body.classList.toggle("setup",setup);document.body.classList.toggle("full",!!full);
+  $("#ttl").textContent=view.tab==="ich"?"Ich":(TABS.find(x=>x[0]===view.tab)||["",""])[1];
+  if(S.started){const t=today(),p=P();$("#day").textContent=t<p.st?`Start in ${diffDays(t,p.st)} ${pl(diffDays(t,p.st),"Tag","Tagen")}`:t>p.end?"Abgegeben?":`Woche ${weekNo().n}/${weekNo().of}`}
+  let html;
+  if(!S.started)html=vSetup();
+  else if(view.sub)html=SUB[view.sub.t](view.sub);
+  else html={jetzt:vJetzt,phasen:vPhasen,fortschritt:vFortschritt,notizen:vNotizen,hilfe:vHilfe,ich:vIch}[view.tab]();
+  $("#app").innerHTML=html}
+function back(label){return `<button class="back" data-act="back">‹ ${label||"Zurück"}</button>`}
+function tile(v,l){return `<div class="tile"><b>${v}</b><span>${l}</span></div>`}
+function dots(i,n){return `<div class="dots">${Array.from({length:n},(_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div>`}
+
+// ================= Einstieg =================
+function vSetup(){const s=view.setup;
+  if(s===0)return `
+  <div class="wm">PRJCT</div><h1>Deine Abschlussarbeit mit rotem Faden.</h1>
+  <p class="lead">Diese App begleitet dich durch deine qualitative empirische Abschlussarbeit, von der genehmigten Idee bis zur Abgabe.</p>
+  <div class="phs">
+   <div class="st"><div class="n on">1</div><div><b>Dein Phasenplan</b><p class="m">Neun Phasen, verteilt auf deine Zeit bis zur Abgabe. Zu jeder Phase: wofür sie da ist, eine Checkliste, typische Stolpersteine und worauf Gutachter:innen achten.</p></div></div>
+   <div class="st"><div class="n">2</div><div><b>Einmal pro Woche, 5 Minuten</b><p class="m">Kein tägliches Eintragen. Ein kurzer Wochen-Check: Wie klar ist der nächste Schritt, was hast du geschafft, was kommt als Nächstes?</p></div></div>
+   <div class="st"><div class="n">3</div><div><b>Wenn es hakt</b><p class="m">Ein Karteikasten für mentale Blockaden, ein Glossar und ein Ort für Fragen an deine Betreuung.</p></div></div>
+  </div><div class="grow"></div>${dots(0,4)}<button class="btn" data-act="setup" data-v="1">Los geht’s</button>`;
+  if(s===1)return `${back()}<h1>Wie viel Zeit hast du?</h1>
+  ${dateIn(S,"start","Ab wann begleitet dich die App?","Meist heute.")}
+  <div class="q"><span class="k">Bis zur Abgabe</span><div class="seg">${DUR.map((m,i)=>`<button data-act="dur" data-v="${i}" aria-pressed="${S.dur===i}">${m} Mon.</button>`).join("")}</div></div>
+  ${dateIn(S,"end","Oder genaues Abgabedatum",S.end?"Abgabe am "+fmtDate(S.end,true):"Wenn du es schon kennst.")}
+  ${choice(S,"art",["Bachelorarbeit","Masterarbeit"],"Deine Arbeit")}
+  <div class="grow"></div>${dots(1,4)}<button class="btn" data-act="setup" data-v="2" ${S.end&&S.end>S.start?"":"disabled style=\"opacity:.45\""}>Weiter</button>`;
+  if(s===2)return `${back()}<h1>Wo stehst du gerade?</h1><p class="lead">Wähl die Phase, mit der du jetzt anfängst. Die Phasen davor gelten als erledigt, das kannst du später ändern.</p>
+  ${choice(S,"from",PHASEN.map((p,i)=>(i+1)+" · "+p.t),null)}
+  ${ta(S,"frage","Deine Forschungsfrage","Arbeitsversion, sie darf sich noch ändern. Freiwillig.",3)}
+  <div class="grow"></div>${dots(2,4)}<button class="btn" data-act="setup" data-v="3">Weiter</button>`;
+  const pl_=makePlan(S.from,S.start,S.end);
+  return `${back()}<h1>Dein Phasenplan</h1><p class="lead">${diffDays(S.start,S.end)+1} Tage bis zur Abgabe am ${fmtDate(S.end,true)}. So verteilen sich deine Phasen:</p>
+  <div class="tl">${PHASEN.map((p,i)=>`<div class="trow plr ${i<S.from?"old":""}"><b class="pn">${i+1}</b><span style="flex:1">${p.t}<br><span class="m">${i<S.from?"schon erledigt":rangeTxt(pl_[i])+" · "+n1(Math.round((diffDays(pl_[i].s,pl_[i].e)+1)/7*2)/2)+" Wo."}</span></span></div>`).join("")}</div>
+  <p class="m">Die Phasen dürfen sich überschneiden. Den Plan kannst du jederzeit neu verteilen.</p>
+  <div class="grow"></div>${dots(3,4)}<button class="btn" data-act="startApp">Plan übernehmen</button>`}
+function installHelp(){return `<details class="box"><summary>Auf den Home-Bildschirm legen</summary><ol class="list"><li><b>iPhone (Safari):</b> Teilen-Symbol, dann „Zum Home-Bildschirm“.</li><li><b>Android (Chrome):</b> Menü mit drei Punkten, dann „App installieren“ oder „Zum Startbildschirm hinzufügen“.</li></ol></details>`}
+
+// ================= Jetzt =================
+function wkObj(){const k=monday(today());return S.wk[k]}
+function vJetzt(){const t=today(),p=P();
+  if(t<p.st)return `<h1>Deine Begleitung startet am ${fmtDate(p.st,true)}.</h1><p>Bis dahin musst du nichts tun. Schau dir gern schon deinen Phasenplan an.</p><button class="btn o" data-tab="phasen">Zum Phasenplan</button>`;
+  const a=arbeit(),pa=phaseAt(t),ph=PHASEN[a],x=S.plan[a];const wk=wkObj();
+  const fr=S.frage.trim()?`<div class="frage"><span class="k">Deine Forschungsfrage</span><p>${esc(S.frage)}</p></div>`:"";
+  const rest=x?diffDays(t,x.e):null;
+  const phase=`<button class="box acc phcard" data-act="sub" data-t="phase" data-n="${a}" style="text-align:left">
+   <span class="row"><span class="k r">Phase ${a+1} von ${PHASEN.length}</span><span class="m">${x?(rest>=0?"noch "+rest+" "+pl(rest,"Tag","Tage")+" laut Plan":"Plan: bis "+fmtShort(x.e)):""}</span></span>
+   <b class="pht">${ph.t}</b><span class="m">${ph.kap}</span>
+   <span class="bar"><i style="width:${phDone(a)/ph.schritte.length*100}%"></i></span><span class="m">${phDone(a)} von ${ph.schritte.length} Schritten · Zur Phase ›</span></button>`;
+  const hint=pa<99&&pa>a?`<div class="box fill"><span class="k">Kurzer Abgleich</span><p>Laut Plan wärst du schon in Phase ${pa+1}, „${PHASEN[pa].kurz}“. Das ist normal, Pläne sind dazu da, angepasst zu werden. Hak ab, was du schon geschafft hast, oder verteil den Plan neu.</p><button class="lnk" data-act="sub" data-t="replan">Plan neu verteilen</button></div>`:"";
+  const open=ph.schritte.map((s,j)=>[s,j]).filter(([_,j])=>!S.done[sk(a,j)]).slice(0,3);
+  const nxt=`<div class="q">${kI("Als Nächstes in dieser Phase","Die nächsten offenen Punkte aus der Checkliste deiner Phase. Wenn du einen abhakst, wächst dein Fortschritt.")}<div class="tl">${open.map(([s,j])=>`<button class="trow ckrow" data-act="step" data-i="${a}" data-j="${j}" aria-pressed="false"><span class="cb" aria-pressed="false"></span><span>${md(s)}</span></button>`).join("")||`<p class="m">Alles abgehakt. Stark!</p>`}</div></div>`;
+  const wc=!wk?`<button class="box acc" data-act="wcheck" style="text-align:left;background:var(--bg)"><span class="k r">Wochen-Check · 5 Minuten</span><b>Wie klar ist dein nächster Schritt?</b><span class="m">Einmal pro Woche: Klarheit, was geschafft ist, die nächsten drei Schritte.</span></button>`
+   :`<div class="box"><div class="row"><span class="k">Deine drei Schritte diese Woche</span><span class="kl" title="Klarheit ${wk.klar!=null?wk.klar+1:"–"} von 5">${wk.klar!=null?klarIcon(wk.klar,.7):""}</span></div><div class="tl">${wk.next.map((x,i)=>x.t.trim()?`<button class="trow ckrow" data-act="wkTog" data-i="${i}" aria-pressed="${!!x.d}"><span class="cb" aria-pressed="${!!x.d}"></span><span>${esc(x.t)}</span></button>`:"").join("")||`<p class="m">Noch keine Schritte eingetragen.</p>`}</div><button class="lnk m" data-act="wcheck" style="align-self:flex-start;padding:0">Wochen-Check ändern</button></div>`;
+  const tp=Math.max(0,Math.min(1,(diffDays(p.st,t)+1)/p.N));
+  const cd=`<div class="box"><div class="row"><span class="k">Bis zur Abgabe</span><span class="m">${fmtDate(p.end)}</span></div>
+   <div class="row"><span class="bignum">${Math.max(0,restDays())}</span><span class="m" style="flex:1">${pl(restDays(),"Tag","Tage")}</span><span class="bignum">${pct()}<small>%</small></span><span class="m">geschafft</span></div>
+   <div class="bar two"><i style="width:${pct()}%"></i><em style="left:${tp*100}%"></em></div><p class="m">Balken: dein Fortschritt im Forschungsprozess. Strich: wie viel Zeit vergangen ist.</p></div>`;
+  return `${fr}${wc}${phase}${hint}${nxt}${cd}<div class="btns"><button class="btn q2" data-tab="hilfe">Kopf blockiert? Zum Karteikasten</button></div>`}
+
+// ================= Phasen =================
+function gantt(){const p=P(),t=today();const tp=Math.max(0,Math.min(1,diffDays(p.st,t)/p.N));
+  return `<div class="gantt">${PHASEN.map((ph,i)=>{const x=S.plan[i];if(!x)return"";const l=diffDays(p.st,x.s)/p.N*100,w=(diffDays(x.s,x.e)+1)/p.N*100;return `<div class="gr"><span>${i+1}</span><div><i class="${phFull(i)?"f":i===arbeit()?"on":""}" style="left:${l}%;width:${w}%"></i></div></div>`}).join("")}<em style="left:calc(22px + (100% - 22px) * ${tp})"></em></div>`}
+function vPhasen(){const a=arbeit();
+  return `<h1>Dein Weg bis zur Abgabe</h1>${gantt()}
+  <div class="tl">${PHASEN.map((p,i)=>{const d=phDone(i),n=p.schritte.length;return `<button class="trow plr ${i===a?"cur":""}" data-act="sub" data-t="phase" data-n="${i}"><b class="pn ${d===n?"ok":""}">${d===n?"✓":i+1}</b><span style="flex:1;text-align:left">${p.t}<br><span class="m">${rangeTxt(S.plan[i])} · ${d}/${n}</span></span><span class="m">›</span></button>`}).join("")}</div>
+  <div class="two"><button class="btn o" data-act="sub" data-t="replan">Plan neu verteilen</button><button class="btn o" data-act="sub" data-t="glossar">Glossar</button></div>`}
+function matLinks(ks){return ks.length?`<div class="q"><span class="k">Material dazu</span><div class="tl">${ks.map(k=>{const [n,z,u]=MAT[k];return `<a class="tool" href="${u}" target="_blank" rel="noopener"><b>${n}</b><span class="m">${z}</span></a>`}).join("")}</div></div>`:""}
+const SUB={
+ phase(s){const i=+s.n,p=PHASEN[i],x=S.plan[i];
+  return `${back()}<div class="q"><span class="k r">Phase ${i+1} · ${rangeTxt(x)}</span><h1>${p.t}</h1><p class="m">Arbeitet hin auf: ${p.kap}</p></div>
+  <p>${md(p.ziel)}</p>
+  <div class="box fill"><span class="k">Am Ende dieser Phase hast du</span><p>${md(p.ergebnis)}</p></div>
+  <div class="q"><div class="row"><span class="k">Checkliste</span><span class="m">${phDone(i)} von ${p.schritte.length}</span></div><div class="bar"><i style="width:${phDone(i)/p.schritte.length*100}%"></i></div>
+  <div class="tl">${p.schritte.map((t,j)=>{const on=!!S.done[sk(i,j)];return `<button class="trow ckrow" data-act="step" data-i="${i}" data-j="${j}" aria-pressed="${on}"><span class="cb" aria-pressed="${on}"></span><span>${md(t)}</span></button>`}).join("")}</div></div>
+  <div class="q"><span class="k">Typische Stolpersteine</span><ul class="ul">${p.stolper.map(t=>`<li>${md(t)}</li>`).join("")}</ul></div>
+  <div class="q"><span class="k">Darauf achten Gutachter:innen</span><ul class="ul">${p.blick.map(t=>`<li>${md(t)}</li>`).join("")}</ul></div>
+  <div class="q"><span class="k">Aus meiner Praxis</span><p class="say">${md(p.tipp)}</p></div>
+  ${matLinks(p.mat||[])}
+  ${p.lit&&p.lit.length?`<details class="box"><summary>Zum Weiterlesen</summary><ul class="ul m">${p.lit.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></details>`:""}
+  <div class="row">${i>0?`<button class="lnk" data-act="sub" data-t="phase" data-n="${i-1}">‹ Phase ${i}</button>`:"<span></span>"}${i<PHASEN.length-1?`<button class="lnk" data-act="sub" data-t="phase" data-n="${i+1}">Phase ${i+2} ›</button>`:""}</div>
+  <p class="m">Du steckst in dieser Phase fest? <a href="${LINKS.gespraech}" target="_blank" rel="noopener">Im Erstgespräch</a> schauen wir gemeinsam auf dein Projekt.</p>`},
+ replan(){const a=arbeit();if(view.sub.from==null)view.sub.from=a;const o=view.sub;
+  return `${back()}<h1>Plan neu verteilen</h1><p class="lead">Ab heute verteilt die App die verbleibenden Phasen neu auf die Zeit bis zur Abgabe. Deine Häkchen bleiben erhalten.</p>
+  ${dateIn(S,"end","Abgabedatum")}
+  ${choice(o,"from",PHASEN.map((p,i)=>(i+1)+" · "+p.t),"Ab welcher Phase?")}
+  <button class="btn" data-act="replan">Neu verteilen</button>`},
+ glossar(){return `${back()}<h1>Glossar</h1><p class="lead">Die wichtigsten Begriffe der qualitativen Forschung, kurz erklärt.</p>
+  <input type="text" id="gq" placeholder="Begriff suchen" aria-label="Begriff suchen">
+  <div class="tl" id="gl">${GLOSSAR.map(([b,e])=>`<div class="gi" data-t="${esc((b+" "+e).toLowerCase())}"><b>${b}</b><p>${e}</p></div>`).join("")}</div>`},
+ wcheck(){const k=monday(today());const o=S.wk[k]||(view.sub.o=view.sub.o||{klar:null,ok:"",next:[{t:"",d:false},{t:"",d:false},{t:"",d:false}],plan:null});const w=S.wk[k]||o;
+  const a=arbeit();const have=new Set(w.next.map(x=>x.t.trim()));const sug=PHASEN[a].schritte.map((s,j)=>[s,j]).filter(([s,j])=>!S.done[sk(a,j)]&&!have.has(s.replace(/\*/g,""))).slice(0,3);
+  const tip=w.klar!=null&&w.klar<=1?`<div class="box fill"><p>Nimm dir jetzt fünf Minuten und schreib die nächsten drei kleinen Schritte auf. Klarheit kommt beim Aufschreiben, nicht beim Grübeln.</p></div>`:"";
+  const hint=w.plan===2?`<div class="box fill"><p>Das passiert vielen. Verteil deinen Plan neu, oder lass uns in einem <a href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a> gemeinsam draufschauen.</p></div>`:"";
+  return `${back()}<div class="q"><span class="k r">Wochen-Check · 5 Minuten</span><h1>Wie läuft deine Woche?</h1></div>
+  ${klarScale(w)}${tip}
+  ${ta(w,"ok","Was hast du seit dem letzten Check geschafft?","Auch Kleines zählt: eine Mail, ein gelesener Text, ein Absatz.",2)}
+  ${todos(w,"next","Deine nächsten drei kleinen Schritte",3)}
+  ${sug.length?`<div class="q"><span class="m">Vorschläge aus deiner Phase, zum Übernehmen antippen:</span><div class="chips">${sug.map(([s])=>`<button class="chip" data-act="sug" data-t="${esc(s.replace(/\*/g,""))}">+ ${md(s)}</button>`).join("")}</div></div>`:""}
+  ${choice(w,"plan",PLANG,"Dein Zeitplan")}${hint}
+  <div class="grow"></div><button class="btn" data-act="wsave">Speichern</button>`},
+ notiz(){const o=view.sub;if(o.art==null)o.art=0;const id=bindObj(o);
+  return `${back()}<h1>Kurz notieren</h1>
+  <div class="seg">${NOTART.map((l,i)=>`<button data-b="${id}" data-k="art" data-v="${i}" aria-pressed="${o.art===i}">${l}</button>`).join("")}</div>
+  ${ta(o,"t",["Deine Frage","Was hast du entschieden?","Was geht dir durch den Kopf?"][o.art],o.art===1?"Zum Beispiel: Ich befrage nur Fachkräfte mit mindestens zwei Jahren Berufserfahrung.":null,3)}
+  ${o.art===1?ta(o,"w","Warum?","Die Begründung ist später Gold wert für dein Methodenkapitel.",3)+ta(o,"alt","Welche Alternativen hattest du? (freiwillig)",null,2):""}
+  <button class="btn" data-act="notizSave">Speichern</button>`},
+ log(s){const e=S.log.find(x=>x.id===+s.id);if(!e)return back();
+  return `${back()}<h1>Entscheidung</h1><p class="m">${fmtDate(e.d,true)}${e.ph!=null?" · Phase "+(e.ph+1):""}</p>${ta(e,"t","Was hast du entschieden?",null,3)}${ta(e,"w","Warum?",null,3)}${ta(e,"alt","Alternativen",null,2)}<button class="lnk m" data-act="logDel" data-id="${e.id}">Eintrag löschen</button>`},
+ feedback(){const o=S.fb;return `${back()}<h1>Dein Feedback</h1><p class="lead">Danke, dass du die App testest! Gesendet werden nur diese Antworten, deine Einträge bleiben auf deinem Gerät.</p>
+  ${FBQ.map(([k,q,c])=>c?choice(o,k,c,q):ta(o,k,q,null,3)).join("")}<button class="btn" data-act="fbSend">Per E-Mail senden</button>`}
+};
+const FBQ=[["oft","Wie oft hast du die App genutzt?",["mehrmals pro Woche","etwa einmal pro Woche","seltener"]],
+ ["ph","Wie hilfreich sind die Phasen mit Checkliste, Stolpersteinen und Gutachter:innen-Blick? 1 = wenig, 5 = sehr",R5],
+ ["wc","Wie hilfreich ist der Wochen-Check?",R5],["kk","Wie hilfreich ist der Karteikasten?",R5],
+ ["gut","Was hat dir am meisten geholfen?"],["stoer","Was war unklar oder hat gestört?"],["fehlt","Was hast du vermisst?"],
+ ["gesamt","Wie zufrieden bist du insgesamt?",R5]];
+
+// ================= Fortschritt =================
+function vFortschritt(){const p=P(),t=today();const tp=Math.max(0,Math.min(1,(diffDays(p.st,t)+1)/p.N));
+  const n=S.gl.length,cnt=[0,1,2].map(a=>S.gl.filter(g=>g.a===a).length);
+  const wks=Object.keys(S.wk).sort().slice(-10);
+  return `<div class="q">${kI("Forschungsprozess","Jeder abgehakte Punkt aus den Checklisten deiner Phasen zählt. Der Strich zeigt, wie viel Zeit bis zur Abgabe schon vergangen ist.")}
+  <div class="row"><span class="bignum">${pct()}<small>%</small></span><span class="m">${doneSteps()} von ${totSteps()} Schritten</span></div>
+  <div class="bar thick two"><i style="width:${pct()}%"></i><em style="left:${tp*100}%"></em></div>
+  <p class="m">Zeit vergangen: ${Math.round(tp*100)} % · noch ${Math.max(0,restDays())} Tage</p></div>
+  <div class="q">${PHASEN.map((ph,i)=>`<div class="typ"><span>${i+1} ${ph.kurz}</span><div class="bar"><i style="width:${phDone(i)/ph.schritte.length*100}%"></i></div><span class="m">${phDone(i)}/${ph.schritte.length}</span></div>`).join("")}</div><hr>
+  <div class="q">${kI("Gliederung · "+cnt[2]+" von "+n+" fertig","Trag deine Kapitel ein und gib jedem einen Stand. Im Balken ist grau offen, hell begonnen und kräftig fertig.")}
+  ${n?`<div class="glbar">${S.gl.map(g=>`<i class="a${g.a}"></i>`).join("")}</div>`:`<p class="m">Zum Beispiel: 1 Einleitung, 2 Theorie und Forschungsstand, 3 Methodik, 4 Ergebnisse, 5 Diskussion, 6 Fazit.</p>`}
+  ${S.gl.map((g,i)=>{const id=bindObj(g);return `<div class="gl"><input type="text" aria-label="Kapitel ${i+1}" placeholder="z. B. 2 Theorie" data-b="${id}" data-k="t" value="${esc(g.t)}"><button class="x" data-act="glDel" data-i="${i}" aria-label="Kapitel entfernen">×</button><div class="seg">${STAND.map((l,a)=>`<button class="a${a}" data-act="amp" data-i="${i}" data-v="${a}" aria-pressed="${g.a===a}">${l}</button>`).join("")}</div></div>`}).join("")}
+  <div class="two"><button class="btn o" data-act="glAdd">+ Kapitel</button>${n?"":`<button class="btn o" data-act="glStd">Vorschlag übernehmen</button>`}</div></div><hr>
+  <div class="q">${kI("Klarheit der letzten Wochen","Aus deinen Wochen-Checks. Je schärfer die Striche, desto klarer waren deine nächsten Schritte.")}
+  ${wks.length?`<div class="kw">${wks.map(k=>{const w=S.wk[k];return `<div><span>${w.klar!=null?klarIcon(w.klar,.8):"–"}</span><small>${fmtShort(k)}</small></div>`}).join("")}</div>`:`<p class="m">Hier erscheint deine Klarheit, sobald du den ersten Wochen-Check gemacht hast.</p>`}</div>`}
+
+// ================= Notizen =================
+function logText(){return "Entscheidungs-Logbuch\n\n"+S.log.map(e=>`${fmtShort(e.d)}${e.ph!=null?" (Phase "+(e.ph+1)+")":""}: ${e.t}\nWarum: ${e.w||"–"}${e.alt?"\nAlternativen: "+e.alt:""}`).join("\n\n")}
+function qText(){return "Fragen für die Betreuung\n\n"+S.fragen.filter(f=>!f.ok).map((f,i)=>(i+1)+". "+f.t).join("\n")}
+function vNotizen(){const op=S.fragen.filter(f=>!f.ok).length;
+  return `<div class="q">${kI("Fragen für die Betreuung · "+op+" offen","Sammle hier alles, was du deine Betreuung fragen möchtest. Vor dem nächsten Termin kopierst du die offenen Fragen mit einem Tipp, zum Beispiel in eine Mail.")}
+  <div class="tl">${S.fragen.map(f=>`<div class="trow"><button class="cb" data-act="qTog" data-id="${f.id}" aria-pressed="${!!f.ok}" aria-label="besprochen"></button><span style="flex:1;${f.ok?"color:var(--mute);text-decoration:line-through":""}">${esc(f.t)}</span><button class="x" data-act="qDel" data-id="${f.id}" aria-label="Löschen">×</button></div>`).join("")}</div>
+  <div class="add"><input type="text" id="newq" placeholder="Neue Frage" aria-label="Neue Frage"><button class="btn o" data-act="addQ">+</button></div>
+  ${op?`<button class="lnk" data-act="copy" data-w="q">Offene Fragen kopieren</button>`:""}</div><hr>
+  <div class="q">${kI("Entscheidungs-Logbuch · "+S.log.length,"Halte jede methodische Entscheidung fest: was, warum und welche Alternativen es gab. Daraus schreibst du später fast von allein deinen Methodenteil, und in der Verteidigung oder im Gespräch mit der Betreuung hast du alle Begründungen parat.")}
+  <div class="tl">${S.log.slice().reverse().map(e=>`<button class="trow lg" data-act="sub" data-t="log" data-id="${e.id}"><span style="flex:1;text-align:left"><b>${esc(e.t)}</b><br><span class="m">${fmtShort(e.d)}${e.w?" · "+esc(e.w.slice(0,70))+(e.w.length>70?"…":""):" · Begründung fehlt noch"}</span></span><span class="m">›</span></button>`).join("")||`<p class="m">Noch keine Entscheidung. Zum Beispiel: „Ich führe Leitfadeninterviews statt einer Gruppendiskussion, weil …“</p>`}</div>
+  <div class="two"><button class="btn o" data-act="sub" data-t="notiz" data-a="1">+ Entscheidung</button>${S.log.length?`<button class="btn o" data-act="copy" data-w="log">Alles kopieren</button>`:""}</div></div><hr>
+  <div class="q"><span class="k">Gedanken · ${S.ideen.length}</span>${S.ideen.slice().reverse().map(x=>`<div class="trow"><span style="flex:1">${esc(x.t)} <span class="m">· ${fmtShort(x.d)}</span></span><button class="x" data-act="iDel" data-id="${x.id}" aria-label="Löschen">×</button></div>`).join("")||`<p class="m">Ideen, Zitate, Einfälle beim Lesen. Über „Notieren“ oben landen sie hier.</p>`}</div>`}
+
+// ================= Hilfe: Karteikasten =================
+function vHilfe(){return `<h1>Was ist gerade los?</h1><p class="lead">Zieh die Karte, die am ehesten passt. Auf der Rückseite steht, was dahintersteckt, und eine kleine Übung.</p>
+  <div class="kasten">${KARTEN.map(k=>{const on=view.flip===k.id;return `<button class="kk ${on?"bk":""}" data-act="flip" data-id="${k.id}" aria-expanded="${on}"><span class="reiter">${k.kat}</span>${on?`<span class="kb"><b>Was dahintersteckt</b>${k.was}</span><span class="kb"><b>Was hilft</b>${k.hilft}</span><span class="kb ue"><b>Mini-Übung</b>${k.uebung}</span>${k.lit?`<span class="m">${esc(k.lit)}</span>`:""}<span class="m">Tippen zum Umdrehen</span>`:`<span class="kv">„${k.v}“</span>`}</button>`}).join("")}</div>
+  <div class="foot"><button data-act="sub" data-t="glossar">Glossar</button><span class="m">·</span><a href="${LINKS.sos}" target="_blank" rel="noopener">SOS-Reset-Paket</a><span class="m">·</span><a href="${LINKS.gespraech}" target="_blank" rel="noopener">Erstgespräch</a></div>
+  <p class="m">${CRISIS}</p>`}
+
+// ================= Ich =================
+function vIch(){const p=P();return `<h1>Meine Arbeit</h1>
+  ${ta(S,"frage","Meine Forschungsfrage","Sie steht oben auf „Jetzt“, damit du sie nicht aus dem Blick verlierst.",3)}
+  ${choice(S,"art",["Bachelorarbeit","Masterarbeit"],"Art der Arbeit")}
+  <div class="box"><span class="k">Zeitraum</span><p>${fmtDate(p.st,true)} bis ${fmtDate(p.end,true)} · ${p.N} Tage</p><button class="btn o" data-act="sub" data-t="replan">Abgabedatum ändern oder Plan neu verteilen</button></div>
+  ${TESTV?`<div class="box fill"><span class="k r">Testversion</span><p>Danke, dass du die App von Anfang an testest! Ich freue mich über deine Rückmeldung, gern auch zwischendurch.</p><button class="btn" data-act="sub" data-t="feedback">Feedback geben</button></div>`:""}
+  ${installHelp()}
+  <div class="box">${kI("Sicherung","Deine Daten liegen nur auf diesem Gerät. Mit einer Sicherungsdatei nimmst du sie auf ein anderes Gerät mit. Lade dir ab und zu eine herunter.")}<div class="two"><button class="btn o" data-act="export">Herunterladen</button><button class="btn o" data-act="import">Laden</button></div><input type="file" id="imp" accept=".json,application/json" hidden></div>
+  <button class="lnk m" data-act="reset">Alles löschen und neu starten</button>
+  ${storageOK?"":`<p class="m"><b>Speichern ist in diesem Browser nicht möglich.</b></p>`}
+  <p class="m"><b class="wm s">PRJCT</b> · Testversion · Dr. Mascha Körner · Forschung mit rotem Faden</p>`}
+
+// ================= Glossar-Suche =================
+function glFilter(q){q=q.trim().toLowerCase();document.querySelectorAll("#gl .gi").forEach(el=>{el.hidden=q&&!el.dataset.t.includes(q)})}
+
+// ================= Aktionen =================
+const ACT={
+ back(){if(view.sub){view.sub=null;render();window.scrollTo(0,0)}else if(!S.started){view.setup=Math.max(0,view.setup-1);render()}else go("jetzt")},
+ setup(t){view.setup=+t.dataset.v;render();window.scrollTo(0,0)},
+ dur(t){S.dur=+t.dataset.v;S.end=addMonths(S.start,DUR[S.dur]);save();keepScroll(render)},
+ startApp(){S.plan=makePlan(S.from,S.start,S.end);for(let i=0;i<S.from;i++)PHASEN[i].schritte.forEach((_,j)=>S.done[sk(i,j)]=true);S.started=true;saveNow();go("jetzt")},
+ sub(t){const x={};if(t.dataset.n!=null)x.n=t.dataset.n;if(t.dataset.id!=null)x.id=t.dataset.id;if(t.dataset.a!=null)x.art=+t.dataset.a;sub(t.dataset.t,x)},
+ step(t){const k=sk(+t.dataset.i,+t.dataset.j);S.done[k]=!S.done[k];save();const i=+t.dataset.i;keepScroll(render);if(S.done[k])toast(phFull(i)?`Phase ${i+1} geschafft! ${pct()} % insgesamt.`:`Abgehakt. ${pct()} % geschafft.`)},
+ replan(){const o=view.sub;if(!S.end||S.end<=today()){toast("Bitte ein Abgabedatum in der Zukunft wählen");return}const pl_=makePlan(+o.from,today(),S.end);S.plan=S.plan.map((x,i)=>i<+o.from?x:pl_[i]);save();view.sub=null;go("phasen");toast("Plan neu verteilt")},
+ wcheck(){sub("wcheck")},
+ wkTog(t){const w=wkObj();const x=w.next[+t.dataset.i];x.d=!x.d;save();keepScroll(render);if(x.d)toast("Erledigt. Weiter so!")},
+ sug(t){const w=S.wk[monday(today())]||view.sub.o;const e=w.next.find(x=>!x.t.trim());if(!e){toast("Deine drei Schritte sind schon voll");return}e.t=t.dataset.t;keepScroll(render)},
+ wsave(){const k=monday(today());if(!S.wk[k]&&view.sub.o)S.wk[k]=view.sub.o;S.wk[k].d=today();save();go("jetzt");toast("Wochen-Check gespeichert. Gute Woche!")},
+ notiz(){sub("notiz")},
+ notizSave(){const o=view.sub;const v=(o.t||"").trim();if(!v){view.sub=null;render();return}
+  if(o.art===0)S.fragen.push({id:S.nid++,t:v,d:today(),ok:false});
+  else if(o.art===1)S.log.push({id:S.nid++,t:v,w:(o.w||"").trim(),alt:(o.alt||"").trim(),d:today(),ph:arbeit()});
+  else S.ideen.push({id:S.nid++,t:v,d:today()});
+  save();view.sub=null;render();toast(["Frage notiert","Entscheidung im Logbuch","Gedanke notiert"][o.art])},
+ addQ(){const i=$("#newq");const v=i.value.trim();if(!v)return;S.fragen.push({id:S.nid++,t:v,d:today(),ok:false});save();keepScroll(render);const n=$("#newq");n&&n.focus()},
+ qTog(t){const f=S.fragen.find(x=>x.id===+t.dataset.id);f.ok=!f.ok;save();keepScroll(render)},
+ qDel(t){S.fragen=S.fragen.filter(x=>x.id!==+t.dataset.id);save();keepScroll(render)},
+ iDel(t){S.ideen=S.ideen.filter(x=>x.id!==+t.dataset.id);save();keepScroll(render)},
+ logDel(t){if(!confirm("Diesen Eintrag löschen?"))return;S.log=S.log.filter(x=>x.id!==+t.dataset.id);save();view.sub=null;render()},
+ copy(t){const txt=t.dataset.w==="q"?qText():logText();(navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast("Kopiert")).catch(()=>{const a=document.createElement("textarea");a.value=txt;document.body.appendChild(a);a.select();try{document.execCommand("copy");toast("Kopiert")}catch(e){}a.remove()})},
+ flip(t){view.flip=view.flip===t.dataset.id?null:t.dataset.id;keepScroll(render)},
+ glAdd(){S.gl.push({id:S.gid++,t:"",a:0});save();keepScroll(render);const ins=document.querySelectorAll(".gl input");ins.length&&ins[ins.length-1].focus()},
+ glStd(){["1 Einleitung","2 Theorie und Forschungsstand","3 Methodik","4 Ergebnisse","5 Diskussion","6 Fazit und Ausblick"].forEach(t=>S.gl.push({id:S.gid++,t,a:0}));save();keepScroll(render)},
+ glDel(t){S.gl.splice(+t.dataset.i,1);save();keepScroll(render)},
+ amp(t){S.gl[+t.dataset.i].a=+t.dataset.v;save();keepScroll(render)},
+ ich(){go("ich")},
+ info(t){const [h,x]=INFOS[+t.dataset.i]||["",""];const p=$("#pop");p.querySelector("b").textContent=h;p.querySelector("p").textContent=x;p.hidden=false;p.querySelector("button").focus()},
+ fbSend(){const o=S.fb;const txt="Feedback PRJCT\n\n"+FBQ.map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")+`\n\nStand: ${pct()} % · Woche ${weekNo().n} · ${Object.keys(S.wk).length} Wochen-Checks`;S.fb.sent=today();save();location.href="mailto:kontakt@drmaschakoerner.de?subject="+encodeURIComponent("Feedback PRJCT")+"&body="+encodeURIComponent(txt)},
+ export(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="prjct-sicherung-"+today()+".json";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)},
+ import(){const f=$("#imp");f.onchange=()=>{const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||d.v!==1||!Array.isArray(d.plan))throw 0;S=Object.assign(blank(),d);saveNow();toast("Sicherung geladen");go("jetzt")}catch(e){toast("Diese Datei passt nicht.")}};r.readAsText(f.files[0])};f.click()},
+ reset(){if(!confirm("Wirklich alles löschen? Das lässt sich nicht rückgängig machen."))return;try{localStorage.removeItem(KEY)}catch(e){}S=blank();view.setup=0;go("jetzt")}
+};
+
+// ================= Start =================
+load();
+render();
+$("#notbtn").addEventListener("click",()=>{if(S.started)ACT.notiz()});
+$("#ichbtn").addEventListener("click",()=>{if(S.started)ACT.ich()});
+$("#pop").addEventListener("click",e=>{if(e.target.id==="pop"||e.target.id==="popx")$("#pop").hidden=true});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#pop").hidden=true});
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+
+</script>
+</body></html>
