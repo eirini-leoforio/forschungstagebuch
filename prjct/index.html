@@ -7,12 +7,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="PRJCT">
 <style>
-/* Abschlussarbeit mit rotem Faden · Stil aus Reset & Flow, Akzent Ocker (23.11.2026) */
+/* PRJCT · Grau, Schwarz, Weiß, Bordeaux im College-Stil (23.11.2026) */
 @font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Source Sans 3";src:url(fonts/source-sans-3-latin-ext-wght-normal.woff2) format("woff2");font-weight:200 900;font-display:swap;unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-:root{--bg:#FFFFFF;--ink:#1C2423;--mute:#6E7876;--line:#E4E7E6;--soft:#F5F5F3;--red:#8A5F1E;--redsoft:#F6EFE3;--redmid:#E6D2AC;--reddark:#4E3510;--onink:#FFFFFF;--onred:#FFFFFF;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121615;--ink:#E9EDEC;--mute:#98A3A1;--line:#2A3231;--soft:#1B2120;--red:#D6A657;--redsoft:#2C2417;--redmid:#5E4A28;--reddark:#EBCB8C;--onink:#121615;--onred:#FFFFFF;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#121615;--ink:#E9EDEC;--mute:#98A3A1;--line:#2A3231;--soft:#1B2120;--red:#D6A657;--redsoft:#2C2417;--redmid:#5E4A28;--reddark:#EBCB8C;--onink:#121615;--onred:#FFFFFF;color-scheme:dark}
+:root{--bg:#FFFFFF;--ink:#161616;--mute:#6B6B6B;--line:#E2E2E2;--soft:#F2F2F2;--red:#7A1F2B;--redsoft:#F3E7E9;--redmid:#DDB7BD;--reddark:#4A1019;--onink:#FFFFFF;--onred:#FFFFFF;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--ink:#ECECEC;--mute:#9C9C9C;--line:#2E2E2E;--soft:#1E1E1E;--red:#C9606E;--redsoft:#2B1A1D;--redmid:#5C2B33;--reddark:#EDB8C0;--onink:#121615;--onred:#FFFFFF;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141414;--ink:#ECECEC;--mute:#9C9C9C;--line:#2E2E2E;--soft:#1E1E1E;--red:#C9606E;--redsoft:#2B1A1D;--redmid:#5C2B33;--reddark:#EDB8C0;--onink:#121615;--onred:#FFFFFF;color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,sans-serif;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:calc(64px + env(safe-area-inset-bottom))}
@@ -300,8 +300,10 @@ a.tool b{color:var(--red)}
 @keyframes flip{from{transform:perspective(600px) rotateX(-60deg)}to{transform:none}}
 .typ{grid-template-columns:130px 1fr 34px}
 .say{font-size:16px;font-weight:500}
-.wm{font-weight:900;font-size:44px;letter-spacing:.04em;line-height:1;color:var(--red)}
-.wm.s{font-size:inherit;letter-spacing:.06em}
+.wm{display:block;width:220px;max-width:70%;height:auto}
+.wm.s{display:inline;font-weight:900;letter-spacing:.08em;color:var(--red)}
+.stripes{display:flex;flex-direction:column;gap:4px;width:140px}.stripes i{height:5px;background:var(--red)}.stripes i+i{background:var(--ink)}
+.pn{font-weight:800}
 </style>
 </head><body>
 <header class="top"><div class="in">
@@ -610,7 +612,7 @@ function dots(i,n){return `<div class="dots">${Array.from({length:n},(_,k)=>`<i 
 // ================= Einstieg =================
 function vSetup(){const s=view.setup;
   if(s===0)return `
-  <div class="wm">PRJCT</div><h1>Deine Abschlussarbeit mit rotem Faden.</h1>
+  <img class="wm" src="icons/wordmark.png" alt="PRJCT"><div class="stripes"><i></i><i></i></div><h1>Deine Abschlussarbeit mit rotem Faden.</h1>
   <p class="lead">Diese App begleitet dich durch deine qualitative empirische Abschlussarbeit, von der genehmigten Idee bis zur Abgabe.</p>
   <div class="phs">
    <div class="st"><div class="n on">1</div><div><b>Dein Phasenplan</b><p class="m">Neun Phasen, verteilt auf deine Zeit bis zur Abgabe. Zu jeder Phase: wofür sie da ist, eine Checkliste, typische Stolpersteine und worauf Gutachter:innen achten.</p></div></div>
