@@ -362,7 +362,8 @@ const INHALT={
 // Reset & Flow · Fassung 2 (21.11.2026): minimalistischer Umbau
 // Morgen-Check-in mit Anweisung, Fokuszeit (zählt hoch), Fortschritt mit Gesamtbalken, Hilfe-Seite, optionaler Wochenplan, Einführung.
 const KEY="ftb-klarheit-v1";
-const TESTV=true;
+const TESTV=false;
+const LEGAL=`<div class="foot"><a href="https://drmaschakoerner.de/impressum/" target="_blank" rel="noopener">Impressum</a><span class="m">·</span><a href="https://drmaschakoerner.de/datenschutz/" target="_blank" rel="noopener">Datenschutz</a></div>`;
 const LINKS={gespraech:"https://drmaschakoerner.de/erstgespraech/#formular",gantt:"https://drmaschakoerner.de/gantt-vorlagen/",sos:"https://drmaschakoerner.de/schnelle-hilfe/",ki:"https://drmaschakoerner.de/ki-in-der-abschlussarbeit/",maxqda:"https://drmaschakoerner.mytentary.com/p/Bvukys",nl:"https://drmaschakoerner.de/#newsletter"};
 const ART={d:"Denkaufgabe",k:"Klärungsaufgabe",f:"Fleißaufgabe"};
 const ARTK={d:"Denken",k:"Klären",f:"Fleiß"};
@@ -499,7 +500,7 @@ function vSetup(){const s=view.setup;
   <div class="st"><div class="n">2</div><div><b>Flow · 20 Tage</b><p class="m">Morgens kurzer Check-in, dann 2 bis 3 Aufgaben. Fokuszeit starten, arbeiten.</p></div></div>
   <div class="st"><div class="n">3</div><div><b>Abschluss · 5 Tage</b><p class="m">Überarbeiten und abgeben, oder zurück in die Spur.</p></div></div></div>
   <div class="grow"></div>${dots(0,3)}
-  <div class="btns"><button class="btn" data-act="setup" data-v="1">Weiter</button><button class="btn o" data-act="demo">Erst ein Beispiel ansehen</button></div>`;
+  <div class="btns"><button class="btn" data-act="setup" data-v="1">Weiter</button><button class="btn o" data-act="demo">Erst ein Beispiel ansehen</button></div>${LEGAL}`;
   if(s===2&&S.wocheQ==null)S.wocheQ=0;
   if(s===1){const ab=S.goal==="abgeben",sp=S.goal==="spur";let prev="";
     if(S.goal&&(sp||S.deadline)){const P=plan();const w=[];
@@ -626,7 +627,7 @@ function vEnde(){const tot=S.sessions.reduce((a,s)=>a+s.min,0);
   <div class="tiles">${tile(S.tasks.filter(t=>t.done).length,"Aufgaben erledigt")}${tile(n1(tot/60),"Stunden Fokuszeit")}${tile(S.gl.filter(g=>g.a===2).length+"/"+S.gl.length,"Kapitel fertig")}</div>
   <p>Alles bleibt dir erhalten. Schau gern unter „Fortschritt“ zurück, wie viel du in diesem Monat bewegt hast.</p>
   ${offer("Wie geht es weiter?","Wenn du für die nächste Etappe Begleitung möchtest: Im kostenlosen Erstgespräch schauen wir, was zu dir passt.")}
-  ${TESTV&&!S.fb.sent?`<button class="btn" data-act="sub" data-t="feedback">Feedback geben</button>`:""}`}
+  ${!S.fb.sent?`<button class="btn o" data-act="sub" data-t="feedback">Feedback geben (freiwillig)</button>`:""}`}
 
 // ================= Timer =================
 const C=2*Math.PI*45;
@@ -698,10 +699,10 @@ const SUB={
   <div class="q"><span class="k">Gleich einsortieren? Freiwillig</span><div class="seg">${[["d","Denken"],["k","Klären"],["f","Fleiß"]].map(([k,l])=>`<button data-act="parkArt" data-v="${k}" aria-pressed="${o.art===k}">${l}</button>`).join("")}</div>
   ${o.art?`<p class="m">Wird als ${ART[o.art]} in deine Liste übernommen.</p>`:""}</div>
   <button class="btn" data-act="parkSave">${o.art?"Als Aufgabe speichern":"Parken"}</button>`},
- feedback(){const o=S.fb;return `${back()}<div class="q"><span class="k">Testphase · etwa 10 Minuten</span><h1>Dein Feedback</h1></div>
-  ${o.sent?`<div class="box fill"><b>Danke für dein Feedback!</b><p>Deinen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde schicke ich dir per E-Mail. In meinem Newsletter „Post mit rotem Faden“ erfährst du von neuen Angeboten und Rabatten, dazu kommen alle drei Wochen Tipps für dein Forschungsprojekt.</p><a class="btn o" href="${LINKS.nl}" target="_blank" rel="noopener">Zum Newsletter</a></div>`:""}
-  <p class="m">Gesendet werden nur diese Antworten, deine Einträge bleiben auf deinem Gerät. Als Dankeschön bekommst du einen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde.</p>
-  ${FBQ.map(([k,q,c])=>k==="#"?`<h3 style="margin-top:8px">${q}</h3>`:c?choice(o,k,c,null,null).replace('<div class="q">',`<div class="q"><span style="font-weight:700;font-size:14px">${q}</span>`):k==="fach"?inp(o,k,q,"z. B. Soziale Arbeit, Masterarbeit"):ta(o,k,q,null,3)).join("")}
+ feedback(){const o=S.fb;return `${back()}<div class="q"><span class="k">Freiwillig · etwa 5 Minuten</span><h1>Dein Feedback</h1></div>
+  ${o.sent?`<div class="box fill"><b>Danke für dein Feedback!</b><p>In meinem Newsletter „Post mit rotem Faden“ erfährst du von neuen Angeboten und Rabatten, dazu kommen alle drei Wochen Tipps für dein Forschungsprojekt.</p><a class="btn o" href="${LINKS.nl}" target="_blank" rel="noopener">Zum Newsletter</a></div>`:""}
+  <p class="m">Gesendet werden nur diese Antworten, deine Einträge bleiben auf deinem Gerät.</p>
+  ${FBQ.filter(x=>TESTV||x[0]!=="preis").map(([k,q,c])=>k==="#"?`<h3 style="margin-top:8px">${q}</h3>`:c?choice(o,k,c,null,null).replace('<div class="q">',`<div class="q"><span style="font-weight:700;font-size:14px">${q}</span>`):k==="fach"?inp(o,k,q,"z. B. Soziale Arbeit, Masterarbeit"):ta(o,k,q,null,3)).join("")}
   <button class="btn" data-act="fbSend">Feedback per E-Mail senden</button>
   <p class="m">Das öffnet dein E-Mail-Programm mit deinen Antworten. Klappt das nicht, kopier den Text unten und schick ihn an kontakt@drmaschakoerner.de.</p>
   <textarea rows="5" readonly>${esc(fbText())}</textarea>`},
@@ -827,12 +828,12 @@ function vIch(){const ab=S.goal==="abgeben";
   ${choice(S,"ki",["Ohne KI","Mit KI"],"KI")}
   <div class="q">${kI("Wochenplan","Feste Arbeitszeiten und Termine für die Woche. Freiwillig, der Morgen-Check-in reicht auch.")}<div class="seg"><button data-act="woche" data-v="0" aria-pressed="${!S.woche}">Aus</button><button data-act="woche" data-v="1" aria-pressed="${!!S.woche}">An</button></div></div>
   <button class="btn o" data-act="tour">Einführung noch einmal ansehen</button>
-  ${TESTV?`<div class="box fill"><span class="k r">Testversion</span><p>Danke, dass du den ganzen Monat testest! Am Ende freue ich mich über dein Feedback. Als Dankeschön bekommst du einen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde.</p><button class="btn" data-act="sub" data-t="feedback">Feedback geben</button></div>`:""}
+  ${TESTV?`<div class="box fill"><span class="k r">Testversion</span><p>Danke, dass du den ganzen Monat testest! Am Ende freue ich mich über dein Feedback. Als Dankeschön bekommst du einen Gutschein über 30 Prozent auf eine Coaching-Einzelstunde.</p><button class="btn" data-act="sub" data-t="feedback">Feedback geben</button></div>`:`<div class="box fill"><span class="k">Deine Meinung</span><p>Ich freue mich, wenn du mir erzählst, was dir geholfen hat und was fehlt.</p><button class="btn o" data-act="sub" data-t="feedback">Feedback geben</button></div>`}
   ${installHelp()}
   <div class="box">${kI("Sicherung","Deine Daten liegen nur auf diesem Gerät. Mit einer Sicherungsdatei nimmst du sie auf ein anderes Gerät mit.")}<div class="two"><button class="btn o" data-act="export">Herunterladen</button><button class="btn o" data-act="import">Laden</button></div><input type="file" id="imp" accept=".json,application/json" hidden></div>
   <button class="lnk m" data-act="reset">Alles löschen und neu starten</button>
   ${storageOK?"":`<p class="m"><b>Speichern ist in diesem Browser nicht möglich.</b></p>`}
-  <p class="m">Reset &amp; Flow · Dr. Mascha Körner · Forschung mit rotem Faden</p>`}
+  <p class="m">Reset &amp; Flow · Dr. Mascha Körner · Forschung mit rotem Faden. Deine Einträge bleiben nur auf deinem Gerät.</p>${LEGAL}`}
 
 // ================= Feedback =================
 const FBQ=[["#","Deine Nutzung"],
@@ -856,7 +857,7 @@ const FBQ=[["#","Deine Nutzung"],
  ["fach","Dein Fach und die Art deiner Arbeit (freiwillig)"],
  ["zitat","Darf ich deine Antworten, z. B. deinen Satz über die App, auf meiner Website und in der Werbung verwenden?",["ja, anonym","ja, mit Vorname","ja, mit Vorname und Fach","lieber nicht"]]];
 function fbText(){const o=S.fb;const tot=S.sessions.reduce((a,s)=>a+s.min,0);
-  return "Feedback zur Testphase – Reset & Flow\n\n"+FBQ.filter(x=>x[0]!=="#").map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")
+  return "Feedback – Reset & Flow\n\n"+FBQ.filter(x=>TESTV||x[0]!=="preis").filter(x=>x[0]!=="#").map(([k,q,c])=>q+"\n"+(c?(o[k]!=null?c[o[k]]:"–"):((o[k]||"–").trim()))).join("\n\n")
   +`\n\n(Automatisch: ${S.tasks.filter(t=>t.done).length} von ${S.tasks.length} Aufgaben erledigt, ${n1(tot/60)} Std. Fokuszeit, ${Object.values(S.days).filter(d=>d.ci).length} Check-ins, Wochenplan ${S.woche?"an":"aus"})`}
 
 // ================= Aktionen =================
@@ -931,7 +932,7 @@ const ACT={
  parkDel(t){S.park.splice(+t.dataset.i,1);save();keepScroll(render)},
  ich(){go("ich")},
  info(t){const [h,x]=INFOS[+t.dataset.i]||["",""];const p=$("#pop");p.querySelector("b").textContent=h;p.querySelector("p").textContent=x;p.hidden=false;p.querySelector("button").focus()},
- fbSend(){S.fb.sent=today();save();location.href="mailto:kontakt@drmaschakoerner.de?subject="+encodeURIComponent("Feedback Testphase Reset & Flow")+"&body="+encodeURIComponent(fbText());setTimeout(()=>keepScroll(render),400)},
+ fbSend(){S.fb.sent=today();save();location.href="mailto:kontakt@drmaschakoerner.de?subject="+encodeURIComponent("Feedback Reset & Flow")+"&body="+encodeURIComponent(fbText());setTimeout(()=>keepScroll(render),400)},
  export(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="reset-and-flow-sicherung-"+today()+".json";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)},
  import(){const f=$("#imp");f.onchange=()=>{const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||d.v!==2||!Array.isArray(d.tasks))throw 0;S=Object.assign(blank(),d);S.demo=false;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}toast("Sicherung geladen");go("heute")}catch(e){toast("Diese Datei passt nicht.")}};r.readAsText(f.files[0])};f.click()},
  reset(){if(!confirm("Wirklich alles löschen? Das lässt sich nicht rückgängig machen."))return;try{localStorage.removeItem(KEY)}catch(e){}S=blank();view.setup=0;go("heute")},
