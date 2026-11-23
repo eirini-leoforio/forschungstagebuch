@@ -250,6 +250,8 @@ h1 .ib::before{width:19px;height:19px;line-height:16px;font-size:12px}
 .pop[hidden]{display:none}
 .pop .sh{background:var(--bg);width:100%;max-width:560px;border-radius:12px 12px 0 0;padding:20px 16px calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}
 .pop p{white-space:pre-line}
+.seg.klar button{display:flex;align-items:center;justify-content:center;min-height:48px;color:var(--ink)}
+.seg.klar button[aria-pressed="true"]{color:var(--onink)}
 </style>
 </head><body>
 <header class="top"><div class="in">
@@ -368,7 +370,11 @@ const ARTH={d:"braucht einen klaren Kopf",k:"in 10 bis 15 Minuten erledigt",f:"v
 const AUF={"+":"groß","o":"mittel","-":"klein"};
 const STAND=["offen","begonnen","fertig"];
 const LAGE=["Ich habe vor allem Chaos im Kopf.","Ein großer inhaltlicher Teil ist noch nicht fertig, z. B. die Auswertung.","Die Rohfassung steht weitgehend."];
-const SCHLAF=["wenig","okay","gut"];
+const KLAR=["Alles noch im Nebel.","Ich ahne, worum es geht.","Ein Schritt ist klar, der Rest noch nicht.","Zwei, drei Schritte sind klar.","Glasklar: Ich kenne meine nächsten drei Schritte."];
+// Klarheit: drei Striche (= die nächsten drei Schritte), von verschwommen bis scharf
+function klarIcon(i){const b=[3.2,2.2,1.3,.6,0][i];return `<span aria-hidden="true" style="display:inline-flex;padding:6px;filter:blur(${b}px)"><svg viewBox="0 0 32 24" width="30" height="22"><rect x="3" y="3" width="26" height="3.4" rx="1.7" fill="currentColor"/><rect x="3" y="10.3" width="20" height="3.4" rx="1.7" fill="currentColor"/><rect x="3" y="17.6" width="14" height="3.4" rx="1.7" fill="currentColor"/></svg></span>`}
+function klarScale(d){const id=bindObj(d);const v=d.klar;return `<div class="q">${kI("Klarheit","Klarheit heißt: Du weißt, was als Nächstes konkret zu tun ist. Nicht das ganze Kapitel, sondern die nächsten drei kleinen Schritte für heute oder morgen. Je klarer sie sind, desto leichter fängst du an.")}<p class="m" style="margin:0">Kennst du deine nächsten drei kleinen Schritte?</p><div class="seg klar" role="group" aria-label="Klarheit">${[0,1,2,3,4].map(i=>`<button data-b="${id}" data-k="klar" data-v="${i}" aria-pressed="${v===i}" aria-label="${i+1} von 5: ${KLAR[i]}">${klarIcon(i)}</button>`).join("")}</div><div class="row m"><span>neblig</span><span>glasklar</span></div>${v!=null?`<p class="m" style="margin:0"><b>${KLAR[v]}</b></p>`:""}</div>`}
+function klarTxt(d){return d.klar==null?"":d.klar<=1?" Bevor du loslegst: Nimm dir fünf Minuten und schreib deine nächsten drei kleinen Schritte auf. Klarheit kommt beim Aufschreiben, nicht beim Grübeln.":d.klar===2?" Mach deinen ersten Schritt so klein, dass du sofort anfangen kannst.":""}
 const ZEIT=["1 Std.","2 Std.","3 Std.","4+"];
 const ZEITL=["1 Stunde","2 Stunden","3 Stunden","4 Stunden oder mehr"];
 const ZIELMIN=[60,120,180,240];
@@ -518,7 +524,7 @@ function vSetup(){const s=view.setup;
   <div class="btns"><button class="btn" data-act="start">Los geht’s</button><button class="btn o" data-act="start" data-tour="1">Erst kurze Einführung (1 Minute)</button></div>`}
 function installHelp(){return `<details class="box"><summary>Auf den Home-Bildschirm legen</summary><ol class="list"><li><b>iPhone (Safari):</b> unten auf das Teilen-Symbol, dann „Zum Home-Bildschirm“.</li><li><b>Android (Chrome):</b> oben rechts auf die drei Punkte, dann „App installieren“.</li><li>Öffne die App danach immer über das neue Symbol. Auf dem iPhone bleiben deine Daten nur so dauerhaft gespeichert.</li></ol></details>`}
 const TOUR=[
- ["Morgens · 1 Minute","Check-in","Energie, Schlaf und Zeit antippen. Die App sagt dir, welche Art von Aufgaben heute passt und wie viele. Welche genau, wählst du selbst, weil nur du die Zusammenhänge kennst."],
+ ["Morgens · 1 Minute","Check-in","Energie, Klarheit und Zeit antippen. Die App sagt dir, welche Art von Aufgaben heute passt und wie viele. Welche genau, wählst du selbst, weil nur du die Zusammenhänge kennst."],
  ["Arbeiten","Fokuszeit","Ein Knopf startet die Uhr. Der Kreis zeigt 25 Minuten, danach 5 Minuten Pause. Die Uhr läuft weiter, bis du stoppst. Jede Minute zählt für deine Statistik."],
  ["Aufgaben","Drei Arten","<b>Denkaufgaben</b> brauchen einen klaren Kopf. <b>Klärungsaufgaben</b> dauern 10 bis 15 Minuten. <b>Fleißaufgaben</b> sind viel Arbeit mit wenig Kopf. So passt immer etwas zu deiner Energie."],
  ["Fortschritt","Sichtbar machen","Ein Balken über alle Aufgaben, deine Gliederung und deine Arbeitszeit. Damit du siehst, was du schon geschafft hast, und nicht nur, was fehlt."],
@@ -547,18 +553,18 @@ function goalOn(d){const x=S.days[d];if(x&&x.zeit!=null)return ZIELMIN[x.zeit];c
 function dayObj(date){return S.days[date]||(S.days[date]={pick:[]})}
 function pdObj(k){return S.pd[k]||(S.pd[k]={})}
 // d.e ist der Index 0–4 (angezeigt 1–5)
-function lvl(d){if(d.e==null)return 1;const E=d.e+1;if(E<=2||(E===3&&d.schlaf===0))return 0;if(E>=4&&d.schlaf!==0)return 2;return 1}
+function lvl(d){if(d.e==null)return 1;const E=d.e+1;if(E<=2)return 0;if(E>=4)return 2;return 1}
 function anweisung(d,w){
-  if(d.e==null||d.schlaf==null||d.zeit==null)return null;
+  if(d.e==null||d.klar==null||d.zeit==null)return null;
   const L=lvl(d);const head=["Wenig Energie","Mittlere Energie","Gute Energie"][L]+", "+ZEITL[d.zeit]+".";
   if(w.ph!==2){const c=stepsOf(w.ph)[curStep(w)];const t=`Heute steht „${c.t}“ an${c.dauer?", etwa "+c.dauer:""}.`;
-    return {head,text:t+(L===0?" Mach heute nur den ersten Teil. Der Rest darf morgen folgen.":"")+(d.schlaf===0?" Erst etwas essen und trinken.":""),nd:0,nr:0}}
+    return {head,text:t+(L===0?" Mach heute nur den ersten Teil. Der Rest darf morgen folgen.":"")+klarTxt(d),nd:0,nr:0}}
   const T=[2,3,3,4][d.zeit];const openD=S.tasks.some(t=>!t.done&&t.art==="d");
   let nd,nr,text;
   if(L===0){nd=0;nr=Math.min(T,3);text=`Heute keine große Denkaufgabe. Wähle ${nr} Klärungs- oder Fleißaufgaben. Das ist kein verlorener Tag.`}
   else if(!openD){nd=0;nr=T;text=`Wähle ${T} Aufgaben aus deiner Liste.`}
   else{nd=L===2&&d.zeit>=2?2:1;nr=T-nd;text=`Wähle ${nd} ${pl(nd,"Denkaufgabe","Denkaufgaben")} für den Anfang${L===2?", solange du frisch bist,":""} und ${nr} Fleiß- oder ${pl(nr,"Klärungsaufgabe","Klärungsaufgaben")} für danach.`}
-  if(d.schlaf===0&&L!==0)text+=" Wenig Schlaf: Plan eine echte Pause ein.";
+  text+=klarTxt(d);
   return {head,text,nd,nr,n:nd+nr}}
 function curStep(w){const list=stepsOf(w.ph);const def=w.ph===1?w.n-1:w.c;return view.step!=null&&view.step<list.length?view.step:def}
 function vHeute(){const date=today();const w=where(date);
@@ -580,10 +586,10 @@ function vHeute(){const date=today();const w=where(date);
 function vCheckin(d,w){const h=new Date().getHours();const wb=workBlocksOn(today());
   if(d.zeit==null&&wb.length){const m=wb.reduce((a,b)=>a+tmin(b.e)-tmin(b.s),0);d.zeit=Math.max(0,Math.min(3,Math.round(m/60)-1))}
   const A=anweisung(d,w);
-  return `<div class="row">${kI("Check-in · 1 Minute","Aus Energie, Schlaf und Zeit ergibt sich deine Anweisung: wie viele Aufgaben heute passen und welche Art. Mit guter Energie kommen Denkaufgaben zuerst, solange du frisch bist. Mit wenig Energie passen Klärungs- und Fleißaufgaben. Welche Aufgaben genau, wählst du selbst.")}<span class="m">${phName(w.ph)} · Tag ${w.n}</span></div>
+  return `<div class="row">${kI("Check-in · 1 Minute","Aus Energie, Klarheit und Zeit ergibt sich deine Anweisung: wie viele Aufgaben heute passen und welche Art. Ist noch vieles im Nebel, schreibst du zuerst deine nächsten drei kleinen Schritte auf. Mit guter Energie kommen Denkaufgaben zuerst, solange du frisch bist. Mit wenig Energie passen Klärungs- und Fleißaufgaben. Welche Aufgaben genau, wählst du selbst.")}<span class="m">${phName(w.ph)} · Tag ${w.n}</span></div>
   <h1>${h<12?"Guten Morgen.":h<18?"Kurzer Check-in.":"Guten Abend."}</h1>
   ${choice(d,"e",R5,"Energie",`<div class="row m"><span>leer</span><span>voller Energie</span></div>`)}
-  ${choice(d,"schlaf",SCHLAF,"Schlaf")}
+  ${klarScale(d)}
   ${choice(d,"zeit",ZEIT,"Zeit für die Arbeit heute",wb.length?`<p class="m">Laut Wochenplan: ${wb.map(b=>tfmt(b.s)+" bis "+tfmt(b.e)+" Uhr").join(", ")}</p>`:"")}
   ${A?`<div class="box acc"><span class="k r">Deine Anweisung für heute</span><p><b>${A.head}</b> ${A.text}</p></div>`:`<p class="m">Tippe alle drei an.</p>`}
   <div class="btns"><button class="btn" data-act="ciDone" ${A?"":"disabled style=\"opacity:.45\""}>${w.ph===2?"Aufgaben wählen":"Los geht’s"}</button><button class="lnk m" data-act="ciSkip" style="align-self:center">Heute ohne Check-in</button></div>`}
@@ -771,13 +777,13 @@ function vFortschritt(){const t=today();const w=where(t);const P=plan();
   const past=Math.max(0,Math.min(P.N,diffDays(P.st,t)+1));const daysOn=new Set(S.sessions.map(s=>s.d)).size;
   const wk=addDays(t,-wday(t));const wkMin=Array.from({length:7},(_,i)=>minsOn(addDays(wk,i))).reduce((a,b)=>a+b,0);
   const ci=last.map(d=>S.days[d]).filter(x=>x&&x.e!=null);const eAvg=ci.length?ci.reduce((a,x)=>a+x.e+1,0)/ci.length:null;
-  const sl=ci.filter(x=>x.schlaf!=null);const slMode=sl.length?SCHLAF[[0,1,2].sort((a,b)=>sl.filter(x=>x.schlaf===b).length-sl.filter(x=>x.schlaf===a).length)[0]]:null;
+  const kl=ci.filter(x=>x.klar!=null);const kAvg=kl.length?kl.reduce((a,x)=>a+x.klar+1,0)/kl.length:null;
   const n=S.gl.length,cnt=[0,1,2].map(a=>S.gl.filter(g=>g.a===a).length);
   return `${totalBox(true)}${typeBars()}<hr>
   <div class="q"><span class="k">Dein Monat</span>${monthBar(t)}<p class="m">${w.pre?"Startet am "+fmtDate(P.st,true):w.post?"Vorbei":countdown()}</p></div><hr>
   <div class="q">${kI("Arbeitszeit · letzte 7 Tage","Jeder Balken zeigt deine Fokuszeit an einem Tag. Der schwarze Strich ist dein Ziel aus dem Morgen-Check-in. Hast du es erreicht, wird der Balken kräftig rot.")}${chart}</div>
   <div class="tiles">${tile(n1(tot/60),"Stunden gesamt")}${tile(blocks,"Fokusblöcke")}${tile(daysOn+"/"+past,"Tage dran")}</div>
-  <p class="m">Diese Woche: ${hm(wkMin)}${eAvg!=null?` · Energie im Schnitt ${n1(eAvg)} von 5`:""}${slMode?` · Schlaf meist ${slMode}`:""}</p><hr>
+  <p class="m">Diese Woche: ${hm(wkMin)}${eAvg!=null?` · Energie im Schnitt ${n1(eAvg)} von 5`:""}${kAvg!=null?` · Klarheit im Schnitt ${n1(kAvg)} von 5`:""}</p><hr>
   <div class="q">${kI("Gliederung · "+cnt[2]+" von "+n+" fertig","Trag deine Kapitel ein und gib jedem einen Stand. Im Balken ist grau offen, hell begonnen und rot fertig.")}
   ${n?`<div class="glbar">${S.gl.map(g=>`<i class="a${g.a}"></i>`).join("")}</div>`:""}
   ${S.gl.map((g,i)=>{const id=bindObj(g);return `<div class="gl"><input type="text" aria-label="Kapitel ${i+1}" placeholder="z. B. 2 Theorie" data-b="${id}" data-k="t" value="${esc(g.t)}"><button class="x" data-act="glDel" data-i="${i}" aria-label="Kapitel entfernen">×</button><div class="seg">${STAND.map((l,a)=>`<button class="a${a}" data-act="amp" data-i="${i}" data-v="${a}" aria-pressed="${g.a===a}">${l}</button>`).join("")}</div></div>`}).join("")}
@@ -941,8 +947,8 @@ function demoData(){const s=blank();s.demo=true;s.started=true;s.goal="abgeben";
   s.park.push({t:"Zitat von Kuckartz zur Kategorienbildung noch einbauen?",d:addDays(today(),-1)});
   for(let i=0;i<5;i++)s.steps["p1_"+i]=true;
   const M=[[50,25,50],[75,50],[40,35,50],[30],[60,25,90],[90,45,50],[25],[55,50,25]];
-  for(let i=0;i<8;i++){const dt=addDays(s.start,i);s.days[dt]={pick:[],ci:true,e:[2,3,3,2,4,3,1,3][i],schlaf:[1,1,2,2,2,1,0,2][i],zeit:[1,1,1,0,2,2,0,1][i]};M[i].forEach(m=>s.sessions.push({d:dt,min:m,task:null}))}
-  s.days[today()]={pick:[1,2,12],ci:true,e:2,schlaf:1,zeit:1};s.sessions.push({d:today(),min:45,task:1});
+  for(let i=0;i<8;i++){const dt=addDays(s.start,i);s.days[dt]={pick:[],ci:true,e:[2,3,3,2,4,3,1,3][i],klar:[1,2,3,3,4,2,1,3][i],zeit:[1,1,1,0,2,2,0,1][i]};M[i].forEach(m=>s.sessions.push({d:dt,min:m,task:null}))}
+  s.days[today()]={pick:[1,2,12],ci:true,e:2,klar:3,zeit:1};s.sessions.push({d:today(),min:45,task:1});
   s.blocks=[{id:1,wd:0,s:"09:00",e:"11:00",typ:"w",t:""},{id:2,wd:0,s:"14:00",e:"15:00",typ:"t",t:"Kita"},{id:3,wd:1,s:"07:00",e:"11:00",typ:"t",t:"Job"},{id:4,wd:1,s:"13:00",e:"15:00",typ:"w",t:""},{id:5,wd:2,s:"09:00",e:"11:00",typ:"w",t:""},{id:6,wd:2,s:"12:00",e:"16:00",typ:"t",t:"Job"},{id:7,wd:3,s:"13:00",e:"15:00",typ:"w",t:""},{id:8,wd:4,s:"09:00",e:"10:30",typ:"w",t:""},{id:9,wd:5,s:"10:00",e:"12:00",typ:"w",t:""},{id:10,wd:6,s:"15:00",e:"17:00",typ:"t",t:"Familie"}];s.bid=11;
   return s}
 
