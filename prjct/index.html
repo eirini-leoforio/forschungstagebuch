@@ -408,6 +408,11 @@ details.box.vert summary::after{color:#591427;font-weight:700;font-size:20px;lin
 .box.info,.box.def{background:var(--soft);border:0;border-left:3px solid #591427}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .box.info .k{color:#F2C4CF}:root:not([data-theme="light"]) .box.info,:root:not([data-theme="light"]) .box.def{border-left-color:#D27C91}}
 :root[data-theme="dark"] .box.info .k{color:#F2C4CF}:root[data-theme="dark"] .box.info,:root[data-theme="dark"] .box.def{border-left-color:#D27C91}
+
+.box.feat{border:1.5px solid #591427;border-left-width:6px}
+.box.feat .k{color:#591427}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .box.feat{border-color:#D27C91}:root:not([data-theme="light"]) .box.feat .k{color:#F2C4CF}}
+:root[data-theme="dark"] .box.feat{border-color:#D27C91}:root[data-theme="dark"] .box.feat .k{color:#F2C4CF}
 </style>
 </head><body>
 <header class="top"><div class="in">
@@ -553,7 +558,8 @@ const PHASEN=[
   info:[{t:"Was sagt eine Zahl?",x:"MAXQDA zeigt dir schnell, wie oft ein Code vorkommt. Das ist ein Hinweis, aber kein Ergebnis. Frag dich bei jeder Zahl, was sie für deine Forschungsfrage bedeutet, und denk mit, statt nur zu zählen."}],
   coach:"Du kommst mit deinem Kategoriensystem nicht weiter oder weißt nicht, welche *Story* dein Material erzählt? Genau da schauen wir in der Forschungsbegleitung gemeinsam drauf.",
   lit:["Kuckartz, U. & Rädiker, S. (2024). Qualitative Inhaltsanalyse. Methoden, Praxis, Umsetzung mit Software und künstlicher Intelligenz (6. Aufl.). Beltz Juventa.","Mayring, P. (2022). Qualitative Inhaltsanalyse. Grundlagen und Techniken (13. Aufl.). Beltz.","Braun, V. & Clarke, V. (2022). Thematic Analysis. A Practical Guide. Sage.","Braun, V. & Clarke, V. (2006). Using thematic analysis in psychology. Qualitative Research in Psychology, 3(2), 77–101.","Strauss, A. & Corbin, J. (1996). Grounded Theory. Grundlagen qualitativer Sozialforschung. Beltz PVU.","Strübing, J. (2021). Grounded Theory (4. Aufl.). Springer VS.","Meuser, M. & Nagel, U. (1991). ExpertInneninterviews – vielfach erprobt, wenig bedacht. In D. Garz & K. Kraimer (Hrsg.), Qualitativ-empirische Sozialforschung (S. 441–471). Westdeutscher Verlag."],
-  mat:["maxqda"]},
+  feat:{k:"maxqda",x:"Für die Auswertung habe ich das MAXQDA-Paket entwickelt. Es zeigt dir Schritt für Schritt, wie du dein Kategoriensystem aufbaust, einen Codierleitfaden schreibst, mit Memos arbeitest und aus deinen Codes die *Story* deiner Ergebnisse entwickelst. Mit Vorlagen und vielen Ansichten aus MAXQDA. Kein Klick-Tutorial, sondern die Denkweise dahinter und mein eigenes Vorgehen aus vielen Jahren Forschungspraxis."},
+  mat:[]},
  {id:"schreib1",t:"Schreibphase 1: Deine Empirie",kurz:"Empirie schreiben",w:2.5,kap:"Methodenteil und Ergebnisse",
   def:{t:"Was ist eigentlich der Unterschied zwischen Ergebnis und Interpretation?",x:"Im Ergebnisteil zeigst du, was in deinem Material steckt: Was sagen deine Interview\u00ADpartner:innen, welche Muster zeigen sich, welche Unterschiede gibt es? Belegt wird mit Zitaten. Die Interpretation geht einen Schritt weiter. Sie fragt, was das bedeutet und wie es sich zu Theorie und Forschungsstand verhält. Das gehört in die Diskussion. Als Faustregel: Im Ergebnisteil sprechen vor allem deine Daten, in der Diskussion sprichst du."},
   ziel:"Jetzt schreibst du, und zwar zuerst das, was du am besten kennst: deinen Methodenteil und deine Ergebnisse. Der Methodenteil ist ein guter Einstieg. Du brauchst wenig Literatur, weißt genau, was du gemacht hast, der Umfang ist absehbar, und beim Schreiben durchdringst du noch einmal alles. Danach folgt der Ergebnisteil, die Grundlage für alles andere.",
@@ -896,6 +902,7 @@ const SUB={
   <div class="q"><span class="k">Aus meiner Praxis</span><p class="say">${md(p.tipp)}</p></div>
   ${(p.info||[]).map(v=>`<div class="box info"><span class="k">Gut zu wissen</span><b>${v.t}</b><p>${md(v.x)}</p></div>`).join("")}
   ${(p.vert||[]).map(v=>`<details class="box vert"><summary><span><span class="k">Vertiefung · zum Aufklappen</span>${v.t}</span></summary>${v.intro?`<p>${md(v.intro)}</p>`:""}<ul class="ul">${v.punkte.map(t=>`<li>${md(t)}</li>`).join("")}</ul></details>`).join("")}
+  ${p.feat?(()=>{const [n,,u]=MAT[p.feat.k];return `<div class="box feat"><span class="k">Das Material zu dieser Phase</span><b>${n}</b><p>${md(p.feat.x)}</p><a class="btn" href="${u}" target="_blank" rel="noopener">Zum MAXQDA-Paket</a></div>`})():""}
   ${matLinks(p.mat||[])}
   ${p.lit&&p.lit.length?`<details class="box"><summary>Zum Weiterlesen</summary><ul class="ul m">${p.lit.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></details>`:""}
   <div class="row">${i>0?`<button class="lnk" data-act="sub" data-t="phase" data-n="${i-1}">‹ Phase ${i}</button>`:"<span></span>"}${i<PHASEN.length-1?`<button class="lnk" data-act="sub" data-t="phase" data-n="${i+1}">Phase ${i+2} ›</button>`:""}</div>
