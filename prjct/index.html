@@ -962,7 +962,7 @@ const SUB={
   <div class="stats"><div><span class="bignum">${d}</span><span class="m">${pl(d,"Tag","Tage")}</span></div><div><span class="bignum">${PHASEN.length}</span><span class="m">Phasen</span></div><div><span class="bignum">${doneSteps()}</span><span class="m">Häkchen</span></div></div></div>
   <div class="box coach"><span class="k">Mündliche Prüfung oder Verteidigung?</span><p>Wenn du deine Arbeit noch mündlich verteidigen musst, melde dich gern. Ich unterstütze dich gern bei der Vorbereitung, damit du sicher und gelassen in die Prüfung gehst.</p><a href="${LINKS.gespraech}" target="_blank" rel="noopener">Zum kostenlosen Erstgespräch ›</a></div>
   <div class="box fill"><span class="k">Wie war es mit PRJCT?</span><p>Ich freue mich sehr über deine Rückmeldung: Hat dir die App geholfen? Wo hättest du dir noch Ergänzungen gewünscht, und was ist unklar geblieben? Mir liegt es am Herzen, dass jedes Projekt bestmöglich begleitet wird, und ich freue mich, wenn das mit dieser App gelungen ist.</p><button class="btn" data-act="sub" data-t="feedback">Feedback geben</button></div>
-  <p class="say">Ich wünsche dir alles Gute für alles, was jetzt kommt!<br>Mascha</p>`},
+  <p class="say">Ich wünsche dir alles Gute für deinen weiteren beruflichen und privaten Weg! Wenn dir PRJCT geholfen hat, freue ich mich, wenn du die App an andere weiterempfiehlst, die sie gebrauchen können.<br>Mascha</p>`},
  feedback(){const o=S.fb;return `${back()}<h1>Dein Feedback</h1><p class="lead">Danke, dass du dir die Zeit nimmst! Gesendet werden nur diese Antworten, deine Einträge bleiben auf deinem Gerät.</p>
   ${FBQ.map(([k,q,c])=>c?choice(o,k,c,q):ta(o,k,q,null,3)).join("")}<button class="btn" data-act="fbSend">Per E-Mail senden</button>`}
 };
