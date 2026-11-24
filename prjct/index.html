@@ -388,6 +388,8 @@ nav.tabs button[aria-current="page"]::before{background:#591427}
 .box.coach{border:1.5px solid #000}
 .box.coach a{font-weight:700;color:#591427}
 .par{font-size:14px;color:var(--mute);border-left:2px solid var(--line);padding-left:10px}
+/* 24.11. Blocksatz mit Silbentrennung im Fließtext */
+main p,main li,.box p{text-align:justify;-webkit-hyphens:auto;hyphens:auto;hyphenate-limit-chars:6 3 3}
 </style>
 </head><body>
 <header class="top"><div class="in">
@@ -408,7 +410,7 @@ const PHASEN=[
   ziel:"Du legst fest, in welche Richtung du dein Thema ausarbeitest. Hast du ein Exposé geschrieben, bist du schon gut eingearbeitet: Forschungsfrage, Arbeitsplan, meist auch eine erste Gliederung und ein Zeitplan stehen. Dann gehst du diese Phase zügig durch und prüfst nur, was sich seitdem verändert hat. Bei vielen Bachelor- und Masterarbeiten ist aber gar kein Exposé nötig. Du hast dein Thema bekommen, und jetzt entwickelst du daraus eine Arbeitsversion deiner Forschungsfrage.",
   ergebnis:"Eine Arbeitsversion deiner Forschungsfrage und deines Titels, eine erste Gliederung und ein Zeitplan bis zur Abgabe.",
   schritte:["Falls vorhanden: Exposé noch einmal lesen und markieren, was sich seitdem verändert hat","Erkenntnisinteressen sammeln: Was interessiert mich an diesem Thema wirklich? Alles aufschreiben, ohne zu bewerten","Überschlagen, welche Ausrichtungen das Thema zulässt, und eine davon wählen","Forschungsfrage und Titel als Arbeitsversion aufschreiben","Erste Gliederung anlegen, in Word mit Formatvorlagen","Zeitplan erstellen: Phasen, Abgabe, Puffer, feste Arbeitszeiten in der Woche","Mit der Betreuung klären: Erwartungen, Erreichbarkeit, nächster Termin"],
-  stolper:["Die Forschungsfrage ist zu groß. Eine Masterarbeit beantwortet eine Frage gut, nicht fünf halb.","Auf die perfekte Frage warten und deshalb nicht anfangen. Am Anfang reicht eine Arbeitsversion.","Der Zeitplan hat keinen Puffer. Rechne damit, dass Interviews ausfallen und Rückmeldungen dauern."],
+  stolper:["Die Forschungsfrage ist zu groß. Lieber eine klar umrissene Frage gründlich beantworten als mehrere Fragen nur oberflächlich.","Auf die perfekte Frage warten und deshalb nicht anfangen. Am Anfang reicht eine Arbeitsversion.","Der Zeitplan hat keinen Puffer. Rechne damit, dass Interviews ausfallen und Rückmeldungen dauern."],
   blick:["Passt die Forschungsfrage zu einer qualitativen Herangehensweise? Fragen nach dem Wie und Warum, nach Erleben und Deutungen eignen sich, Fragen nach dem Wie viel nicht.","Zieht sich die Forschungsfrage durch die ganze Arbeit? Genau das ist der rote Faden."],
   tipp:"Gerade in der qualitativen Forschung ist es in Ordnung, wenn Forschungsfrage und Titel am Anfang erst ein Arbeitsentwurf sind. Beides schärft sich mit der weiteren Recherche. Spürst du noch Unsicherheit und kannst die Frage noch nicht klar ausformulieren, dann starte mit Phase 2: Tauch mindestens eine, besser zwei Wochen tief in die Literatur ein und formuliere die Frage danach neu.",
   vert:[{t:"Forschungsfrage ausformulieren: Worauf es ankommt",
