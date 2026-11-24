@@ -413,6 +413,20 @@ details.box.vert summary::after{color:#591427;font-weight:700;font-size:20px;lin
 .box.feat .k{color:#591427}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .box.feat{border-color:#D27C91}:root:not([data-theme="light"]) .box.feat .k{color:#F2C4CF}}
 :root[data-theme="dark"] .box.feat{border-color:#D27C91}:root[data-theme="dark"] .box.feat .k{color:#F2C4CF}
+
+.fertig{position:relative;overflow:hidden;padding:36px 0 4px;text-align:center}
+.fertig .lead{text-align:center}
+h1.gross{font-size:44px;line-height:1.05;margin:6px 0 10px;color:#591427;letter-spacing:-.01em}
+.konfetti{position:absolute;inset:0;pointer-events:none}
+.konfetti i{position:absolute;top:-12px;width:8px;height:14px;border-radius:2px;opacity:0;animation:fall 3.2s ease-in 1 forwards}
+@keyframes fall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(420px) rotate(540deg)}}
+@media (prefers-reduced-motion:reduce){.konfetti{display:none}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0 4px}
+.stats>div{background:#F6E4E9;border-radius:6px;padding:12px 6px;display:flex;flex-direction:column;align-items:center}
+.stats .bignum{color:#591427}
+.fertig+.box,.fertig~p.say{margin-top:4px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h1.gross,:root:not([data-theme="light"]) .stats .bignum{color:#F2C4CF}:root:not([data-theme="light"]) .stats>div{background:#2A1820}}
+:root[data-theme="dark"] h1.gross,:root[data-theme="dark"] .stats .bignum{color:#F2C4CF}:root[data-theme="dark"] .stats>div{background:#2A1820}
 </style>
 </head><body>
 <header class="top"><div class="in">
@@ -801,6 +815,7 @@ function ownL(i){return (S.own||{})[PHASEN[i].id]||[]}
 function phN(i){return PHASEN[i].schritte.length+ownL(i).length}
 function phDone(i){return PHASEN[i].schritte.filter((_,j)=>S.done[sk(i,j)]).length+ownL(i).filter(x=>x.d).length}
 function phFull(i){return phDone(i)===phN(i)}
+function celebrate(){if(pct()===100&&!S.fertig){S.fertig=today();save();view.sub={t:"fertig"};render();scrollTo(0,0);return true}if(pct()<100&&S.fertig){S.fertig=null}return false}
 function autoPlan(i){if(!S.plan||i>=PHASEN.length-1)return;const from=arbeit();if(from<=i||phFull(from))return;const t0=today()<S.start?S.start:today();const end=P().end;if(end<=t0)return;const x=S.plan[i];if(x&&x.e>=t0&&x.s<t0)x.e=addDays(t0,-1);const pl=makePlan(from,t0,end);S.plan=S.plan.map((y,k)=>k<from?y:pl[k])}
 function arbeit(){const i=PHASEN.findIndex((_,k)=>!phFull(k));return i<0?PHASEN.length-1:i}
 function totSteps(){return PHASEN.reduce((a,p,i)=>a+phN(i),0)}
@@ -882,7 +897,8 @@ function vJetzt(){const t=today(),p=P();
   const cd=`<div class="box"><div class="row"><span class="k">Bis zur Abgabe</span><span class="m">${fmtDate(p.end)}</span></div>
    <div class="row"><span class="bignum">${Math.max(0,restDays())}</span><span class="m" style="flex:1">${pl(restDays(),"Tag","Tage")}</span><span class="bignum">${pct()}<small>%</small></span><span class="m">geschafft</span></div>
    <div class="bar two"><i style="width:${pct()}%"></i><em style="left:${tp*100}%"></em></div><p class="m">Balken: dein Fortschritt im Forschungsprozess. Strich: wie viel Zeit vergangen ist.</p></div>`;
-  return `${fr}${wc}${phase}${hint}${nxt}${cd}<div class="btns"><button class="btn q2" data-tab="hilfe">Kopf blockiert? Zum Karteikasten</button></div>`}
+  const fin=pct()===100?`<button class="box fill fin" data-act="sub" data-t="fertig" style="text-align:left"><span class="k">Geschafft</span><b>Alle Phasen abgeschlossen. Zu deiner Abschlussseite ›</b></button>`:"";
+  return `${fin}${fr}${wc}${phase}${hint}${nxt}${cd}<div class="btns"><button class="btn q2" data-tab="hilfe">Kopf blockiert? Zum Karteikasten</button></div>`}
 
 // ================= Phasen =================
 function gantt(){const p=P(),t=today();const tp=Math.max(0,Math.min(1,diffDays(p.st,t)/p.N));
@@ -940,6 +956,13 @@ const SUB={
   <button class="btn" data-act="notizSave">Speichern</button>`},
  log(s){const e=S.log.find(x=>x.id===+s.id);if(!e)return back();
   return `${back()}<h1>Entscheidung</h1><p class="m">${fmtDate(e.d,true)}${e.ph!=null?" · Phase "+(e.ph+1):""}</p>${ta(e,"t","Was hast du entschieden?",null,3)}${ta(e,"w","Warum?",null,3)}${ta(e,"alt","Alternativen",null,2)}<button class="lnk m" data-act="logDel" data-id="${e.id}">Eintrag löschen</button>`},
+ fertig(){const d=S.start?Math.max(1,diffDays(S.start,S.fertig||today())):0;const conf=Array.from({length:28},(_,i)=>`<i style="left:${(i*37)%100}%;animation-delay:${(i%7)*.25}s;background:${["#591427","#A94A63","#D27C91","#EBC3CD","#111"][i%5]}"></i>`).join("");
+  return `${back()}<div class="fertig"><div class="konfetti" aria-hidden="true">${conf}</div><span class="k r">Abgeschlossen</span><h1 class="gross">Geschafft!</h1>
+  <p class="lead">Herzlichen Glückwunsch, deine Arbeit ist fertig! Hinter dir liegen Monate voller Lesen, Fragen, Zweifeln, Schreiben und Überarbeiten. Du hast ein eigenes Forschungsprojekt von der ersten Frage bis zur Abgabe durchgezogen. Sei stolz auf dich, und jetzt wird gefeiert.</p>
+  <div class="stats"><div><span class="bignum">${d}</span><span class="m">${pl(d,"Tag","Tage")}</span></div><div><span class="bignum">${PHASEN.length}</span><span class="m">Phasen</span></div><div><span class="bignum">${doneSteps()}</span><span class="m">Häkchen</span></div></div></div>
+  <div class="box coach"><span class="k">Mündliche Prüfung oder Verteidigung?</span><p>Wenn du deine Arbeit noch mündlich verteidigen musst, melde dich gern. Ich unterstütze dich gern bei der Vorbereitung, damit du sicher und gelassen in die Prüfung gehst.</p><a href="${LINKS.gespraech}" target="_blank" rel="noopener">Zum kostenlosen Erstgespräch ›</a></div>
+  <div class="box fill"><span class="k">Wie war es mit PRJCT?</span><p>Ich freue mich sehr über deine Rückmeldung: Hat dir die App geholfen? Wo hättest du dir noch Ergänzungen gewünscht, und was ist unklar geblieben? Mir liegt es am Herzen, dass jedes Projekt bestmöglich begleitet wird, und ich freue mich, wenn das mit dieser App gelungen ist.</p><button class="btn" data-act="sub" data-t="feedback">Feedback geben</button></div>
+  <p class="say">Ich wünsche dir alles Gute für alles, was jetzt kommt!<br>Mascha</p>`},
  feedback(){const o=S.fb;return `${back()}<h1>Dein Feedback</h1><p class="lead">Danke, dass du dir die Zeit nimmst! Gesendet werden nur diese Antworten, deine Einträge bleiben auf deinem Gerät.</p>
   ${FBQ.map(([k,q,c])=>c?choice(o,k,c,q):ta(o,k,q,null,3)).join("")}<button class="btn" data-act="fbSend">Per E-Mail senden</button>`}
 };
@@ -1006,11 +1029,11 @@ const ACT={
  dur(t){S.dur=+t.dataset.v;S.end=addMonths(S.start,DUR[S.dur]);save();keepScroll(render)},
  startApp(){S.plan=makePlan(S.from,S.start,S.end);for(let i=0;i<S.from;i++)PHASEN[i].schritte.forEach((_,j)=>S.done[sk(i,j)]=true);S.started=true;saveNow();go("jetzt")},
  sub(t){const x={};if(t.dataset.n!=null)x.n=t.dataset.n;if(t.dataset.id!=null)x.id=t.dataset.id;if(t.dataset.a!=null)x.art=+t.dataset.a;sub(t.dataset.t,x)},
- step(t){const k=sk(+t.dataset.i,+t.dataset.j);S.done[k]=!S.done[k];const i=+t.dataset.i;const fin=S.done[k]&&phFull(i);if(fin)autoPlan(i);save();keepScroll(render);if(S.done[k])toast(fin?(i<PHASEN.length-1?`Phase ${i+1} geschafft! Die restlichen Phasen sind neu verteilt.`:`Phase ${i+1} geschafft! ${pct()} % insgesamt.`):`Abgehakt. ${pct()} % geschafft.`)},
+ step(t){const k=sk(+t.dataset.i,+t.dataset.j);S.done[k]=!S.done[k];const i=+t.dataset.i;const fin=S.done[k]&&phFull(i);if(fin)autoPlan(i);save();if(celebrate())return;keepScroll(render);if(S.done[k])toast(fin?(i<PHASEN.length-1?`Phase ${i+1} geschafft! Die restlichen Phasen sind neu verteilt.`:`Phase ${i+1} geschafft! ${pct()} % insgesamt.`):`Abgehakt. ${pct()} % geschafft.`)},
  ownAdd(t){const i=+t.dataset.i,el=$("#own"+i),v=(el&&el.value||"").trim();if(!v)return;S.own=S.own||{};const k=PHASEN[i].id;(S.own[k]=S.own[k]||[]).push({id:S.nid++,t:v,d:false});save();keepScroll(render)},
- ownTog(t){const i=+t.dataset.i,x=ownL(i).find(y=>y.id===+t.dataset.id);if(!x)return;x.d=!x.d;const fin=x.d&&phFull(i);if(fin)autoPlan(i);save();keepScroll(render);if(x.d)toast(fin&&i<PHASEN.length-1?`Phase ${i+1} geschafft! Die restlichen Phasen sind neu verteilt.`:`Abgehakt. ${pct()} % geschafft.`)},
+ ownTog(t){const i=+t.dataset.i,x=ownL(i).find(y=>y.id===+t.dataset.id);if(!x)return;x.d=!x.d;const fin=x.d&&phFull(i);if(fin)autoPlan(i);save();if(celebrate())return;keepScroll(render);if(x.d)toast(fin&&i<PHASEN.length-1?`Phase ${i+1} geschafft! Die restlichen Phasen sind neu verteilt.`:`Abgehakt. ${pct()} % geschafft.`)},
  ownDel(t){const i=+t.dataset.i,k=PHASEN[i].id;S.own[k]=ownL(i).filter(y=>y.id!==+t.dataset.id);save();keepScroll(render)},
- phClose(t){const i=+t.dataset.i;PHASEN[i].schritte.forEach((_,j)=>S.done[sk(i,j)]=true);ownL(i).forEach(x=>x.d=true);autoPlan(i);save();render();toast(i<PHASEN.length-1?`Phase ${i+1} abgeschlossen. Die restlichen Phasen sind neu verteilt.`:"Geschafft!")},
+ phClose(t){const i=+t.dataset.i;PHASEN[i].schritte.forEach((_,j)=>S.done[sk(i,j)]=true);ownL(i).forEach(x=>x.d=true);autoPlan(i);save();if(celebrate())return;render();toast(i<PHASEN.length-1?`Phase ${i+1} abgeschlossen. Die restlichen Phasen sind neu verteilt.`:"Geschafft!")},
  replan(){const o=view.sub;if(!S.end||S.end<=today()){toast("Bitte ein Abgabedatum in der Zukunft wählen");return}const pl_=makePlan(+o.from,today(),S.end);S.plan=S.plan.map((x,i)=>i<+o.from?x:pl_[i]);save();view.sub=null;go("phasen");toast("Plan neu verteilt")},
  wcheck(){sub("wcheck")},
  wkTog(t){const w=wkObj();const x=w.next[+t.dataset.i];x.d=!x.d;save();keepScroll(render);if(x.d)toast("Erledigt. Weiter so!")},
