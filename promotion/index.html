@@ -298,13 +298,16 @@ const STUNDEN=["unter 1 Std.","1–4 Std.","über 4 Std."];
 const STD_MID=[0.5,2.5,5];
 const STOER=["Handy","Mails und Nachrichten","Job","Familie","Krankheit oder Notfall","Eigener Kopf","Keiner","Eigener Störfaktor"];
 const TYP=["Promotionsarbeitstag","Bewusste Auszeit"];
+const TYP_WAHL=["Fest eingeplantes Zeitfenster für die Promotion","Geplante Auszeit von der Promotion / andere Verpflichtungen"];
+function stL(d){return Array.isArray(d.st)?d.st:(d.st==null?[]:[d.st])}
+function stTxt(d){return stL(d).filter(i=>i!==6).map(i=>i===7?esc(d.stE||"eigener"):STOER[i]).join(", ")}
 
 // ================= Hilfecenter (nach dem SOS-Reset-Paket) =================
 const HILFE=[
  {id:"handy",t:"Handy und Ablenkung",k:"Ich lasse mich ständig rausreißen.",
   say:"Mein Fokus gehört heute meinem Projekt, nicht meinem Handy.",
-  was:"Der Griff zum Handy kommt selten zufällig. Oft ist er eine kleine Flucht, wenn die Aufgabe gerade kognitiv anstrengend, unklar oder unangenehm ist: Das Handy bietet leichte Berieselung ohne Anstrengung. Jede Unterbrechung kostet dann mehr als die Sekunden, die sie dauert, weil der Kopf danach erst wieder in die Aufgabe finden muss. Mit Willenskraft allein gewinnt man dagegen selten. Leichter wird es, wenn du den Impuls bemerkst, ihn kurz aufschiebst und deine nächsten Schritte so klein machst, dass der Ausweg weniger lockt.",
-  tipps:["Die Zehn-Minuten-Regel nach Nir Eyal: Wenn der Impuls kommt, sag dir bewusst „Alles klar, in zehn Minuten“ und schau einmal kurz auf die Uhr. Meist ist der dringende Impuls bis dahin verschwunden.","Benenne den Impuls: Was will ich gerade nicht fühlen oder nicht tun? Schon das Bemerken nimmt ihm Kraft.","Mach den nächsten Schritt kleiner und konkreter. Je genauer du weißt, was als Nächstes dran ist, desto seltener greifst du zum Handy.","Leg das Handy für deinen Fokusblock in einen anderen Raum, nicht nur umgedreht auf den Tisch, und schalte einen Fokus- oder Nicht-stören-Modus ein.","Plan Handyzeit bewusst ein, zum Beispiel als Belohnung nach dem Block, mit Timer.","Arbeite mit Pomodoro: 25 Minuten arbeiten, 5 Minuten Pause. Ein Study-with-me-Video auf YouTube gibt den Takt vor."],
+  was:"Der Griff zum Handy kommt selten zufällig. Oft ist er eine kleine Flucht, wenn die Aufgabe gerade kognitiv anstrengend, unklar oder unangenehm ist: Das Handy bietet leichte Berieselung ohne Anstrengung. Jede Unterbrechung kostet dann mehr als die Sekunden, die sie dauert, weil der Kopf danach erst wieder in die Aufgabe finden muss. Mit Willenskraft allein gewinnt man dagegen selten. Leichter wird es, wenn du den Impuls bemerkst, ihn kurz aufschiebst und deine nächsten Schritte so klein machst, dass der Ausweg weniger lockt. Natürlich ist das Handy heute oft auch Arbeitswerkzeug, für Mails und dienstliche Angelegenheiten. Gerade in deiner Promotionszeit sollte es trotzdem nicht zur Tür werden, durch die du mitten im Fokusblock in einen anderen Bereich wechselst. Genau dieses Hin- und Herspringen vermeidet Time-Blocking: Mails und Dienstliches bekommen ihr eigenes Zeitfenster, deine Promotion ihres. Du findest es unter „Ich“ → „Meine Woche“.",
+  tipps:["Die Zehn-Minuten-Regel nach Nir Eyal: Wenn der Impuls kommt, sag dir bewusst „Alles klar, in zehn Minuten“ und schau einmal kurz auf die Uhr. Meist ist der dringende Impuls bis dahin verschwunden.","Benenne den Impuls: Was will ich gerade nicht fühlen oder nicht tun? Schon das Bemerken nimmt ihm Kraft.","Mach den nächsten Schritt kleiner und konkreter. Je genauer du weißt, was als Nächstes dran ist, desto seltener greifst du zum Handy.","Leg das Handy für deinen Fokusblock in einen anderen Raum, nicht nur umgedreht auf den Tisch, und schalte einen Fokus- oder Nicht-stören-Modus ein.","Plan Handyzeit bewusst ein: dienstliche Mails und Nachrichten in einem eigenen Zeitfenster, privates Scrollen als Belohnung nach dem Block, mit Timer.","Arbeite mit Pomodoro: 25 Minuten arbeiten, 5 Minuten Pause. Ein Study-with-me-Video auf YouTube gibt den Takt vor."],
   lit:["Eyal, N. (2019). Indistractable. How to Control Your Attention and Choose Your Life. Dallas: BenBella Books. Deutsch: Unablenkbar (2019).","Monsell, S. (2003). Task switching. Trends in Cognitive Sciences, 7(3), 134–140.","Cirillo, F. (2018). The Pomodoro Technique. New York: Currency."]},
  {id:"aufschieben",t:"Aufschieben",k:"Ich nehme es mir vor und fange doch nicht an.",
   say:"Erst anfangen, dann nachdenken.",
@@ -377,6 +380,7 @@ let BIND={};let bindId=0;
 function bindObj(o){const id="o"+(++bindId);BIND[id]=o;return id}
 function ta(o,key,label,hint,rows){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<div><label class="q" for="${fid}">${label}${hint?`<span class="hn">${hint}</span>`:""}</label><textarea id="${fid}" rows="${rows||2}" data-b="${id}" data-k="${key}">${esc(o[key])}</textarea></div>`}
 function inp(o,key,label,ph,hint){const id=bindObj(o);const fid="f_"+id+"_"+key;return `<div><label class="q" for="${fid}">${label}${hint?`<span class="hn">${hint}</span>`:""}</label><input type="text" id="${fid}" placeholder="${esc(ph||"")}" data-b="${id}" data-k="${key}" value="${esc(o[key])}"></div>`}
+function chipsM(o,key,opts,label){const id=bindObj(o);const a=stL(o);return `<div>${label?`<span class="q">${label}</span>`:""}<div class="chips" role="group">${opts.map((t,i)=>`<button class="chip" data-b="${id}" data-km="${key}" data-v="${i}" aria-pressed="${a.includes(i)}">${t}</button>`).join("")}</div></div>`}
 function chips(o,key,opts,label){const id=bindObj(o);return `<div>${label?`<span class="q">${label}</span>`:""}<div class="chips" role="group">${opts.map((t,i)=>`<button class="chip" data-b="${id}" data-k="${key}" data-v="${i}" aria-pressed="${o[key]===i}">${t}</button>`).join("")}</div></div>`}
 function scale(o,key,label,n){n=n||9;const id=bindObj(o);return `<div><span class="q">${label}</span><div class="scale ${n===10?"s10":""}" role="group" aria-label="${label}">${Array.from({length:n},(_,i)=>`<button data-b="${id}" data-k="${key}" data-v="${i+1}" aria-pressed="${o[key]===i+1}" aria-label="${i+1}">${i+1}</button>`).join("")}</div><div class="scale-l"><span>leer</span><span>voller Energie</span></div></div>`}
 function todos(o,key,label,n,hint){if(!Array.isArray(o[key]))o[key]=[];while(o[key].length<n)o[key].push({t:"",d:false});const id=bindObj(o[key]);return `<div><span class="q">${label}${hint?`<span class="hn">${hint}</span>`:""}</span>${o[key].map((t,i)=>`<div class="todo"><button class="cbx" aria-label="erledigt" data-b="${id}" data-i="${i}" data-todo="1" aria-pressed="${!!t.d}"></button><input type="text" aria-label="${label} ${i+1}" data-b="${id}" data-i="${i}" data-todot="1" value="${esc(t.t)}"></div>`).join("")}</div>`}
@@ -395,6 +399,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)r
     if(t.dataset.rr){const it=o[+t.dataset.i];it.r=it.r===t.dataset.rr?null:t.dataset.rr;save();keepScroll(render);return}
     if(t.dataset.rx){o.splice(+t.dataset.i,1);if(!o.length)o.push({t:"",r:null});save();keepScroll(render);return}
     if(t.dataset.radd){o.push({t:"",r:null});save();keepScroll(render);return}
+    if(t.dataset.km){const v=+t.dataset.v;let a=stL(o).slice();if(a.includes(v))a=a.filter(x=>x!==v);else if(v===6)a=[6];else a=a.filter(x=>x!==6).concat(v);o[t.dataset.km]=a.length?a:null;save();keepScroll(render);return}
     if(t.dataset.k){const v=+t.dataset.v;o[t.dataset.k]=o[t.dataset.k]===v?null:v;save();keepScroll(render);return}
   }
   const a=t.dataset.act;if(a&&ACT[a])ACT[a](t);
@@ -456,7 +461,7 @@ const HW=(l,v,s)=>v&&String(v).trim()?`<span class="lbl">${l}</span><div class="
 const HBOX=c=>`<svg class="hbox" viewBox="0 0 26 26" aria-label="${c?"erledigt":"offen"}"><path d="M5.4 6.6c4.2-.9 9.3-1.2 14.2-.5.6 4.3.4 9.1.3 13.6-4.7.7-9.8.6-14.6.2-.8-4.4-.6-8.9 0-13.5.3 0 .7.1 1.1.3"/>${c?`<path class="hk" d="M7.6 13.4c1.3 1 2.5 2.6 3.5 4.6 2.6-6 6.4-11.4 12-16"/>`:""}</svg>`;
 const PEN=(d,p)=>`<button class="penbtn" data-act="edit" data-id="${d.id}" data-part="${p}" aria-label="${p==="morgen"?"Morgen":"Abend"} bearbeiten">${ICON.pen}<span>Bearbeiten</span></button>`;
 function bookPage(d){const [k,t,q]=bandFor(d);const isA=d.typ===1;const td=(d.todos||[]).filter(x=>x.t&&x.t.trim());
-  const morningEmpty=!d.eM&&!d.eMw&&d.schlaf==null&&!d.fokus&&!td.length&&!d.aff&&!d.aGrund;const eveningEmpty=!d.eA&&!d.eAw&&!d.abbr&&d.st==null&&d.fa==null&&!d.plus&&!d.minus&&!d.geschafft&&!d.erk&&!d.haenge&&d.std==null;
+  const morningEmpty=!d.eM&&!d.eMw&&d.schlaf==null&&!d.fokus&&!td.length&&!d.aff&&!d.aGrund;const eveningEmpty=!d.eA&&!d.eAw&&!d.abbr&&!stL(d).length&&d.fa==null&&!d.plus&&!d.minus&&!d.geschafft&&!d.erk&&!d.haenge&&d.std==null;
   return dayHead(d)+`<article class="paperpage" aria-label="Tagebuchseite">
   <div class="date">${fmtDate(d.date,true)}</div>
   <div class="meta">${TYP[isA?1:0]}${isA&&d.aArt!=null?` · ${["selbst gewählt","fremdbestimmt"][d.aArt]}`:""}</div>
@@ -473,7 +478,7 @@ function bookPage(d){const [k,t,q]=bandFor(d);const isA=d.typ===1;const td=(d.to
   ${HW("Begründung",d.eAw,1)}
   ${d.abbr?`<div class="meta" style="color:var(--faden)">Fremdbestimmt abgebrochen${d.abbrW?": "+esc(d.abbrW):""}</div>`:""}
   ${!isA&&d.fa!=null?`<div class="meta">Feierabend ${["selbst gewählt","fremdbestimmt"][d.fa]}</div>`:""}
-  ${d.st!=null&&d.st!==6?`<div class="meta">Störfaktor: ${d.st===7?esc(d.stE||"eigener"):STOER[d.st]}</div>`:""}
+  ${stTxt(d)?`<div class="meta">Störfaktoren: ${stTxt(d)}</div>`:""}
   ${HW("Energie gegeben",d.plus)}${HW("Energie gezogen",d.minus)}${HW("Geschafft",d.geschafft)}${HW("Daran hänge ich",d.haenge)}${HW("Erkenntnis",d.erk)}
   </article>
   ${!morningEmpty&&eveningEmpty?`<div class="row"><button class="btn" data-act="edit" data-id="${d.id}" data-part="abend">${ICON.moon.replace("<svg",'<svg width="18" height="18" style="stroke:currentColor;fill:none;stroke-width:1.8"')} Abend ausfüllen</button></div>`:""}`}
@@ -481,7 +486,7 @@ function dayForm(d){const [k,t,q]=bandFor(d);const isA=d.typ===1;
   return `<div><div class="eyebrow">Woche ${weekOfDate(d.date)} von ${WK}</div><h2>${fmtDate(d.date,true)}</h2></div>
   <div class="page">
     <div class="sec">${ICON.sun} Morgens</div>
-    ${chips(d,"typ",TYP,"Was ist heute?")}
+    ${chips(d,"typ",TYP_WAHL,"Was ist heute?")}
     ${isA?chips(d,"aArt",["selbst gewählt","fremdbestimmt"],"Meine Auszeit ist …")+ta(d,"aGrund","Ich nehme heute eine Auszeit, weil …"):""}
     ${chips(d,"schlaf",SCHLAF,"Geschlafen")}
     ${scale(d,"eM","Mein Energielevel am Morgen")}
@@ -499,8 +504,8 @@ function dayForm(d){const [k,t,q]=bandFor(d);const isA=d.typ===1;
     ${!isA&&d.abbr?inp(d,"abbrW","Was kam dazwischen?","kurz, z. B. Projektantrag für die Chefin"):""}
     ${isA?"":chips(d,"std",STUNDEN,"Heute am Projekt gearbeitet")}
     ${isA?"":chips(d,"fa",["selbst gewählt","fremdbestimmt"],"Mein Feierabend war …")}
-    ${chips(d,"st",STOER,"Größter Störfaktor heute")}
-    ${d.st===7?inp(d,"stE","Mein Störfaktor","kurz, in deinen Worten"):""}
+    ${chipsM(d,"st",STOER,"Störfaktoren heute (mehrere möglich)")}
+    ${stL(d).includes(7)?inp(d,"stE","Mein Störfaktor","kurz, in deinen Worten"):""}
     <div class="two">${ta(d,"plus","Das hat mir Energie gegeben")}${ta(d,"minus","Das hat mir Energie gezogen")}</div>
     ${isA?"":ta(d,"geschafft","Das habe ich heute geschafft")}
     ${ta(d,"haenge","Daran hänge ich gerade")}
@@ -757,8 +762,8 @@ function energyNote(ds){const mf=avg(ds.filter(d=>d.typ!==1).map(d=>d.eM)),ma=av
 function sleepBars(ds){const rows=SCHLAF.map((l,i)=>{const g=ds.filter(d=>d.schlaf===i);return {l,c:g.length,e:avg(g.map(d=>d.eM))}});const tot=rows.reduce((s,r)=>s+r.c,0);
   if(!tot)return '<p class="muted" style="margin:0">Noch keine Schlafangaben.</p>';const best=rows.filter(r=>r.e).sort((a,b)=>b.e-a.e)[0];
   return `<div class="bars">${rows.map(r=>`<div class="bar"><span>${r.l}</span><span class="tr"><i style="width:${(r.e||0)/9*100}%"></i></span><span class="n">${f1(r.e)}</span></div>`).join("")}</div><p class="muted" style="margin:0">Balken: dein Energielevel am Morgen im Schnitt nach so viel Schlaf (Nächte: ${rows.map(r=>r.c).join(" · ")}).${best?` Am meisten Energie hattest du nach ${best.l.replace("Std.","Stunden")}.`:""} Empfohlen für Erwachsene sind mindestens 7 Stunden.</p>`}
-function stoerBars(ds){const g={};ds.forEach(d=>{if(d.st==null||d.st===6)return;const k=d.st===7?(d.stE&&d.stE.trim()?d.stE.trim():"Eigener Störfaktor"):STOER[d.st];(g[k]=g[k]||[]).push(d)});
-  const rows=Object.entries(g).sort((a,b)=>b[1].length-a[1].length);const none=ds.filter(d=>d.st===6);
+function stoerBars(ds){const g={};ds.forEach(d=>{stL(d).forEach(i=>{if(i===6)return;const k=i===7?(d.stE&&d.stE.trim()?d.stE.trim():"Eigener Störfaktor"):STOER[i];(g[k]=g[k]||[]).push(d)})});
+  const rows=Object.entries(g).sort((a,b)=>b[1].length-a[1].length);const none=ds.filter(d=>stL(d).includes(6));
   if(!rows.length)return '<p class="muted" style="margin:0">Noch keine Störfaktoren eingetragen. Du findest das Feld auf der Abendseite.</p>';const m=rows[0][1].length;
   return `<div class="bars">${rows.map(([k,a])=>`<div class="bar"><span>${esc(k)}</span><span class="tr"><i class="r" style="width:${a.length/m*100}%"></i></span><span class="n">${a.length}×</span></div>`).join("")}</div><p class="muted" style="margin:0">Am häufigsten: ${esc(rows[0][0])}. An diesen Tagen lag deine Energie abends im Schnitt bei ${f1(avg(rows[0][1].map(d=>d.eA)))}${none.length?`, an Tagen ohne Störfaktor bei ${f1(avg(none.map(d=>d.eA)))}`:""}.</p>`}
 function distBars(ds,k,labels){const c=labels.map((_,i)=>ds.filter(d=>d[k]===i).length);const m=Math.max(1,...c);return `<div class="bars">${labels.map((l,i)=>`<div class="bar"><span>${l}</span><span class="tr"><i style="width:${c[i]/m*100}%"></i></span><span class="n">${c[i]}</span></div>`).join("")}</div>`}
@@ -872,7 +877,7 @@ function buildPrint(){const L=(l,v)=>v&&String(v).trim()?`<p><b>${l}:</b> ${esc(
   let h=`<h1>Forschungstagebuch Promotion</h1><p>Export vom ${fmtDate(today(),true)} · Start am ${fmtDate(startDate(),true)} · ${S.days.length} Tagesseiten</p>`;
   if(S.warum.satz)h+=`<h2>Mein Warum</h2><p>${esc(S.warum.satz)}</p>`;
   const st=stats(sortedDays());h+=`<h2>Überblick</h2><p>Promotionsarbeitstage ${st.f} (davon fremdbestimmt abgebrochen ${st.abbr}) · Auszeiten ${st.a} (selbst gewählt ${st.aS}, fremdbestimmt ${st.aF}) · Feierabend selbst gewählt ${st.faS}, fremdbestimmt ${st.faF} · Stunden ca. ${Math.round(st.h)} · Schritte erledigt ${st.td} von ${st.tp}</p>`;
-  for(let w=1;w<=curWeek();w++){const ds=daysInWeek(w);const o=S.weeks[w];if(!ds.length&&!o)continue;h+=`<h2 class="pw">Woche ${w} · ${weekRange(w)}</h2>`;ds.forEach(d=>{h+=`<div class="pd"><h3>${fmtDate(d.date,true)} · ${TYP[d.typ===1?1:0]}${d.abbr?" · fremdbestimmt abgebrochen":""}</h3>${d.eM||d.eA?`<p>Energie morgens ${d.eM||"–"}, abends ${d.eA||"–"} · Schlaf ${d.schlaf!=null?SCHLAF[d.schlaf]:"–"}${d.std!=null?" · Projekt "+STUNDEN[d.std]:""}${d.st!=null&&d.st!==6?" · Störfaktor "+(d.st===7?esc(d.stE||""):STOER[d.st]):""}</p>`:""}${L("Fokus",d.fokus)}${T("Schritte",d.todos)}${L("Affirmation",d.aff)}${L("Energie gegeben",d.plus)}${L("Energie gezogen",d.minus)}${L("Geschafft",d.geschafft)}${L("Daran hänge ich",d.haenge)}${L("Erkenntnis",d.erk)}</div>`});
+  for(let w=1;w<=curWeek();w++){const ds=daysInWeek(w);const o=S.weeks[w];if(!ds.length&&!o)continue;h+=`<h2 class="pw">Woche ${w} · ${weekRange(w)}</h2>`;ds.forEach(d=>{h+=`<div class="pd"><h3>${fmtDate(d.date,true)} · ${TYP[d.typ===1?1:0]}${d.abbr?" · fremdbestimmt abgebrochen":""}</h3>${d.eM||d.eA?`<p>Energie morgens ${d.eM||"–"}, abends ${d.eA||"–"} · Schlaf ${d.schlaf!=null?SCHLAF[d.schlaf]:"–"}${d.std!=null?" · Projekt "+STUNDEN[d.std]:""}${stTxt(d)?" · Störfaktoren "+stTxt(d):""}</p>`:""}${L("Fokus",d.fokus)}${T("Schritte",d.todos)}${L("Affirmation",d.aff)}${L("Energie gegeben",d.plus)}${L("Energie gezogen",d.minus)}${L("Geschafft",d.geschafft)}${L("Daran hänge ich",d.haenge)}${L("Erkenntnis",d.erk)}</div>`});
    if(o)h+=`<div class="pd"><h3>Wochenreflexion</h3>${L("Vorangebracht",o.frage)}${L("Das hat mich vorangebracht",o.voran)}${L("Ausgebremst",o.bremse)}${L("Wer hat entschieden",o.wer)}${L("Grenzen",o.grenzen)}${T("Nächste Schritte",o.schritte)}${L("Notizen",o.notiz)}</div>`}
   $("#print").innerHTML=h}
 
