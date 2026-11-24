@@ -393,6 +393,18 @@ main p,main li,.box p{text-align:justify;-webkit-hyphens:auto;hyphens:auto;hyphe
 /* 24.11. Knopf „Idee notieren“ hervorheben */
 #notbtn{background:#591427;border-color:#591427;color:#fff}
 #notbtn svg{stroke:#fff}
+/* 24.11. eigene Checklisten-Punkte */
+.ownrow{display:flex;align-items:center;gap:6px}.ownrow .trow{flex:1}
+.ownadd{display:flex;gap:8px;margin-top:8px}.ownadd input{flex:1;min-width:0}.ownadd .btn{width:auto;padding:0 14px}
+
+.box.def{border:1.5px solid var(--line);border-top:3px solid #591427}
+.box.def .k{color:#591427}
+details.box.vert{background:#F6E4E9;border:0;border-left:3px solid #A94A63}
+details.box.vert summary{color:#591427;align-items:center}
+details.box.vert summary .k{display:block;color:#A94A63;font-weight:700;margin-bottom:2px}
+details.box.vert summary::after{color:#591427;font-weight:700;font-size:20px;line-height:1;flex:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) details.box.vert{background:#2A1820}:root:not([data-theme="light"]) details.box.vert summary,:root:not([data-theme="light"]) details.box.vert summary::after,:root:not([data-theme="light"]) .box.def .k{color:#F2C4CF}:root:not([data-theme="light"]) details.box.vert summary .k{color:#D27C91}}
+:root[data-theme="dark"] details.box.vert{background:#2A1820}:root[data-theme="dark"] details.box.vert summary,:root[data-theme="dark"] details.box.vert summary::after,:root[data-theme="dark"] .box.def .k{color:#F2C4CF}
 </style>
 </head><body>
 <header class="top"><div class="in">
@@ -426,6 +438,7 @@ const PHASEN=[
   coach:"Du bist unsicher, ob deine Forschungsfrage so passt, ob sie zu groß oder zu vage ist? Schick sie mir gern, oft reicht ein gemeinsamer Blick.",
   mat:["gantt","timeblocking","insta"]},
  {id:"theorie",t:"Literatur und Theorie",kurz:"Theorie",w:3,kap:"Theorie und Forschungsstand, erste Fassung",
+  def:{t:"Was ist eigentlich eine Theorie?",x:"Eine Theorie ist ein begründetes Gefüge aus Begriffen und Aussagen, das einen Ausschnitt der Wirklichkeit beschreibt und erklärt: was zusammenhängt, wie und warum. Du kannst sie dir wie eine Brille vorstellen, durch die du auf dein Thema schaust. Sie lenkt deinen Blick auf bestimmte Dinge und gibt ihnen einen Namen. Ein Beispiel: Das transaktionale Stressmodell nach Lazarus sagt, dass Stress nicht durch eine Situation allein entsteht, sondern dadurch, wie ein Mensch sie bewertet und welche Möglichkeiten er sieht, damit umzugehen. Wer mit dieser Brille Interviews liest, achtet auf Bewertungen und Bewältigungsstrategien."},
   ziel:"Warum braucht eine empirische Arbeit überhaupt Theorie? Weil Theorie dir Begriffe und Erklärungsansätze gibt, mit denen du dein Thema verstehst, deine Forschungsfrage begründest, deinen Leitfaden entwickelst und am Ende deine Ergebnisse einordnest. Der Forschungsstand zeigt, was andere schon herausgefunden haben und wo die Lücke liegt, die deine Arbeit bearbeitet. Was Theorie nicht kann: deine Ergebnisse vorwegnehmen. Qualitative Forschung bleibt offen für das, was dein Material zeigt. Mit jedem Artikel, jeder Studie und jeder theoretischen Auseinandersetzung wird deine Forschungsfrage schärfer.",
   ergebnis:"Eine geschärfte Forschungsfrage, eine gut gefüllte Literaturverwaltung, ein erster theoretischer Rahmen, ein Überblick über den Forschungsstand und eine Vorstellung davon, welche Lücke deine Arbeit bearbeitet.",
   schritte:["Literaturverwaltung einrichten (Zotero oder Citavi) und ab jetzt parallel führen","Klären, welchen Zitierstil deine Hochschule oder dein Fachbereich verlangt, und ihn im Programm einstellen","Suchbegriffe festlegen, auch auf Englisch, mit Synonymen","Eine bis zwei Wochen tief in die Literatur eintauchen: möglichst systematisch recherchieren und die Suchen kurz dokumentieren","Literatur sichten und auswählen: Was brauche ich wirklich für meine Frage?","Forschungsfrage mit dem neuen Wissen schärfen","Vorgaben klären: ein Hauptmodell oder mehrere theoretische Ansätze? Gehört der Forschungsstand zum theoretischen Rahmen oder in ein eigenes Kapitel?","Zentrale Begriffe definieren","Theoretischen Rahmen festlegen und als Skizze aufzeichnen","Forschungsstand nach Themen ordnen und die Forschungslücke benennen"],
@@ -709,8 +722,8 @@ document.addEventListener("input",e=>{const t=e.target;if(t.id==="gq"){glFilter(
   if(t.dataset.todot){o[+t.dataset.i].t=t.value}else if(t.dataset.k){o[t.dataset.k]=t.value}save()});
 document.addEventListener("change",e=>{const t=e.target;if(t.dataset.re){save();keepScroll(render)}});
 document.addEventListener("focusin",e=>{if(e.target.matches("textarea,input[type=text]"))document.body.classList.add("writing")});
-document.addEventListener("focusout",e=>{if(e.target.matches("textarea,input[type=text]"))document.body.classList.remove("writing")});
-document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="newq"){e.preventDefault();ACT.addQ()}});
+document.addEventListener("focusout",e=>{if(e.target.matches("textarea,input[type=text]"))setTimeout(()=>{const a=document.activeElement;if(!a||!a.matches("textarea,input[type=text]"))document.body.classList.remove("writing")},300)});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="newq"){e.preventDefault();ACT.addQ()}if(e.key==="Enter"&&/^own\d+$/.test(e.target.id)){e.preventDefault();ACT.ownAdd({dataset:{i:e.target.id.slice(3)}})}});
 document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
   if(t.dataset.tab){go(t.dataset.tab);return}
   const o=BIND[t.dataset.b];
@@ -740,7 +753,7 @@ const PLANG=["Ich liege im Plan","Etwas hinterher","Deutlich hinterher"];
 const NOTART=["Frage für die Betreuung","Entscheidung","Gedanke oder Idee"];
 const KLAR=["Alles noch im Nebel.","Ich ahne, worum es geht.","Ein Schritt ist klar, der Rest noch nicht.","Zwei, drei Schritte sind klar.","Glasklar: Ich kenne meine nächsten drei Schritte."];
 
-function blank(){return {v:1,started:false,start:today(),end:"",dur:null,art:1,from:0,frage:"",plan:[],done:{},gl:[],gid:1,wk:{},log:[],fragen:[],ideen:[],nid:1,fb:{},created:today()}}
+function blank(){return {v:1,started:false,start:today(),end:"",dur:null,art:1,from:0,frage:"",plan:[],done:{},gl:[],gid:1,wk:{},log:[],fragen:[],ideen:[],own:{},nid:1,fb:{},created:today()}}
 let S=blank();let storageOK=true;
 function load(){try{const r=localStorage.getItem(KEY);if(r){S=Object.assign(blank(),JSON.parse(r))}}catch(e){storageOK=false}}
 let saveT=null;
@@ -761,11 +774,13 @@ function makePlan(from,st,end){const N=Math.max(9,diffDays(st,end)+1);const ph=P
 function P(){const st=S.start,end=S.end||addMonths(st,5);return {st,end,N:diffDays(st,end)+1}}
 function phaseAt(date){const p=P();if(date<p.st)return -1;if(date>p.end)return 99;for(let i=0;i<PHASEN.length;i++){const x=S.plan[i];if(x&&date>=x.s&&date<=x.e)return i}return 99}
 function sk(i,j){return PHASEN[i].id+"_"+j}
-function phDone(i){return PHASEN[i].schritte.filter((_,j)=>S.done[sk(i,j)]).length}
-function phFull(i){return phDone(i)===PHASEN[i].schritte.length}
+function ownL(i){return (S.own||{})[PHASEN[i].id]||[]}
+function phN(i){return PHASEN[i].schritte.length+ownL(i).length}
+function phDone(i){return PHASEN[i].schritte.filter((_,j)=>S.done[sk(i,j)]).length+ownL(i).filter(x=>x.d).length}
+function phFull(i){return phDone(i)===phN(i)}
 function autoPlan(i){if(!S.plan||i>=PHASEN.length-1)return;const from=arbeit();if(from<=i||phFull(from))return;const t0=today()<S.start?S.start:today();const end=P().end;if(end<=t0)return;const x=S.plan[i];if(x&&x.e>=t0&&x.s<t0)x.e=addDays(t0,-1);const pl=makePlan(from,t0,end);S.plan=S.plan.map((y,k)=>k<from?y:pl[k])}
 function arbeit(){const i=PHASEN.findIndex((_,k)=>!phFull(k));return i<0?PHASEN.length-1:i}
-function totSteps(){return PHASEN.reduce((a,p)=>a+p.schritte.length,0)}
+function totSteps(){return PHASEN.reduce((a,p,i)=>a+phN(i),0)}
 function doneSteps(){return PHASEN.reduce((a,_,i)=>a+phDone(i),0)}
 function pct(){return Math.round(doneSteps()/totSteps()*100)}
 function rangeTxt(x){return x?fmtShort(x.s)+" bis "+fmtShort(x.e):"vor deinem Start"}
@@ -834,7 +849,7 @@ function vJetzt(){const t=today(),p=P();
   const phase=`<button class="box acc phcard" data-act="sub" data-t="phase" data-n="${a}" style="text-align:left">
    <span class="row"><span class="k r">Phase ${a+1} von ${PHASEN.length}</span><span class="m">${x?(rest>=0?"noch "+rest+" "+pl(rest,"Tag","Tage")+" laut Plan":"Plan: bis "+fmtShort(x.e)):""}</span></span>
    <b class="pht">${ph.t}</b><span class="m">${ph.kap}</span>
-   <span class="bar"><i style="width:${phDone(a)/ph.schritte.length*100}%"></i></span><span class="m">${phDone(a)} von ${ph.schritte.length} Schritten · Zur Phase ›</span></button>`;
+   <span class="bar"><i style="width:${phDone(a)/phN(a)*100}%"></i></span><span class="m">${phDone(a)} von ${phN(a)} Schritten · Zur Phase ›</span></button>`;
   const hint=pa<99&&pa>a?`<div class="box fill"><span class="k">Kurzer Abgleich</span><p>Laut Plan wärst du schon in Phase ${pa+1}, „${PHASEN[pa].kurz}“. Das ist normal, Pläne sind dazu da, angepasst zu werden. Hak ab, was du schon geschafft hast, oder verteil den Plan neu.</p><button class="lnk" data-act="sub" data-t="replan">Plan neu verteilen</button></div>`:"";
   const open=ph.schritte.map((s,j)=>[s,j]).filter(([_,j])=>!S.done[sk(a,j)]).slice(0,3);
   const nxt=`<div class="q">${kI("Als Nächstes in dieser Phase","Die nächsten offenen Punkte aus der Checkliste deiner Phase. Wenn du einen abhakst, wächst dein Fortschritt.")}<div class="tl">${open.map(([s,j])=>`<button class="trow ckrow" data-act="step" data-i="${a}" data-j="${j}" aria-pressed="false"><span class="cb" aria-pressed="false"></span><span>${md(s)}</span></button>`).join("")||`<p class="m">Alles abgehakt. Stark!</p>`}</div></div>`;
@@ -851,22 +866,24 @@ function gantt(){const p=P(),t=today();const tp=Math.max(0,Math.min(1,diffDays(p
   return `<div class="gantt">${PHASEN.map((ph,i)=>{const x=S.plan[i];if(!x)return"";const l=diffDays(p.st,x.s)/p.N*100,w=(diffDays(x.s,x.e)+1)/p.N*100;return `<div class="gr"><span>${i+1}</span><div><i class="${phFull(i)?"f":i===arbeit()?"on":""}" style="left:${l}%;width:${w}%"></i></div></div>`}).join("")}<em style="left:calc(22px + (100% - 22px) * ${tp})"></em></div>`}
 function vPhasen(){const a=arbeit();
   return `<h1>Dein Weg bis zur Abgabe</h1>${gantt()}
-  <div class="tl">${PHASEN.map((p,i)=>{const d=phDone(i),n=p.schritte.length;return `<button class="trow plr ${i===a?"cur":""}" data-act="sub" data-t="phase" data-n="${i}"><b class="pn ${d===n?"ok":""}">${d===n?"✓":i+1}</b><span style="flex:1;text-align:left">${p.t}<br><span class="m">${rangeTxt(S.plan[i])} · ${d}/${n}</span></span><span class="m">›</span></button>`}).join("")}</div>
+  <div class="tl">${PHASEN.map((p,i)=>{const d=phDone(i),n=phN(i);return `<button class="trow plr ${i===a?"cur":""}" data-act="sub" data-t="phase" data-n="${i}"><b class="pn ${d===n?"ok":""}">${d===n?"✓":i+1}</b><span style="flex:1;text-align:left">${p.t}<br><span class="m">${rangeTxt(S.plan[i])} · ${d}/${n}</span></span><span class="m">›</span></button>`}).join("")}</div>
   <div class="two"><button class="btn o" data-act="sub" data-t="replan">Plan neu verteilen</button><button class="btn o" data-act="sub" data-t="glossar">Glossar</button></div>`}
 function matLinks(ks){return ks.length?`<div class="q"><span class="k">Material dazu</span><div class="tl">${ks.map(k=>{const [n,z,u]=MAT[k];return `<a class="tool" href="${u}" target="_blank" rel="noopener"><b>${n}</b><span class="m">${z}</span></a>`}).join("")}</div></div>`:""}
 const SUB={
  phase(s){const i=+s.n,p=PHASEN[i],x=S.plan[i];
   return `${back()}<div class="q"><span class="k r">Phase ${i+1} · ${rangeTxt(x)}</span><h1>${p.t}</h1><p class="m">Arbeitet hin auf: ${p.kap}</p></div>
   ${p.par?`<p class="par"><b>Läuft parallel:</b> ${md(p.par)}</p>`:""}
+  ${p.def?`<div class="box def"><span class="k">Kurz erklärt</span><b>${p.def.t}</b><p>${md(p.def.x)}</p></div>`:""}
   <p>${md(p.ziel)}</p>
   <div class="box fill"><span class="k">Am Ende dieser Phase hast du</span><p>${md(p.ergebnis)}</p></div>
-  <div class="q"><div class="row"><span class="k">Checkliste</span><span class="m">${phDone(i)} von ${p.schritte.length}</span></div><div class="bar"><i style="width:${phDone(i)/p.schritte.length*100}%"></i></div>
-  <div class="tl">${p.schritte.map((t,j)=>{const on=!!S.done[sk(i,j)];return `<button class="trow ckrow" data-act="step" data-i="${i}" data-j="${j}" aria-pressed="${on}"><span class="cb" aria-pressed="${on}"></span><span>${md(t)}</span></button>`}).join("")}</div></div>
+  <div class="q"><div class="row"><span class="k">Checkliste</span><span class="m">${phDone(i)} von ${phN(i)}</span></div><div class="bar"><i style="width:${phDone(i)/phN(i)*100}%"></i></div>
+  <div class="tl">${p.schritte.map((t,j)=>{const on=!!S.done[sk(i,j)];return `<button class="trow ckrow" data-act="step" data-i="${i}" data-j="${j}" aria-pressed="${on}"><span class="cb" aria-pressed="${on}"></span><span>${md(t)}</span></button>`}).join("")}${ownL(i).map(x=>`<div class="ownrow"><button class="trow ckrow" data-act="ownTog" data-i="${i}" data-id="${x.id}" aria-pressed="${!!x.d}"><span class="cb" aria-pressed="${!!x.d}"></span><span>${esc(x.t)}</span></button><button class="x" data-act="ownDel" data-i="${i}" data-id="${x.id}" aria-label="Löschen">×</button></div>`).join("")}</div>
+  <div class="ownadd"><input type="text" id="own${i}" placeholder="Eigenen Punkt ergänzen" aria-label="Eigenen Punkt ergänzen"><button class="btn o" data-act="ownAdd" data-i="${i}">Hinzufügen</button></div></div>
   <div class="q"><span class="k">Typische Stolpersteine</span><ul class="ul">${p.stolper.map(t=>`<li>${md(t)}</li>`).join("")}</ul></div>
   <div class="q"><span class="k">Darauf achten Gutachter:innen</span><ul class="ul">${p.blick.map(t=>`<li>${md(t)}</li>`).join("")}</ul></div>
   <div class="q"><span class="k">Aus meiner Praxis</span><p class="say">${md(p.tipp)}</p></div>
   ${(p.info||[]).map(v=>`<div class="box info"><span class="k">Gut zu wissen</span><b>${v.t}</b><p>${md(v.x)}</p></div>`).join("")}
-  ${(p.vert||[]).map(v=>`<details class="box vert"><summary>${v.t}</summary>${v.intro?`<p>${md(v.intro)}</p>`:""}<ul class="ul">${v.punkte.map(t=>`<li>${md(t)}</li>`).join("")}</ul></details>`).join("")}
+  ${(p.vert||[]).map(v=>`<details class="box vert"><summary><span><span class="k">Vertiefung · zum Aufklappen</span>${v.t}</span></summary>${v.intro?`<p>${md(v.intro)}</p>`:""}<ul class="ul">${v.punkte.map(t=>`<li>${md(t)}</li>`).join("")}</ul></details>`).join("")}
   ${matLinks(p.mat||[])}
   ${p.lit&&p.lit.length?`<details class="box"><summary>Zum Weiterlesen</summary><ul class="ul m">${p.lit.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></details>`:""}
   <div class="row">${i>0?`<button class="lnk" data-act="sub" data-t="phase" data-n="${i-1}">‹ Phase ${i}</button>`:"<span></span>"}${i<PHASEN.length-1?`<button class="lnk" data-act="sub" data-t="phase" data-n="${i+1}">Phase ${i+2} ›</button>`:""}</div>
@@ -916,7 +933,7 @@ function vFortschritt(){const p=P(),t=today();const tp=Math.max(0,Math.min(1,(di
   <div class="row"><span class="bignum">${pct()}<small>%</small></span><span class="m">${doneSteps()} von ${totSteps()} Schritten</span></div>
   <div class="bar thick two"><i style="width:${pct()}%"></i><em style="left:${tp*100}%"></em></div>
   <p class="m">Zeit vergangen: ${Math.round(tp*100)} % · noch ${Math.max(0,restDays())} Tage</p></div>
-  <div class="q">${PHASEN.map((ph,i)=>`<div class="typ"><span>${i+1} ${ph.kurz}</span><div class="bar"><i style="width:${phDone(i)/ph.schritte.length*100}%"></i></div><span class="m">${phDone(i)}/${ph.schritte.length}</span></div>`).join("")}</div><hr>
+  <div class="q">${PHASEN.map((ph,i)=>`<div class="typ"><span>${i+1} ${ph.kurz}</span><div class="bar"><i style="width:${phDone(i)/phN(i)*100}%"></i></div><span class="m">${phDone(i)}/${phN(i)}</span></div>`).join("")}</div><hr>
   <div class="q">${kI("Gliederung · "+cnt[2]+" von "+n+" fertig","Trag deine Kapitel ein und gib jedem einen Stand. Im Balken ist grau offen, hell begonnen und kräftig fertig.")}
   ${n?`<div class="glbar">${S.gl.map(g=>`<i class="a${g.a}"></i>`).join("")}</div>`:`<p class="m">Zum Beispiel: 1 Einleitung, 2 Theorie und Forschungsstand, 3 Methodik, 4 Ergebnisse, 5 Diskussion, 6 Fazit.</p>`}
   ${S.gl.map((g,i)=>{const id=bindObj(g);return `<div class="gl"><input type="text" aria-label="Kapitel ${i+1}" placeholder="z. B. 2 Theorie" data-b="${id}" data-k="t" value="${esc(g.t)}"><button class="x" data-act="glDel" data-i="${i}" aria-label="Kapitel entfernen">×</button><div class="seg">${STAND.map((l,a)=>`<button class="a${a}" data-act="amp" data-i="${i}" data-v="${a}" aria-pressed="${g.a===a}">${l}</button>`).join("")}</div></div>`}).join("")}
@@ -966,7 +983,10 @@ const ACT={
  startApp(){S.plan=makePlan(S.from,S.start,S.end);for(let i=0;i<S.from;i++)PHASEN[i].schritte.forEach((_,j)=>S.done[sk(i,j)]=true);S.started=true;saveNow();go("jetzt")},
  sub(t){const x={};if(t.dataset.n!=null)x.n=t.dataset.n;if(t.dataset.id!=null)x.id=t.dataset.id;if(t.dataset.a!=null)x.art=+t.dataset.a;sub(t.dataset.t,x)},
  step(t){const k=sk(+t.dataset.i,+t.dataset.j);S.done[k]=!S.done[k];const i=+t.dataset.i;const fin=S.done[k]&&phFull(i);if(fin)autoPlan(i);save();keepScroll(render);if(S.done[k])toast(fin?(i<PHASEN.length-1?`Phase ${i+1} geschafft! Die restlichen Phasen sind neu verteilt.`:`Phase ${i+1} geschafft! ${pct()} % insgesamt.`):`Abgehakt. ${pct()} % geschafft.`)},
- phClose(t){const i=+t.dataset.i;PHASEN[i].schritte.forEach((_,j)=>S.done[sk(i,j)]=true);autoPlan(i);save();render();toast(i<PHASEN.length-1?`Phase ${i+1} abgeschlossen. Die restlichen Phasen sind neu verteilt.`:"Geschafft!")},
+ ownAdd(t){const i=+t.dataset.i,el=$("#own"+i),v=(el&&el.value||"").trim();if(!v)return;S.own=S.own||{};const k=PHASEN[i].id;(S.own[k]=S.own[k]||[]).push({id:S.nid++,t:v,d:false});save();keepScroll(render)},
+ ownTog(t){const i=+t.dataset.i,x=ownL(i).find(y=>y.id===+t.dataset.id);if(!x)return;x.d=!x.d;const fin=x.d&&phFull(i);if(fin)autoPlan(i);save();keepScroll(render);if(x.d)toast(fin&&i<PHASEN.length-1?`Phase ${i+1} geschafft! Die restlichen Phasen sind neu verteilt.`:`Abgehakt. ${pct()} % geschafft.`)},
+ ownDel(t){const i=+t.dataset.i,k=PHASEN[i].id;S.own[k]=ownL(i).filter(y=>y.id!==+t.dataset.id);save();keepScroll(render)},
+ phClose(t){const i=+t.dataset.i;PHASEN[i].schritte.forEach((_,j)=>S.done[sk(i,j)]=true);ownL(i).forEach(x=>x.d=true);autoPlan(i);save();render();toast(i<PHASEN.length-1?`Phase ${i+1} abgeschlossen. Die restlichen Phasen sind neu verteilt.`:"Geschafft!")},
  replan(){const o=view.sub;if(!S.end||S.end<=today()){toast("Bitte ein Abgabedatum in der Zukunft wählen");return}const pl_=makePlan(+o.from,today(),S.end);S.plan=S.plan.map((x,i)=>i<+o.from?x:pl_[i]);save();view.sub=null;go("phasen");toast("Plan neu verteilt")},
  wcheck(){sub("wcheck")},
  wkTog(t){const w=wkObj();const x=w.next[+t.dataset.i];x.d=!x.d;save();keepScroll(render);if(x.d)toast("Erledigt. Weiter so!")},
