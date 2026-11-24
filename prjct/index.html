@@ -860,7 +860,7 @@ function vJetzt(){const t=today(),p=P();
   const rest=x?diffDays(t,x.e):null;
   const phase=`<button class="box acc phcard" data-act="sub" data-t="phase" data-n="${a}" style="text-align:left">
    <span class="row"><span class="k r">Phase ${a+1} von ${PHASEN.length}</span><span class="m">${x?(rest>=0?"noch "+rest+" "+pl(rest,"Tag","Tage")+" laut Plan":"Plan: bis "+fmtShort(x.e)):""}</span></span>
-   <b class="pht">${ph.t}</b><span class="m">${ph.kap}</span>
+   <b class="pht">${ph.t}</b><span class="m">${md(ph.kap)}</span>
    <span class="bar"><i style="width:${phDone(a)/phN(a)*100}%"></i></span><span class="m">${phDone(a)} von ${phN(a)} Schritten · Zur Phase ›</span></button>`;
   const hint=pa<99&&pa>a?`<div class="box fill"><span class="k">Kurzer Abgleich</span><p>Laut Plan wärst du schon in Phase ${pa+1}, „${PHASEN[pa].kurz}“. Das ist normal, Pläne sind dazu da, angepasst zu werden. Hak ab, was du schon geschafft hast, oder verteil den Plan neu.</p><button class="lnk" data-act="sub" data-t="replan">Plan neu verteilen</button></div>`:"";
   const open=ph.schritte.map((s,j)=>[s,j]).filter(([_,j])=>!S.done[sk(a,j)]).slice(0,3);
