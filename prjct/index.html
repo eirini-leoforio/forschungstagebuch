@@ -348,6 +348,40 @@ h1{font-weight:800}
 .phcard .bar i{background:#D27C91}
 nav.tabs button[aria-current="page"]::before{background:#D27C91}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .box.fill,:root:not([data-theme="light"]) .chip,:root:not([data-theme="light"]) .kw div{background:#2A1820;border-color:#2A1820;color:var(--ink)}:root:not([data-theme="light"]) .kk{background:#2A1820;border-color:#4A2230}:root:not([data-theme="light"]) .btn{background:#A94A63;border-color:#A94A63;color:#fff}}
+
+/* 23.11. 21 Uhr: Weiß, Schwarz, Bordeaux – kein Grau, keine rosa Flächen */
+:root{--soft:#F1F1F1;--line:#E4E4E4}
+header.top{background:#fff;color:var(--ink);border-bottom:1px solid var(--line)}
+header.top .day{color:var(--mute)}
+header.top .hbtn{background:#fff;border-color:var(--line);color:var(--ink)}
+nav.tabs{background:#fff;border-top:1px solid var(--line)}
+nav.tabs button{color:var(--mute)}
+nav.tabs button[aria-current="page"]{color:#591427}
+nav.tabs button[aria-current="page"]::before{background:#591427}
+.box.fill{background:#fff;border:1.5px solid #591427}
+.box.fill .k{color:#591427}
+.chip{background:#fff;border:1px solid #591427;color:#591427}
+.kw div{background:#fff;border:1px solid var(--line)}
+.pn.ok{background:#591427;color:#fff;border-color:#591427}
+.bar i{background:#591427}
+.phcard{background:#111!important;border-color:#111!important}
+.phcard .k.r,.phcard .bar i{color:#fff}.phcard .bar i{background:#fff}.phcard .bar{background:#3a3a3a}
+.gr div{background:var(--soft)}.gr i{background:#C9A3AE}.gr i.on{background:#591427}.gr i.f{background:#111}
+.kk{background:#fff;border:1.5px solid #111;box-shadow:0 3px 0 -1px var(--bg),0 4px 0 0 #111}
+.kk .kv{background-image:repeating-linear-gradient(transparent 0 25px,#E6D3D8 25px 26px)}
+.kk .reiter{background:#591427;border-color:#591427;color:#fff}
+.kk.bk{background:#591427;border-color:#591427;color:#fff}
+.kk.bk .reiter{background:#111;border-color:#111}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) header.top,:root:not([data-theme="light"]) nav.tabs{background:var(--bg);color:var(--ink)}:root:not([data-theme="light"]) header.top .hbtn{background:var(--bg);color:var(--ink)}:root:not([data-theme="light"]) .box.fill,:root:not([data-theme="light"]) .chip,:root:not([data-theme="light"]) .kk{background:var(--bg);border-color:#D27C91;color:var(--ink)}:root:not([data-theme="light"]) nav.tabs button[aria-current="page"]{color:#D27C91}:root:not([data-theme="light"]) nav.tabs button[aria-current="page"]::before,:root:not([data-theme="light"]) .bar i{background:#D27C91}}
+/* 24.11.: einige Flächen in dunklem Bordeaux, damit nicht alles auf Weiß steht */
+.phcard{background:#591427!important;border-color:#591427!important}
+.phcard .bar{background:#7E3A4E}.phcard .bar i{background:#fff}.phcard .m,.phcard .k.r{color:#F2D6DD}
+.box.fill{background:#591427;border-color:#591427;color:#fff}
+.box.fill .k,.box.fill .k.r{color:#F2D6DD}
+.box.fill p,.box.fill li,.box.fill .m{color:#fff}
+.kk .reiter{background:#591427}
+.box.fill a{color:#fff;text-decoration:underline}
+.box.fill .btn{background:#fff;color:#591427;border-color:#fff}.box.fill .btn.o{background:transparent;color:#fff;border-color:#fff}
 </style>
 </head><body>
 <header class="top"><div class="in">
