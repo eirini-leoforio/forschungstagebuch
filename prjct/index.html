@@ -609,8 +609,9 @@ const PHASEN=[
   vert:[{t:"Checkliste Anhang: was rein muss und was nicht",
    intro:"Schau zuerst in die Vorgaben deiner Hochschule. Und wenn es erlaubt ist: Mach den Anhang digital, sonst druckst du dich verrückt.",
    punkte:["**Rein:** Interviewleitfaden, leere Vorlage der Einwilligungserklärung, Anschreiben oder Aufruf zur Teilnahme, gegebenenfalls Kurzfragebogen.","**Rein:** Transkriptionsregeln, Anonymisierungskonzept, anonymisierte Transkripte mit Absatznummern.","**Rein:** Kategoriensystem mit Definitionen und Ankerbeispielen, gegebenenfalls eine anonymisierte Übersicht der Interview\u00ADpartner:innen.","**Nicht rein:** unterschriebene Einwilligungen mit Namen, Audiodateien, nicht anonymisierte Daten, Kontaktlisten, die Zuordnung von Codes zu echten Namen.","**Nicht nötig:** jeder Zwischenschritt deines Codesystems. Das wird schnell zu viel. Die finale Fassung reicht."]}],
-  coach:"Du möchtest vor der Abgabe noch einen fachlichen Blick auf deine Arbeit? Im Fachlektorat schaue ich auf Inhalt, Aufbau und roten Faden, auch für einzelne Kapitel.",
-  mat:["lektorat"]}
+  coach:"Du bist unsicher, ob der rote Faden hält, oder weißt nicht, ob ein Fachlektorat für dich sinnvoll ist? Im kostenlosen Erstgespräch schauen wir gemeinsam drauf.",
+  feat:{k:"lektorat",lab:"Mein Angebot zu dieser Phase",btn:"Fachlektorat anfragen",x:"Ich biete ein wissenschaftliches Fachlektorat an, für die ganze Arbeit oder einzelne Kapitel. Dabei schaue ich nicht nur auf Rechtschreibung und Zeichensetzung, sondern auf Argumentationslogik, Stringenz, den roten Faden und die wissenschaftliche Formulierung. Frag gern an, du bekommst einen Kostenvoranschlag."},
+  mat:[]}
 ];
 
 // Material und Angebote je Phase
@@ -623,7 +624,7 @@ const MAT={
  timeblocking:["Time-Blocking-Vorlage (kostenlos)","Feste Arbeitszeiten in deiner Woche planen","https://drmaschakoerner.de/time-blocking/"],
  insta:["Instagram @forschung.mit.rotem.faden","Tipps für deinen Forschungsalltag","https://www.instagram.com/forschung.mit.rotem.faden/"],
  sos:["SOS-Reset-Paket (kostenlos)","Hilfe bei Blockaden und Zweifeln","https://drmaschakoerner.de/schnelle-hilfe/"],
- lektorat:["Fachlektorat","auch für einzelne Kapitel","https://drmaschakoerner.de/erstgespraech/#formular"]
+ lektorat:["Wissenschaftliches Fachlektorat","auch für einzelne Kapitel","https://drmaschakoerner.de/erstgespraech/#formular"]
 };
 
 // Karteikasten: mentale Blockaden. v = Vorderseite (so fühlt es sich an), dann Rückseite
@@ -906,7 +907,7 @@ const SUB={
   <div class="q"><span class="k">Aus meiner Praxis</span><p class="say">${md(p.tipp)}</p></div>
   ${(p.info||[]).map(v=>`<div class="box info"><span class="k">Gut zu wissen</span><b>${v.t}</b><p>${md(v.x)}</p></div>`).join("")}
   ${(p.vert||[]).map(v=>`<details class="box vert"><summary><span><span class="k">Vertiefung · zum Aufklappen</span>${v.t}</span></summary>${v.intro?`<p>${md(v.intro)}</p>`:""}<ul class="ul">${v.punkte.map(t=>`<li>${md(t)}</li>`).join("")}</ul>${v.go||v.mat?`<div class="two">${v.go?`<button class="btn o" data-tab="${v.go[0]}">${v.go[1]}</button>`:""}${v.mat?`<a class="btn o" href="${MAT[v.mat][2]}" target="_blank" rel="noopener">${v.matL||MAT[v.mat][0]}</a>`:""}</div>`:""}</details>`).join("")}
-  ${p.feat?(()=>{const [n,,u]=MAT[p.feat.k];return `<div class="box feat"><span class="k">Das Material zu dieser Phase</span><b>${n}</b><p>${md(p.feat.x)}</p><a class="btn" href="${u}" target="_blank" rel="noopener">Zum MAXQDA-Paket</a></div>`})():""}
+  ${p.feat?(()=>{const [n,,u]=MAT[p.feat.k];return `<div class="box feat"><span class="k">${p.feat.lab||"Das Material zu dieser Phase"}</span><b>${n}</b><p>${md(p.feat.x)}</p><a class="btn" href="${u}" target="_blank" rel="noopener">${p.feat.btn||"Zum MAXQDA-Paket"}</a></div>`})():""}
   ${matLinks(p.mat||[])}
   ${p.lit&&p.lit.length?`<details class="box"><summary>Zum Weiterlesen</summary><ul class="ul m">${p.lit.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></details>`:""}
   <div class="row">${i>0?`<button class="lnk" data-act="sub" data-t="phase" data-n="${i-1}">‹ Phase ${i}</button>`:"<span></span>"}${i<PHASEN.length-1?`<button class="lnk" data-act="sub" data-t="phase" data-n="${i+1}">Phase ${i+2} ›</button>`:""}</div>
