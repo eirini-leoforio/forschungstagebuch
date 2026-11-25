@@ -1075,4 +1075,62 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#pop").hidden=tru
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("sw.js").catch(()=>{})}
 
 </script>
+<script>
+window.IG={name:"PRJCT",key:"ftb-abschluss-v2"};
+/* Einrichtungsseite vor dem ersten Start (25.11.2026), gemeinsam für PRJCT und Reset & Flow.
+   Braucht vorher: window.IG={name:"PRJCT",key:"<storage-key>"}. Testen: ?einrichtung an die Adresse hängen. */
+(function(){
+var C=window.IG||{},N=C.name||"die App",SEEN="ftb-einrichtung-"+(C.key||"app");
+var q=location.search.indexOf("einrichtung")>-1;
+function has(k){try{return !!localStorage.getItem(k)}catch(e){return false}}
+var standalone=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
+if(!q&&(standalone||has(SEEN)||(C.key&&has(C.key))))return;
+var ua=navigator.userAgent||"",ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1),
+and=/Android/.test(ua),inapp=/FBAN|FBAV|Instagram|Line\/|GSA\/|; wv\)|WebView/.test(ua)||(ios&&!/Safari\//.test(ua)),
+dev=ios?"ios":and?"and":"pc",prompt=null;
+var share='<svg viewBox="0 0 24 24" class="ig-i" aria-label="Teilen-Symbol"><path d="M12 3v12M8 7l4-4 4 4M6 11H5v10h14V11h-1"/></svg>',
+dots='<svg viewBox="0 0 24 24" class="ig-i" aria-label="Menü"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>',
+inst='<svg viewBox="0 0 24 24" class="ig-i" aria-label="Installieren-Symbol"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 7v6M9 10l3 3 3-3M8 21h8"/></svg>';
+var T={
+ios:'<ol class="ig-steps">'+(inapp?'<li class="ig-warn"><b>Öffne diesen Link zuerst in Safari.</b> Du bist gerade im Browser einer anderen App (zum Beispiel deiner Mail-App). Tippe auf „In Safari öffnen“ oder kopiere den Link und füge ihn in Safari ein.</li>':'<li>Du brauchst <b>Safari</b>. Falls du den Link in einer anderen App geöffnet hast, öffne ihn zuerst in Safari.</li>')+
+'<li>Tippe unten auf das <b>Teilen-Symbol</b> '+share+'.</li><li>Wähle <b>„Zum Home-Bildschirm“</b> (eventuell etwas nach unten scrollen) und dann <b>„Hinzufügen“</b>.</li><li>Öffne '+N+' ab jetzt über das neue Symbol auf deinem Home-Bildschirm und richte sie dort ein.</li></ol>'+
+'<p class="ig-note"><b>Wichtig auf dem iPhone:</b> Die App auf dem Home-Bildschirm hat ihren eigenen Speicher. Was du hier im Browser einträgst, taucht dort nicht auf. Richte sie deshalb erst nach dem Hinzufügen ein.</p>',
+and:'<div id="ig-pb"></div><ol class="ig-steps"><li>Öffne diesen Link in <b>Chrome</b>.</li><li>Tippe oben rechts auf das <b>Menü</b> '+dots+'.</li><li>Wähle <b>„App installieren“</b> oder <b>„Zum Startbildschirm hinzufügen“</b>.</li><li>Öffne '+N+' ab jetzt über das neue Symbol und richte sie dort ein.</li></ol>',
+pc:'<div id="ig-pb"></div><ol class="ig-steps"><li><b>Chrome oder Edge:</b> rechts in der Adressleiste auf das <b>Installieren-Symbol</b> '+inst+' klicken, dann „Installieren“. '+N+' öffnet sich dann in einem eigenen Fenster.</li><li><b>Safari am Mac:</b> oben im Menü <b>Ablage → „Zum Dock hinzufügen“</b>.</li><li><b>Andere Browser:</b> Setz dir einfach ein Lesezeichen und öffne '+N+' immer im selben Browser.</li></ol>'};
+var css='.ig{position:fixed;inset:0;z-index:9999;overflow:auto;background:var(--bg);color:var(--ink);-webkit-overflow-scrolling:touch}'+
+'.ig-hero{background:var(--red);color:var(--onred);padding:calc(28px + env(safe-area-inset-top)) 20px 26px}.ig-in{max-width:560px;margin:0 auto}'+
+'.ig-hero img{width:64px;height:64px;border-radius:15px;display:block;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.18)}'+
+'.ig-k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.85}.ig-hero h1{font-size:26px;margin:6px 0 10px;color:inherit}.ig-hero p{font-size:16px;line-height:1.45;opacity:.95}'+
+'.ig-body{padding:22px 20px calc(30px + env(safe-area-inset-bottom))}.ig-tabs{display:flex;gap:6px;margin-bottom:16px}'+
+'.ig-tabs button{flex:1;padding:10px 6px;border:1.5px solid var(--line);background:var(--bg);border-radius:10px;font-weight:600}.ig-tabs button[aria-pressed=true]{border-color:var(--red);background:var(--redsoft);color:var(--reddark)}'+
+'.ig-steps{margin:0;padding:0;list-style:none;counter-reset:s}.ig-steps li{counter-increment:s;position:relative;padding:0 0 14px 40px;font-size:16px;line-height:1.45}'+
+'.ig-steps li:before{content:counter(s);position:absolute;left:0;top:-2px;width:28px;height:28px;border-radius:50%;background:var(--red);color:var(--onred);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}'+
+'.ig-steps li.ig-warn{background:var(--redsoft);border-radius:10px;padding:12px 12px 12px 52px;margin-bottom:12px}.ig-steps li.ig-warn:before{left:12px;top:12px}'+
+'.ig-i{width:20px;height:20px;vertical-align:-4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.ig-i circle{fill:currentColor;stroke:none}'+
+'.ig-note{font-size:14px;line-height:1.45;background:var(--soft);border-left:3px solid var(--red);padding:10px 12px;border-radius:4px;margin:4px 0 0}'+
+'.ig-facts{margin:20px 0 0;padding:16px 0 0;border-top:1px solid var(--line);display:grid;gap:10px;font-size:14px;line-height:1.45;color:var(--mute)}.ig-facts b{color:var(--ink)}'+
+'.ig-go{display:block;width:100%;margin-top:22px;padding:14px;border:0;border-radius:12px;background:var(--ink);color:var(--onink);font-size:16px;font-weight:700}'+
+'.ig-pbtn{display:block;width:100%;margin:0 0 18px;padding:14px;border:0;border-radius:12px;background:var(--red);color:var(--onred);font-size:16px;font-weight:700}'+
+'.ig-later{display:block;margin:12px auto 0;background:none;border:0;color:var(--mute);font-size:14px;text-decoration:underline}body.ig-open{overflow:hidden}';
+function el(){
+var s=document.createElement("style");s.textContent=css;document.head.appendChild(s);
+var d=document.createElement("div");d.className="ig";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","ig-h");
+d.innerHTML='<div class="ig-hero"><div class="ig-in"><img src="icons/icon-180.png" alt=""><div class="ig-k">Einrichtung · 1 Minute</div><h1 id="ig-h">Willkommen bei '+N+'</h1><p>Schön, dass du da bist. '+(dev=="pc"?"Am Computer kannst du "+N+" direkt im Browser nutzen oder als eigenes Programm installieren. Auf dem Handy legst du sie auf deinen Home-Bildschirm und öffnest sie wie jede andere App über ihr Symbol.":"Bevor du startest, leg "+N+" auf deinen Home-Bildschirm. Dann öffnest du sie wie jede andere App über ihr eigenes Symbol, auch ohne Internet.")+'</p></div></div>'+
+'<div class="ig-body"><div class="ig-in"><div class="ig-tabs" role="group" aria-label="Gerät wählen"><button data-d="ios">iPhone</button><button data-d="and">Android</button><button data-d="pc">Computer</button></div><div id="ig-c"></div>'+
+'<div class="ig-facts"><p><b>Deine Einträge bleiben auf deinem Gerät.</b> Kein App Store, kein Konto, kein Passwort. Niemand außer dir sieht, was du einträgst, auch ich nicht.</p><p><b>Heb die Kauf-E-Mail auf.</b> Mit dem Link darin öffnest du '+N+' jederzeit wieder.</p></div>'+
+'<button class="ig-go" id="ig-go">'+(dev=="pc"?N+" starten":"Weiter zu "+N)+'</button>'+(dev=="pc"?'':'<button class="ig-later" id="ig-later">Erst mal im Browser ausprobieren</button>')+'</div></div>';
+document.body.appendChild(d);document.body.classList.add("ig-open");
+function show(k){dev=k;d.querySelectorAll(".ig-tabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.d==k)});d.querySelector("#ig-c").innerHTML=T[k];pb()}
+function pb(){var x=d.querySelector("#ig-pb");if(!x)return;x.innerHTML=prompt?'<button class="ig-pbtn" id="ig-pi">'+N+' jetzt installieren</button>':"";var b=d.querySelector("#ig-pi");if(b)b.onclick=function(){prompt.prompt();prompt.userChoice.then(function(){prompt=null;pb()})}}
+d.querySelectorAll(".ig-tabs button").forEach(function(b){b.onclick=function(){show(b.dataset.d)}});
+function close(){try{localStorage.setItem(SEEN,"1")}catch(e){}d.remove();document.body.classList.remove("ig-open");window.scrollTo(0,0)}
+d.querySelector("#ig-go").onclick=close;var l=d.querySelector("#ig-later");if(l)l.onclick=close;
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();prompt=e;pb()});
+window.addEventListener("appinstalled",function(){prompt=null;pb()});
+show(dev);
+}
+if(document.body)el();else document.addEventListener("DOMContentLoaded",el);
+})();
+
+</script>
 </body></html>
