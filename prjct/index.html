@@ -443,7 +443,7 @@ h1.gross{font-size:44px;line-height:1.05;margin:6px 0 10px;color:#591427;letter-
 // Inhalte „Abschlussarbeit mit rotem Faden“ (Arbeitstitel) · Entwurf 1 vom 23.11.2026
 // Qualitative empirische Bachelor- und Masterarbeiten. 10 Phasen in Arbeitsreihenfolge (Stand 24.11.2026), w = Anteil an der Gesamtzeit (Wochen bei 5 Monaten).
 const PHASEN=[
- {id:"start",t:"Fundament",kurz:"Fundament",w:0.5,kap:"Arbeitsversion von Forschungs\u00ADfrage, Titel und Gliederung",
+ {id:"start",t:"Thema eingrenzen",kurz:"Thema",w:0.5,kap:"Arbeitsversion von Forschungs\u00ADfrage, Titel und Gliederung",
   def:{t:"Was ist eigentlich eine Forschungs\u00ADfrage?",x:"Eine Forschungs\u00ADfrage ist die eine Frage, die deine ganze Arbeit beantworten will. Sie legt fest, was du genau wissen willst, bei wem und in welchem Zusammenhang. Ein Thema ist noch keine Frage: „Pflegekräfte und Stress“ ist ein Thema. „Wie erleben Pflegekräfte auf Intensivstationen den Umgang mit Stress im Schichtdienst?“ ist eine Forschungs\u00ADfrage. Qualitative Fragen beginnen oft mit „Wie“ oder „Welche“, weil sie nach Erleben, Deutungen und Abläufen fragen und nicht nach Häufigkeiten. Und keine Sorge: Deine Frage darf sich im Laufe der Arbeit noch verändern."},
   ziel:"Du legst fest, in welche Richtung du dein Thema ausarbeitest. Hast du ein Exposé geschrieben, bist du schon gut eingearbeitet: Forschungs\u00ADfrage, Arbeitsplan, meist auch eine erste Gliederung und ein Zeitplan stehen. Dann gehst du diese Phase zügig durch und prüfst nur, was sich seitdem verändert hat. Bei vielen Bachelor- und Masterarbeiten ist aber gar kein Exposé nötig. Du hast dein Thema bekommen, und jetzt entwickelst du daraus eine Arbeitsversion deiner Forschungs\u00ADfrage.",
   ergebnis:"Eine Arbeitsversion deiner Forschungs\u00ADfrage und deines Titels, eine erste Gliederung und ein Zeitplan bis zur Abgabe.",
@@ -856,7 +856,7 @@ function vSetup(){const s=view.setup;
   ${wordmark("wm")}<div class="stripes"><i></i><i></i></div><h1>Deine Abschlussarbeit mit rotem Faden.</h1>
   <p class="lead">Diese App begleitet dich durch deine qualitative empirische Abschlussarbeit, von der genehmigten Idee bis zur Abgabe.</p>
   <div class="phs">
-   <div class="st"><div class="n on">1</div><div><b>Dein Phasenplan</b><p class="m">Neun Phasen, verteilt auf deine Zeit bis zur Abgabe. Zu jeder Phase: wofür sie da ist, eine Checkliste, typische Stolpersteine und worauf Gutachter:innen achten.</p></div></div>
+   <div class="st"><div class="n on">1</div><div><b>Dein Phasenplan</b><p class="m">Zehn Phasen, verteilt auf deine Zeit bis zur Abgabe. Zu jeder Phase: wofür sie da ist, eine Checkliste, typische Stolpersteine und worauf Gutachter:innen achten.</p></div></div>
    <div class="st"><div class="n">2</div><div><b>Einmal pro Woche, 5 Minuten</b><p class="m">Kein tägliches Eintragen. Ein kurzer Wochen-Check: Wie klar ist der nächste Schritt, was hast du geschafft, was kommt als Nächstes?</p></div></div>
    <div class="st"><div class="n">3</div><div><b>Wenn es hakt</b><p class="m">Ein Karteikasten für mentale Blockaden, ein Glossar und ein Ort für Fragen an deine Betreuung.</p></div></div>
   </div><div class="grow"></div>${dots(0,4)}<button class="btn" data-act="setup" data-v="1">Los geht’s</button>${LEGAL}`;
